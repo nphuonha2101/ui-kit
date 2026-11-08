@@ -1,0 +1,13 @@
+{
+  "name": "ui-kits",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @nphuonha/ui-demo",
+    "build": "npm run build -w @nphuonha/ui-demo",
+    "typecheck": "npm run typecheck -w @nphuonha/ui-kit && npm run typecheck -w @nphuonha/ui-demo"
+  }
+}

@@ -1,0 +1,12 @@
+@import "../../../../packages/ui-kit/src/styles.css";
+
+@source "../../../../packages/ui-kit/src";
+@source "../..";
+
+/* Demo-only layout helpers */
+:root {
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
+}

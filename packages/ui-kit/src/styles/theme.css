@@ -1,0 +1,121 @@
+/* Modern, borderless, solid-surface theme.
+ * Depth comes from tonal surface steps + soft shadows, not outlined boxes.
+ * Accent is customizable: override --primary* / --ring (see generateAccentVars in lib/color).
+ */
+
+:root,
+[data-ui="kit"] {
+  color-scheme: light;
+
+  /* Tonal surface ladder (solid fills) */
+  --background: #f3f4f8;
+  --foreground: #16181d;
+  --card: #ffffff;
+  --card-foreground: #16181d;
+  --popover: #ffffff;
+  --popover-foreground: #16181d;
+  --surface: #eceef4;
+  --surface-hover: #e2e5ee;
+  --field: #eceef4;            /* borderless input/control fill */
+  --field-hover: #e5e8f0;
+  --field-foreground: #16181d;
+  --secondary: #eceef4;
+  --secondary-foreground: #16181d;
+  --muted: #eceef4;
+  --muted-foreground: #63697a;
+  --accent: #e8eaf6;
+  --accent-foreground: #1e2230;
+
+  /* Vibrant default accent (indigo). Override via generateAccentVars / --primary*. */
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --primary-hover: #4338ca;
+  --primary-active: #3730a3;
+  --primary-soft: #e8e9ff;
+  --primary-soft-foreground: #3730a3;
+  --ring: #4f46e5;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+  --info: #0284c7;
+  --info-foreground: #ffffff;
+
+  /* Hairline only where a border is still necessary (rare) */
+  --border: #171a2110;
+  --input: #171a2110;
+  --overlay: rgb(12 14 20 / 0.5);
+
+  --radius-control: 0.75rem;   /* 12px */
+  --radius-card: 1.25rem;      /* 20px */
+  --radius-overlay: 1.25rem;
+  --radius-field: 0.75rem;
+
+  --shadow-overlay: 0 16px 48px -12px rgb(16 18 26 / 0.22), 0 4px 14px -4px rgb(16 18 26 / 0.1);
+  --shadow-raised: 0 2px 6px -2px rgb(16 18 26 / 0.12), 0 8px 24px -12px rgb(16 18 26 / 0.16);
+  --shadow-soft: 0 1px 2px rgb(16 18 26 / 0.04), 0 6px 20px -10px rgb(16 18 26 / 0.14);
+
+  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+[data-ui="kit"].dark,
+.dark [data-ui="kit"],
+.dark:where([data-ui="kit"]) {
+  color-scheme: dark;
+
+  /* Light behaves differently on dark solids: cool rim, no milky wash. */
+  --light-top: color-mix(in srgb, #c7d2fe 26%, transparent);
+  --light-top-soft: color-mix(in srgb, #e2e8f0 16%, transparent);
+  --light-bottom: color-mix(in srgb, #000000 34%, transparent);
+  --light-sheen: color-mix(in srgb, #ffffff 9%, transparent);
+  --light-sheen-soft: color-mix(in srgb, #ffffff 4%, transparent);
+  --light-side: color-mix(in srgb, #ffffff 8%, transparent);
+  --light-rim: color-mix(in srgb, #ffffff 20%, transparent);
+
+  --background: #0d0f15;
+  --foreground: #f1f3f8;
+  --card: #171a22;
+  --card-foreground: #f1f3f8;
+  --popover: #1b1f29;
+  --popover-foreground: #f1f3f8;
+  --surface: #1c2029;
+  --surface-hover: #252a35;
+  --field: #1c2029;
+  --field-hover: #252a35;
+  --field-foreground: #f1f3f8;
+  --secondary: #1c2029;
+  --secondary-foreground: #f1f3f8;
+  --muted: #1c2029;
+  --muted-foreground: #9ba3b4;
+  --accent: #232840;
+  --accent-foreground: #f1f3f8;
+
+  --primary: #818cf8;
+  --primary-foreground: #111322;
+  --primary-hover: #a5b4fc;
+  --primary-active: #6366f1;
+  --primary-soft: #24244a;
+  --primary-soft-foreground: #c7d2fe;
+  --ring: #818cf8;
+
+  --destructive: #f87171;
+  --destructive-foreground: #160b0b;
+  --success: #4ade80;
+  --success-foreground: #06140b;
+  --warning: #fbbf24;
+  --warning-foreground: #171004;
+  --info: #38bdf8;
+  --info-foreground: #04141d;
+
+  --border: #ffffff14;
+  --input: #ffffff14;
+  --overlay: rgb(0 0 0 / 0.64);
+
+  --shadow-overlay: 0 20px 60px -12px rgb(0 0 0 / 0.6), 0 6px 20px -6px rgb(0 0 0 / 0.4);
+  --shadow-raised: 0 2px 8px -2px rgb(0 0 0 / 0.4), 0 10px 30px -12px rgb(0 0 0 / 0.5);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -14px rgb(0 0 0 / 0.5);
+}

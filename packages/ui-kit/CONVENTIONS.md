@@ -23,7 +23,7 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - **Prop-driven & consistent**: prefer clear props over compound anatomy for core controls.
 - **Controls**: comfortable `h-10` default; shared focus/disabled/error states.
 - **Forms**: `label`, `description`, `error` (with `aria-invalid`/`aria-describedby`/`role="alert"` where relevant), `required` mark.
-- **Icons**: `startIcon`/`endIcon` (and icon-only via `IconButton`); icon type `IconComponent { size?, className? }`.
+- **Icons**: default internal affordances use **Phosphor**. `startIcon`/`endIcon`, `Alert.icon` and `IconButton` children accept any icon component (`IconComponent { size?, className? }`), so user-facing icons are pack-agnostic. The internal set (`check`, `minus`, `chevron`, `close`, `spinner`) is replaceable via `IconProvider`; `Toaster` exposes its own `icons` prop.
 - **Loading**: preserve layout (spinner + label), set `disabled`/`aria-busy`.
 
 ## Structure & exports

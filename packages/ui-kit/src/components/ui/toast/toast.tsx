@@ -1,12 +1,23 @@
 "use client";
 
+import type * as React from "react";
 import { Toaster as SonnerToaster, toast } from "sonner";
+
+export interface ToasterIcons {
+  success?: React.ReactNode;
+  info?: React.ReactNode;
+  warning?: React.ReactNode;
+  error?: React.ReactNode;
+  loading?: React.ReactNode;
+  close?: React.ReactNode;
+}
 
 export interface ToasterProps {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
   theme?: "light" | "dark" | "system";
   richColors?: boolean;
   closeButton?: boolean;
+  icons?: ToasterIcons;
 }
 
 export function Toaster({
@@ -14,6 +25,7 @@ export function Toaster({
   theme = "light",
   richColors = false,
   closeButton = true,
+  icons,
 }: ToasterProps) {
   return (
     <SonnerToaster
@@ -21,6 +33,7 @@ export function Toaster({
       theme={theme}
       richColors={richColors}
       closeButton={closeButton}
+      icons={icons}
       toastOptions={{
         classNames: {
           toast:

@@ -8,6 +8,12 @@ export { cn } from "./lib/utils";
 export type { IconComponent } from "./lib/utils";
 export { generateAccentVars, accentStyle } from "./lib/color";
 export type { AccentVars, ThemeMode } from "./lib/color";
+export { IconProvider, useKitIcon } from "./components/ui/_shared/icon-provider";
+export type {
+  IconProviderProps,
+  KitIcon,
+  KitIconName,
+} from "./components/ui/_shared/icon-provider";
 
 export * from "./components/ui/alert";
 export * from "./components/ui/badge";

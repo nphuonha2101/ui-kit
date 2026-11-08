@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
-import { CaretUpDownIcon, CheckIcon } from "@phosphor-icons/react";
 import { cn } from "../../../lib/utils";
+import { useKitIcon } from "../_shared/icon-provider";
 
 export interface SelectOption {
   value: string;
@@ -39,6 +39,8 @@ export function Select({
   id,
   ...aria
 }: SelectProps) {
+  const ChevronIcon = useKitIcon("chevron");
+  const CheckIcon = useKitIcon("check");
   return (
     <SelectPrimitive.Root value={value} defaultValue={defaultValue} onValueChange={onValueChange} disabled={disabled} name={name}>
       <SelectPrimitive.Trigger
@@ -53,7 +55,7 @@ export function Select({
       >
         <SelectPrimitive.Value>{(val) => options.find((o) => o.value === val)?.label ?? <span className="text-muted-foreground/70">{placeholder}</span>}</SelectPrimitive.Value>
         <SelectPrimitive.Icon className="shrink-0 text-muted-foreground">
-          <CaretUpDownIcon size={14} weight="bold" />
+          <ChevronIcon size={14} />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
       <SelectPrimitive.Portal>
@@ -73,7 +75,7 @@ export function Select({
                   className="flex cursor-default select-none items-center gap-2 rounded-control px-2.5 py-2 text-sm outline-none data-[highlighted]:bg-surface data-[selected]:bg-primary-soft data-[selected]:font-medium data-[selected]:text-primary-soft-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-45"
                 >
                   <SelectPrimitive.ItemIndicator className="inline-flex w-4 shrink-0 items-center justify-center text-primary">
-                    <CheckIcon size={14} weight="bold" />
+                    <CheckIcon size={14} />
                   </SelectPrimitive.ItemIndicator>
                   <SelectPrimitive.ItemText>{opt.label}</SelectPrimitive.ItemText>
                 </SelectPrimitive.Item>

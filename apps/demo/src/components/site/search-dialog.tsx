@@ -2,9 +2,25 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { cn, Dialog, Input } from "@nphuonha/ui-kit";
+import {
+  CubeIcon,
+  KeyReturnIcon,
+  MagnifyingGlassIcon,
+} from "@phosphor-icons/react";
+import { cn, Dialog } from "@nphuonha/ui-kit";
 import { searchIndex } from "@/content/components";
+
+function optionId(slug: string) {
+  return `search-option-${slug}`;
+}
+
+function Kbd({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="inline-flex min-w-5 items-center justify-center rounded-[4px] bg-surface px-1 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
+      {children}
+    </kbd>
+  );
+}
 
 export function SearchDialog({
   open,
@@ -58,65 +74,112 @@ export function SearchDialog({
     }
   };
 
+  const active = filtered[activeIndex];
+
   return (
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
       showClose={false}
       aria-label="Search documentation"
-      className="max-w-xl gap-0 overflow-hidden p-0"
+      className="max-w-lg gap-0 overflow-hidden p-0"
     >
-      <div className="flex items-center gap-2 px-4">
-        <MagnifyingGlassIcon size={18} className="shrink-0 text-muted-foreground" />
-        <Input
-          autoFocus
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value);
-            setActiveIndex(0);
-          }}
-          onKeyDown={onKeyDown}
-          placeholder="Search components..."
-          aria-label="Search components"
-          className="surface-flat h-12 rounded-none bg-transparent px-0 text-base focus-visible:ring-0"
-        />
-      </div>
-      <div className="h-px bg-border/60" />
-      <div className="max-h-[360px] overflow-y-auto p-2">
-        {filtered.length === 0 ? (
-          <p className="px-3 py-8 text-center text-sm text-muted-foreground">
-            No components found.
-          </p>
-        ) : (
-          filtered.map((item, index) => (
-            <button
-              key={item.slug}
-              type="button"
-              onClick={() => go(item.slug)}
-              onMouseEnter={() => setActiveIndex(index)}
-              className={cn(
-                "flex w-full items-center gap-3 rounded-control px-3 py-2 text-left transition-colors",
-                index === activeIndex ? "bg-surface" : "hover:bg-surface/60",
-              )}
-            >
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-[9px] bg-field text-muted-foreground">
-                <MagnifyingGlassIcon size={15} />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium text-foreground">
-                  {item.title}
-                </span>
-                <span className="block truncate text-xs text-muted-foreground">
-                  {item.description}
-                </span>
-              </span>
-            </button>
-          ))
-        )}
-      </div>
-      <div className="flex items-center justify-between gap-3 border-t border-border/60 px-4 py-2 text-[11px] text-muted-foreground">
-        <span>↑↓ to navigate</span>
-        <span>↵ to open</span>
+      <div className="flex min-w-0 max-h-[min(560px,80vh)] flex-col">
+        <div className="flex h-14 shrink-0 items-center gap-2.5 px-4">
+          <MagnifyingGlassIcon size={18} className="shrink-0 text-muted-foreground" />
+          <input
+            autoFocus
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setActiveIndex(0);
+            }}
+            onKeyDown={onKeyDown}
+            placeholder="Search components..."
+            aria-label="Search components"
+            aria-controls="search-results"
+            aria-activedescendant={active ? optionId(active.slug) : undefined}
+            className="h-full min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground/70"
+          />
+          <kbd className="hidden shrink-0 rounded-[5px] bg-surface px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground sm:inline-flex">
+            Esc
+          </kbd>
+        </div>
+
+        <div className="h-px shrink-0 bg-border/60" />
+
+        <div
+          id="search-results"
+          role="listbox"
+          aria-label="Components"
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2"
+        >
+          {filtered.length === 0 ? (
+            <div className="flex flex-col items-center gap-1.5 px-3 py-12 text-center">
+              <MagnifyingGlassIcon size={24} className="text-muted-foreground/50" />
+              <p className="text-sm font-medium text-foreground">No components found</p>
+              <p className="text-xs text-muted-foreground">Try a different search term.</p>
+            </div>
+          ) : (
+            filtered.map((item, index) => {
+              const selected = index === activeIndex;
+              return (
+                <button
+                  key={item.slug}
+                  id={optionId(item.slug)}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  onClick={() => go(item.slug)}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  className={cn(
+                    "group flex w-full items-center gap-3 rounded-control px-3 py-2.5 text-left transition-colors",
+                    selected ? "bg-surface" : "hover:bg-surface/60",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "flex size-9 shrink-0 items-center justify-center rounded-[10px] transition-colors",
+                      selected
+                        ? "bg-primary-soft text-primary-soft-foreground"
+                        : "bg-surface text-muted-foreground",
+                    )}
+                  >
+                    <CubeIcon size={16} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2">
+                      <span className="truncate text-sm font-medium text-foreground">
+                        {item.title}
+                      </span>
+                      <span className="hidden shrink-0 rounded-pill bg-surface px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground sm:inline-flex">
+                        {item.category}
+                      </span>
+                    </span>
+                    <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                      {item.description}
+                    </span>
+                  </span>
+                  {selected ? (
+                    <KeyReturnIcon size={14} className="shrink-0 text-muted-foreground" />
+                  ) : null}
+                </button>
+              );
+            })
+          )}
+        </div>
+
+        <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/60 px-4 py-2.5 text-[11px] text-muted-foreground">
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
+            <Kbd>↑</Kbd>
+            <Kbd>↓</Kbd>
+            to navigate
+          </span>
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
+            <Kbd>↵</Kbd>
+            to open
+          </span>
+        </div>
       </div>
     </Dialog>
   );

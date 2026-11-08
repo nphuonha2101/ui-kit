@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import { XIcon } from "@phosphor-icons/react";
 import { cn } from "../../../lib/utils";
 import { IconButton } from "../icon-button";
+import { useKitIcon } from "../_shared/icon-provider";
 
 export interface SheetProps {
   open?: boolean;
@@ -42,6 +42,7 @@ export function Sheet({
   className,
   showClose = true,
 }: SheetProps) {
+  const CloseIcon = useKitIcon("close");
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger ? <DialogPrimitive.Trigger render={trigger} /> : null}
@@ -63,7 +64,7 @@ export function Sheet({
               </div>
               {showClose ? (
                 <DialogPrimitive.Close
-                  render={<IconButton aria-label="Close" variant="ghost" size="icon-sm" className="-mr-2 -mt-2 shrink-0"><XIcon size={16} /></IconButton>}
+                  render={<IconButton aria-label="Close" variant="ghost" size="icon-sm" className="-mr-2 -mt-2 shrink-0"><CloseIcon size={16} /></IconButton>}
                 />
               ) : null}
             </div>

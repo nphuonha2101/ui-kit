@@ -16,6 +16,7 @@
     "./dialog": "./src/components/ui/dialog/index.ts",
     "./field": "./src/components/ui/field/index.ts",
     "./icon-button": "./src/components/ui/icon-button/index.ts",
+    "./icons": "./src/components/ui/_shared/icon-provider.ts",
     "./input": "./src/components/ui/input/index.ts",
     "./label": "./src/components/ui/label/index.ts",
     "./popover": "./src/components/ui/popover/index.ts",

@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
-import { CheckIcon, MinusIcon } from "@phosphor-icons/react";
 import { cn } from "../../../lib/utils";
+import { useKitIcon } from "../_shared/icon-provider";
 
 export interface CheckboxProps
   extends Omit<React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "children"> {
@@ -14,6 +14,8 @@ export interface CheckboxProps
 
 export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ className, label, description, error, id, ...props }, ref) => {
+    const CheckIcon = useKitIcon("check");
+    const MinusIcon = useKitIcon("minus");
     const autoId = React.useId();
     const controlId = id ?? autoId;
     const descriptionId = description ? `${controlId}-description` : undefined;
@@ -31,8 +33,8 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         {...props}
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current data-[unchecked]:hidden">
-          <CheckIcon size={13} weight="bold" className="in-data-[indeterminate]:hidden" />
-          <MinusIcon size={13} weight="bold" className="hidden in-data-[indeterminate]:block" />
+          <CheckIcon size={13} className="in-data-[indeterminate]:hidden" />
+          <MinusIcon size={13} className="hidden in-data-[indeterminate]:block" />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
     );

@@ -1,15 +1,17 @@
 "use client";
 
-import { SpinnerIcon } from "@phosphor-icons/react";
+import * as React from "react";
 import { cn } from "../../../lib/utils";
+import { useKitIcon } from "../_shared/icon-provider";
 
 export interface SpinnerProps extends React.HTMLAttributes<SVGSVGElement> {
   size?: number;
 }
 
 export function Spinner({ size = 18, className, ...props }: SpinnerProps) {
+  const Icon = useKitIcon("spinner");
   return (
-    <SpinnerIcon
+    <Icon
       size={size}
       className={cn("animate-spin text-current", className)}
       aria-hidden="true"

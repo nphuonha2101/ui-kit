@@ -30,6 +30,11 @@ export const meta: ComponentMeta = {
       "type": "boolean",
       "default": "true",
       "description": "Show a close button."
+    },
+    {
+      "name": "icons",
+      "type": "ToasterIcons",
+      "description": "Custom status and close icons from any icon pack."
     }
   ],
   "examples": [

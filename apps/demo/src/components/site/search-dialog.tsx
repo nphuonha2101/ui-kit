@@ -7,19 +7,11 @@ import {
   KeyReturnIcon,
   MagnifyingGlassIcon,
 } from "@phosphor-icons/react";
-import { cn, Dialog } from "@nphuonha/ui-kit";
+import { Kbd, KbdGroup, cn, Dialog } from "@nphuonha/ui-kit";
 import { searchIndex } from "@/content/components";
 
 function optionId(slug: string) {
   return `search-option-${slug}`;
-}
-
-function Kbd({ children }: { children: React.ReactNode }) {
-  return (
-    <kbd className="inline-flex min-w-5 items-center justify-center rounded-[4px] bg-surface px-1 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
-      {children}
-    </kbd>
-  );
 }
 
 export function SearchDialog({
@@ -101,9 +93,9 @@ export function SearchDialog({
             aria-activedescendant={active ? optionId(active.slug) : undefined}
             className="h-full min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground/70"
           />
-          <kbd className="hidden shrink-0 rounded-[5px] bg-surface px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground sm:inline-flex">
+          <Kbd size="sm" className="hidden shrink-0 sm:inline-flex">
             Esc
-          </kbd>
+          </Kbd>
         </div>
 
         <div className="h-px shrink-0 bg-border/60" />
@@ -171,8 +163,10 @@ export function SearchDialog({
 
         <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/60 px-4 py-2.5 text-[11px] text-muted-foreground">
           <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
-            <Kbd>↑</Kbd>
-            <Kbd>↓</Kbd>
+            <KbdGroup>
+              <Kbd>↑</Kbd>
+              <Kbd>↓</Kbd>
+            </KbdGroup>
             to navigate
           </span>
           <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">

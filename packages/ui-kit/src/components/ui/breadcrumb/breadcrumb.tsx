@@ -44,18 +44,34 @@ export function BreadcrumbItem({
   );
 }
 
+export interface BreadcrumbLinkProps
+  extends React.ComponentPropsWithoutRef<"a"> {
+  /** Render the child element (for example a framework Link) with breadcrumb styles. */
+  asChild?: boolean;
+}
+
 export function BreadcrumbLink({
+  asChild,
   className,
+  children,
   ...props
-}: React.ComponentPropsWithoutRef<"a">) {
+}: BreadcrumbLinkProps) {
+  const classes = cn(
+    "rounded-[4px] outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
+    className,
+  );
+
+  if (asChild && React.isValidElement(children)) {
+    const child = children as React.ReactElement<{ className?: string }>;
+    return React.cloneElement(child, {
+      className: cn(classes, child.props.className),
+    });
+  }
+
   return (
-    <a
-      className={cn(
-        "rounded-[4px] outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
-        className,
-      )}
-      {...props}
-    />
+    <a className={classes} {...props}>
+      {children}
+    </a>
   );
 }
 

@@ -114,7 +114,7 @@ export function Slider<Value extends SliderValue = number>({
             <SliderPrimitive.Thumb
               key={index}
               index={index}
-              className="surface-curved-pill block size-4 rounded-full bg-card shadow-[var(--shadow-raised)] ring-1 ring-border/60 outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="surface-curved-pill block h-5 w-7 rounded-pill bg-card shadow-[var(--shadow-raised)] ring-1 ring-border/60 outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             />
           ))}
         </SliderPrimitive.Control>

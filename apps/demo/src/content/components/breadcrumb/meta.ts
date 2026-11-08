@@ -25,7 +25,7 @@ export const meta: ComponentMeta = {
     {
       "name": "BreadcrumbLink",
       "type": "component",
-      "description": "Anchor with hover and focus treatment."
+      "description": "Anchor with hover and focus treatment. Use asChild to render a framework Link."
     },
     {
       "name": "BreadcrumbPage",

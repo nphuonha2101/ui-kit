@@ -1,6 +1,49 @@
 import { componentGroups } from "./components";
+import type { ComponentMeta, ComponentSnippets } from "./types";
 
 export const DOCS_URL = "https://ui.nphuonha.id.vn";
+
+export function buildComponentAgentPrompt(meta: ComponentMeta, snippets: ComponentSnippets) {
+  const props = meta.props
+    .map(
+      (prop) =>
+        `- ${prop.name} (${prop.type}${prop.default ? `, default: ${prop.default}` : ""}) — ${prop.description}`,
+    )
+    .join("\n");
+
+  return `Use this page as the source of truth for the ${meta.title} component.
+
+Package: @nphuonha/ui-kit
+Docs: ${DOCS_URL}/docs/components/${meta.slug}
+
+Install:
+npm install @nphuonha/ui-kit
+
+Import:
+${meta.imports}
+
+Props:
+${props}
+
+Usage:
+${snippets.usage}
+
+Rules:
+- Import "@nphuonha/ui-kit/styles.css" once at the app root.
+- Put data-ui="kit" on <html> and add class="dark" for dark mode.
+- Use semantic tokens and the documented props. Do not add another UI library.`;
+}
+
+export const INSTALLATION_AGENT_PROMPT = `Set up @nphuonha/ui-kit in this project.
+
+1. npm install @nphuonha/ui-kit
+2. Import "@nphuonha/ui-kit/styles.css" once at the app root.
+3. Put data-ui="kit" on <html>; add class="dark" for dark mode.
+4. Use semantic tokens and the documented components.
+
+Do not add transpilePackages: the package ships compiled ESM and .d.ts files.
+Do not add another UI library.`;
+
 
 export function buildLlmsTxt() {
   const groups = componentGroups
@@ -23,6 +66,7 @@ export function buildLlmsTxt() {
 Docs: ${DOCS_URL}
 Agent guide: ${DOCS_URL}/docs/agents
 Machine-readable guide: ${DOCS_URL}/llms.txt
+Per-page context: append /llms.txt to any docs URL, e.g. ${DOCS_URL}/docs/components/button/llms.txt
 
 ## Install
 

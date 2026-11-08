@@ -76,6 +76,20 @@ export default function AgentsPage() {
             </div>
           </div>
           <CodeBlock code={`${DOCS_URL}/llms.txt`} language="bash" filename="llms.txt" />
+          <p className="text-sm leading-7 text-muted-foreground">
+            Working on one component? Use its page-scoped file so the agent only reads that
+            page:
+          </p>
+          <CodeBlock
+            code={`${DOCS_URL}/docs/components/button/llms.txt`}
+            language="bash"
+            filename="Page-scoped context"
+          />
+          <p className="text-sm leading-7 text-muted-foreground">
+            Every component page and the installation page also has a{" "}
+            <span className="font-medium text-foreground">Copy for agent</span> button that
+            copies only that page&apos;s context.
+          </p>
         </section>
 
         <section className="flex flex-col gap-3">

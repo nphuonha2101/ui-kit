@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Badge } from "@nphuonha/ui-kit";
 import type { ComponentMeta, ComponentSnippets } from "@/content/types";
 import { registry } from "@/content/components";
+import { buildComponentAgentPrompt } from "@/content/llms";
 import { ComponentDemo, ExampleDemo } from "@/content/components/demo-map";
+import { AgentCopyButton } from "./agent-copy-button";
 import { CodeBlock } from "./code-block";
 import { ComponentPreview } from "./component-preview";
 import { PropTable } from "./prop-table";
@@ -44,6 +46,10 @@ export function ComponentDoc({
               {meta.title}
             </h1>
             <Badge variant="primary">{meta.category}</Badge>
+            <AgentCopyButton
+              text={buildComponentAgentPrompt(meta, snippets)}
+              className="ml-auto"
+            />
           </div>
           <p className="max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
             {meta.description}
@@ -59,8 +65,8 @@ export function ComponentDoc({
         <section id="installation" className="mt-10 scroll-mt-24">
           <h2 className="text-xl font-semibold tracking-[-0.025em]">Installation</h2>
           <p className="mt-2 text-sm leading-7 text-muted-foreground">
-            Import the component from the kit. The package ships source and is transpiled by
-            Next.js.
+            Import the component from the kit. The package ships compiled ESM and type
+            declarations.
           </p>
           <div className="mt-3">
             <CodeBlock code={meta.imports} filename="Import" />

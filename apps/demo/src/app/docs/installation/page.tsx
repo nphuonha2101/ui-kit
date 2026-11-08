@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { CheckCircleIcon, InfoIcon } from "@/components/icons";
 import { Alert, Card, CardContent } from "@nphuonha/ui-kit";
+import { AgentCopyButton } from "@/components/docs/agent-copy-button";
 import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
+import { INSTALLATION_AGENT_PROMPT } from "@/content/llms";
 
 export const metadata: Metadata = { title: "Installation" };
 
@@ -11,7 +13,8 @@ export default function InstallationPage() {
     <div className="max-w-3xl">
       <PageHeader
         title="Installation"
-        description="Add the kit to a Next.js app, import the stylesheet and scope the tokens. The package ships source, so Next transpiles it directly."
+        description="Add the package, import the stylesheet and scope the tokens. The published package ships compiled ESM and types, so it works with Next.js, Vite, Remix and other React 19 bundlers."
+        action={<AgentCopyButton text={INSTALLATION_AGENT_PROMPT} />}
       />
 
       <div className="flex flex-col gap-10">
@@ -20,7 +23,7 @@ export default function InstallationPage() {
           <ul className="flex flex-col gap-2 text-sm leading-6 text-muted-foreground">
             {[
               "React 19 and React DOM 19",
-              "Next.js 15 or newer (App Router)",
+              "Next.js 15+ or another React 19 bundler",
               "Tailwind CSS 4",
             ].map((item) => (
               <li key={item} className="flex items-start gap-2">
@@ -37,26 +40,7 @@ export default function InstallationPage() {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">2. Transpile the package</h2>
-          <p className="text-sm leading-7 text-muted-foreground">
-            The package exports TypeScript source. Add it to{" "}
-            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">transpilePackages</code>{" "}
-            so Next.js compiles it with your app.
-          </p>
-          <CodeBlock
-            filename="next.config.ts"
-            code={`import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  transpilePackages: ["@nphuonha/ui-kit"],
-};
-
-export default nextConfig;`}
-          />
-        </section>
-
-        <section className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">3. Import the stylesheet</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">2. Import the stylesheet</h2>
           <p className="text-sm leading-7 text-muted-foreground">
             Import the styles once at the root of your app. The file includes Tailwind, the
             structural layer and the theme tokens.
@@ -77,7 +61,7 @@ export default function RootLayout({ children }) {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">4. Use a component</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">3. Use a component</h2>
           <CodeBlock
             filename="app/page.tsx"
             code={`import { Button, Field, Input } from "@nphuonha/ui-kit";

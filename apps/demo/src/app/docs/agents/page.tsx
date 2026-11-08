@@ -30,7 +30,8 @@ const rules = [
   "Install @nphuonha/ui-kit and import the stylesheet once at the app root.",
   'Put data-ui="kit" on <html>; add class="dark" to the same element for dark mode.',
   "Use semantic utilities and tokens instead of raw colors: bg-card, bg-surface, text-muted-foreground, rounded-card, shadow-soft.",
-  "Prefer the kit's Button, Input, Field, Dialog, Sheet and Popover over new dependencies.",
+  "Prefer the kit's Button, Input, Field, Dialog, AlertDialog, Sheet, Table and Popover over new dependencies.",
+  "Use Breadcrumb and Pagination for secondary navigation, and EmptyState for zero states.",
   "Use startIcon/endIcon on buttons; activeIcon on BottomNav/DesktopNav items.",
   "Use generateAccentVars or accentStyle for runtime accent changes.",
 ];

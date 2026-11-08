@@ -103,7 +103,7 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Button`, `IconButton`, `Input`, `Textarea`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Dialog`, `Sheet`, `Popover`, `Tooltip`, `Tabs`, `BottomNav`, `DesktopNav`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
+`Button`, `IconButton`, `Input`, `Textarea`, `NumberField`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Slider`, `Dialog`, `AlertDialog`, `Sheet`, `Popover`, `Tooltip`, `Table`, `ScrollArea`, `Tabs`, `ToggleGroup`, `BottomNav`, `DesktopNav`, `Breadcrumb`, `Pagination`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Kbd`/`KbdGroup`, `EmptyState`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 

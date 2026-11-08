@@ -2,14 +2,25 @@
 
 import * as React from "react";
 import {
+  CaretLeftIcon,
+  CaretRightIcon,
   CaretUpDownIcon,
   CheckIcon,
   MinusIcon,
+  PlusIcon,
   SpinnerIcon,
   XIcon,
 } from "@phosphor-icons/react";
 
-export type KitIconName = "check" | "minus" | "chevron" | "close" | "spinner";
+export type KitIconName =
+  | "check"
+  | "minus"
+  | "plus"
+  | "chevron"
+  | "chevronLeft"
+  | "chevronRight"
+  | "close"
+  | "spinner";
 
 export type KitIcon = React.ComponentType<
   { size?: number } & React.SVGProps<SVGSVGElement>
@@ -18,7 +29,10 @@ export type KitIcon = React.ComponentType<
 const defaultIcons: Record<KitIconName, KitIcon> = {
   check: (props) => <CheckIcon {...props} weight="bold" />,
   minus: (props) => <MinusIcon {...props} weight="bold" />,
+  plus: (props) => <PlusIcon {...props} weight="bold" />,
   chevron: (props) => <CaretUpDownIcon {...props} weight="bold" />,
+  chevronLeft: (props) => <CaretLeftIcon {...props} weight="bold" />,
+  chevronRight: (props) => <CaretRightIcon {...props} weight="bold" />,
   close: (props) => <XIcon {...props} weight="bold" />,
   spinner: SpinnerIcon,
 };

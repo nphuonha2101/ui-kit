@@ -42,6 +42,11 @@
       "import": "./dist/components/ui/alert/index.js",
       "default": "./dist/components/ui/alert/index.js"
     },
+    "./alert-dialog": {
+      "types": "./dist/components/ui/alert-dialog/index.d.ts",
+      "import": "./dist/components/ui/alert-dialog/index.js",
+      "default": "./dist/components/ui/alert-dialog/index.js"
+    },
     "./badge": {
       "types": "./dist/components/ui/badge/index.d.ts",
       "import": "./dist/components/ui/badge/index.js",
@@ -51,6 +56,11 @@
       "types": "./dist/components/ui/bottom-nav/index.d.ts",
       "import": "./dist/components/ui/bottom-nav/index.js",
       "default": "./dist/components/ui/bottom-nav/index.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/components/ui/breadcrumb/index.d.ts",
+      "import": "./dist/components/ui/breadcrumb/index.js",
+      "default": "./dist/components/ui/breadcrumb/index.js"
     },
     "./button": {
       "types": "./dist/components/ui/button/index.d.ts",
@@ -77,6 +87,11 @@
       "import": "./dist/components/ui/dialog/index.js",
       "default": "./dist/components/ui/dialog/index.js"
     },
+    "./empty-state": {
+      "types": "./dist/components/ui/empty-state/index.d.ts",
+      "import": "./dist/components/ui/empty-state/index.js",
+      "default": "./dist/components/ui/empty-state/index.js"
+    },
     "./field": {
       "types": "./dist/components/ui/field/index.d.ts",
       "import": "./dist/components/ui/field/index.js",
@@ -97,10 +112,25 @@
       "import": "./dist/components/ui/input/index.js",
       "default": "./dist/components/ui/input/index.js"
     },
+    "./kbd": {
+      "types": "./dist/components/ui/kbd/index.d.ts",
+      "import": "./dist/components/ui/kbd/index.js",
+      "default": "./dist/components/ui/kbd/index.js"
+    },
     "./label": {
       "types": "./dist/components/ui/label/index.d.ts",
       "import": "./dist/components/ui/label/index.js",
       "default": "./dist/components/ui/label/index.js"
+    },
+    "./number-field": {
+      "types": "./dist/components/ui/number-field/index.d.ts",
+      "import": "./dist/components/ui/number-field/index.js",
+      "default": "./dist/components/ui/number-field/index.js"
+    },
+    "./pagination": {
+      "types": "./dist/components/ui/pagination/index.d.ts",
+      "import": "./dist/components/ui/pagination/index.js",
+      "default": "./dist/components/ui/pagination/index.js"
     },
     "./popover": {
       "types": "./dist/components/ui/popover/index.d.ts",
@@ -111,6 +141,11 @@
       "types": "./dist/components/ui/radio-group/index.d.ts",
       "import": "./dist/components/ui/radio-group/index.js",
       "default": "./dist/components/ui/radio-group/index.js"
+    },
+    "./scroll-area": {
+      "types": "./dist/components/ui/scroll-area/index.d.ts",
+      "import": "./dist/components/ui/scroll-area/index.js",
+      "default": "./dist/components/ui/scroll-area/index.js"
     },
     "./select": {
       "types": "./dist/components/ui/select/index.d.ts",
@@ -127,6 +162,11 @@
       "import": "./dist/components/ui/sheet/index.js",
       "default": "./dist/components/ui/sheet/index.js"
     },
+    "./slider": {
+      "types": "./dist/components/ui/slider/index.d.ts",
+      "import": "./dist/components/ui/slider/index.js",
+      "default": "./dist/components/ui/slider/index.js"
+    },
     "./spinner": {
       "types": "./dist/components/ui/spinner/index.d.ts",
       "import": "./dist/components/ui/spinner/index.js",
@@ -136,6 +176,11 @@
       "types": "./dist/components/ui/switch/index.d.ts",
       "import": "./dist/components/ui/switch/index.js",
       "default": "./dist/components/ui/switch/index.js"
+    },
+    "./table": {
+      "types": "./dist/components/ui/table/index.d.ts",
+      "import": "./dist/components/ui/table/index.js",
+      "default": "./dist/components/ui/table/index.js"
     },
     "./tabs": {
       "types": "./dist/components/ui/tabs/index.d.ts",
@@ -151,6 +196,11 @@
       "types": "./dist/components/ui/toast/index.d.ts",
       "import": "./dist/components/ui/toast/index.js",
       "default": "./dist/components/ui/toast/index.js"
+    },
+    "./toggle-group": {
+      "types": "./dist/components/ui/toggle-group/index.d.ts",
+      "import": "./dist/components/ui/toggle-group/index.js",
+      "default": "./dist/components/ui/toggle-group/index.js"
     },
     "./tooltip": {
       "types": "./dist/components/ui/tooltip/index.d.ts",

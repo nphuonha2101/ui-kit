@@ -26,33 +26,43 @@ export interface NumberFieldProps {
   description?: React.ReactNode;
   error?: React.ReactNode;
   placeholder?: string;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   className?: string;
   "aria-label"?: string;
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean;
 }
 
-export function NumberField({
-  value,
-  defaultValue,
-  onValueChange,
-  min,
-  max,
-  step,
-  largeStep,
-  smallStep,
-  format,
-  locale,
-  disabled,
-  readOnly,
-  required,
-  name,
-  id,
-  label,
-  description,
-  error,
-  placeholder,
-  className,
-  "aria-label": ariaLabel,
-}: NumberFieldProps) {
+export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
+  function NumberField(
+    {
+      value,
+      defaultValue,
+      onValueChange,
+      min,
+      max,
+      step,
+      largeStep,
+      smallStep,
+      format,
+      locale,
+      disabled,
+      readOnly,
+      required,
+      name,
+      id,
+      label,
+      description,
+      error,
+      placeholder,
+      onBlur,
+      className,
+      "aria-label": ariaLabel,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+    },
+    ref,
+  ) {
   const autoId = React.useId();
   const inputId = id ?? autoId;
   const descriptionId = description ? `${inputId}-description` : undefined;
@@ -95,10 +105,14 @@ export function NumberField({
           <MinusIcon size={14} />
         </NumberFieldPrimitive.Decrement>
         <NumberFieldPrimitive.Input
+          ref={ref}
           id={inputId}
+          onBlur={onBlur}
           aria-label={ariaLabel}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={describedBy}
+          aria-invalid={error ? true : ariaInvalid || undefined}
+          aria-describedby={
+            [ariaDescribedBy, describedBy].filter(Boolean).join(" ") || undefined
+          }
           placeholder={placeholder}
           className="min-w-0 flex-1 bg-transparent text-center text-sm tabular-nums text-field-foreground outline-none placeholder:text-muted-foreground/70"
         />
@@ -129,11 +143,13 @@ export function NumberField({
           {description}
         </p>
       ) : null}
-      {error ? (
+      {error && typeof error !== "boolean" ? (
         <p id={errorId} role="alert" className="text-xs font-medium text-destructive">
           {error}
         </p>
       ) : null}
     </div>
   );
-}
+  },
+);
+NumberField.displayName = "NumberField";

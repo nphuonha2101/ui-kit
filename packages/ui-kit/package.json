@@ -97,6 +97,11 @@
       "import": "./dist/components/ui/field/index.js",
       "default": "./dist/components/ui/field/index.js"
     },
+    "./form": {
+      "types": "./dist/components/ui/form/index.d.ts",
+      "import": "./dist/components/ui/form/index.js",
+      "default": "./dist/components/ui/form/index.js"
+    },
     "./icon-button": {
       "types": "./dist/components/ui/icon-button/index.d.ts",
       "import": "./dist/components/ui/icon-button/index.js",
@@ -229,7 +234,13 @@
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19",
-    "tailwindcss": ">=4"
+    "tailwindcss": ">=4",
+    "react-hook-form": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "react-hook-form": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -249,6 +260,7 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.2.1",
     "jsdom": "^31.0.0",
+    "react-hook-form": "^7.91.0",
     "typescript": "^5",
     "vitest": "^5.1.0"
   }

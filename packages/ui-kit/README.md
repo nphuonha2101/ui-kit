@@ -107,6 +107,14 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
+For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`:
+
+```tsx
+import { Form, FormField } from "@nphuonha/ui-kit/form";
+```
+
+Install `react-hook-form` (optional peer dependency) when using the `form` entry.
+
 Live previews, code and API reference: https://ui.nphuonha.id.vn
 
 ## License

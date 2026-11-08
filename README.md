@@ -90,6 +90,29 @@ Each component page includes a live preview, copyable code, props and examples:
 
 **[Browse the component docs →](https://ui.nphuonha.id.vn/docs/components)**
 
+## Forms
+
+`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom Base UI controls (`Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `NumberField`) expose `value`/`onValueChange` APIs — use `Controller` or the optional `FormField` wrapper:
+
+```tsx
+import { Input } from "@nphuonha/ui-kit";
+import { Form, FormField } from "@nphuonha/ui-kit/form";
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)}>
+    <FormField
+      control={form.control}
+      name="email"
+      label="Email"
+      rules={{ required: "Email is required" }}
+      render={({ field }) => <Input type="email" {...field} />}
+    />
+  </form>
+</Form>
+```
+
+`react-hook-form` is an optional peer dependency: `npm install react-hook-form`. Full guide: https://ui.nphuonha.id.vn/docs/forms
+
 ## Navigation
 
 `BottomNav` and `DesktopNav` share the same item model. Items can include links, badges and an alternate icon for the active state:

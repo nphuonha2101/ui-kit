@@ -32,6 +32,7 @@ const rules = [
   "Use semantic utilities and tokens instead of raw colors: bg-card, bg-surface, text-muted-foreground, rounded-card, shadow-soft.",
   "Prefer the kit's Button, Input, Field, Dialog, AlertDialog, Sheet, Table and Popover over new dependencies.",
   "Use Breadcrumb and Pagination for secondary navigation, and EmptyState for zero states.",
+  "For forms, use register with Input/Textarea and Controller or FormField from @nphuonha/ui-kit/form for custom controls.",
   "Use startIcon/endIcon on buttons; activeIcon on BottomNav/DesktopNav items.",
   "Use generateAccentVars or accentStyle for runtime accent changes.",
 ];

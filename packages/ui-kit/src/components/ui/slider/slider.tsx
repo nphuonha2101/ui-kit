@@ -21,6 +21,7 @@ export interface SliderProps<Value extends SliderValue = number> {
   disabled?: boolean;
   orientation?: "horizontal" | "vertical";
   name?: string;
+  id?: string;
   label?: React.ReactNode;
   description?: React.ReactNode;
   error?: React.ReactNode;
@@ -28,7 +29,11 @@ export interface SliderProps<Value extends SliderValue = number> {
   formatValue?: (value: number) => React.ReactNode;
   marks?: SliderMark[];
   className?: string;
+  ref?: React.Ref<HTMLDivElement>;
+  onBlur?: React.FocusEventHandler<HTMLDivElement>;
   "aria-label"?: string;
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean;
 }
 
 export function Slider<Value extends SliderValue = number>({
@@ -41,6 +46,7 @@ export function Slider<Value extends SliderValue = number>({
   disabled,
   orientation = "horizontal",
   name,
+  id,
   label,
   description,
   error,
@@ -48,7 +54,11 @@ export function Slider<Value extends SliderValue = number>({
   formatValue,
   marks,
   className,
+  ref,
+  onBlur,
   "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
 }: SliderProps<Value>) {
   const rawValue = value ?? defaultValue;
   const thumbCount = Array.isArray(rawValue) ? rawValue.length : 1;
@@ -57,6 +67,7 @@ export function Slider<Value extends SliderValue = number>({
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <SliderPrimitive.Root
+        ref={ref}
         value={value}
         defaultValue={defaultValue}
         onValueChange={onValueChange ? (next) => onValueChange(next as Value) : undefined}
@@ -66,8 +77,11 @@ export function Slider<Value extends SliderValue = number>({
         disabled={disabled}
         orientation={orientation}
         name={name}
+        id={id}
+        onBlur={onBlur}
         aria-label={ariaLabel}
-        aria-invalid={error ? true : undefined}
+        aria-describedby={ariaDescribedBy}
+        aria-invalid={error ? true : ariaInvalid || undefined}
         className="relative flex w-full select-none flex-col gap-2 data-[disabled]:opacity-45"
       >
         {label || showValue ? (
@@ -138,7 +152,7 @@ export function Slider<Value extends SliderValue = number>({
       </SliderPrimitive.Root>
 
       {description ? <p className="text-xs text-muted-foreground">{description}</p> : null}
-      {error ? (
+      {error && typeof error !== "boolean" ? (
         <p role="alert" className="text-xs font-medium text-destructive">
           {error}
         </p>

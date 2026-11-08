@@ -1,9 +1,18 @@
 {
   "name": "@nphuonha/ui-kit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Solid, clean, flat, modern React UI kit (Base UI + Tailwind v4).",
   "license": "MIT",
   "author": "nphuonha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nphuonha2101/ui-kit.git",
+    "directory": "packages/ui-kit"
+  },
+  "homepage": "https://ui.nphuonha.id.vn",
+  "bugs": {
+    "url": "https://github.com/nphuonha2101/ui-kit/issues"
+  },
   "type": "module",
   "keywords": [
     "react",

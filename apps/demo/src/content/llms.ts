@@ -1,4 +1,5 @@
 import { componentGroups } from "./components";
+import { latestRelease, releases, type ApiMigration } from "./migrations";
 import type { ComponentMeta, ComponentSnippets } from "./types";
 
 export const DOCS_URL = "https://ui.nphuonha.id.vn";
@@ -44,6 +45,66 @@ export const INSTALLATION_AGENT_PROMPT = `Set up @nphuonha/ui-kit in this projec
 Do not add transpilePackages: the package ships compiled ESM and .d.ts files.
 Do not add another UI library.`;
 
+export const UPGRADING_AGENT_PROMPT = `Upgrade @nphuonha/ui-kit safely.
+
+1. Read package.json to find the installed version and the target version.
+2. Read ${DOCS_URL}/docs/upgrading/llms.txt before changing code.
+3. Apply only the migrations between those versions, oldest first, using each row's find and fix values.
+4. Never guess a renamed or removed prop. If a breaking change has no row, stop and report it.
+5. Run typecheck and tests after each release; keep unrelated refactors out of the upgrade.`;
+
+function formatMigration(change: ApiMigration) {
+  return `- ${change.surface} (${change.kind})
+  - Before: ${change.before}
+  - After: ${change.after}
+  - Find: ${change.find}
+  - Fix: ${change.fix}`;
+}
+
+export function buildUpgradingAgentPrompt() {
+  const releaseBlocks = releases
+    .map((release) => {
+      const heading = `### ${release.version} (${release.date}) — ${
+        release.breaking ? "breaking changes" : "no breaking changes"
+      }`;
+      const changes = release.changes.length
+        ? release.changes.map(formatMigration).join("\n")
+        : "- No action required.";
+
+      return `${heading}\n\n${release.summary}\n\n${changes}`;
+    })
+    .join("\n\n");
+
+  return `# Upgrading @nphuonha/ui-kit
+
+Latest release: ${latestRelease.version} (${latestRelease.date})
+Upgrade guide: ${DOCS_URL}/docs/upgrading
+Machine-readable: ${DOCS_URL}/docs/upgrading/llms.txt
+Releases: https://github.com/nphuonha2101/ui-kit/releases
+
+## Protocol
+
+1. Read package.json and record the installed version and the target version.
+2. Apply only the releases between those two versions, oldest first.
+3. For each row, search for the Find value and rewrite Before → After; follow the Fix notes.
+4. Never guess a replacement prop. If a breaking change has no row, stop and report it.
+5. Run typecheck and tests after each release, then spot-check focus, overlays and dark mode.
+6. Keep the stylesheet import and data-ui="kit" setup unchanged unless a migration says otherwise.
+
+## Compatibility policy
+
+- Additive APIs ship in minor releases and do not require code changes.
+- Breaking API changes require a major release (or a minor while the package is 0.x) and a row here.
+- Visual-only changes do not require a migration, but may change focus rings, spacing or shadows.
+
+## Releases
+
+${releaseBlocks}
+
+## Report a missing migration
+
+Open an issue at https://github.com/nphuonha2101/ui-kit/issues with the failing type error and the old/new prop names.`;
+}
 
 export function buildLlmsTxt() {
   const groups = componentGroups
@@ -65,8 +126,10 @@ export function buildLlmsTxt() {
 
 Docs: ${DOCS_URL}
 Agent guide: ${DOCS_URL}/docs/agents
+Upgrading: ${DOCS_URL}/docs/upgrading
 Machine-readable guide: ${DOCS_URL}/llms.txt
 Per-page context: append /llms.txt to any docs URL, e.g. ${DOCS_URL}/docs/components/button/llms.txt
+Latest release: ${latestRelease.version}
 
 ## Install
 
@@ -92,6 +155,7 @@ import { Button, Card, CardContent, Input } from "@nphuonha/ui-kit";
 - Use generateAccentVars(color, mode) or accentStyle(color, mode) to create an accent palette; put the variables on the root that carries data-ui="kit".
 - For smaller bundles, import from a component subpath: @nphuonha/ui-kit/button, @nphuonha/ui-kit/input, @nphuonha/ui-kit/dialog.
 - Keep overlays inside the data-ui="kit" scope so dialogs, sheets, popovers and tooltips inherit the theme.
+- Before upgrading, read ${DOCS_URL}/docs/upgrading/llms.txt and apply its migration rows instead of guessing renamed props.
 
 ## Components
 
@@ -101,7 +165,9 @@ ${groups}
 
 - [Installation](${DOCS_URL}/docs/installation)
 - [Theming](${DOCS_URL}/docs/theming)
+- [Upgrading](${DOCS_URL}/docs/upgrading)
 - [Component index](${DOCS_URL}/docs/components)
 - [For agents](${DOCS_URL}/docs/agents)
+- [Upgrade context for agents](${DOCS_URL}/docs/upgrading/llms.txt)
 `;
 }

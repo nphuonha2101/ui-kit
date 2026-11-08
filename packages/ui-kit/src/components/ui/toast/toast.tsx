@@ -63,8 +63,9 @@ export function Toaster({
           ),
           content: "!gap-0.5",
           icon: "!mx-0 !mt-0.5 !size-[18px] [&_svg]:size-[18px]",
+          // 24px target: an inset ring stays compact instead of the 2px offset outline.
           closeButton:
-            "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground",
+            "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground focus-visible:!outline-none focus-visible:!ring-2 focus-visible:!ring-inset focus-visible:!ring-ring/50",
           actionButton:
             "!ml-auto !mr-0 !h-8 !self-center !rounded-control !border-0 !bg-primary !px-2.5 !text-xs !font-medium !text-primary-foreground hover:!bg-primary-hover",
           cancelButton:

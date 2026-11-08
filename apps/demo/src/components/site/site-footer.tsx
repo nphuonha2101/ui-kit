@@ -15,6 +15,7 @@ const columns = [
       { label: "Introduction", href: "/docs" },
       { label: "Installation", href: "/docs/installation" },
       { label: "Theming", href: "/docs/theming" },
+      { label: "Upgrading", href: "/docs/upgrading" },
       { label: "Components", href: "/docs/components" },
       { label: "For agents", href: "/docs/agents" },
     ],

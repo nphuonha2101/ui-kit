@@ -21,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const prompt = `Read ${DOCS_URL}/llms.txt before writing UI.
+If you are upgrading the package, read ${DOCS_URL}/docs/upgrading/llms.txt first.
 Use @nphuonha/ui-kit as the source of truth for primitives.
 Import the stylesheet once and put data-ui="kit" on <html>.
 Prefer semantic tokens, existing components and the documented props.
@@ -35,6 +36,7 @@ const rules = [
   "For forms, use register with Input/Textarea and Controller or FormField from @nphuonha/ui-kit/form for custom controls.",
   "Use startIcon/endIcon on buttons; activeIcon on BottomNav/DesktopNav items.",
   "Use generateAccentVars or accentStyle for runtime accent changes.",
+  "Before upgrading, read docs/upgrading/llms.txt and apply its migration rows instead of guessing renamed props.",
 ];
 
 export default function AgentsPage() {
@@ -98,6 +100,42 @@ export default function AgentsPage() {
             <span className="font-medium text-foreground">Copy for agent</span> button that
             copies only that page&apos;s context.
           </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <TerminalWindowIcon size={18} className="text-primary" />
+            <h2 className="text-xl font-semibold tracking-[-0.025em]">
+              Upgrading without guessing
+            </h2>
+          </div>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Every release records old code, new code, a search pattern and a fix. Give an
+            agent the upgrade file before it bumps the package; if a breaking change has no
+            row, it must stop and report it instead of inventing an API.
+          </p>
+          <CodeBlock
+            code={`${DOCS_URL}/docs/upgrading/llms.txt`}
+            language="bash"
+            filename="Upgrade context"
+          />
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/docs/upgrading"
+              className={buttonVariants({ variant: "secondary", size: "sm" })}
+            >
+              Open upgrade guide
+            </Link>
+            <Link
+              href="/docs/upgrading/llms.txt"
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "secondary", size: "sm" })}
+            >
+              Upgrade llms.txt
+              <ArrowUpRightIcon size={14} />
+            </Link>
+          </div>
         </section>
 
         <section className="flex flex-col gap-3">

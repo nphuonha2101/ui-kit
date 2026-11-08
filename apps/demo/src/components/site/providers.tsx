@@ -12,6 +12,9 @@ type ThemeSettings = {
 
 const ThemeSettingsContext = React.createContext<ThemeSettings | null>(null);
 
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 const ACCENT_KEYS = [
   "--primary",
   "--primary-foreground",
@@ -39,7 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setReady(true);
   }, []);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!ready) return;
     const root = document.documentElement;
     root.dataset.ui = "kit";

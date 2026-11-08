@@ -17,6 +17,8 @@ const dialogDemo = dynamic(() => import("./dialog/demo").then((module) => module
 const popoverDemo = dynamic(() => import("./popover/demo").then((module) => module.demo));
 const sheetDemo = dynamic(() => import("./sheet/demo").then((module) => module.demo));
 const tooltipDemo = dynamic(() => import("./tooltip/demo").then((module) => module.demo));
+const bottomNavDemo = dynamic(() => import("./bottom-nav/demo").then((module) => module.demo));
+const desktopNavDemo = dynamic(() => import("./desktop-nav/demo").then((module) => module.demo));
 const tabsDemo = dynamic(() => import("./tabs/demo").then((module) => module.demo));
 const badgeDemo = dynamic(() => import("./badge/demo").then((module) => module.demo));
 const cardDemo = dynamic(() => import("./card/demo").then((module) => module.demo));
@@ -56,6 +58,8 @@ export const demoMap: Record<string, React.ComponentType> = {
   "popover": popoverDemo,
   "sheet": sheetDemo,
   "tooltip": tooltipDemo,
+  "bottom-nav": bottomNavDemo,
+  "desktop-nav": desktopNavDemo,
   "tabs": tabsDemo,
   "badge": badgeDemo,
   "card": cardDemo,

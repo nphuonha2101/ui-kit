@@ -38,6 +38,11 @@
       "import": "./dist/components/ui/badge/index.js",
       "default": "./dist/components/ui/badge/index.js"
     },
+    "./bottom-nav": {
+      "types": "./dist/components/ui/bottom-nav/index.d.ts",
+      "import": "./dist/components/ui/bottom-nav/index.js",
+      "default": "./dist/components/ui/bottom-nav/index.js"
+    },
     "./button": {
       "types": "./dist/components/ui/button/index.d.ts",
       "import": "./dist/components/ui/button/index.js",
@@ -52,6 +57,11 @@
       "types": "./dist/components/ui/checkbox/index.d.ts",
       "import": "./dist/components/ui/checkbox/index.js",
       "default": "./dist/components/ui/checkbox/index.js"
+    },
+    "./desktop-nav": {
+      "types": "./dist/components/ui/desktop-nav/index.d.ts",
+      "import": "./dist/components/ui/desktop-nav/index.js",
+      "default": "./dist/components/ui/desktop-nav/index.js"
     },
     "./dialog": {
       "types": "./dist/components/ui/dialog/index.d.ts",

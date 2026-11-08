@@ -17,9 +17,11 @@ export type {
 
 export * from "./components/ui/alert";
 export * from "./components/ui/badge";
+export * from "./components/ui/bottom-nav";
 export * from "./components/ui/button";
 export * from "./components/ui/card";
 export * from "./components/ui/checkbox";
+export * from "./components/ui/desktop-nav";
 export * from "./components/ui/dialog";
 export * from "./components/ui/field";
 export * from "./components/ui/icon-button";

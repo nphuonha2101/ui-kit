@@ -14,6 +14,8 @@ import { snippets as dialogSnippets } from "./dialog/snippets";
 import { snippets as popoverSnippets } from "./popover/snippets";
 import { snippets as sheetSnippets } from "./sheet/snippets";
 import { snippets as tooltipSnippets } from "./tooltip/snippets";
+import { snippets as bottomNavSnippets } from "./bottom-nav/snippets";
+import { snippets as desktopNavSnippets } from "./desktop-nav/snippets";
 import { snippets as tabsSnippets } from "./tabs/snippets";
 import { snippets as badgeSnippets } from "./badge/snippets";
 import { snippets as cardSnippets } from "./card/snippets";
@@ -37,6 +39,8 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "popover": popoverSnippets,
   "sheet": sheetSnippets,
   "tooltip": tooltipSnippets,
+  "bottom-nav": bottomNavSnippets,
+  "desktop-nav": desktopNavSnippets,
   "tabs": tabsSnippets,
   "badge": badgeSnippets,
   "card": cardSnippets,

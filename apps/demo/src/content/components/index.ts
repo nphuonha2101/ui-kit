@@ -12,6 +12,8 @@ import { meta as dialogMeta } from "./dialog/meta";
 import { meta as popoverMeta } from "./popover/meta";
 import { meta as sheetMeta } from "./sheet/meta";
 import { meta as tooltipMeta } from "./tooltip/meta";
+import { meta as bottomNavMeta } from "./bottom-nav/meta";
+import { meta as desktopNavMeta } from "./desktop-nav/meta";
 import { meta as tabsMeta } from "./tabs/meta";
 import { meta as badgeMeta } from "./badge/meta";
 import { meta as cardMeta } from "./card/meta";
@@ -37,6 +39,8 @@ export const registry: ComponentMeta[] = [
   popoverMeta,
   sheetMeta,
   tooltipMeta,
+  bottomNavMeta,
+  desktopNavMeta,
   tabsMeta,
   badgeMeta,
   cardMeta,

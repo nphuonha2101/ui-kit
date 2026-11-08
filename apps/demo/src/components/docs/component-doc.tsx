@@ -116,7 +116,7 @@ export function ComponentDoc({
           </div>
         </section>
 
-        <nav className="mt-12 grid gap-3 border-t border-border/60 pt-6 sm:grid-cols-2">
+        <nav className="mt-12 grid gap-3 border-t border-border/60 pt-6 grid-cols-2">
           {previous ? (
             <Link
               href={`/docs/components/${previous.slug}`}
@@ -125,7 +125,7 @@ export function ComponentDoc({
               <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
                 Previous
               </span>
-              <span className="text-sm font-medium text-foreground">← {previous.title}</span>
+              <span className="text-sm font-medium text-foreground text-ellipsis">← {previous.title}</span>
             </Link>
           ) : (
             <div />
@@ -138,7 +138,7 @@ export function ComponentDoc({
               <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
                 Next
               </span>
-              <span className="text-sm font-medium text-foreground">{next.title} →</span>
+              <span className="text-sm font-medium text-foreground text-ellipsis">{next.title} →</span>
             </Link>
           ) : null}
         </nav>

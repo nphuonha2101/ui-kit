@@ -13,6 +13,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ui.nphuonha.id.vn"),
   title: {
     default: "UI Kit — Solid, borderless, expressive",
     template: "%s — UI Kit",
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Script>
         <Providers>
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pt-16">{children}</main>
           <SiteFooter />
         </Providers>
       </body>

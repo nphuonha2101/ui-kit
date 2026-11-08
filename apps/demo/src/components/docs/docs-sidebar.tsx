@@ -23,7 +23,8 @@ function SidebarLink({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-  const active = pathname === href;
+  const current = pathname.replace(/\/+$/, "") || "/";
+  const active = current === href;
   return (
     <Link
       href={href}
@@ -92,7 +93,7 @@ export function DocsSidebar() {
 
   return (
     <aside className="hidden w-56 shrink-0 lg:block">
-      <div className="sticky top-14 max-h-[calc(100vh-3.5rem)] scrollbar-none overflow-y-auto py-8 pr-4">
+      <div className="sticky top-20 -ml-1 max-h-[calc(100vh-5rem)] scrollbar-none overflow-y-auto py-8 pl-1 pr-4">
         <div className="mb-5 flex items-center gap-2 px-2.5">
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Documentation

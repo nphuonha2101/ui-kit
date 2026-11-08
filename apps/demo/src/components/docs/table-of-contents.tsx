@@ -6,7 +6,7 @@ export interface TocItem {
 export function TableOfContents({ items }: { items: TocItem[] }) {
   return (
     <aside className="hidden xl:block">
-      <div className="sticky top-20">
+      <div className="sticky top-24">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           On this page
         </p>

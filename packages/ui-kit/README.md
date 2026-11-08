@@ -29,6 +29,27 @@ export function App() {
 - Dark mode: add `class="dark"` (and/or `data-ui="kit"` dark variant as supported by your setup).
 - Change accent at runtime: `style={accentStyle("#0d9488", "light")}` or `generateAccentVars(color, mode)` to override `--primary*`/`--ring`.
 
+### Framework setup
+
+The published package ships compiled ESM + `.d.ts`, so it works with Next.js, Vite, Remix and other bundlers. **No `transpilePackages` is required for the published package.**
+
+If you are consuming the TypeScript source from this monorepo instead, add:
+
+```ts
+// next.config.ts
+const nextConfig = {
+  transpilePackages: ["@nphuonha/ui-kit"],
+};
+
+export default nextConfig;
+```
+
+The published stylesheet scans its own components with `@source "./components"` inside `dist`. If your Tailwind setup ignores `@source` directives from dependencies, add this to your app CSS as a fallback:
+
+```css
+@source "../node_modules/@nphuonha/ui-kit/dist/components";
+```
+
 ## Granular imports
 
 The main barrel is convenient. For smaller client bundles, import from a component subpath:
@@ -85,8 +106,32 @@ The docs site uses Phosphor too. Swapping to another pack only affects the kit's
 ## Scripts
 
 ```bash
+npm run build -w @nphuonha/ui-kit      # emit dist (ESM + .d.ts + CSS)
 npm run typecheck -w @nphuonha/ui-kit
 npm run test -w @nphuonha/ui-kit
 ```
+
+## Publishing
+
+The package builds to `dist` as ESM + `.d.ts` with `npm run build`. `prepack` builds automatically before `npm pack`/`npm publish`; `prepublishOnly` runs typecheck + tests.
+
+```bash
+npm login
+npm publish -w @nphuonha/ui-kit
+```
+
+Or from the repo root:
+
+```bash
+npm run publish:kit
+```
+
+Bump the version with:
+
+```bash
+npm version patch -w @nphuonha/ui-kit
+```
+
+The published package is compiled and works with Vite, Remix, Next.js and plain bundler-based JS apps. The repository's docs app consumes the TypeScript source via a local path alias for fast iteration.
 
 See `CONVENTIONS.md` for design/API rules.

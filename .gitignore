@@ -25,3 +25,6 @@ playwright/.cache/
 *.log
 .eslintcache
 .DS_Store
+
+# Package tarballs
+*.tgz

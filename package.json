@@ -1,6 +1,7 @@
 {
-  "name": "ui-kits",
+  "name": "ui-kit",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "packages/*",
     "apps/*"
@@ -8,6 +9,8 @@
   "scripts": {
     "dev": "npm run dev -w @nphuonha/ui-demo",
     "build": "npm run build -w @nphuonha/ui-demo",
-    "typecheck": "npm run typecheck -w @nphuonha/ui-kit && npm run typecheck -w @nphuonha/ui-demo"
+    "build:kit": "npm run build -w @nphuonha/ui-kit",
+    "typecheck": "npm run typecheck -w @nphuonha/ui-kit && npm run typecheck -w @nphuonha/ui-demo",
+    "publish:kit": "npm publish -w @nphuonha/ui-kit"
   }
 }

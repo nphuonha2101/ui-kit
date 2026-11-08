@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@nphuonha/ui-kit": [
+        "../../packages/ui-kit/src/index.ts"
       ]
     }
   },

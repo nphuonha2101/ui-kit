@@ -19,7 +19,7 @@ npm run build
 ## Structure
 
 ```
-ui-kits/
+ui-kit/
 ├── packages/ui-kit/                 # @nphuonha/ui-kit
 │   └── src/
 │       ├── styles/{base.css,theme.css} + styles.css

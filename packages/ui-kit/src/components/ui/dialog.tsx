@@ -17,6 +17,7 @@ export interface DialogProps {
   footer?: React.ReactNode;
   className?: string;
   showClose?: boolean;
+  "aria-label"?: string;
 }
 
 export function Dialog({
@@ -30,6 +31,7 @@ export function Dialog({
   footer,
   className,
   showClose = true,
+  "aria-label": ariaLabel,
 }: DialogProps) {
   return (
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
@@ -37,6 +39,7 @@ export function Dialog({
       <DialogPrimitive.Portal>
         <DialogPrimitive.Backdrop className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
         <DialogPrimitive.Popup
+          aria-label={ariaLabel}
           className={cn(
             "surface-curved fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-5 rounded-overlay bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
             "transition-[opacity,transform] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]",

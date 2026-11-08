@@ -4,14 +4,21 @@ import { Toaster as SonnerToaster, toast } from "sonner";
 
 export interface ToasterProps {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
+  theme?: "light" | "dark" | "system";
   richColors?: boolean;
   closeButton?: boolean;
 }
 
-export function Toaster({ position = "bottom-right", richColors = false, closeButton = true }: ToasterProps) {
+export function Toaster({
+  position = "bottom-right",
+  theme = "light",
+  richColors = false,
+  closeButton = true,
+}: ToasterProps) {
   return (
     <SonnerToaster
       position={position}
+      theme={theme}
       richColors={richColors}
       closeButton={closeButton}
       toastOptions={{

@@ -39,6 +39,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main className="flex-1 pt-16">{children}</main>
           <SiteFooter />
         </Providers>
+        {process.env.NODE_ENV === "production" ? (
+          <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({
+              token: "70b29b839a2e4ae383648efc1c71772e",
+            })}
+          />
+        ) : null}
       </body>
     </html>
   );

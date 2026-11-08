@@ -28,6 +28,24 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.5.0",
+    date: "2026-11-08",
+    breaking: false,
+    summary:
+      "ScrollArea scrollbars now auto-hide by default and can be hidden entirely. The new prop is additive; the default visual behavior changes.",
+    changes: [
+      {
+        id: "scroll-area-scrollbar-visibility",
+        kind: "behavior",
+        surface: "ScrollArea.scrollbar",
+        before: "Custom scrollbars stayed visible whenever content overflowed.",
+        after: 'scrollbar="auto" | "hidden" (default: "auto")',
+        find: "<ScrollArea",
+        fix: "Nothing required. auto reveals the bar on hover, focus or scroll; hidden removes the bar while scrolling still works.",
+      },
+    ],
+  },
+  {
     version: "0.4.1",
     date: "2026-11-08",
     breaking: false,

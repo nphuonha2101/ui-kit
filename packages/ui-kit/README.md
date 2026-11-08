@@ -1,14 +1,26 @@
 # @nphuonha/ui-kit
 
-Solid, clean, flat, modern React UI kit. **Base UI** for behavior/a11y + owned tokens/styles + a consistent prop-driven API. Accent is vibrant by default and **customizable by color generation** (M3 Expressive-inspired, not M3 Expressive).
+Solid, clean, flat, modern React UI kit. **Base UI** for behavior/a11y + owned tokens/styles + a consistent prop-driven API. Accent is vibrant by default and customizable by color generation.
 
-> Status: MVP rewrite (single suite). Breaking changes from previous `warm-editorial`/`celebration` suites.
+- **Docs:** https://ui.nphuonha.id.vn
+- **Agent guide:** https://ui.nphuonha.id.vn/docs/agents
+- **llms.txt:** https://ui.nphuonha.id.vn/llms.txt
 
-## Install / use (workspace or package)
+## Install
+
+```bash
+npm install @nphuonha/ui-kit
+```
+
+Peer dependencies: React 19, React DOM 19, Tailwind CSS 4.
+
+The published package ships compiled ESM + `.d.ts`, so it works with Next.js, Vite, Remix and other bundlers. No `transpilePackages` step is required.
+
+## Usage
 
 ```tsx
 import "@nphuonha/ui-kit/styles.css";
-import { Button, Card, CardContent, Input, Toaster, accentStyle } from "@nphuonha/ui-kit";
+import { Button, Card, CardContent, Input, Toaster } from "@nphuonha/ui-kit";
 
 export function App() {
   return (
@@ -26,25 +38,26 @@ export function App() {
 ```
 
 - Scope tokens/overlays with `data-ui="kit"` (add to `<html>` for portalled overlays).
-- Dark mode: add `class="dark"` (and/or `data-ui="kit"` dark variant as supported by your setup).
-- Change accent at runtime: `style={accentStyle("#0d9488", "light")}` or `generateAccentVars(color, mode)` to override `--primary*`/`--ring`.
+- Dark mode: add the `dark` class to the same element.
+- Change the accent at runtime:
 
-### Framework setup
+```tsx
+import { accentStyle } from "@nphuonha/ui-kit";
 
-The published package ships compiled ESM + `.d.ts`, so it works with Next.js, Vite, Remix and other bundlers. **No `transpilePackages` is required for the published package.**
-
-If you are consuming the TypeScript source from this monorepo instead, add:
-
-```ts
-// next.config.ts
-const nextConfig = {
-  transpilePackages: ["@nphuonha/ui-kit"],
-};
-
-export default nextConfig;
+<div data-ui="kit" style={accentStyle("#0d9488", "light")}>
+  <App />
+</div>
 ```
 
-The published stylesheet scans its own components with `@source "./components"` inside `dist`. If your Tailwind setup ignores `@source` directives from dependencies, add this to your app CSS as a fallback:
+Or generate variables directly:
+
+```ts
+import { generateAccentVars } from "@nphuonha/ui-kit";
+
+const vars = generateAccentVars("#0d9488", "dark");
+```
+
+Tailwind v4: the package stylesheet imports Tailwind. If your setup ignores `@source` from dependencies, add:
 
 ```css
 @source "../node_modules/@nphuonha/ui-kit/dist/components";
@@ -62,19 +75,9 @@ import { Input } from "@nphuonha/ui-kit/input";
 
 Variants live in server-safe `*-variants.ts` files and can be used from server components.
 
-## Structure
-
-```
-src/components/ui/button/
-  button.tsx           # "use client" behavior/render
-  button-variants.ts   # cva, server-safe
-  button.test.tsx      # colocated test
-  index.ts             # explicit exports
-```
-
 ## Icons
 
-The kit uses **Phosphor** as its default internal icon set (check, minus, chevron, close, spinner). User-facing icons stay icon-agnostic — pass any icon component that accepts `size` and `className`:
+The kit uses **Phosphor** for its internal affordances (check, minus, chevron, close, spinner). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
 
 ```tsx
 <Button startIcon={Plus}>New item</Button>
@@ -82,7 +85,7 @@ The kit uses **Phosphor** as its default internal icon set (check, minus, chevro
 <Alert icon={Info} title="Heads up">...</Alert>
 ```
 
-Swap the internal set at any time with `IconProvider`:
+Swap the internal set with `IconProvider`:
 
 ```tsx
 import { IconProvider } from "@nphuonha/ui-kit";
@@ -97,41 +100,12 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 `Toaster` also accepts an `icons` prop for `success`, `info`, `warning`, `error`, `loading` and `close`.
 
-The docs site uses Phosphor too. Swapping to another pack only affects the kit's internal affordances; icons you pass to `Button`, `IconButton` and `Alert` are always yours.
+## Components
 
-## MVP components
+`Button`, `IconButton`, `Input`, `Textarea`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Dialog`, `Sheet`, `Popover`, `Tooltip`, `Tabs`, `BottomNav`, `DesktopNav`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
 
-`Button`, `IconButton`, `Input`, `Textarea`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Dialog`, `Sheet`, `Popover`, `Tooltip`, `Tabs`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
+Live previews, code and API reference: https://ui.nphuonha.id.vn
 
-## Scripts
+## License
 
-```bash
-npm run build -w @nphuonha/ui-kit      # emit dist (ESM + .d.ts + CSS)
-npm run typecheck -w @nphuonha/ui-kit
-npm run test -w @nphuonha/ui-kit
-```
-
-## Publishing
-
-The package builds to `dist` as ESM + `.d.ts` with `npm run build`. `prepack` builds automatically before `npm pack`/`npm publish`; `prepublishOnly` runs typecheck + tests.
-
-```bash
-npm login
-npm publish -w @nphuonha/ui-kit
-```
-
-Or from the repo root:
-
-```bash
-npm run publish:kit
-```
-
-Bump the version with:
-
-```bash
-npm version patch -w @nphuonha/ui-kit
-```
-
-The published package is compiled and works with Vite, Remix, Next.js and plain bundler-based JS apps. The repository's docs app consumes the TypeScript source via a local path alias for fast iteration.
-
-See `CONVENTIONS.md` for design/API rules.
+MIT

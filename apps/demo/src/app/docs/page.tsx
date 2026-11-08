@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowRightIcon,
   PaletteIcon,
+  RobotIcon,
   RocketLaunchIcon,
   SquaresFourIcon,
 } from "@/components/icons";
@@ -30,6 +31,12 @@ const links = [
     title: "Components",
     description: "Browse the MVP components with live previews and API notes.",
     icon: SquaresFourIcon,
+  },
+  {
+    href: "/docs/agents",
+    title: "For agents",
+    description: "Machine-readable docs and a prompt for coding agents.",
+    icon: RobotIcon,
   },
 ];
 
@@ -107,7 +114,7 @@ export function Example() {
 
         <section className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold tracking-[-0.025em]">Start here</h2>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {links.map((item) => (
               <Link
                 key={item.href}

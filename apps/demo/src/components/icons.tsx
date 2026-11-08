@@ -8,7 +8,9 @@ export {
   InfoIcon,
   PaletteIcon,
   RocketLaunchIcon,
+  RobotIcon,
   ShieldCheckIcon,
   SparkleIcon,
   SquaresFourIcon,
+  TerminalWindowIcon,
 } from "@phosphor-icons/react";

@@ -2,6 +2,8 @@
 
 Solid, clean, flat, modern React UI kit. **Base UI** for behavior/a11y + owned tokens/styles + a consistent prop-driven API. Accent is vibrant by default and customizable by color generation.
 
+> **v0.3.0** adds `BottomNav`, `DesktopNav` and `activeIcon` support for selected navigation items.
+
 - **Docs:** https://ui.nphuonha.id.vn
 - **Agent guide:** https://ui.nphuonha.id.vn/docs/agents
 - **llms.txt:** https://ui.nphuonha.id.vn/llms.txt
@@ -103,6 +105,8 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 ## Components
 
 `Button`, `IconButton`, `Input`, `Textarea`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Dialog`, `Sheet`, `Popover`, `Tooltip`, `Tabs`, `BottomNav`, `DesktopNav`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
+
+`BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
 Live previews, code and API reference: https://ui.nphuonha.id.vn
 

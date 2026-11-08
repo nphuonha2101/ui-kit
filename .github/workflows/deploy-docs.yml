@@ -3,6 +3,18 @@ name: Deploy docs
 on:
   push:
     branches: [main]
+    # Do not redeploy for README/package metadata changes. The site only
+    # depends on the docs app, kit source and deploy configuration.
+    paths:
+      - "apps/demo/**"
+      - "packages/ui-kit/src/**"
+      - "packages/ui-kit/scripts/**"
+      - "packages/ui-kit/package.json"
+      - "packages/ui-kit/tsconfig*.json"
+      - "package.json"
+      - "package-lock.json"
+      - "wrangler.jsonc"
+      - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
 permissions:

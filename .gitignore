@@ -18,10 +18,13 @@ playwright/.cache/
 .env
 .env.*
 !.env.example
+.npmrc
 
 # Tooling / OS
 .turbo/
 .vercel/
+.wrangler/
+.dev.vars
 *.log
 .eslintcache
 .DS_Store

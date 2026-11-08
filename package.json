@@ -11,6 +11,8 @@
     "build": "npm run build -w @nphuonha/ui-demo",
     "build:kit": "npm run build -w @nphuonha/ui-kit",
     "typecheck": "npm run typecheck -w @nphuonha/ui-kit && npm run typecheck -w @nphuonha/ui-demo",
+    "predeploy:site": "npm run build:kit && npm run build",
+    "deploy:site": "npx wrangler pages deploy apps/demo/out --project-name ui-kit-site --branch main",
     "publish:kit": "npm publish -w @nphuonha/ui-kit"
   }
 }

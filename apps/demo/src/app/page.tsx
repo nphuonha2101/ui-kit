@@ -20,7 +20,7 @@ const featured = ["button", "input", "dialog", "tabs", "card", "badge"];
 export default function HomePage() {
   return (
     <div>
-      <section className="mx-auto grid w-full max-w-6xl gap-12 px-4 pb-16 pt-16 md:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-24">
+      <section className="mx-auto grid w-full max-w-6xl gap-12 overflow-x-clip px-4 pb-16 pt-16 md:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-24">
         <div>
           <h1 className="mt-4 max-w-[16ch] text-[clamp(2.7rem,6vw,4.5rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
             The foundation for your design system.

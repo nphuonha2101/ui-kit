@@ -1,11 +1,25 @@
 # @nphuonha/ui-kit
 
-Solid, clean, flat, modern React UI kit. **Base UI** for behavior/a11y + owned tokens/styles + a consistent prop-driven API. Accent is vibrant by default and customizable by color generation.
+![nphuonha UI — solid, borderless React UI kit](https://ui.nphuonha.id.vn/og.png)
 
-- **Docs:** https://ui.nphuonha.id.vn
-- **Agent guide:** https://ui.nphuonha.id.vn/docs/agents
-- **llms.txt:** https://ui.nphuonha.id.vn/llms.txt
-- **Releases:** https://github.com/nphuonha2101/ui-kit/releases
+**Solid, borderless React UI kit** built on **Base UI** and **Tailwind CSS v4**. Tonal surfaces, top-lit curves, accessible primitives and an accent you can change at runtime.
+
+[![npm version](https://img.shields.io/npm/v/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
+[![npm downloads](https://img.shields.io/npm/dm/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
+[![CI](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-4f46e5?style=flat-square)](./LICENSE)
+[![Docs](https://img.shields.io/badge/docs-ui.nphuonha.id.vn-4f46e5?style=flat-square)](https://ui.nphuonha.id.vn)
+[![Base UI](https://img.shields.io/badge/Base%20UI-1.9-4f46e5?style=flat-square)](https://base-ui.com)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind%20CSS-v4-38bdf8?style=flat-square)](https://tailwindcss.com)
+
+[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Forms](https://ui.nphuonha.id.vn/docs/forms) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
+
+## Why this kit
+
+- **Behavior from Base UI** — focus management, overlays and form semantics are accessible by default.
+- **Owned visual language** — semantic tokens, solid filled surfaces and a top-lit curved edge; no gray outlined boxes.
+- **Runtime accent** — generate the full primary palette from one color and re-tone the whole app.
+- **Prop-driven API** — consistent variants, sizes, icons and loading semantics across components.
 
 ## Install
 

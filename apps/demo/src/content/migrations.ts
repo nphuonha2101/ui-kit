@@ -28,6 +28,14 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.4.1",
+    date: "2026-11-08",
+    breaking: false,
+    summary:
+      "Patch release. Keeps the toast close-button focus ring compact and adds the upgrading guide. No API changes.",
+    changes: [],
+  },
+  {
     version: "0.4.0",
     date: "2026-11-08",
     breaking: false,

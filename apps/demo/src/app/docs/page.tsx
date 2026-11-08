@@ -7,6 +7,7 @@ import {
   RobotIcon,
   RocketLaunchIcon,
   SquaresFourIcon,
+  TerminalWindowIcon,
 } from "@/components/icons";
 import { Card, CardContent } from "@nphuonha/ui-kit";
 import { CodeBlock } from "@/components/docs/code-block";
@@ -38,6 +39,12 @@ const links = [
     title: "Forms",
     description: "React Hook Form integration and accessible validation.",
     icon: ListChecksIcon,
+  },
+  {
+    href: "/docs/upgrading",
+    title: "Upgrading",
+    description: "Version policy and old → new API migration rows.",
+    icon: TerminalWindowIcon,
   },
   {
     href: "/docs/components",

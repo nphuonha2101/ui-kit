@@ -31,6 +31,38 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - Extract `cva` into `<name>-variants.ts` **without** `"use client"`, so variants can be used in server components.
 - The folder `index.ts` exports the component and its variants explicitly. The main `src/index.ts` barrel re-exports folders, and `package.json` exposes subpaths (`@nphuonha/ui-kit/<name>`) for smaller client bundles.
 - Keep tests colocated with the component. Prefer a11y smoke tests plus token/scale regressions for components with meaningful state.
+- `dist/` and `.next/` are generated. Never edit build output by hand.
+
+## Focus & interaction states
+- Interactive components use the kit ring, not the browser outline: `outline-none` + `focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background`.
+- The global `:focus-visible` outline in `base.css` is a fallback. Reset it when a component defines its own ring.
+- Targets under ~32px (for example the toast close button) use a compact inset ring (`focus-visible:ring-2 focus-visible:ring-inset`) instead of the offset outline. Never remove the focus indicator.
+- Hover, active, disabled and invalid states are part of the API. Use semantic tokens, never raw brand colors.
+
+## Third-party styling
+- Base UI owns behavior and accessibility. `sonner` is the toast engine only and injects **unlayered** CSS at runtime.
+- Kit utilities that must beat sonner need the `!` important modifier, including `focus-visible` box-shadow/outline overrides.
+- Restyle sonner through `Toaster`'s `toastOptions.classNames`, not through global `[data-sonner-*]` selectors.
+
+## Docs & agent context
+- Component docs live in `apps/demo/src/content/components/<slug>/`: `meta.ts` (props are the API source of truth), `snippets.ts`, and `demo.tsx` (must export `demo` and `examples`).
+- `apps/demo/src/content/components/{index.ts,snippets-map.ts,demo-map.tsx}` are generated. Run `npm run gen:content -w @nphuonha/ui-demo`; CI runs the `--check` variant.
+- Scaffold content with `npm run new:component -w @nphuonha/ui-demo -- <slug> "<Title>" <Category>`.
+- Component pages and core setup guides (installation, upgrading) expose a "Copy for agent" button and a page-scoped `llms.txt` route. Keep prompts in `apps/demo/src/content/llms.ts` as the single source.
+- Any new docs page must be added to the sidebar, sitemap, root `llms.txt` links and README when it is part of the core setup flow.
+
+## Versioning & migrations
+- Breaking API changes require a row in `apps/demo/src/content/migrations.ts`, newest release first: surface, old snippet, new snippet, searchable `find` pattern and fix.
+- Additive and behavior changes get a row too, tagged `additive` or `behavior`; never present them as required migrations.
+- `/docs/upgrading` and `/docs/upgrading/llms.txt` are generated from that data. Do not duplicate migration copy elsewhere.
+- Breaking changes require a major version (minor while the package is 0.x), updated component props, tests and README/setup notes in the same change.
+
+## Adding or renaming a component
+1. Create the component folder, explicit `index.ts`, colocated test and (when needed) a server-safe `*-variants.ts`.
+2. Export it from the root barrel and add its `package.json` subpath export.
+3. Add docs content (`meta.ts`, `snippets.ts`, `demo.tsx`) and regenerate content indexes.
+4. Update the README component list and any affected page-scoped `llms.txt` content.
+5. Run typecheck, kit tests and the docs build; confirm focus, disabled, error and dark-mode states.
 
 ## Stack notes
 - Overlays/behavior: `@base-ui/react`. Toast: `sonner` (restyled via tokens).

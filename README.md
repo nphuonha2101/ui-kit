@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-4f46e5?style=flat-square)](./LICENSE)
 [![Docs](https://img.shields.io/badge/docs-ui.nphuonha.id.vn-4f46e5?style=flat-square)](https://ui.nphuonha.id.vn)
 
-[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
+[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [Upgrading](https://ui.nphuonha.id.vn/docs/upgrading) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
 
 ## Why this kit
 
@@ -141,6 +141,13 @@ Point coding agents at the machine-readable guide:
 - **llms.txt:** https://ui.nphuonha.id.vn/llms.txt
 
 The file includes setup rules, token conventions, icon patterns and the full component map.
+
+## Upgrading
+
+Breaking API changes are published with a migration row: old code, new code, a search pattern and a fix. Read the upgrade guide before bumping a major version:
+
+- **Guide:** https://ui.nphuonha.id.vn/docs/upgrading
+- **Agent context:** https://ui.nphuonha.id.vn/docs/upgrading/llms.txt
 
 ## Development
 

@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import "@fontsource/work-sans/400.css";
+import "@fontsource/work-sans/500.css";
+import "@fontsource/work-sans/600.css";
+import "@fontsource/work-sans/700.css";
+import "@fontsource/google-sans-code/400.css";
+import "@fontsource/google-sans-code/500.css";
+import "@fontsource/google-sans-code/600.css";
 import "./globals.css";
 import { Providers } from "@/components/site/providers";
 import { SiteFooter } from "@/components/site/site-footer";

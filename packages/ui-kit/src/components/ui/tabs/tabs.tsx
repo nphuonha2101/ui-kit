@@ -14,9 +14,10 @@ export interface TabItem {
 export interface TabsProps extends Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>, "children"> {
   items: TabItem[];
   listClassName?: string;
+  panelClassName?: string;
 }
 
-export function Tabs({ items, className, listClassName, ...props }: TabsProps) {
+export function Tabs({ items, className, listClassName, panelClassName, ...props }: TabsProps) {
   return (
     <TabsPrimitive.Root className={cn("w-full", className)} {...props}>
       <TabsPrimitive.List
@@ -38,7 +39,7 @@ export function Tabs({ items, className, listClassName, ...props }: TabsProps) {
         ))}
       </TabsPrimitive.List>
       {items.map((item) => (
-        <TabsPrimitive.Panel key={item.value} value={item.value} className="mt-4 rounded-control outline-none transition-opacity duration-[var(--duration-ui)] focus-visible:ring-2 focus-visible:ring-ring/20 data-[hidden]:hidden">
+        <TabsPrimitive.Panel key={item.value} value={item.value} className={cn("mt-4 rounded-control outline-none transition-opacity duration-[var(--duration-ui)] focus-visible:ring-2 focus-visible:ring-ring/20 data-[hidden]:hidden", panelClassName)}>
           {item.content}
         </TabsPrimitive.Panel>
       ))}

@@ -31,7 +31,7 @@ export function Tooltip({
       <TooltipPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
         <TooltipPrimitive.Trigger render={children} />
         <TooltipPrimitive.Portal>
-          <TooltipPrimitive.Positioner side={side} align={align} sideOffset={6}>
+          <TooltipPrimitive.Positioner side={side} align={align} sideOffset={6} className="z-50">
             <TooltipPrimitive.Popup
               role="tooltip"
               className={cn(

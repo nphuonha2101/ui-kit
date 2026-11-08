@@ -33,7 +33,7 @@ export function Popover({
     <PopoverPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <PopoverPrimitive.Trigger render={trigger} />
       <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Positioner side={side} align={align} sideOffset={8}>
+        <PopoverPrimitive.Positioner side={side} align={align} sideOffset={8} className="z-50">
           <PopoverPrimitive.Popup
             className={cn(
               "surface-curved relative z-50 w-72 rounded-overlay bg-popover p-4 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { Providers } from "@/components/providers";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { Providers } from "@/components/site/providers";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
 
 export const metadata: Metadata = {
   title: {

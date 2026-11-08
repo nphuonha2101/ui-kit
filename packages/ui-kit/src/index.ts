@@ -8,8 +8,6 @@ export { cn } from "./lib/utils";
 export type { IconComponent } from "./lib/utils";
 export { generateAccentVars, accentStyle } from "./lib/color";
 export type { AccentVars, ThemeMode } from "./lib/color";
-export { buttonVariants } from "./components/ui/button-variants";
-export type { ButtonVariants } from "./components/ui/button-variants";
 
 export * from "./components/ui/alert";
 export * from "./components/ui/badge";

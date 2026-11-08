@@ -1,4 +1,4 @@
-import { DocsSidebar, MobileDocsNav } from "@/components/docs-sidebar";
+import { DocsSidebar, MobileDocsNav } from "@/components/docs/docs-sidebar";
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (

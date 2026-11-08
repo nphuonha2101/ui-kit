@@ -29,6 +29,28 @@ export function App() {
 - Dark mode: add `class="dark"` (and/or `data-ui="kit"` dark variant as supported by your setup).
 - Change accent at runtime: `style={accentStyle("#0d9488", "light")}` or `generateAccentVars(color, mode)` to override `--primary*`/`--ring`.
 
+## Granular imports
+
+The main barrel is convenient. For smaller client bundles, import from a component subpath:
+
+```tsx
+import { Button, buttonVariants } from "@nphuonha/ui-kit/button";
+import { Field } from "@nphuonha/ui-kit/field";
+import { Input } from "@nphuonha/ui-kit/input";
+```
+
+Variants live in server-safe `*-variants.ts` files and can be used from server components.
+
+## Structure
+
+```
+src/components/ui/button/
+  button.tsx           # "use client" behavior/render
+  button-variants.ts   # cva, server-safe
+  button.test.tsx      # colocated test
+  index.ts             # explicit exports
+```
+
 ## MVP components
 
 `Button`, `IconButton`, `Input`, `Textarea`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Dialog`, `Sheet`, `Popover`, `Tooltip`, `Tabs`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.

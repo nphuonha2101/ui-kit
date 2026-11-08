@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Card, CardContent } from "@nphuonha/ui-kit";
-import { CodeBlock } from "@/components/code-block";
-import { PageHeader } from "@/components/page-header";
-import { ThemingPlayground } from "@/components/theming-playground";
+import { CodeBlock } from "@/components/docs/code-block";
+import { PageHeader } from "@/components/docs/page-header";
+import { ThemingPlayground } from "@/components/docs/theming-playground";
 
 export const metadata: Metadata = { title: "Theming" };
 

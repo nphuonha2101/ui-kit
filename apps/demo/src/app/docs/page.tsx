@@ -7,8 +7,8 @@ import {
   SquaresFourIcon,
 } from "@/components/icons";
 import { Card, CardContent } from "@nphuonha/ui-kit";
-import { CodeBlock } from "@/components/code-block";
-import { PageHeader } from "@/components/page-header";
+import { CodeBlock } from "@/components/docs/code-block";
+import { PageHeader } from "@/components/docs/page-header";
 
 export const metadata: Metadata = { title: "Introduction" };
 

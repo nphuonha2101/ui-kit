@@ -26,7 +26,13 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - **Icons**: `startIcon`/`endIcon` (and icon-only via `IconButton`); icon type `IconComponent { size?, className? }`.
 - **Loading**: preserve layout (spinner + label), set `disabled`/`aria-busy`.
 
+## Structure & exports
+- One folder per component: `src/components/ui/<name>/<name>.tsx`, `<name>-variants.ts`, `<name>.test.tsx`, `index.ts`.
+- Extract `cva` into `<name>-variants.ts` **without** `"use client"`, so variants can be used in server components.
+- The folder `index.ts` exports the component and its variants explicitly. The main `src/index.ts` barrel re-exports folders, and `package.json` exposes subpaths (`@nphuonha/ui-kit/<name>`) for smaller client bundles.
+- Keep tests colocated with the component. Prefer a11y smoke tests plus token/scale regressions for components with meaningful state.
+
 ## Stack notes
 - Overlays/behavior: `@base-ui/react`. Toast: `sonner` (restyled via tokens).
 - Prefer CSS transitions; avoid adding animation libraries for core MVP unless necessary.
-- When adding components, follow the token contract + these conventions and add/extend tests for regressions (tokens, a11y smoke, scale).
+- When adding components, follow the token contract + these conventions and add/extend colocated tests.

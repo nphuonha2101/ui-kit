@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { CheckCircleIcon, InfoIcon } from "@/components/icons";
 import { Alert, Card, CardContent } from "@nphuonha/ui-kit";
-import { CodeBlock } from "@/components/code-block";
-import { PageHeader } from "@/components/page-header";
+import { CodeBlock } from "@/components/docs/code-block";
+import { PageHeader } from "@/components/docs/page-header";
 
 export const metadata: Metadata = { title: "Installation" };
 

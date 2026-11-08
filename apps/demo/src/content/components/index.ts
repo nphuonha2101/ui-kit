@@ -1,0 +1,72 @@
+import { meta as buttonMeta } from "./button/meta";
+import { meta as iconButtonMeta } from "./icon-button/meta";
+import { meta as checkboxMeta } from "./checkbox/meta";
+import { meta as fieldMeta } from "./field/meta";
+import { meta as inputMeta } from "./input/meta";
+import { meta as labelMeta } from "./label/meta";
+import { meta as radioGroupMeta } from "./radio-group/meta";
+import { meta as selectMeta } from "./select/meta";
+import { meta as switchMeta } from "./switch/meta";
+import { meta as textareaMeta } from "./textarea/meta";
+import { meta as dialogMeta } from "./dialog/meta";
+import { meta as popoverMeta } from "./popover/meta";
+import { meta as sheetMeta } from "./sheet/meta";
+import { meta as tooltipMeta } from "./tooltip/meta";
+import { meta as tabsMeta } from "./tabs/meta";
+import { meta as badgeMeta } from "./badge/meta";
+import { meta as cardMeta } from "./card/meta";
+import { meta as separatorMeta } from "./separator/meta";
+import { meta as alertMeta } from "./alert/meta";
+import { meta as spinnerMeta } from "./spinner/meta";
+import { meta as toasterMeta } from "./toaster/meta";
+
+import type { ComponentCategory, ComponentMeta } from "@/content/types";
+
+export const registry: ComponentMeta[] = [
+  buttonMeta,
+  iconButtonMeta,
+  checkboxMeta,
+  fieldMeta,
+  inputMeta,
+  labelMeta,
+  radioGroupMeta,
+  selectMeta,
+  switchMeta,
+  textareaMeta,
+  dialogMeta,
+  popoverMeta,
+  sheetMeta,
+  tooltipMeta,
+  tabsMeta,
+  badgeMeta,
+  cardMeta,
+  separatorMeta,
+  alertMeta,
+  spinnerMeta,
+  toasterMeta,
+];
+
+export const categories: ComponentCategory[] = [
+  "Actions",
+  "Forms",
+  "Overlays",
+  "Navigation",
+  "Data Display",
+  "Feedback"
+];
+
+export const searchIndex = registry.map(({ slug, title, description, category }) => ({
+  slug,
+  title,
+  description,
+  category,
+}));
+
+export const componentGroups = categories.map((category) => ({
+  category,
+  components: registry.filter((entry) => entry.category === category),
+}));
+
+export function getComponent(slug: string) {
+  return registry.find((entry) => entry.slug === slug);
+}

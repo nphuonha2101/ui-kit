@@ -5,22 +5,11 @@ import {
   ShieldCheckIcon,
   SparkleIcon,
 } from "@/components/icons";
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Field,
-  Input,
-  Separator,
-  buttonVariants,
-} from "@nphuonha/ui-kit";
-import { CodeBlock } from "@/components/code-block";
-import { demoMap } from "@/components/demos";
-import { registry } from "@/lib/registry";
+import { Badge, Card, CardContent, buttonVariants } from "@nphuonha/ui-kit";
+import { CodeBlock } from "@/components/docs/code-block";
+import { ComponentDemo } from "@/content/components/demo-map";
+import { HeroSignup } from "@/components/home/hero-signup";
+import { registry } from "@/content/components";
 
 const featured = ["button", "input", "dialog", "tabs", "card", "badge"];
 
@@ -57,37 +46,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm">
-          <div className="absolute -inset-6 rounded-[2rem] bg-primary/10 blur-3xl" aria-hidden />
-          <Card className="relative">
-            <CardHeader>
-              <CardTitle>Create an account</CardTitle>
-              <CardDescription>Start building with the kit in seconds.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              <Field label="Email">
-                <Input placeholder="you@example.com" type="email" />
-              </Field>
-              <Field label="Password">
-                <Input placeholder="••••••••" type="password" />
-              </Field>
-              <Button className="w-full">Continue</Button>
-              <div className="flex items-center gap-3">
-                <Separator className="flex-1" />
-                <span className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                  or
-                </span>
-                <Separator className="flex-1" />
-              </div>
-              <Button variant="secondary" className="w-full">
-                Continue with GitHub
-              </Button>
-            </CardContent>
-          </Card>
-          <div className="absolute -right-3 -top-3 rotate-6">
-            <Badge variant="solid">New</Badge>
-          </div>
-        </div>
+        <HeroSignup />
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-16 md:px-6">
@@ -108,17 +67,16 @@ export default function HomePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((slug) => {
             const entry = registry.find((item) => item.slug === slug);
-            const Demo = demoMap[slug];
-            if (!entry || !Demo) return null;
+            if (!entry) return null;
             return (
               <Link
                 key={slug}
                 href={`/docs/components/${slug}`}
                 className="surface-curved group relative flex flex-col overflow-hidden rounded-card bg-card shadow-soft transition-transform hover:-translate-y-0.5"
               >
-                <div className="preview-canvas pointer-events-none flex h-40 items-center justify-center overflow-hidden p-4" aria-hidden>
-                  <div className="w-full scale-[0.85]">
-                    <Demo />
+                <div className="preview-canvas pointer-events-none flex h-44 items-center justify-center overflow-hidden p-4" aria-hidden>
+                  <div className="w-full scale-[0.72]">
+                    <ComponentDemo slug={slug} />
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-3 px-4 py-3">

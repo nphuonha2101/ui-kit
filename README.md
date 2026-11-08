@@ -24,11 +24,29 @@ ui-kits/
 │   └── src/
 │       ├── styles/{base.css,theme.css} + styles.css
 │       ├── lib/{utils.ts,color.ts}  # cn + accent color generation
-│       ├── components/ui/*          # MVP components
-│       └── index.ts
-├── apps/demo/                       # MVP showcase (theming + components)
+│       ├── components/ui/<name>/    # component + variants + test + index
+│       └── index.ts                 # barrel + subpath exports
+├── apps/demo/                       # docs site
+│   ├── src/app/                     # thin routes (landing, docs, component pages)
+│   ├── src/components/{site,docs,home}/
+│   ├── src/content/components/<slug>/
+│   │   ├── meta.ts                  # nav/search/SEO data (serializable)
+│   │   ├── snippets.ts              # code tab / usage / examples
+│   │   └── demo.tsx                 # "use client" live preview
+│   └── scripts/{gen-content-index,new-component}.mjs
 └── package.json                     # npm workspaces
 ```
+
+Content indexes are generated, not hand-maintained:
+
+```bash
+cd apps/demo
+npm run new:component -- date-picker "Date Picker" Forms
+npm run gen:content
+npm run check:content
+```
+
+See [`apps/demo/CONTRIBUTING.md`](apps/demo/CONTRIBUTING.md) for the workflow.
 
 ## Usage
 

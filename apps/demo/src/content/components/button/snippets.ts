@@ -1,0 +1,9 @@
+import type { ComponentSnippets } from "@/content/types";
+
+export const snippets: ComponentSnippets = {
+  "preview": "import { Button } from \"@nphuonha/ui-kit\";\nimport { PlusIcon } from \"@phosphor-icons/react\";\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <div className=\"flex flex-wrap items-center justify-center gap-2\">\n        <Button>Primary</Button>\n        <Button variant=\"secondary\">Secondary</Button>\n        <Button variant=\"outline\">Outline</Button>\n        <Button variant=\"ghost\">Ghost</Button>\n        <Button variant=\"soft\">Soft</Button>\n        <Button variant=\"danger\">Danger</Button>\n      </div>\n      <div className=\"flex flex-wrap items-center justify-center gap-2\">\n        <Button size=\"sm\" startIcon={PlusIcon}>New item</Button>\n        <Button loading>Loading</Button>\n        <Button shape=\"pill\">Pill action</Button>\n      </div>\n    </div>\n  );\n}",
+  "usage": "import { Button } from \"@nphuonha/ui-kit\";\n\nexport function Actions() {\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      <Button>Primary</Button>\n      <Button variant=\"secondary\">Secondary</Button>\n      <Button variant=\"outline\">Outline</Button>\n      <Button variant=\"ghost\">Ghost</Button>\n      <Button variant=\"soft\">Soft</Button>\n      <Button variant=\"danger\">Danger</Button>\n    </div>\n  );\n}",
+  "examples": {
+    "button-sizes": "import { Button } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-wrap items-center justify-center gap-2\">\n      <Button size=\"sm\">Small</Button>\n      <Button size=\"default\">Default</Button>\n      <Button size=\"lg\">Large</Button>\n      <Button shape=\"pill\">Pill</Button>\n      <Button shape=\"pill\" variant=\"secondary\">Pill secondary</Button>\n    </div>\n  );\n}"
+  }
+};

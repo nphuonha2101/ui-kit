@@ -23,5 +23,25 @@ export function Example() {
 }`,
   "usage": `<ScrollArea className="h-72">
   <div className="flex flex-col gap-2">{items}</div>
-</ScrollArea>`
+</ScrollArea>`,
+  "examples": {
+    "scroll-area-hidden-scrollbar": `import { ScrollArea } from "@nphuonha/ui-kit";
+
+export function Example() {
+  return (
+    <ScrollArea className="h-56" viewportClassName="p-3" scrollbar="hidden">
+      <div className="flex flex-col gap-2">
+        {Array.from({ length: 14 }, (_, index) => (
+          <div
+            key={index}
+            className="rounded-control bg-surface px-3 py-2 text-sm text-muted-foreground"
+          >
+            Item {index + 1}
+          </div>
+        ))}
+      </div>
+    </ScrollArea>
+  );
+}`
+  }
 };

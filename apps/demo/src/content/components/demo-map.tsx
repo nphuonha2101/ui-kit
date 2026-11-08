@@ -52,6 +52,9 @@ const tabstabsSettingsExample = dynamic(() =>
 const cardcardProfileExample = dynamic(() =>
   import("./card/demo").then((module) => module.examples["card-profile"]),
 );
+const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
+  import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
+);
 const toastertoastPromiseExample = dynamic(() =>
   import("./toaster/demo").then((module) => module.examples["toast-promise"]),
 );
@@ -98,6 +101,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "select-field": selectselectFieldExample,
   "tabs-settings": tabstabsSettingsExample,
   "card-profile": cardcardProfileExample,
+  "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
   "toast-promise": toastertoastPromiseExample,
 };
 

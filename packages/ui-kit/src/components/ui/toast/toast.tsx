@@ -2,6 +2,8 @@
 
 import type * as React from "react";
 import { Toaster as SonnerToaster, toast } from "sonner";
+import { cn } from "../../../lib/utils";
+import { useKitIcon } from "../_shared/icon-provider";
 
 export interface ToasterIcons {
   success?: React.ReactNode;
@@ -20,6 +22,14 @@ export interface ToasterProps {
   icons?: ToasterIcons;
 }
 
+const statusIconTone: Record<"success" | "info" | "warning" | "error" | "loading", string> = {
+  success: "[&_[data-icon]]:text-success",
+  info: "[&_[data-icon]]:text-info",
+  warning: "[&_[data-icon]]:text-warning",
+  error: "[&_[data-icon]]:text-destructive",
+  loading: "[&_[data-icon]]:text-muted-foreground",
+};
+
 export function Toaster({
   position = "bottom-right",
   theme = "light",
@@ -27,26 +37,43 @@ export function Toaster({
   closeButton = true,
   icons,
 }: ToasterProps) {
+  const CloseIcon = useKitIcon("close");
+
   return (
     <SonnerToaster
       position={position}
       theme={theme}
       richColors={richColors}
       closeButton={closeButton}
-      icons={icons}
+      icons={{ close: <CloseIcon size={14} />, ...icons }}
       toastOptions={{
         classNames: {
-          toast:
-            "surface-curved relative group rounded-overlay bg-popover text-popover-foreground shadow-[var(--shadow-overlay)]",
-          title: "text-sm font-medium",
-          description: "text-sm text-muted-foreground",
-          actionButton: "rounded-control bg-primary text-primary-foreground text-xs font-medium",
-          cancelButton: "rounded-control bg-surface text-foreground text-xs font-medium",
-          closeButton: "border-border bg-card text-muted-foreground hover:text-foreground",
-          success: "!border-success/25",
-          error: "!border-destructive/25",
-          warning: "!border-warning/25",
-          info: "!border-info/25",
+          toast: cn(
+            // Sonner ships unlayered CSS, so kit utilities need `!` to win.
+            "surface-curved group relative font-sans !items-start !gap-3 !rounded-overlay !border-0 !px-4 !py-4 !text-sm !shadow-[var(--shadow-overlay)]",
+            closeButton && "!pr-9",
+            "!bg-[linear-gradient(to_bottom,var(--light-sheen-soft)_0%,transparent_28%,transparent_72%,var(--light-bottom)_100%)]",
+            !richColors && "!bg-popover !text-popover-foreground",
+            "focus-visible:!outline-2 focus-visible:!outline-offset-2 focus-visible:!outline-ring/40",
+          ),
+          title: "!text-sm !font-medium !leading-5",
+          description: cn(
+            "!text-sm !leading-5",
+            richColors ? "!text-inherit" : "!text-muted-foreground",
+          ),
+          content: "!gap-0.5",
+          icon: "!mx-0 !mt-0.5 !size-[18px] [&_svg]:size-[18px]",
+          closeButton:
+            "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground",
+          actionButton:
+            "!ml-auto !mr-0 !h-8 !self-center !rounded-control !border-0 !bg-primary !px-2.5 !text-xs !font-medium !text-primary-foreground hover:!bg-primary-hover",
+          cancelButton:
+            "!h-8 !self-center !rounded-control !border-0 !bg-surface !px-2.5 !text-xs !font-medium !text-foreground hover:!bg-surface-hover",
+          success: richColors ? undefined : statusIconTone.success,
+          info: richColors ? undefined : statusIconTone.info,
+          warning: richColors ? undefined : statusIconTone.warning,
+          error: richColors ? undefined : statusIconTone.error,
+          loading: richColors ? undefined : statusIconTone.loading,
         },
       }}
     />

@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { Badge } from "@nphuonha/ui-kit";
+import {
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@nphuonha/ui-kit";
 import type { ComponentMeta, ComponentSnippets } from "@/content/types";
 import { registry } from "@/content/components";
 import { buildComponentAgentPrompt } from "@/content/llms";
@@ -32,13 +40,19 @@ export function ComponentDoc({
   return (
     <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_200px] xl:items-start xl:gap-10">
       <article className="min-w-0 max-w-3xl">
-        <nav className="mb-4 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Link href="/docs/components" className="transition-colors hover:text-foreground">
-            Components
-          </Link>
-          <span>/</span>
-          <span className="text-foreground">{meta.title}</span>
-        </nav>
+        <Breadcrumb className="mb-4 text-xs">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/docs/components">Components</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{meta.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
         <header className="mb-8 flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-2.5">

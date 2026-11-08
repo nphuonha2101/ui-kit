@@ -19,6 +19,7 @@ export interface RadioGroupProps extends Omit<React.ComponentPropsWithoutRef<typ
   error?: React.ReactNode;
   orientation?: "vertical" | "horizontal";
   children?: React.ReactNode;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 export function RadioGroup({
@@ -29,11 +30,16 @@ export function RadioGroup({
   error,
   orientation = "vertical",
   children,
+  ref,
   ...props
 }: RadioGroupProps) {
   const groupId = React.useId();
   const labelId = `${groupId}-label`;
   const descriptionId = `${groupId}-description`;
+  const describedBy =
+    [props["aria-describedby"], description ? descriptionId : undefined]
+      .filter(Boolean)
+      .join(" ") || undefined;
   return (
     <div className={cn("flex flex-col gap-2", className)}>
       {label ? (
@@ -42,10 +48,11 @@ export function RadioGroup({
         </div>
       ) : null}
       <RadioGroupPrimitive
-        aria-labelledby={label ? labelId : undefined}
-        aria-describedby={description ? descriptionId : undefined}
-        className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap")}
         {...props}
+        ref={ref}
+        aria-labelledby={label ? labelId : props["aria-labelledby"]}
+        aria-describedby={describedBy}
+        className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap")}
       >
         {options
           ? options.map((opt, index) => {
@@ -81,7 +88,11 @@ export function RadioGroup({
           {description}
         </p>
       ) : null}
-      {error ? <p role="alert" className="text-xs font-medium text-destructive">{error}</p> : null}
+      {error && typeof error !== "boolean" ? (
+        <p role="alert" className="text-xs font-medium text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

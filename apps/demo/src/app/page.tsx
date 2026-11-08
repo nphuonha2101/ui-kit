@@ -20,7 +20,7 @@ const featured = ["button", "input", "dialog", "tabs", "card", "badge"];
 export default function HomePage() {
   return (
     <div>
-      <section className="mx-auto grid w-full max-w-6xl gap-12 px-4 pb-16 pt-16 md:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-24">
+      <section className="mx-auto grid w-full max-w-6xl gap-12 overflow-x-clip px-4 pb-16 pt-16 md:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pt-24">
         <div>
           <h1 className="mt-4 max-w-[16ch] text-[clamp(2.7rem,6vw,4.5rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
             The foundation for your design system.
@@ -72,11 +72,15 @@ export default function HomePage() {
             const entry = registry.find((item) => item.slug === slug);
             if (!entry) return null;
             return (
-              <Link
+              <div
                 key={slug}
-                href={`/docs/components/${slug}`}
                 className="surface-curved group relative flex flex-col overflow-hidden rounded-card bg-card shadow-soft transition-transform hover:-translate-y-0.5"
               >
+                <Link
+                  href={`/docs/components/${slug}`}
+                  aria-label={`Open ${entry.title}`}
+                  className="absolute inset-0 z-10 rounded-card outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                />
                 <div className="preview-canvas pointer-events-none flex h-44 items-center justify-center overflow-hidden p-4" aria-hidden>
                   <div className="w-full scale-[0.72]">
                     <ComponentDemo slug={slug} />
@@ -94,7 +98,7 @@ export default function HomePage() {
                     className="shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   />
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>

@@ -12,7 +12,7 @@ import {
   PaletteIcon,
   SunIcon,
 } from "@phosphor-icons/react";
-import { IconButton, Popover, Sheet, buttonVariants, cn } from "@nphuonha/ui-kit";
+import { IconButton, Kbd, Popover, Sheet, buttonVariants, cn } from "@nphuonha/ui-kit";
 import { AccentPicker } from "./accent-picker";
 import { BrandLogo } from "./brand-logo";
 import { useThemeSettings } from "./providers";
@@ -96,9 +96,9 @@ export function SiteHeader() {
             >
               <MagnifyingGlassIcon size={16} />
               <span className="hidden text-xs font-medium xl:inline">Search</span>
-              <kbd className="hidden rounded-[5px] bg-surface px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground xl:inline-flex">
+              <Kbd size="sm" className="hidden xl:inline-flex">
                 ⌘ K
-              </kbd>
+              </Kbd>
             </button>
 
             <span aria-hidden className="mx-0.5 h-4 w-px shrink-0 bg-border" />

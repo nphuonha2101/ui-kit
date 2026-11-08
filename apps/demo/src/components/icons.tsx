@@ -6,6 +6,7 @@ export {
   CheckCircleIcon,
   CompassIcon,
   InfoIcon,
+  ListChecksIcon,
   PaletteIcon,
   RocketLaunchIcon,
   RobotIcon,

@@ -26,6 +26,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@nphuonha/ui-kit/form": [
+        "../../packages/ui-kit/src/components/ui/form/index.ts"
+      ],
       "@nphuonha/ui-kit": [
         "../../packages/ui-kit/src/index.ts"
       ]

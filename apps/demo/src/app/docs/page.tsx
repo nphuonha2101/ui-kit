@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRightIcon,
+  ListChecksIcon,
   PaletteIcon,
   RobotIcon,
   RocketLaunchIcon,
@@ -31,6 +32,12 @@ const links = [
     title: "Theming",
     description: "Semantic tokens, dark mode and runtime accent generation.",
     icon: PaletteIcon,
+  },
+  {
+    href: "/docs/forms",
+    title: "Forms",
+    description: "React Hook Form integration and accessible validation.",
+    icon: ListChecksIcon,
   },
   {
     href: "/docs/components",

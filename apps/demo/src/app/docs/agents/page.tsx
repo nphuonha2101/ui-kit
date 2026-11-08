@@ -11,8 +11,14 @@ import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
 import { componentGroups } from "@/content/components";
 import { DOCS_URL } from "@/content/llms";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "For agents" };
+export const metadata: Metadata = pageMetadata({
+  title: "For agents",
+  description:
+    "Page-scoped prompts, llms.txt and setup rules for coding agents using @nphuonha/ui-kit.",
+  path: "/docs/agents/",
+});
 
 const prompt = `Read ${DOCS_URL}/llms.txt before writing UI.
 Use @nphuonha/ui-kit as the source of truth for primitives.

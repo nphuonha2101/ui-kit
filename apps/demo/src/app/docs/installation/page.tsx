@@ -5,8 +5,14 @@ import { AgentCopyButton } from "@/components/docs/agent-copy-button";
 import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
 import { INSTALLATION_AGENT_PROMPT } from "@/content/llms";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Installation" };
+export const metadata: Metadata = pageMetadata({
+  title: "Installation",
+  description:
+    "Install @nphuonha/ui-kit, import the stylesheet once and scope the tokens with data-ui=\"kit\".",
+  path: "/docs/installation/",
+});
 
 export default function InstallationPage() {
   return (

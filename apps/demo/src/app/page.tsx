@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowUpRightIcon,
   PaletteIcon,
@@ -10,6 +11,9 @@ import { CodeBlock } from "@/components/docs/code-block";
 import { ComponentDemo } from "@/content/components/demo-map";
 import { HeroSignup } from "@/components/home/hero-signup";
 import { registry } from "@/content/components";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({ path: "/" });
 
 const featured = ["button", "input", "dialog", "tabs", "card", "badge"];
 

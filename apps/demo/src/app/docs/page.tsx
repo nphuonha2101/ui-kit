@@ -10,8 +10,14 @@ import {
 import { Card, CardContent } from "@nphuonha/ui-kit";
 import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Introduction" };
+export const metadata: Metadata = pageMetadata({
+  title: "Introduction",
+  description:
+    "A modern, borderless React UI kit built on Base UI and Tailwind CSS v4, with semantic tokens and a runtime-customizable accent.",
+  path: "/docs/",
+});
 
 const links = [
   {

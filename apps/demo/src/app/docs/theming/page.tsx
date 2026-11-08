@@ -3,8 +3,14 @@ import { Card, CardContent } from "@nphuonha/ui-kit";
 import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
 import { ThemingPlayground } from "@/components/docs/theming-playground";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Theming" };
+export const metadata: Metadata = pageMetadata({
+  title: "Theming",
+  description:
+    "Semantic CSS variables, dark mode and runtime accent generation for @nphuonha/ui-kit.",
+  path: "/docs/theming/",
+});
 
 const tokens = [
   ["Surfaces", "--background, --card, --surface, --field, --popover, --muted"],

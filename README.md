@@ -84,7 +84,7 @@ const vars = generateAccentVars("#0d9488", "dark");
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `Card`, `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `IconButton`, `Input`, `Kbd`, `Label`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Card`, `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `IconButton`, `Input`, `Kbd`, `Label`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 Each component page includes a live preview, copyable code, props and examples:
 

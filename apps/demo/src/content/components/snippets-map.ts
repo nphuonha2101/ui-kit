@@ -1,6 +1,7 @@
 import type { ComponentSnippets } from "@/content/types";
 
 import { snippets as buttonSnippets } from "./button/snippets";
+import { snippets as buttonLinkSnippets } from "./button-link/snippets";
 import { snippets as iconButtonSnippets } from "./icon-button/snippets";
 import { snippets as toggleSnippets } from "./toggle/snippets";
 import { snippets as toggleGroupSnippets } from "./toggle-group/snippets";
@@ -41,6 +42,7 @@ import { snippets as toasterSnippets } from "./toaster/snippets";
 
 const snippetsMap: Record<string, ComponentSnippets> = {
   "button": buttonSnippets,
+  "button-link": buttonLinkSnippets,
   "icon-button": iconButtonSnippets,
   "toggle": toggleSnippets,
   "toggle-group": toggleGroupSnippets,

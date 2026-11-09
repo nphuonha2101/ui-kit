@@ -1,4 +1,5 @@
 import { meta as buttonMeta } from "./button/meta";
+import { meta as buttonLinkMeta } from "./button-link/meta";
 import { meta as iconButtonMeta } from "./icon-button/meta";
 import { meta as toggleMeta } from "./toggle/meta";
 import { meta as toggleGroupMeta } from "./toggle-group/meta";
@@ -41,6 +42,7 @@ import type { ComponentCategory, ComponentMeta } from "@/content/types";
 
 export const registry: ComponentMeta[] = [
   buttonMeta,
+  buttonLinkMeta,
   iconButtonMeta,
   toggleMeta,
   toggleGroupMeta,

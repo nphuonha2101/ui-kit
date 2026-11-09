@@ -3,7 +3,7 @@ import type { ComponentMeta } from "@/content/types";
 export const meta: ComponentMeta = {
   "slug": "button",
   "title": "Button",
-  "description": "Triggers an action or event. Supports variants, sizes, icons, and disabled and loading states.",
+  "description": "Triggers an action or event. Supports variants, sizes, icons, and disabled and loading states; use ButtonLink for navigation.",
   "category": "Actions",
   "imports": "import { Button } from \"@nphuonha/ui-kit\";\nimport { PlusIcon } from \"@phosphor-icons/react\";",
   "props": [

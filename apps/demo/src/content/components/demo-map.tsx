@@ -4,6 +4,7 @@ import type * as React from "react";
 import dynamic from "next/dynamic";
 
 const buttonDemo = dynamic(() => import("./button/demo").then((module) => module.demo));
+const buttonLinkDemo = dynamic(() => import("./button-link/demo").then((module) => module.demo));
 const iconButtonDemo = dynamic(() => import("./icon-button/demo").then((module) => module.demo));
 const toggleDemo = dynamic(() => import("./toggle/demo").then((module) => module.demo));
 const toggleGroupDemo = dynamic(() => import("./toggle-group/demo").then((module) => module.demo));
@@ -47,6 +48,9 @@ const buttonbuttonSizesExample = dynamic(() =>
 );
 const buttonbuttonStatesExample = dynamic(() =>
   import("./button/demo").then((module) => module.examples["button-states"]),
+);
+const buttonLinkbuttonLinkNextExample = dynamic(() =>
+  import("./button-link/demo").then((module) => module.examples["button-link-next"]),
 );
 const toggletoggleSizesExample = dynamic(() =>
   import("./toggle/demo").then((module) => module.examples["toggle-sizes"]),
@@ -93,6 +97,7 @@ const toastertoastPromiseExample = dynamic(() =>
 
 export const demoMap: Record<string, React.ComponentType> = {
   "button": buttonDemo,
+  "button-link": buttonLinkDemo,
   "icon-button": iconButtonDemo,
   "toggle": toggleDemo,
   "toggle-group": toggleGroupDemo,
@@ -135,6 +140,7 @@ export const demoMap: Record<string, React.ComponentType> = {
 export const exampleMap: Record<string, React.ComponentType> = {
   "button-sizes": buttonbuttonSizesExample,
   "button-states": buttonbuttonStatesExample,
+  "button-link-next": buttonLinkbuttonLinkNextExample,
   "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
   "select-field": selectselectFieldExample,

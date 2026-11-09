@@ -6,7 +6,7 @@ import { ArrowUpRightIcon, RocketLaunchIcon } from "@/components/icons";
 import {
   Avatar,
   Badge,
-  buttonVariants,
+  ButtonLink,
   Card,
   CardContent,
   CardDescription,
@@ -112,10 +112,13 @@ export function HeroShowcase() {
             />
           </div>
 
-          <Link href="/docs/components" className={buttonVariants({ className: "w-full" })}>
+          <ButtonLink
+            render={<Link href="/docs/components" />}
+            className="w-full"
+            endIcon={ArrowUpRightIcon}
+          >
             Browse components
-            <ArrowUpRightIcon size={15} />
-          </Link>
+          </ButtonLink>
         </CardContent>
       </Card>
       <div className="absolute -right-3 -top-3 rotate-6">

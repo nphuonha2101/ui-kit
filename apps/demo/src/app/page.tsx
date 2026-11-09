@@ -6,7 +6,7 @@ import {
   ShieldCheckIcon,
   SparkleIcon,
 } from "@/components/icons";
-import { Badge, Card, CardContent, buttonVariants } from "@nphuonha/ui-kit";
+import { Badge, ButtonLink, Card, CardContent } from "@nphuonha/ui-kit";
 import { CodeBlock } from "@/components/docs/code-block";
 import { ComponentDemo } from "@/content/components/demo-map";
 import { HeroShowcase } from "@/components/home/hero-showcase";
@@ -30,15 +30,16 @@ export default function HomePage() {
             and a vibrant accent you can change at runtime.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            <Link href="/docs" className={buttonVariants({ size: "lg" })}>
+            <ButtonLink render={<Link href="/docs" />} size="lg">
               Get started
-            </Link>
-            <Link
-              href="/docs/components"
-              className={buttonVariants({ variant: "secondary", size: "lg" })}
+            </ButtonLink>
+            <ButtonLink
+              render={<Link href="/docs/components" />}
+              variant="secondary"
+              size="lg"
             >
               Browse components
-            </Link>
+            </ButtonLink>
           </div>
           <div className="mt-6 max-w-md">
             <CodeBlock
@@ -164,12 +165,15 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link href="/docs/installation" className={buttonVariants()}>
+              <ButtonLink render={<Link href="/docs/installation" />}>
                 Installation
-              </Link>
-              <Link href="/docs/theming" className={buttonVariants({ variant: "secondary" })}>
+              </ButtonLink>
+              <ButtonLink
+                render={<Link href="/docs/theming" />}
+                variant="secondary"
+              >
                 Theming
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </div>

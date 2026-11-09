@@ -3,19 +3,25 @@ import type { ComponentMeta } from "@/content/types";
 export const meta: ComponentMeta = {
   "slug": "date-picker",
   "title": "DatePicker",
-  "description": "An input-style date field that opens a Calendar in a popover, with clear and today shortcuts, constraints and form support.",
+  "description": "An input-style date field that opens a Calendar in a popover for single dates or ranges, with clear/today shortcuts, constraints and form support.",
   "category": "Forms",
   "imports": "import { DatePicker } from \"@nphuonha/ui-kit\";",
   "props": [
     {
+      "name": "mode",
+      "type": "\"single\" | \"range\"",
+      "default": "\"single\"",
+      "description": "Selection model. Range uses { from, to } values."
+    },
+    {
       "name": "value",
-      "type": "Date | null",
-      "description": "Controlled selected date."
+      "type": "Date | CalendarRange | null",
+      "description": "Controlled selection. Date for single, { from, to } for range."
     },
     {
       "name": "defaultValue",
-      "type": "Date | null",
-      "description": "Initial date for uncontrolled usage."
+      "type": "Date | CalendarRange | null",
+      "description": "Initial selection for uncontrolled usage."
     },
     {
       "name": "defaultMonth",
@@ -24,8 +30,8 @@ export const meta: ComponentMeta = {
     },
     {
       "name": "onValueChange",
-      "type": "(value: Date | null) => void",
-      "description": "Called when a date is selected or cleared."
+      "type": "(value: Date | CalendarRange | null) => void",
+      "description": "Called when the selection changes. Range mode reports { from, to }."
     },
     {
       "name": "onBlur",
@@ -91,6 +97,12 @@ export const meta: ComponentMeta = {
       "description": "Name for a hidden input with a YYYY-MM-DD value."
     },
     {
+      "name": "endName",
+      "type": "string",
+      "default": "name + \"-end\"",
+      "description": "Name for the range end hidden input."
+    },
+    {
       "name": "label",
       "type": "ReactNode",
       "description": "Visible label."
@@ -113,6 +125,11 @@ export const meta: ComponentMeta = {
     }
   ],
   "examples": [
+    {
+      "title": "Range selection",
+      "description": "Set mode=\"range\" and use a { from, to } value. The popup closes after both endpoints are selected.",
+      "demoKey": "date-picker-range"
+    },
     {
       "title": "Clearable",
       "description": "Add a Clear action when the date is optional.",

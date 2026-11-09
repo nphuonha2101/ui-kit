@@ -121,7 +121,7 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
-For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`. `Calendar`/`DatePicker` use `value`/`onValueChange`; `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
+For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`); `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
 
 ```tsx
 import { Form, FormField } from "@nphuonha/ui-kit/form";

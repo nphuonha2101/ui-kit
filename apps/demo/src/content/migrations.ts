@@ -46,6 +46,16 @@ export const releases: ReleaseMigration[] = [
         fix: 'Nothing required. DatePicker is the input-style popup field; Calendar stays inline for single/range grids. FileUpload is UI-only and reports File[] through onFilesChange.',
       },
       {
+        id: "date-picker-range",
+        kind: "additive",
+        surface: "DatePicker",
+        before: "DatePicker only supported a single date.",
+        after:
+          '<DatePicker mode="range" value={range} onValueChange={setRange} />',
+        find: "<DatePicker",
+        fix: 'Nothing required. Range mode uses CalendarRange ({ from, to }) and closes after both endpoints are selected.',
+      },
+      {
         id: "required-marks",
         kind: "behavior",
         surface: "Checkbox / Switch / RadioGroup / Select / Field",

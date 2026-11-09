@@ -148,7 +148,7 @@ import { Button, Card, CardContent, Input } from "@nphuonha/ui-kit";
 ## Rules for agents
 
 - Use the kit's primitives before adding another UI dependency.
-- Use semantic utilities and tokens: bg-card, bg-surface, bg-field, text-muted-foreground, border-border, rounded-card, rounded-control, shadow-soft.
+- Use semantic utilities and tokens: bg-card, bg-surface, bg-field, text-muted-foreground, border-border, rounded-card, rounded-control, shadow-soft. Use shadow-none for nested surfaces and surface-flat for fully flat ones.
 - Do not hardcode colors unless you are overriding a documented token.
 - Use cn from "@nphuonha/ui-kit" when merging class names.
 - Buttons accept startIcon/endIcon. IconButton requires an aria-label. BottomNav and DesktopNav items accept activeIcon for the selected state.
@@ -165,6 +165,7 @@ ${groups}
 
 - [Installation](${DOCS_URL}/docs/installation)
 - [Theming](${DOCS_URL}/docs/theming)
+- [Utilities](${DOCS_URL}/docs/utilities)
 - [Upgrading](${DOCS_URL}/docs/upgrading)
 - [Component index](${DOCS_URL}/docs/components)
 - [For agents](${DOCS_URL}/docs/agents)

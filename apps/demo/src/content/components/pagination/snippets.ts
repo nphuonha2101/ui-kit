@@ -1,15 +1,17 @@
 import type { ComponentSnippets } from "@/content/types";
 
 export const snippets: ComponentSnippets = {
-  "preview": `import { Pagination } from "@nphuonha/ui-kit";
+  "preview": `import * as React from "react";
+import { Pagination } from "@nphuonha/ui-kit";
 
 export function Example() {
+  const [page, setPage] = React.useState(1);
+
   return (
-    <Pagination
-      defaultPage={1}
-      pageCount={12}
-      onPageChange={(page) => console.log(page)}
-    />
+    <div className="flex flex-col items-center gap-4">
+      <Pagination page={page} pageCount={12} onPageChange={setPage} />
+      <p className="text-sm text-muted-foreground">Page {page} of 12</p>
+    </div>
   );
 }`,
   "usage": `<Pagination

@@ -25,12 +25,13 @@ If you are upgrading the package, read ${DOCS_URL}/docs/upgrading/llms.txt first
 Use @nphuonha/ui-kit as the source of truth for primitives.
 Import the stylesheet once and put data-ui="kit" on <html>.
 Prefer semantic tokens, existing components and the documented props.
+Read ${DOCS_URL}/docs/utilities for surface, shadow and radius classes.
 Do not add another component library unless explicitly asked.`;
 
 const rules = [
   "Install @nphuonha/ui-kit and import the stylesheet once at the app root.",
   'Put data-ui="kit" on <html>; add class="dark" to the same element for dark mode.',
-  "Use semantic utilities and tokens instead of raw colors: bg-card, bg-surface, text-muted-foreground, rounded-card, shadow-soft.",
+  "Use semantic utilities and tokens instead of raw colors: bg-card, bg-surface, text-muted-foreground, rounded-card, shadow-soft. Use shadow-none for nested surfaces and surface-flat for fully flat ones.",
   "Prefer the kit's Button, Input, Field, Dialog, AlertDialog, Sheet, Table and Popover over new dependencies.",
   "Use Breadcrumb and Pagination for secondary navigation, and EmptyState for zero states.",
   "For forms, use register with Input/Textarea and Controller or FormField from @nphuonha/ui-kit/form for custom controls.",
@@ -209,10 +210,14 @@ export default function AgentsPage() {
             Need the full setup? Read{" "}
             <Link href="/docs/installation" className="docs-link">
               Installation
-            </Link>{" "}
-            and{" "}
+            </Link>
+            ,{" "}
             <Link href="/docs/theming" className="docs-link">
               Theming
+            </Link>{" "}
+            and{" "}
+            <Link href="/docs/utilities" className="docs-link">
+              Utilities
             </Link>
             .
           </span>

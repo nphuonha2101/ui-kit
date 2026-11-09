@@ -76,6 +76,9 @@ const avataravatarSizesExample = dynamic(() =>
 const cardcardProfileExample = dynamic(() =>
   import("./card/demo").then((module) => module.examples["card-profile"]),
 );
+const cardcardElevationExample = dynamic(() =>
+  import("./card/demo").then((module) => module.examples["card-elevation"]),
+);
 const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
   import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
 );
@@ -149,6 +152,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "accordion-separated": accordionaccordionSeparatedExample,
   "avatar-sizes": avataravatarSizesExample,
   "card-profile": cardcardProfileExample,
+  "card-elevation": cardcardElevationExample,
   "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
   "progress-indeterminate": progressprogressIndeterminateExample,
   "progress-tones": progressprogressTonesExample,

@@ -1,5 +1,6 @@
 import {
   Badge,
+  Card,
   Table,
   TableBody,
   TableCell,
@@ -23,7 +24,7 @@ const statusVariant = {
 
 function TableDemo() {
   return (
-    <div className="surface-curved relative w-full overflow-hidden rounded-card bg-card shadow-soft">
+    <Card className="w-full overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
@@ -54,7 +55,7 @@ function TableDemo() {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Card>
   );
 }
 

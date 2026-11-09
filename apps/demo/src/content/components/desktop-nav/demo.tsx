@@ -7,7 +7,7 @@ import {
   SquaresFourIcon,
   StackIcon,
 } from "@phosphor-icons/react";
-import { DesktopNav } from "@nphuonha/ui-kit";
+import { Card, DesktopNav } from "@nphuonha/ui-kit";
 
 const items = [
   { value: "overview", label: "Overview" },
@@ -54,7 +54,7 @@ function DesktopNavDemo() {
         />
       </div>
 
-      <div className="surface-curved relative overflow-hidden rounded-card bg-card p-5 shadow-soft">
+      <Card className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
@@ -86,7 +86,7 @@ function DesktopNavDemo() {
             </div>
           ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

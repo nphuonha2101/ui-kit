@@ -11,6 +11,7 @@ const gettingStarted = [
   { href: "/docs", label: "Introduction" },
   { href: "/docs/installation", label: "Installation" },
   { href: "/docs/theming", label: "Theming" },
+  { href: "/docs/utilities", label: "Utilities" },
   { href: "/docs/forms", label: "Forms" },
   { href: "/docs/upgrading", label: "Upgrading" },
   { href: "/docs/agents", label: "For agents" },

@@ -6,6 +6,7 @@ import {
   PaletteIcon,
   RobotIcon,
   RocketLaunchIcon,
+  SparkleIcon,
   SquaresFourIcon,
   TerminalWindowIcon,
 } from "@/components/icons";
@@ -33,6 +34,12 @@ const links = [
     title: "Theming",
     description: "Semantic tokens, dark mode and runtime accent generation.",
     icon: PaletteIcon,
+  },
+  {
+    href: "/docs/utilities",
+    title: "Utilities",
+    description: "Surface, shadow, radius and fill classes with live examples.",
+    icon: SparkleIcon,
   },
   {
     href: "/docs/forms",

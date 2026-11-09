@@ -1,7 +1,7 @@
 import type { ComponentSnippets } from "@/content/types";
 
 export const snippets: ComponentSnippets = {
-  "preview": `import { AlertDialog, Button } from "@nphuonha/ui-kit";
+  "preview": `import { AlertDialog, Button, toast } from "@nphuonha/ui-kit";
 import { WarningIcon } from "@phosphor-icons/react";
 
 export function Example() {
@@ -12,7 +12,7 @@ export function Example() {
       title="Delete project?"
       description="This will permanently remove the project and all of its data. This action cannot be undone."
       confirmLabel="Delete project"
-      onConfirm={() => console.log("deleted")}
+      onConfirm={() => toast("Project deleted")}
     />
   );
 }`,

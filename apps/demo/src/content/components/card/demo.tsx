@@ -54,7 +54,31 @@ function CardProfileDemo() {
   );
 }
 
+function CardElevationDemo() {
+  return (
+    <div className="mx-auto grid w-full max-w-2xl gap-3 sm:grid-cols-2">
+      <Card className="shadow-none">
+        <CardHeader>
+          <CardTitle>No outer shadow</CardTitle>
+          <CardDescription>
+            shadow-none keeps the curved rim but drops the outer lift.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card className="surface-flat">
+        <CardHeader>
+          <CardTitle>Fully flat</CardTitle>
+          <CardDescription>
+            surface-flat removes the shadow, rim and gradient.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+}
+
 export const demo = CardDemo;
 export const examples = {
   "card-profile": CardProfileDemo,
+  "card-elevation": CardElevationDemo,
 };

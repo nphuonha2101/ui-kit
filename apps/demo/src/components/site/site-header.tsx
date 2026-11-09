@@ -22,6 +22,7 @@ const nav = [
   { href: "/docs", label: "Docs" },
   { href: "/docs/components", label: "Components" },
   { href: "/docs/theming", label: "Theming" },
+  { href: "/docs/utilities", label: "Utilities" },
 ];
 
 const GITHUB_URL = "https://github.com/nphuonha2101/ui-kit";

@@ -14,7 +14,7 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
   - `surface-curved-pill` — switch thumbs and pill controls.
   - `surface-inset` — native fields (input/textarea/select), where `::before` is unavailable.
   - Lighting tokens: `--light-top`, `--light-sheen`, `--light-bottom`, `--light-rim` (defined per light/dark theme).
-- **Shadows only lift, never outline**: keep subtle outer shadows for overlays (`--shadow-overlay`) and raised cards/buttons (`--shadow-soft`/`--shadow-raised`); the curved utilities only add inset edge light.
+- **Shadows only lift, never outline**: keep subtle outer shadows for overlays (`--shadow-overlay`) and raised cards/buttons (`--shadow-soft`/`--shadow-raised`); the curved utilities only add inset edge light. Use `shadow-none` to drop the outer lift (keeping the rim) and `surface-flat` to remove the rim and gradient too.
 - **Shape** via tokens: `--radius-control` (~12px), `--radius-card` (~20px), `--radius-overlay`, `--radius-field`; pill (`rounded-pill`) for actions and switch thumbs.
 - **Typography**: tokenized (`--font-body`), clear hierarchy.
 - **Motion**: restrained 150–220ms, `--ease-out-ui`, CSS transitions for feedback/enter-exit; **no bouncy springs** by default. Honor `prefers-reduced-motion` (global guard in `base.css`).

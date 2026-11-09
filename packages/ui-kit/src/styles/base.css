@@ -12,7 +12,7 @@
   /* Directional light: bright top edge, soft bottom shade. */
   --light-top: color-mix(in srgb, #ffffff 75%, transparent);
   --light-top-soft: color-mix(in srgb, #ffffff 40%, transparent);
-  --light-bottom: color-mix(in srgb, #000000 8%, transparent);
+  --light-bottom: color-mix(in srgb, #000000 6%, transparent);
   --light-sheen: color-mix(in srgb, #ffffff 55%, transparent);
   --light-sheen-soft: color-mix(in srgb, #ffffff 22%, transparent);
   --light-side: color-mix(in srgb, #ffffff 26%, transparent);
@@ -68,6 +68,10 @@
 
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono-family);
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-overlay: var(--shadow-overlay);
 
   --ease-out-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
   --duration-ui: 160ms;
@@ -209,6 +213,9 @@
 @utility surface-flat {
   background-image: none;
   box-shadow: none;
+  &::before {
+    box-shadow: none;
+  }
 }
 
 /* Accordion panel height animation. Base UI exposes the measured height as

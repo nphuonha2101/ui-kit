@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Card, CardContent } from "@nphuonha/ui-kit";
+import Link from "next/link";
 import { CodeBlock } from "@/components/docs/code-block";
 import { PageHeader } from "@/components/docs/page-header";
 import { ThemingPlayground } from "@/components/docs/theming-playground";
@@ -101,45 +101,19 @@ for (const [key, value] of Object.entries(vars)) {
         </section>
 
         <section className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">Surface lighting</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">Surfaces and shadows</h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            Solid surfaces get their curve from a top-lit rim and a micro gradient. Use the
-            utilities instead of hand-rolling borders and shadows:
+            Depth comes from the surface utilities, shape tokens and three shadow levels.
+            Pair <code className="text-[13px] font-semibold text-foreground">surface-curved</code> with{" "}
+            <code className="text-[13px] font-semibold text-foreground">rounded-card</code> and{" "}
+            <code className="text-[13px] font-semibold text-foreground">shadow-soft</code> for a card,
+            or use <code className="text-[13px] font-semibold text-foreground">surface-inset</code> for
+            native fields. See{" "}
+            <Link href="/docs/utilities" className="docs-link">
+              Utilities
+            </Link>{" "}
+            for the full class reference, no-shadow options and live examples.
           </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Card>
-              <CardContent className="pt-5">
-                <code className="text-xs font-semibold text-foreground">surface-curved</code>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                  Cards, dialogs, popovers and primary buttons.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-5">
-                <code className="text-xs font-semibold text-foreground">surface-curved-soft</code>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                  Secondary buttons, tabs, alerts, badges and tracks.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-5">
-                <code className="text-xs font-semibold text-foreground">surface-curved-pill</code>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                  Switch thumbs and pill controls.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-5">
-                <code className="text-xs font-semibold text-foreground">surface-inset</code>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                  Native form fields, where pseudo-elements are unavailable.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
           <CodeBlock
             filename="Card example"
             code={`<div className="surface-curved relative rounded-card bg-card shadow-soft">

@@ -1,10 +1,10 @@
 "use client";
 
-import { Badge, Separator } from "@nphuonha/ui-kit";
+import { Badge, Card, Separator } from "@nphuonha/ui-kit";
 
 function SeparatorDemo() {
   return (
-    <div className="mx-auto w-full max-w-sm rounded-card bg-card p-4 shadow-soft">
+    <Card className="mx-auto w-full max-w-sm p-4">
       <div className="flex items-center justify-between text-sm">
         <span>Storage</span>
         <span className="text-muted-foreground">64%</span>
@@ -19,7 +19,7 @@ function SeparatorDemo() {
         <span>Plan</span>
         <Badge variant="primary">Pro</Badge>
       </div>
-    </div>
+    </Card>
   );
 }
 

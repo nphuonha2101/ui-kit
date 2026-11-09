@@ -144,10 +144,10 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
                 <span
                   data-nav-icon
                   className={cn(
-                    "relative flex h-7 min-w-12 items-center justify-center rounded-pill px-2.5 transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
+                    "relative flex h-7 min-w-12 items-center justify-center rounded-pill px-2.5 transition-[background-color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
                     active
                       ? indicator.visible
-                        ? "text-primary-foreground"
+                        ? "text-primary-foreground transition-[color] delay-[80ms] duration-[var(--duration-ui)]"
                         : "surface-curved bg-primary text-primary-foreground shadow-[var(--shadow-raised)]"
                       : "text-muted-foreground group-hover:bg-surface group-hover:text-foreground",
                   )}
@@ -156,9 +156,9 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
                   {item.badge != null ? (
                     <span
                       className={cn(
-                        "absolute -right-1 -top-1 inline-flex min-w-4 items-center justify-center rounded-pill px-1 text-[9px] font-semibold leading-4 transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
+                        "absolute -right-1 -top-1 inline-flex min-w-4 items-center justify-center rounded-pill px-1 text-[9px] font-semibold leading-4 transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
                         active
-                          ? "bg-card text-foreground shadow-control"
+                          ? "bg-card text-foreground shadow-control delay-[80ms] duration-[var(--duration-ui)]"
                           : "bg-primary text-primary-foreground",
                       )}
                     >
@@ -169,7 +169,9 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
                 <span
                   className={cn(
                     "max-w-full truncate text-[10px] font-medium leading-none tracking-[-0.01em] transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
-                    active ? "font-semibold text-foreground" : "text-muted-foreground",
+                    active
+                      ? "font-semibold text-foreground delay-[80ms] duration-[var(--duration-ui)]"
+                      : "text-muted-foreground",
                   )}
                 >
                   {item.label}

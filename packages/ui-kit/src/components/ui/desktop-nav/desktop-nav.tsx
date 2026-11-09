@@ -144,7 +144,7 @@ export const DesktopNav = React.forwardRef<HTMLElement, DesktopNavProps>(
                     className={cn(
                       "ml-0.5 inline-flex min-w-4 items-center justify-center rounded-pill px-1 text-[10px] font-semibold leading-4 transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
                       active
-                        ? "bg-primary-soft text-primary-soft-foreground"
+                        ? "bg-primary-soft text-primary-soft-foreground delay-[80ms] duration-[var(--duration-ui)]"
                         : "bg-surface-hover text-muted-foreground",
                     )}
                   >
@@ -159,7 +159,7 @@ export const DesktopNav = React.forwardRef<HTMLElement, DesktopNavProps>(
               "focus-visible:ring-2 focus-visible:ring-ring/40",
               active
                 ? indicator.visible
-                  ? "text-foreground"
+                  ? "text-foreground transition-colors delay-[80ms] duration-[var(--duration-ui)]"
                   : "surface-curved bg-card text-foreground shadow-control"
                 : "text-muted-foreground hover:bg-card/60 hover:text-foreground",
               item.disabled && "pointer-events-none opacity-45",

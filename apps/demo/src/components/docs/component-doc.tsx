@@ -132,7 +132,7 @@ export function ComponentDoc({
             Props are additive to the underlying Base UI or native element.
           </p>
           <div className="mt-4">
-            <PropTable props={meta.props} />
+            <PropTable props={meta.props} title={meta.title} />
           </div>
         </section>
 

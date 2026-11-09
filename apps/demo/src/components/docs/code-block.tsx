@@ -4,25 +4,13 @@ import * as React from "react";
 import { Highlight, themes, type Language } from "prism-react-renderer";
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { cn } from "@nphuonha/ui-kit";
+import { copyText } from "@/lib/clipboard";
 
 export interface CodeBlockProps {
   code: string;
   language?: Language;
   filename?: string;
   className?: string;
-}
-
-function copyText(value: string) {
-  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(value);
-  const textarea = document.createElement("textarea");
-  textarea.value = value;
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  textarea.remove();
-  return Promise.resolve();
 }
 
 export function CodeBlock({

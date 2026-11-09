@@ -105,12 +105,6 @@ const headerItems: DesktopNavItem[] = [
   { value: "customers", label: "Customers" },
 ];
 
-const logoItems: DesktopNavItem[] = [
-  { value: "overview", label: "Overview" },
-  { value: "components", label: "Components" },
-  { value: "pricing", label: "Pricing" },
-];
-
 function BrandMark() {
   return (
     <span className="flex items-center gap-2">
@@ -254,25 +248,8 @@ function DesktopNavHeaderDemo() {
   );
 }
 
-function DesktopNavLogoDemo() {
-  return (
-    <div className="mx-auto flex w-full max-w-2xl items-center gap-3">
-      <div className="shrink-0">
-        <BrandMark />
-      </div>
-      <DesktopNav
-        items={logoItems}
-        defaultValue="overview"
-        aria-label="Acme navigation"
-        className="min-w-0"
-      />
-    </div>
-  );
-}
-
 export const demo = DesktopNavDemo;
 export const examples = {
   "desktop-nav-submenu": DesktopNavSubmenuDemo,
   "desktop-nav-header": DesktopNavHeaderDemo,
-  "desktop-nav-logo": DesktopNavLogoDemo,
 };

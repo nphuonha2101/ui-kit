@@ -49,11 +49,6 @@ export const meta: ComponentMeta = {
       "title": "Three-segment header",
       "description": "Logo, centered navigation and actions. Container queries switch to a collapsible Sheet menu with an optional logo on narrow widths.",
       "demoKey": "desktop-nav-header"
-    },
-    {
-      "title": "Navigation with logo",
-      "description": "A compact logo and horizontal navigation bar.",
-      "demoKey": "desktop-nav-logo"
     }
   ]
 };

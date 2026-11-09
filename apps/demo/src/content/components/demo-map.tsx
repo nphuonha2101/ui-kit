@@ -68,9 +68,6 @@ const desktopNavdesktopNavSubmenuExample = dynamic(() =>
 const desktopNavdesktopNavHeaderExample = dynamic(() =>
   import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-header"]),
 );
-const desktopNavdesktopNavLogoExample = dynamic(() =>
-  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-logo"]),
-);
 const tabstabsSettingsExample = dynamic(() =>
   import("./tabs/demo").then((module) => module.examples["tabs-settings"]),
 );
@@ -160,7 +157,6 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "select-field": selectselectFieldExample,
   "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,
   "desktop-nav-header": desktopNavdesktopNavHeaderExample,
-  "desktop-nav-logo": desktopNavdesktopNavLogoExample,
   "tabs-settings": tabstabsSettingsExample,
   "accordion-multiple": accordionaccordionMultipleExample,
   "accordion-separated": accordionaccordionSeparatedExample,

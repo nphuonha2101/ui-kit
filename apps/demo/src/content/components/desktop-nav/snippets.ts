@@ -254,40 +254,6 @@ export function Example() {
       </p>
     </div>
   );
-}`,
-    "desktop-nav-logo": `import { DesktopNav, type DesktopNavItem } from "@nphuonha/ui-kit";
-
-const items: DesktopNavItem[] = [
-  { value: "overview", label: "Overview" },
-  { value: "components", label: "Components" },
-  { value: "pricing", label: "Pricing" },
-];
-
-function BrandMark() {
-  return (
-    <span className="flex items-center gap-2">
-      <span className="flex size-8 items-center justify-center rounded-control bg-primary text-sm font-semibold text-primary-foreground">
-        A
-      </span>
-      <span className="text-sm font-semibold tracking-[-0.02em]">Acme</span>
-    </span>
-  );
-}
-
-export function Example() {
-  return (
-    <div className="mx-auto flex w-full max-w-2xl items-center gap-3">
-      <div className="shrink-0">
-        <BrandMark />
-      </div>
-      <DesktopNav
-        items={items}
-        defaultValue="overview"
-        aria-label="Acme navigation"
-        className="min-w-0"
-      />
-    </div>
-  );
 }`
   }
 };

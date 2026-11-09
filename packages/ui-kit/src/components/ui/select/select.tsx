@@ -81,7 +81,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     key={opt.value}
                     value={opt.value}
                     disabled={opt.disabled}
-                    className="flex cursor-default select-none items-center gap-2 rounded-control px-2.5 py-2 text-sm outline-none data-[highlighted]:bg-surface data-[selected]:bg-primary-soft data-[selected]:font-medium data-[selected]:text-primary-soft-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-45"
+                    className="flex cursor-default select-none items-center gap-2 rounded-control px-2.5 py-2 text-sm outline-none transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] data-[highlighted]:bg-surface data-[selected]:bg-primary-soft data-[selected]:font-medium data-[selected]:text-primary-soft-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-45"
                   >
                     <SelectPrimitive.ItemIndicator className="inline-flex w-4 shrink-0 items-center justify-center text-primary">
                       <CheckIcon size={14} />

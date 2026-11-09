@@ -71,9 +71,9 @@ export function Toaster({
           closeButton:
             "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground focus-visible:!outline-none focus-visible:!ring-2 focus-visible:!ring-inset focus-visible:!ring-ring/40 focus-visible:!text-foreground group-data-[removed=true]:focus-visible:!ring-0",
           actionButton:
-            "!ml-auto !mr-0 !h-8 !self-center !rounded-control !border-0 !bg-primary !px-2.5 !text-xs !font-medium !text-primary-foreground hover:!bg-primary-hover",
+            "!ml-auto !mr-0 !h-8 !self-center !rounded-control !border-0 !bg-primary !px-2.5 !text-xs !font-medium !text-primary-foreground transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] hover:!bg-primary-hover",
           cancelButton:
-            "!h-8 !self-center !rounded-control !border-0 !bg-surface !px-2.5 !text-xs !font-medium !text-foreground hover:!bg-surface-hover",
+            "!h-8 !self-center !rounded-control !border-0 !bg-surface !px-2.5 !text-xs !font-medium !text-foreground transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] hover:!bg-surface-hover",
           success: richColors ? undefined : statusIconTone.success,
           info: richColors ? undefined : statusIconTone.info,
           warning: richColors ? undefined : statusIconTone.warning,

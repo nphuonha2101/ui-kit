@@ -35,7 +35,7 @@ function SidebarLink({
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative flex h-8 items-center rounded-control px-2.5 text-[13px] transition-colors",
+        "relative flex h-8 items-center rounded-control px-2.5 text-sm transition-colors",
         active
           ? "surface-curved-soft bg-surface font-medium text-foreground"
           : "text-muted-foreground hover:bg-surface/60 hover:text-foreground",
@@ -63,7 +63,7 @@ function SidebarGroup({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className="flex h-8 items-center justify-between gap-2 rounded-control px-2.5 text-[11px] font-medium text-muted-foreground/70 transition-colors hover:bg-surface/60 hover:text-foreground"
+        className="flex h-9 items-center justify-between gap-2 rounded-control px-2.5 text-[13px] font-semibold text-foreground transition-colors hover:bg-surface/60"
       >
         <span className="truncate">{category}</span>
         <CaretDownIcon
@@ -83,7 +83,7 @@ function SidebarGroup({
         )}
       >
         <div className="min-h-0 overflow-hidden">
-          <div className="ml-3 flex flex-col gap-0.5 border-l border-border/60 pl-2 pt-0.5">
+          <div className="ml-2.5 flex flex-col gap-0.5 border-l border-border/70 pl-3 pt-0.5">
             {components.map((component) => (
               <SidebarLink
                 key={component.slug}
@@ -103,7 +103,7 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <nav className="flex flex-col gap-6">
       <div>
-        <p className="mb-2 px-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        <p className="mb-2 px-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Getting Started
         </p>
         <div className="flex flex-col gap-0.5">
@@ -114,10 +114,10 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
       </div>
 
       <div>
-        <p className="mb-2 px-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        <p className="mb-2 px-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Components
         </p>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2">
           {componentGroups.map((group) => (
             <SidebarGroup
               key={group.category}
@@ -140,13 +140,8 @@ export function DocsSidebar() {
   const current = slug ? getComponent(slug) : undefined;
 
   return (
-    <aside className="hidden w-56 shrink-0 lg:block">
+    <aside className="hidden w-60 shrink-0 lg:block">
       <div className="sticky top-20 -ml-1 max-h-[calc(100vh-5rem)] scrollbar-none overflow-y-auto py-8 pl-1 pr-4">
-        <div className="mb-5 flex items-center gap-2 px-2.5">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Documentation
-          </span>
-        </div>
         <SidebarNav />
         {current ? (
           <div className="mt-6 flex items-center gap-2 px-2.5 text-xs text-muted-foreground">

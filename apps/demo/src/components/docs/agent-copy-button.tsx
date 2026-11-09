@@ -3,19 +3,7 @@
 import * as React from "react";
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { Button } from "@nphuonha/ui-kit";
-
-async function copyText(value: string) {
-  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(value);
-  const textarea = document.createElement("textarea");
-  textarea.value = value;
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  textarea.remove();
-  return Promise.resolve();
-}
+import { copyText } from "@/lib/clipboard";
 
 export function AgentCopyButton({
   text,

@@ -249,7 +249,7 @@ export default function FormsPage() {
           </p>
           <CodeBlock code={formFieldExample} filename="FormField" />
           <div className="mt-2">
-            <PropTable props={formFieldProps} />
+            <PropTable props={formFieldProps} title="FormField" />
           </div>
         </section>
 

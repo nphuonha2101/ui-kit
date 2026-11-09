@@ -63,6 +63,11 @@ export const meta: ComponentMeta = {
       "description": "Optional supporting copy."
     },
     {
+      "name": "children",
+      "type": "ReactNode",
+      "description": "Extra content below the navigation, such as account or theme controls."
+    },
+    {
       "name": "footer",
       "type": "ReactNode",
       "description": "Actions rendered at the bottom of the menu."

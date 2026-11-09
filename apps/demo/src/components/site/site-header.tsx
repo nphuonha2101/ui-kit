@@ -12,7 +12,7 @@ import {
   PaletteIcon,
   SunIcon,
 } from "@phosphor-icons/react";
-import { IconButton, Kbd, Popover, Sheet, buttonVariants, cn } from "@nphuonha/ui-kit";
+import { IconButton, Kbd, MobileNav, Popover, buttonVariants, cn } from "@nphuonha/ui-kit";
 import { AccentPicker } from "./accent-picker";
 import { BrandLogo } from "./brand-logo";
 import { useThemeSettings } from "./providers";
@@ -99,6 +99,13 @@ export function SiteHeader() {
     }
     return current === href || current.startsWith(`${href}/`);
   };
+
+  const mobileItems = nav.map((item) => ({
+    value: item.href,
+    label: item.label,
+    href: item.href,
+  }));
+  const activeMobileHref = nav.find((item) => isActive(item.href))?.href;
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -210,78 +217,61 @@ export function SiteHeader() {
               <ArrowRightIcon size={14} />
             </Link>
 
-            <IconButton
-              aria-label="Open menu"
-              variant="ghost"
-              size="icon"
-              shape="pill"
-              className="md:hidden"
-              onClick={() => setMenuOpen(true)}
+            <MobileNav
+              open={menuOpen}
+              onOpenChange={setMenuOpen}
+              items={mobileItems}
+              value={activeMobileHref}
+              logo={<BrandLogo logoClassName="h-6" />}
+              trigger={
+                <IconButton
+                  aria-label="Open menu"
+                  variant="ghost"
+                  size="icon"
+                  shape="pill"
+                  className="md:hidden"
+                >
+                  <ListIcon size={18} />
+                </IconButton>
+              }
+              footer={
+                <Link
+                  href="/docs/installation"
+                  onClick={closeMenu}
+                  className={cn(buttonVariants({ shape: "pill" }), "w-full")}
+                >
+                  Get started
+                  <ArrowRightIcon size={14} />
+                </Link>
+              }
             >
-              <ListIcon size={18} />
-            </IconButton>
+              <div className="flex flex-col gap-5">
+                <div className="border-t border-border/60 pt-5">
+                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    Accent
+                  </p>
+                  <AccentPicker />
+                </div>
+                <div className="border-t border-border/60 pt-5">
+                  <Link
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={closeMenu}
+                    className="flex h-11 items-center gap-2.5 rounded-control px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                  >
+                    <GithubLogoIcon size={18} />
+                    GitHub repository
+                  </Link>
+                </div>
+              </div>
+            </MobileNav>
           </div>
         </div>
       </header>
 
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
-      <Sheet
-        open={menuOpen}
-        onOpenChange={setMenuOpen}
-        side="right"
-        title="Menu"
-        description="Documentation, components and theming."
-        footer={
-          <Link
-            href="/docs/installation"
-            onClick={closeMenu}
-            className={cn(buttonVariants({ shape: "pill" }), "w-full")}
-          >
-            Get started
-            <ArrowRightIcon size={14} />
-          </Link>
-        }
-      >
-        <nav className="flex flex-col gap-1">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={closeMenu}
-              aria-current={isActive(item.href) ? "page" : undefined}
-              className={cn(
-                "flex h-11 items-center rounded-control px-3 text-sm font-medium transition-colors",
-                isActive(item.href)
-                  ? "bg-primary-soft text-primary-soft-foreground"
-                  : "text-muted-foreground hover:bg-surface hover:text-foreground",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="mt-6 border-t border-border/60 pt-5">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Accent
-          </p>
-          <AccentPicker />
-        </div>
-
-        <div className="mt-6 border-t border-border/60 pt-5">
-          <Link
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noreferrer"
-            onClick={closeMenu}
-            className="flex h-11 items-center gap-2.5 rounded-control px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
-          >
-            <GithubLogoIcon size={18} />
-            GitHub repository
-          </Link>
-        </div>
-      </Sheet>
     </>
   );
 }

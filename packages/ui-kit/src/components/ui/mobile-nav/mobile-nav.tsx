@@ -22,6 +22,7 @@ export interface MobileNavProps {
   logo?: React.ReactNode;
   title?: React.ReactNode;
   description?: React.ReactNode;
+  children?: React.ReactNode;
   footer?: React.ReactNode;
   side?: "right" | "left" | "bottom";
   className?: string;
@@ -249,6 +250,7 @@ export function MobileNav({
   logo,
   title,
   description,
+  children,
   footer,
   side = "right",
   className,
@@ -297,6 +299,7 @@ export function MobileNav({
           onSelect={select}
         />
       </nav>
+      {children ? <div className="mt-6">{children}</div> : null}
     </Sheet>
   );
 }

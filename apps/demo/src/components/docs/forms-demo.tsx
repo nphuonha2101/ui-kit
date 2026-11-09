@@ -190,6 +190,7 @@ export function FormsDemo() {
             name="startDate"
             label="Start date"
             description="Pick the day the workspace should go live."
+            required
             rules={{ required: "Choose a start date" }}
             render={({ field }) => (
               <DatePicker

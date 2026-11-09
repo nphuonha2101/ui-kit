@@ -297,9 +297,11 @@ describe("Calendar", () => {
     );
 
     expect(screen.getByText("Start date")).toBeInTheDocument();
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
     expect(screen.getByText("Choose a launch date.")).toBeInTheDocument();
     expect(screen.getByRole("alert")).toHaveTextContent("A date is required.");
     expect(screen.getByRole("grid")).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByRole("grid")).toHaveAttribute("aria-required", "true");
   });
 
   it("formats month, weekday and day labels for the locale", () => {

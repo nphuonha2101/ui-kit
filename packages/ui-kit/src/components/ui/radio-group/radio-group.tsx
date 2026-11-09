@@ -17,6 +17,7 @@ export interface RadioGroupProps extends Omit<React.ComponentPropsWithoutRef<typ
   label?: React.ReactNode;
   description?: React.ReactNode;
   error?: React.ReactNode;
+  required?: boolean;
   orientation?: "vertical" | "horizontal";
   children?: React.ReactNode;
   ref?: React.Ref<HTMLDivElement>;
@@ -28,6 +29,7 @@ export function RadioGroup({
   label,
   description,
   error,
+  required,
   orientation = "vertical",
   children,
   ref,
@@ -45,11 +47,18 @@ export function RadioGroup({
       {label ? (
         <div id={labelId} className="text-sm font-medium text-foreground">
           {label}
+          {required ? (
+            <span aria-hidden="true" className="ml-0.5 text-destructive">
+              *
+            </span>
+          ) : null}
         </div>
       ) : null}
       <RadioGroupPrimitive
         {...props}
         ref={ref}
+        required={required}
+        aria-required={required || undefined}
         aria-labelledby={label ? labelId : props["aria-labelledby"]}
         aria-describedby={describedBy}
         className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap")}

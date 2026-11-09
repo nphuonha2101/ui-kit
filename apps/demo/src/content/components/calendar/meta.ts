@@ -103,7 +103,7 @@ export const meta: ComponentMeta = {
     {
       "name": "required",
       "type": "boolean",
-      "description": "Marks the label and grid as required."
+      "description": "Marks the label and grid as required. Use form rules to enforce the value."
     },
     {
       "name": "footer",

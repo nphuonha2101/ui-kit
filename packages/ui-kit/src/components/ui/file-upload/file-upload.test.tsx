@@ -397,9 +397,12 @@ describe("FileUpload", () => {
     expect(ref.current?.type).toBe("file");
   });
 
-  it("marks the native input as required", () => {
-    const { container } = render(<FileUpload required />);
+  it("marks the label and native input as required", () => {
+    const { container } = render(
+      <FileUpload label="Attachments" required />,
+    );
     expect(fileInput(container)).toBeRequired();
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
   });
 
   it("appends to controlled files and reports the exact list", () => {

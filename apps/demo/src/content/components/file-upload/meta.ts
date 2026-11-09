@@ -81,7 +81,7 @@ export const meta: ComponentMeta = {
     {
       "name": "required",
       "type": "boolean",
-      "description": "Marks the field as required and sets the native input's required flag."
+      "description": "Marks the label as required and sets the native input's required flag."
     },
     {
       "name": "title",

@@ -14,4 +14,19 @@ describe("Switch", () => {
     await user.click(control);
     expect(control).toBeChecked();
   });
+
+  it("marks required and forwards native required", () => {
+    const { container } = render(
+      <Switch label="Notifications" required />,
+    );
+
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(screen.getByRole("switch")).toHaveAttribute(
+      "aria-required",
+      "true",
+    );
+    expect(
+      container.querySelector('input[type="checkbox"]'),
+    ).toBeRequired();
+  });
 });

@@ -5,9 +5,10 @@ import { Field, Select } from "@nphuonha/ui-kit";
 function SelectDemo() {
   return (
     <div className="mx-auto w-full max-w-sm">
-      <Field label="Framework">
+      <Field label="Framework" required>
         <Select
           placeholder="Choose one"
+          required
           defaultValue="next"
           options={[
             { value: "next", label: "Next.js" },

@@ -33,6 +33,11 @@ export const meta: ComponentMeta = {
       "description": "Shows the mixed state."
     },
     {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the label and native input as required."
+    },
+    {
       "name": "error",
       "type": "boolean",
       "description": "Applies the invalid visual state."

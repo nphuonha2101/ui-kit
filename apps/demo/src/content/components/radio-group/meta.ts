@@ -43,6 +43,11 @@ export const meta: ComponentMeta = {
       "description": "Group error message."
     },
     {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the group label and native input as required."
+    },
+    {
       "name": "orientation",
       "type": "\"vertical\" | \"horizontal\"",
       "default": "\"vertical\"",

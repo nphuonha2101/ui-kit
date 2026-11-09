@@ -152,6 +152,7 @@ import { Button, Card, CardContent, Input } from "@nphuonha/ui-kit";
 - Do not hardcode colors unless you are overriding a documented token.
 - Use cn from "@nphuonha/ui-kit" when merging class names.
 - Buttons accept startIcon/endIcon. IconButton requires an aria-label. BottomNav and DesktopNav items accept activeIcon for the selected state.
+- For required fields, set required on FormField (RHF) or Field (native) together with validation rules; controls that own their label also accept required standalone.
 - Use generateAccentVars(color, mode) or accentStyle(color, mode) to create an accent palette; put the variables on the root that carries data-ui="kit".
 - For smaller bundles, import from a component subpath: @nphuonha/ui-kit/button, @nphuonha/ui-kit/input, @nphuonha/ui-kit/dialog.
 - Keep overlays inside the data-ui="kit" scope so dialogs, sheets, popovers and tooltips inherit the theme.

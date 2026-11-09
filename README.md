@@ -117,6 +117,8 @@ import { Form, FormField } from "@nphuonha/ui-kit/form";
 </Form>
 ```
 
+For required fields, set `required` on controls that own their label (`Checkbox`, `Switch`, `RadioGroup`, `NumberField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea` and `Select`. With `FormField`, `required` controls the red mark and `rules` controls validation.
+
 `react-hook-form` is an optional peer dependency: `npm install react-hook-form`. Full guide: https://ui.nphuonha.id.vn/docs/forms
 
 ## Navigation

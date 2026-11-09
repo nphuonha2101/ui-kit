@@ -10,10 +10,11 @@ export interface CheckboxProps
   label?: React.ReactNode;
   description?: React.ReactNode;
   error?: boolean;
+  required?: boolean;
 }
 
 export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
-  ({ className, label, description, error, id, ...props }, ref) => {
+  ({ className, label, description, error, required, id, ...props }, ref) => {
     const CheckIcon = useKitIcon("check");
     const MinusIcon = useKitIcon("minus");
     const autoId = React.useId();
@@ -23,6 +24,8 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
       <CheckboxPrimitive.Root
         ref={ref}
         id={controlId}
+        required={required}
+        aria-required={required || undefined}
         aria-invalid={error || undefined}
         aria-describedby={descriptionId}
         className={cn(
@@ -46,6 +49,11 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
           {label ? (
             <label htmlFor={controlId} className="cursor-pointer text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-45">
               {label}
+              {required ? (
+                <span aria-hidden="true" className="ml-0.5 text-destructive">
+                  *
+                </span>
+              ) : null}
             </label>
           ) : null}
           {description ? <p id={descriptionId} className="text-xs text-muted-foreground">{description}</p> : null}

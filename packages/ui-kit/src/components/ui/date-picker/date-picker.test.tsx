@@ -108,6 +108,11 @@ describe("DatePicker", () => {
     ).toBeDisabled();
   });
 
+  it("marks the label as required", () => {
+    render(<DatePicker label="Start date" required />);
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+  });
+
   it("formats the trigger label for the locale", () => {
     const date = new Date(2026, 0, 15);
     render(<DatePicker locale="vi-VN" defaultValue={date} />);

@@ -127,6 +127,8 @@ For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use 
 import { Form, FormField } from "@nphuonha/ui-kit/form";
 ```
 
+For required fields, set `required` on controls that own their label (`Checkbox`, `Switch`, `RadioGroup`, `NumberField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea` and `Select`. With `FormField`, `required` controls the red mark and `rules` controls validation.
+
 Install `react-hook-form` (optional peer dependency) when using the `form` entry.
 
 Live previews, code and API reference: https://ui.nphuonha.id.vn

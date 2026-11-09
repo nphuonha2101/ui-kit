@@ -7,6 +7,7 @@ function RadioGroupDemo() {
     <div className="mx-auto w-full max-w-sm">
       <RadioGroup
         label="Plan"
+        required
         defaultValue="pro"
         options={[
           { value: "free", label: "Free", description: "Basics for personal projects" },

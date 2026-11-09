@@ -39,6 +39,11 @@ export const meta: ComponentMeta = {
       "description": "Disables the trigger."
     },
     {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the native control as required. The visible * comes from Field or FormField."
+    },
+    {
       "name": "error",
       "type": "boolean",
       "description": "Applies the invalid visual state."

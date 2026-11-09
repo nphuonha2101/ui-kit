@@ -25,4 +25,23 @@ describe("RadioGroup", () => {
     await user.click(pro);
     expect(pro).toBeChecked();
   });
+
+  it("marks required and exposes aria-required", () => {
+    render(
+      <RadioGroup
+        label="Plan"
+        required
+        options={[
+          { value: "free", label: "Free" },
+          { value: "pro", label: "Pro" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(screen.getByRole("radiogroup", { name: "Plan" })).toHaveAttribute(
+      "aria-required",
+      "true",
+    );
+  });
 });

@@ -139,6 +139,7 @@ const form = useForm<Values>({ defaultValues: { startDate: null } });
       control={form.control}
       name="startDate"
       label="Start date"
+      required
       rules={{ required: "Choose a start date" }}
       render={({ field }) => (
         <DatePicker
@@ -235,6 +236,14 @@ export default function FormsPage() {
             and{" "}
             <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">aria-invalid</code>{" "}
             into the rendered control.
+          </p>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Use{" "}
+            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">required</code>{" "}
+            on FormField for the red mark, and{" "}
+            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">rules</code>{" "}
+            for validation. Do not also pass label or required to the child; keep label
+            ownership in one place.
           </p>
           <CodeBlock code={formFieldExample} filename="FormField" />
           <div className="mt-2">

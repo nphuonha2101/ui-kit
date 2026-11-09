@@ -27,4 +27,22 @@ describe("Select", () => {
 
     expect(trigger).toHaveTextContent("Vite");
   });
+
+  it("forwards required to the trigger", () => {
+    render(
+      <Select
+        aria-label="Framework"
+        required
+        options={[
+          { value: "next", label: "Next.js" },
+          { value: "vite", label: "Vite" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole("combobox", { name: "Framework" })).toHaveAttribute(
+      "aria-required",
+      "true",
+    );
+  });
 });

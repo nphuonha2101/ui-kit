@@ -92,7 +92,7 @@ Variants live in server-safe `*-variants.ts` files and can be used from server c
 
 ## Icons
 
-The kit uses **Phosphor** for its internal affordances (check, minus, chevron, close, spinner). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
+The kit uses **Phosphor** for its internal affordances (check, minus, chevron, chevronDown, close, spinner, user). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
 
 ```tsx
 <Button startIcon={Plus}>New item</Button>
@@ -117,7 +117,7 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Button`, `IconButton`, `Input`, `Textarea`, `NumberField`, `Field`/`Label`, `Checkbox`, `RadioGroup`, `Switch`, `Select`, `Slider`, `Dialog`, `AlertDialog`, `Sheet`, `Popover`, `Tooltip`, `Table`, `ScrollArea`, `Tabs`, `ToggleGroup`, `BottomNav`, `DesktopNav`, `Breadcrumb`, `Pagination`, `Card` (+Header/Title/Description/Content/Footer), `Badge`, `Kbd`/`KbdGroup`, `EmptyState`, `Alert`, `Separator`, `Spinner`, `Toaster`/`toast`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 

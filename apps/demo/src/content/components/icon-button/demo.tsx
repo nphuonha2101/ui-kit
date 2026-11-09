@@ -10,6 +10,7 @@ function IconButtonDemo() {
       <IconButton aria-label="Copy" variant="secondary"><CopyIcon size={18} /></IconButton>
       <IconButton aria-label="Like" variant="soft"><HeartIcon size={18} /></IconButton>
       <IconButton aria-label="Share" variant="outline"><ShareIcon size={18} /></IconButton>
+      <IconButton aria-label="Disabled share" variant="outline" disabled><ShareIcon size={18} /></IconButton>
     </div>
   );
 }

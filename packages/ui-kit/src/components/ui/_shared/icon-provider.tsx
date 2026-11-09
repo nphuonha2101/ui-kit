@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  CaretDownIcon,
   CaretLeftIcon,
   CaretRightIcon,
   CaretUpDownIcon,
@@ -9,6 +10,7 @@ import {
   MinusIcon,
   PlusIcon,
   SpinnerIcon,
+  UserIcon,
   XIcon,
 } from "@phosphor-icons/react";
 
@@ -17,10 +19,12 @@ export type KitIconName =
   | "minus"
   | "plus"
   | "chevron"
+  | "chevronDown"
   | "chevronLeft"
   | "chevronRight"
   | "close"
-  | "spinner";
+  | "spinner"
+  | "user";
 
 export type KitIcon = React.ComponentType<
   { size?: number } & React.SVGProps<SVGSVGElement>
@@ -31,10 +35,12 @@ const defaultIcons: Record<KitIconName, KitIcon> = {
   minus: (props) => <MinusIcon {...props} weight="bold" />,
   plus: (props) => <PlusIcon {...props} weight="bold" />,
   chevron: (props) => <CaretUpDownIcon {...props} weight="bold" />,
+  chevronDown: (props) => <CaretDownIcon {...props} weight="bold" />,
   chevronLeft: (props) => <CaretLeftIcon {...props} weight="bold" />,
   chevronRight: (props) => <CaretRightIcon {...props} weight="bold" />,
   close: (props) => <XIcon {...props} weight="bold" />,
   spinner: SpinnerIcon,
+  user: UserIcon,
 };
 
 const IconContext = React.createContext<Partial<Record<KitIconName, KitIcon>>>({});

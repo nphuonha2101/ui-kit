@@ -4,7 +4,9 @@ import type * as React from "react";
 import dynamic from "next/dynamic";
 
 const buttonDemo = dynamic(() => import("./button/demo").then((module) => module.demo));
+const buttonLinkDemo = dynamic(() => import("./button-link/demo").then((module) => module.demo));
 const iconButtonDemo = dynamic(() => import("./icon-button/demo").then((module) => module.demo));
+const toggleDemo = dynamic(() => import("./toggle/demo").then((module) => module.demo));
 const toggleGroupDemo = dynamic(() => import("./toggle-group/demo").then((module) => module.demo));
 const checkboxDemo = dynamic(() => import("./checkbox/demo").then((module) => module.demo));
 const fieldDemo = dynamic(() => import("./field/demo").then((module) => module.demo));
@@ -26,6 +28,8 @@ const breadcrumbDemo = dynamic(() => import("./breadcrumb/demo").then((module) =
 const desktopNavDemo = dynamic(() => import("./desktop-nav/demo").then((module) => module.demo));
 const paginationDemo = dynamic(() => import("./pagination/demo").then((module) => module.demo));
 const tabsDemo = dynamic(() => import("./tabs/demo").then((module) => module.demo));
+const accordionDemo = dynamic(() => import("./accordion/demo").then((module) => module.demo));
+const avatarDemo = dynamic(() => import("./avatar/demo").then((module) => module.demo));
 const badgeDemo = dynamic(() => import("./badge/demo").then((module) => module.demo));
 const cardDemo = dynamic(() => import("./card/demo").then((module) => module.demo));
 const kbdDemo = dynamic(() => import("./kbd/demo").then((module) => module.demo));
@@ -34,11 +38,22 @@ const separatorDemo = dynamic(() => import("./separator/demo").then((module) => 
 const tableDemo = dynamic(() => import("./table/demo").then((module) => module.demo));
 const alertDemo = dynamic(() => import("./alert/demo").then((module) => module.demo));
 const emptyStateDemo = dynamic(() => import("./empty-state/demo").then((module) => module.demo));
+const progressDemo = dynamic(() => import("./progress/demo").then((module) => module.demo));
+const skeletonDemo = dynamic(() => import("./skeleton/demo").then((module) => module.demo));
 const spinnerDemo = dynamic(() => import("./spinner/demo").then((module) => module.demo));
 const toasterDemo = dynamic(() => import("./toaster/demo").then((module) => module.demo));
 
 const buttonbuttonSizesExample = dynamic(() =>
   import("./button/demo").then((module) => module.examples["button-sizes"]),
+);
+const buttonbuttonStatesExample = dynamic(() =>
+  import("./button/demo").then((module) => module.examples["button-states"]),
+);
+const buttonLinkbuttonLinkNextExample = dynamic(() =>
+  import("./button-link/demo").then((module) => module.examples["button-link-next"]),
+);
+const toggletoggleSizesExample = dynamic(() =>
+  import("./toggle/demo").then((module) => module.examples["toggle-sizes"]),
 );
 const toggleGrouptoggleGroupMultipleExample = dynamic(() =>
   import("./toggle-group/demo").then((module) => module.examples["toggle-group-multiple"]),
@@ -49,11 +64,32 @@ const selectselectFieldExample = dynamic(() =>
 const tabstabsSettingsExample = dynamic(() =>
   import("./tabs/demo").then((module) => module.examples["tabs-settings"]),
 );
+const accordionaccordionMultipleExample = dynamic(() =>
+  import("./accordion/demo").then((module) => module.examples["accordion-multiple"]),
+);
+const accordionaccordionSeparatedExample = dynamic(() =>
+  import("./accordion/demo").then((module) => module.examples["accordion-separated"]),
+);
+const avataravatarSizesExample = dynamic(() =>
+  import("./avatar/demo").then((module) => module.examples["avatar-sizes"]),
+);
 const cardcardProfileExample = dynamic(() =>
   import("./card/demo").then((module) => module.examples["card-profile"]),
 );
 const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
   import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
+);
+const progressprogressIndeterminateExample = dynamic(() =>
+  import("./progress/demo").then((module) => module.examples["progress-indeterminate"]),
+);
+const progressprogressTonesExample = dynamic(() =>
+  import("./progress/demo").then((module) => module.examples["progress-tones"]),
+);
+const skeletonskeletonLinesExample = dynamic(() =>
+  import("./skeleton/demo").then((module) => module.examples["skeleton-lines"]),
+);
+const skeletonskeletonCardExample = dynamic(() =>
+  import("./skeleton/demo").then((module) => module.examples["skeleton-card"]),
 );
 const toastertoastPromiseExample = dynamic(() =>
   import("./toaster/demo").then((module) => module.examples["toast-promise"]),
@@ -61,7 +97,9 @@ const toastertoastPromiseExample = dynamic(() =>
 
 export const demoMap: Record<string, React.ComponentType> = {
   "button": buttonDemo,
+  "button-link": buttonLinkDemo,
   "icon-button": iconButtonDemo,
+  "toggle": toggleDemo,
   "toggle-group": toggleGroupDemo,
   "checkbox": checkboxDemo,
   "field": fieldDemo,
@@ -83,6 +121,8 @@ export const demoMap: Record<string, React.ComponentType> = {
   "desktop-nav": desktopNavDemo,
   "pagination": paginationDemo,
   "tabs": tabsDemo,
+  "accordion": accordionDemo,
+  "avatar": avatarDemo,
   "badge": badgeDemo,
   "card": cardDemo,
   "kbd": kbdDemo,
@@ -91,17 +131,29 @@ export const demoMap: Record<string, React.ComponentType> = {
   "table": tableDemo,
   "alert": alertDemo,
   "empty-state": emptyStateDemo,
+  "progress": progressDemo,
+  "skeleton": skeletonDemo,
   "spinner": spinnerDemo,
   "toaster": toasterDemo,
 };
 
 export const exampleMap: Record<string, React.ComponentType> = {
   "button-sizes": buttonbuttonSizesExample,
+  "button-states": buttonbuttonStatesExample,
+  "button-link-next": buttonLinkbuttonLinkNextExample,
+  "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
   "select-field": selectselectFieldExample,
   "tabs-settings": tabstabsSettingsExample,
+  "accordion-multiple": accordionaccordionMultipleExample,
+  "accordion-separated": accordionaccordionSeparatedExample,
+  "avatar-sizes": avataravatarSizesExample,
   "card-profile": cardcardProfileExample,
   "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
+  "progress-indeterminate": progressprogressIndeterminateExample,
+  "progress-tones": progressprogressTonesExample,
+  "skeleton-lines": skeletonskeletonLinesExample,
+  "skeleton-card": skeletonskeletonCardExample,
   "toast-promise": toastertoastPromiseExample,
 };
 

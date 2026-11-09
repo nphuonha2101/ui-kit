@@ -210,3 +210,44 @@
   background-image: none;
   box-shadow: none;
 }
+
+/* Accordion panel height animation. Base UI exposes the measured height as
+ * --accordion-panel-height while the panel opens and closes. */
+@utility accordion-panel {
+  overflow: hidden;
+
+  &[data-open] {
+    animation: kit-accordion-down var(--duration-ui-slow) var(--ease-out-ui);
+  }
+
+  &[data-closed] {
+    animation: kit-accordion-up var(--duration-ui-slow) var(--ease-out-ui);
+  }
+}
+
+@keyframes kit-accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--accordion-panel-height);
+  }
+}
+
+@keyframes kit-accordion-up {
+  from {
+    height: var(--accordion-panel-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes kit-progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(350%);
+  }
+}

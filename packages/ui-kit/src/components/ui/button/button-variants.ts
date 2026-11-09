@@ -1,22 +1,22 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-[-0.01em] transition-[background-color,color,box-shadow,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-45 data-[loading]:opacity-80 motion-safe:active:scale-[0.97]",
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-[-0.01em] transition-[background-color,color,box-shadow,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-45 disabled:shadow-none aria-disabled:cursor-not-allowed aria-disabled:opacity-45 data-[loading]:opacity-80 motion-safe:active:scale-[0.97] disabled:motion-safe:active:scale-100",
   {
     variants: {
       variant: {
         primary:
-          "surface-curved bg-primary text-primary-foreground shadow-[var(--shadow-raised)] hover:bg-primary-hover active:bg-primary-active",
+          "surface-curved bg-primary text-primary-foreground shadow-[var(--shadow-raised)] hover:bg-primary-hover active:bg-primary-active disabled:hover:bg-primary",
         secondary:
-          "surface-curved-soft bg-field text-field-foreground hover:bg-field-hover",
+          "surface-curved-soft bg-field text-field-foreground hover:bg-field-hover disabled:hover:bg-field",
         outline:
-          "bg-transparent text-foreground shadow-[inset_0_0_0_1.5px_var(--border)] hover:bg-surface",
+          "bg-transparent text-foreground shadow-[inset_0_0_0_1.5px_var(--border)] hover:bg-surface disabled:hover:bg-transparent",
         ghost:
-          "bg-transparent text-foreground hover:bg-surface active:bg-surface-hover",
+          "bg-transparent text-foreground hover:bg-surface active:bg-surface-hover disabled:hover:bg-transparent",
         danger:
-          "surface-curved bg-destructive text-destructive-foreground shadow-[var(--shadow-raised)] hover:bg-destructive/90",
+          "surface-curved bg-destructive text-destructive-foreground shadow-[var(--shadow-raised)] hover:bg-destructive/90 disabled:hover:bg-destructive",
         soft:
-          "surface-curved-soft bg-primary-soft text-primary-soft-foreground hover:bg-primary-soft/75",
+          "surface-curved-soft bg-primary-soft text-primary-soft-foreground hover:bg-primary-soft/75 disabled:hover:bg-primary-soft",
       },
       size: {
         sm: "h-9 px-3.5 text-[13px]",

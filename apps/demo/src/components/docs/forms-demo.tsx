@@ -5,6 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import {
   Button,
   Checkbox,
+  DatePicker,
+  FileUpload,
   Input,
   NumberField,
   RadioGroup,
@@ -23,6 +25,8 @@ type FormValues = {
   seats: number;
   volume: number;
   notifications: boolean;
+  startDate: Date | null;
+  attachments: File[];
   terms: boolean;
 };
 
@@ -48,6 +52,8 @@ export function FormsDemo() {
       seats: 3,
       volume: 60,
       notifications: true,
+      startDate: new Date(2026, 10, 15),
+      attachments: [],
       terms: false,
     },
   });
@@ -56,7 +62,9 @@ export function FormsDemo() {
   const onSubmit = async (values: FormValues) => {
     await new Promise((resolve) => window.setTimeout(resolve, 500));
     toast.success("Workspace created", {
-      description: `${values.name} · ${values.seats} seats`,
+      description: `${values.name} · ${values.seats} seats · ${
+        values.attachments.length
+      } files`,
     });
   };
 
@@ -73,6 +81,7 @@ export function FormsDemo() {
               control={control}
               name="name"
               label="Workspace name"
+              required
               rules={{ required: "Workspace name is required" }}
               render={({ field }) => (
                 <Input placeholder="Acme Studio" {...field} />
@@ -82,6 +91,7 @@ export function FormsDemo() {
               control={control}
               name="email"
               label="Work email"
+              required
               rules={{
                 required: "Work email is required",
                 pattern: {
@@ -100,6 +110,7 @@ export function FormsDemo() {
               control={control}
               name="role"
               label="Role"
+              required
               rules={{ required: "Choose a role" }}
               render={({ field }) => (
                 <Select
@@ -179,6 +190,41 @@ export function FormsDemo() {
 
           <FormField
             control={control}
+            name="startDate"
+            label="Start date"
+            description="Pick the day the workspace should go live."
+            required
+            rules={{ required: "Choose a start date" }}
+            render={({ field }) => (
+              <DatePicker
+                locale="en-US"
+                value={field.value}
+                onValueChange={field.onChange}
+                onBlur={field.onBlur}
+                clearable
+              />
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="attachments"
+            label="Attachments"
+            description="Optional PDF or image files, up to 5 MB each."
+            render={({ field }) => (
+              <FileUpload
+                files={field.value}
+                onFilesChange={field.onChange}
+                onBlur={field.onBlur}
+                accept=".pdf,image/*"
+                maxFiles={3}
+                maxSize={5 * 1024 * 1024}
+              />
+            )}
+          />
+
+          <FormField
+            control={control}
             name="terms"
             rules={{ required: "Please accept the terms" }}
             render={({ field }) => (
@@ -188,6 +234,7 @@ export function FormsDemo() {
                 onCheckedChange={field.onChange}
                 onBlur={field.onBlur}
                 label="I agree to the terms and privacy policy."
+                required
               />
             )}
           />

@@ -17,4 +17,26 @@ describe("NumberField", () => {
     await user.click(screen.getByRole("button", { name: "Decrease value" }));
     expect(input).toHaveValue("2");
   });
+
+  it("marks required and links description and error messages", () => {
+    render(
+      <NumberField
+        label="Quantity"
+        description="How many seats?"
+        error="Quantity is required"
+        required
+      />,
+    );
+
+    const input = screen.getByRole("textbox", { name: "Quantity" });
+    const description = screen.getByText("How many seats?");
+    const error = screen.getByRole("alert");
+    const describedBy = input.getAttribute("aria-describedby") ?? "";
+
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(input).toBeRequired();
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(describedBy).toContain(description.id);
+    expect(describedBy).toContain(error.id);
+  });
 });

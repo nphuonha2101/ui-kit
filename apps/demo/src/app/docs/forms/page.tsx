@@ -61,8 +61,8 @@ import { Field, Input } from "@nphuonha/ui-kit";
 
 const { register, handleSubmit, formState: { errors } } = useForm<Values>();
 
-<form onSubmit={handleSubmit(onSubmit)}>
-  <Field label="Email" error={errors.email?.message}>
+<form onSubmit={handleSubmit(onSubmit)} noValidate>
+  <Field label="Email" required error={errors.email?.message}>
     <Input
       type="email"
       {...register("email", { required: "Email is required" })}
@@ -82,6 +82,7 @@ const form = useForm<Values>();
       control={form.control}
       name="email"
       label="Email"
+      required
       rules={{ required: "Email is required" }}
       render={({ field }) => <Input type="email" {...field} />}
     />
@@ -96,6 +97,7 @@ import { FormField } from "@nphuonha/ui-kit/form";
   control={control}
   name="role"
   label="Role"
+  required
   rules={{ required: "Choose a role" }}
   render={({ field }) => (
     <Select
@@ -123,6 +125,58 @@ import { RadioGroup } from "@nphuonha/ui-kit";
       onBlur={field.onBlur}
       error={fieldState.error?.message}
       options={plans}
+    />
+  )}
+/>`;
+
+const datePickerExample = `import { useForm } from "react-hook-form";
+import { Button, DatePicker } from "@nphuonha/ui-kit";
+import { Form, FormField } from "@nphuonha/ui-kit/form";
+
+const form = useForm<Values>({ defaultValues: { startDate: null } });
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)}>
+    <FormField
+      control={form.control}
+      name="startDate"
+      label="Start date"
+      required
+      rules={{ required: "Choose a start date" }}
+      render={({ field }) => (
+        <DatePicker
+          value={field.value}
+          onValueChange={field.onChange}
+          onBlur={field.onBlur}
+          clearable
+        />
+      )}
+    />
+    <Button type="submit">Save</Button>
+  </form>
+</Form>`;
+
+const fileUploadExample = `import { useForm } from "react-hook-form";
+import { FileUpload } from "@nphuonha/ui-kit";
+import { FormField } from "@nphuonha/ui-kit/form";
+
+const form = useForm<Values>({
+  defaultValues: { attachments: [] as File[] },
+});
+
+<FormField
+  control={form.control}
+  name="attachments"
+  label="Attachments"
+  rules={{ validate: (files) => files.length > 0 || "Add a file" }}
+  render={({ field }) => (
+    <FileUpload
+      files={field.value}
+      onFilesChange={field.onChange}
+      onBlur={field.onBlur}
+      accept=".pdf,image/*"
+      maxFiles={3}
+      maxSize={5 * 1024 * 1024}
     />
   )}
 />`;
@@ -179,10 +233,19 @@ export default function FormsPage() {
             <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">FormField</code>{" "}
             wraps Controller and renders the label, description and error. It also injects{" "}
             <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">id</code>,{" "}
+            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">aria-labelledby</code>,{" "}
             <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">aria-describedby</code>{" "}
             and{" "}
             <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">aria-invalid</code>{" "}
             into the rendered control.
+          </p>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Use{" "}
+            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">required</code>{" "}
+            on FormField for the red mark, and{" "}
+            <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-xs">rules</code>{" "}
+            for validation. Do not also pass label or required to the child; keep label
+            ownership in one place.
           </p>
           <CodeBlock code={formFieldExample} filename="FormField" />
           <div className="mt-2">
@@ -195,8 +258,9 @@ export default function FormsPage() {
             Custom controls
           </h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            Select, Checkbox, Switch, Slider and NumberField use value/onValueChange
-            or checked/onCheckedChange. Map the Controller field explicitly:
+            DatePicker, Checkbox, FileUpload, NumberField, Select, Slider and Switch use
+            value/onValueChange or checked/onCheckedChange. Map the Controller field
+            explicitly:
           </p>
           <CodeBlock code={customExample} filename="Select with FormField" />
           <p className="text-sm leading-7 text-muted-foreground">
@@ -204,6 +268,12 @@ export default function FormsPage() {
             better fit:
           </p>
           <CodeBlock code={controllerExample} filename="RadioGroup with Controller" />
+          <p className="text-sm leading-7 text-muted-foreground">
+            DatePicker and FileUpload work with FormField too. FormField forwards the
+            field id, aria attributes and validation state to both controls.
+          </p>
+          <CodeBlock code={datePickerExample} filename="DatePicker with FormField" />
+          <CodeBlock code={fileUploadExample} filename="FileUpload with FormField" />
         </section>
 
         <section className="flex flex-col gap-3">
@@ -212,7 +282,7 @@ export default function FormsPage() {
           </h2>
           <p className="text-sm leading-7 text-muted-foreground">
             A complete form with native inputs, a select, number field, slider,
-            switch, checkbox and validation.
+            switch, checkbox, date picker, file upload and validation.
           </p>
           <div className="mt-2">
             <FormsDemo />

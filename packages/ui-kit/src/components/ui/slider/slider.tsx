@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
-import { cn } from "../../../lib/utils";
+import { cn, hasErrorContent } from "../../../lib/utils";
 
 export type SliderValue = number | readonly number[];
 
@@ -32,6 +32,7 @@ export interface SliderProps<Value extends SliderValue = number> {
   ref?: React.Ref<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   "aria-label"?: string;
+  "aria-labelledby"?: string;
   "aria-describedby"?: string;
   "aria-invalid"?: boolean;
 }
@@ -57,9 +58,27 @@ export function Slider<Value extends SliderValue = number>({
   ref,
   onBlur,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   "aria-invalid": ariaInvalid,
 }: SliderProps<Value>) {
+  const autoId = React.useId();
+  const fieldId = id ?? autoId;
+  const hasErrorMessage = hasErrorContent(error);
+  const descriptionId = description ? `${fieldId}-description` : undefined;
+  const errorId = hasErrorMessage ? `${fieldId}-error` : undefined;
+  const describedBy =
+    [ariaDescribedBy, descriptionId, errorId].filter(Boolean).join(" ") ||
+    undefined;
+  const invalid = Boolean(error) || Boolean(ariaInvalid);
+  const syncInputInvalid = React.useCallback(
+    (node: HTMLInputElement | null) => {
+      if (!node) return;
+      if (invalid) node.setAttribute("aria-invalid", "true");
+      else node.removeAttribute("aria-invalid");
+    },
+    [invalid],
+  );
   const rawValue = value ?? defaultValue;
   const thumbCount = Array.isArray(rawValue) ? rawValue.length : 1;
   const vertical = orientation === "vertical";
@@ -77,11 +96,12 @@ export function Slider<Value extends SliderValue = number>({
         disabled={disabled}
         orientation={orientation}
         name={name}
-        id={id}
+        id={fieldId}
         onBlur={onBlur}
         aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-        aria-invalid={error ? true : ariaInvalid || undefined}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={describedBy}
+        aria-invalid={invalid || undefined}
         className="relative flex w-full select-none flex-col gap-2 data-[disabled]:opacity-45"
       >
         {label || showValue ? (
@@ -128,6 +148,11 @@ export function Slider<Value extends SliderValue = number>({
             <SliderPrimitive.Thumb
               key={index}
               index={index}
+              aria-label={ariaLabel}
+              aria-labelledby={ariaLabelledBy}
+              aria-describedby={describedBy}
+              aria-invalid={invalid || undefined}
+              inputRef={syncInputInvalid}
               className="surface-curved-pill block h-5 w-7 rounded-pill bg-card shadow-[var(--shadow-raised)] ring-1 ring-border/60 outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             />
           ))}
@@ -151,9 +176,13 @@ export function Slider<Value extends SliderValue = number>({
         ) : null}
       </SliderPrimitive.Root>
 
-      {description ? <p className="text-xs text-muted-foreground">{description}</p> : null}
-      {error && typeof error !== "boolean" ? (
-        <p role="alert" className="text-xs font-medium text-destructive">
+      {description ? (
+        <p id={descriptionId} className="text-xs text-muted-foreground">
+          {description}
+        </p>
+      ) : null}
+      {hasErrorMessage ? (
+        <p id={errorId} role="alert" className="text-xs font-medium text-destructive">
           {error}
         </p>
       ) : null}

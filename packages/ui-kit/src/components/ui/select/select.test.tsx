@@ -27,4 +27,55 @@ describe("Select", () => {
 
     expect(trigger).toHaveTextContent("Vite");
   });
+
+  it("renders the invalid state from error or aria-invalid", () => {
+    const { rerender } = render(
+      <Select
+        aria-label="Framework"
+        error
+        options={[{ value: "next", label: "Next.js" }]}
+      />,
+    );
+
+    expect(screen.getByRole("combobox")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
+    expect(screen.getByRole("combobox")).toHaveClass("bg-destructive/10");
+
+    rerender(
+      <Select
+        aria-label="Framework"
+        aria-invalid
+        options={[{ value: "next", label: "Next.js" }]}
+      />,
+    );
+
+    expect(screen.getByRole("combobox")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
+  });
+
+  it("forwards required to the trigger and native input", () => {
+    const { container } = render(
+      <Select
+        aria-label="Framework"
+        name="framework"
+        required
+        options={[
+          { value: "next", label: "Next.js" },
+          { value: "vite", label: "Vite" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole("combobox", { name: "Framework" })).toHaveAttribute(
+      "aria-required",
+      "true",
+    );
+    expect(
+      container.querySelector('input[name="framework"]'),
+    ).toBeRequired();
+  });
 });

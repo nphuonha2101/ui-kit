@@ -33,9 +33,14 @@ export const meta: ComponentMeta = {
       "description": "Shows the mixed state."
     },
     {
-      "name": "error",
+      "name": "required",
       "type": "boolean",
-      "description": "Applies the invalid visual state."
+      "description": "Marks the label and native input as required."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
     },
     {
       "name": "disabled",

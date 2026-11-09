@@ -28,6 +28,90 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.8.0",
+    date: "2026-11-09",
+    breaking: false,
+    summary:
+      "Additive release: Calendar, DatePicker and FileUpload, consistent required marks and error wiring across form controls, and stronger Field/FormField integration. Existing APIs keep working.",
+    changes: [
+      {
+        id: "form-components-0-8-0",
+        kind: "additive",
+        surface: "Calendar / DatePicker / FileUpload",
+        before:
+          "Date pickers and file uploads had to be composed manually from Popover, Calendar and a native file input.",
+        after:
+          'import { Calendar, DatePicker, FileUpload } from "@nphuonha/ui-kit";',
+        find: 'from "@nphuonha/ui-kit"',
+        fix: 'Nothing required. DatePicker is the input-style popup field; Calendar stays inline for single/range grids. FileUpload is UI-only and reports File[] through onFilesChange.',
+      },
+      {
+        id: "required-marks",
+        kind: "behavior",
+        surface: "Checkbox / Switch / RadioGroup / Select / Field",
+        before:
+          "Some controls accepted required for native validation but did not render the red mark. Field did not forward required to its control.",
+        after:
+          '<Checkbox label="Terms" required />\n\n<Field label="Email" required><Input /></Field>',
+        find: "<Checkbox",
+        fix: "Nothing required. Label-owning controls and Field now render the mark and forward required. With FormField, keep required for the mark and rules for validation.",
+      },
+      {
+        id: "formfield-aria-wiring",
+        kind: "behavior",
+        surface: "FormField",
+        before:
+          "FormField always injected aria-invalid/aria-describedby and error booleans, which could override a child's own state and create dangling aria references.",
+        after:
+          '<FormField control={control} name="email" label="Email" required rules={{ required: "Email is required" }} render={({ field }) => <Input {...field} />} />',
+        find: "<FormField",
+        fix: "Nothing required. Keep label/required/error on FormField and value/onChange/onBlur on the child. Do not pass the same error message to both.",
+      },
+      {
+        id: "checkbox-switch-errors",
+        kind: "additive",
+        surface: "Checkbox / Switch",
+        before:
+          "error only toggled the invalid style; it could not render or link an error message.",
+        after: '<Checkbox label="Terms" error="You must accept the terms" />',
+        find: "<Checkbox",
+        fix: "Nothing required. error now accepts a ReactNode, renders role=alert and links the message with aria-describedby.",
+      },
+      {
+        id: "slider-aria",
+        kind: "behavior",
+        surface: "Slider",
+        before:
+          "FormField labels and error/description ids were not forwarded to the range input, leaving it unnamed or unlinked.",
+        after:
+          '<FormField control={control} name="volume" label="Volume" render={({ field }) => <Slider value={field.value} onValueChange={field.onChange} />} />',
+        find: "<Slider",
+        fix: "Nothing required. Slider now forwards aria-label, aria-labelledby, aria-describedby and aria-invalid to the actual range input.",
+      },
+      {
+        id: "popover-aria-label",
+        kind: "additive",
+        surface: "Popover",
+        before:
+          "A popover without a visible title had no way to provide an accessible name.",
+        after: '<Popover aria-label="Filters" trigger={<Button>Filters</Button>}>...</Popover>',
+        find: "<Popover",
+        fix: "Nothing required. Pass aria-label when the popup has no title.",
+      },
+      {
+        id: "form-icons",
+        kind: "additive",
+        surface: "IconProvider",
+        before:
+          "Date and upload affordances used direct Phosphor imports instead of the kit icon contract.",
+        after:
+          'icons={{ calendar: CalendarIcon, file: FileIcon, upload: UploadIcon }}',
+        find: "<IconProvider",
+        fix: "Nothing required. calendar, file and upload now join the replaceable internal icon set.",
+      },
+    ],
+  },
+  {
     version: "0.7.0",
     date: "2026-11-09",
     breaking: false,

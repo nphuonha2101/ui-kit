@@ -19,6 +19,7 @@ export interface SelectProps {
   onBlur?: React.FocusEventHandler<HTMLButtonElement>;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: boolean;
   className?: string;
   name?: string;
@@ -26,6 +27,8 @@ export interface SelectProps {
   "aria-label"?: string;
   "aria-labelledby"?: string;
   "aria-describedby"?: string;
+  "aria-required"?: boolean;
+  "aria-invalid"?: boolean;
 }
 
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
@@ -38,26 +41,31 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       onBlur,
       placeholder = "Select…",
       disabled,
+      required,
       error,
       className,
       name,
       id,
+      "aria-required": ariaRequired,
+      "aria-invalid": ariaInvalid,
       ...aria
     },
     ref,
   ) {
     const ChevronIcon = useKitIcon("chevron");
     const CheckIcon = useKitIcon("check");
+    const invalid = Boolean(error) || Boolean(ariaInvalid);
     return (
-      <SelectPrimitive.Root value={value} defaultValue={defaultValue} onValueChange={onValueChange} disabled={disabled} name={name}>
+      <SelectPrimitive.Root value={value} defaultValue={defaultValue} onValueChange={onValueChange} disabled={disabled} required={required} name={name}>
         <SelectPrimitive.Trigger
           ref={ref}
           id={id}
           onBlur={onBlur}
-          aria-invalid={error || undefined}
+          aria-required={required || ariaRequired || undefined}
+          aria-invalid={invalid || undefined}
           className={cn(
             "surface-inset inline-flex h-10 w-full items-center justify-between gap-2 rounded-field bg-field px-3.5 text-sm text-field-foreground outline-none transition-[background-color,box-shadow] duration-[var(--duration-ui)] hover:bg-field-hover focus-visible:bg-field focus-visible:ring-2 focus-visible:ring-ring/35 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45",
-            error && "bg-destructive/10 focus-visible:ring-destructive/30",
+            invalid && "bg-destructive/10 focus-visible:ring-destructive/30",
             className,
           )}
           {...aria}

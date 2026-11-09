@@ -36,6 +36,7 @@ const rules = [
   "Use Breadcrumb and Pagination for secondary navigation, and EmptyState for zero states.",
   "For forms, use register with Input/Textarea and Controller or FormField from @nphuonha/ui-kit/form for custom controls.",
   "Use startIcon/endIcon on buttons; activeIcon on BottomNav/DesktopNav items.",
+  "For required fields, use required on FormField (RHF) or Field (native) plus validation rules. Label-owning controls also accept required standalone.",
   "Use generateAccentVars or accentStyle for runtime accent changes.",
   "Before upgrading, read docs/upgrading/llms.txt and apply its migration rows instead of guessing renamed props.",
 ];

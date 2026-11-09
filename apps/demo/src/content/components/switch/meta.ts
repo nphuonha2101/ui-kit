@@ -28,6 +28,16 @@ export const meta: ComponentMeta = {
       "description": "Initial checked state."
     },
     {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the label and native input as required."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Disables the switch."

@@ -92,7 +92,7 @@ Variants live in server-safe `*-variants.ts` files and can be used from server c
 
 ## Icons
 
-The kit uses **Phosphor** for its internal affordances (check, minus, chevron, chevronDown, close, spinner, user). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
+The kit uses **Phosphor** for its internal affordances (calendar, check, minus, chevron, chevronDown, close, file, spinner, upload, user). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
 
 ```tsx
 <Button startIcon={Plus}>New item</Button>
@@ -117,15 +117,17 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
-For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`:
+For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`. `Calendar`/`DatePicker` use `value`/`onValueChange`; `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
 
 ```tsx
 import { Form, FormField } from "@nphuonha/ui-kit/form";
 ```
+
+For required fields, set `required` on controls that own their label (`Checkbox`, `Switch`, `RadioGroup`, `NumberField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea` and `Select`. With `FormField`, `required` controls the red mark and `rules` controls validation.
 
 Install `react-hook-form` (optional peer dependency) when using the `form` entry.
 

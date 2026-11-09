@@ -3,7 +3,7 @@
 import * as React from "react";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import { Radio } from "@base-ui/react/radio";
-import { cn } from "../../../lib/utils";
+import { cn, hasErrorContent } from "../../../lib/utils";
 
 export interface RadioOption {
   value: string;
@@ -17,6 +17,7 @@ export interface RadioGroupProps extends Omit<React.ComponentPropsWithoutRef<typ
   label?: React.ReactNode;
   description?: React.ReactNode;
   error?: React.ReactNode;
+  required?: boolean;
   orientation?: "vertical" | "horizontal";
   children?: React.ReactNode;
   ref?: React.Ref<HTMLDivElement>;
@@ -28,6 +29,7 @@ export function RadioGroup({
   label,
   description,
   error,
+  required,
   orientation = "vertical",
   children,
   ref,
@@ -35,9 +37,11 @@ export function RadioGroup({
 }: RadioGroupProps) {
   const groupId = React.useId();
   const labelId = `${groupId}-label`;
-  const descriptionId = `${groupId}-description`;
+  const hasErrorMessage = hasErrorContent(error);
+  const descriptionId = description ? `${groupId}-description` : undefined;
+  const errorId = hasErrorMessage ? `${groupId}-error` : undefined;
   const describedBy =
-    [props["aria-describedby"], description ? descriptionId : undefined]
+    [props["aria-describedby"], descriptionId, errorId]
       .filter(Boolean)
       .join(" ") || undefined;
   return (
@@ -45,11 +49,19 @@ export function RadioGroup({
       {label ? (
         <div id={labelId} className="text-sm font-medium text-foreground">
           {label}
+          {required ? (
+            <span aria-hidden="true" className="ml-0.5 text-destructive">
+              *
+            </span>
+          ) : null}
         </div>
       ) : null}
       <RadioGroupPrimitive
         {...props}
         ref={ref}
+        required={required}
+        aria-required={required || undefined}
+        aria-invalid={error ? true : props["aria-invalid"] || undefined}
         aria-labelledby={label ? labelId : props["aria-labelledby"]}
         aria-describedby={describedBy}
         className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap")}
@@ -88,8 +100,8 @@ export function RadioGroup({
           {description}
         </p>
       ) : null}
-      {error && typeof error !== "boolean" ? (
-        <p role="alert" className="text-xs font-medium text-destructive">
+      {hasErrorMessage ? (
+        <p id={errorId} role="alert" className="text-xs font-medium text-destructive">
           {error}
         </p>
       ) : null}

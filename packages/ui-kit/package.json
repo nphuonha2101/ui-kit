@@ -1,6 +1,6 @@
 {
   "name": "@nphuonha/ui-kit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Solid, clean, flat, modern React UI kit (Base UI + Tailwind v4).",
   "license": "MIT",
   "author": "nphuonha",
@@ -77,6 +77,11 @@
       "import": "./dist/components/ui/button/index.js",
       "default": "./dist/components/ui/button/index.js"
     },
+    "./calendar": {
+      "types": "./dist/components/ui/calendar/index.d.ts",
+      "import": "./dist/components/ui/calendar/index.js",
+      "default": "./dist/components/ui/calendar/index.js"
+    },
     "./card": {
       "types": "./dist/components/ui/card/index.d.ts",
       "import": "./dist/components/ui/card/index.js",
@@ -86,6 +91,11 @@
       "types": "./dist/components/ui/checkbox/index.d.ts",
       "import": "./dist/components/ui/checkbox/index.js",
       "default": "./dist/components/ui/checkbox/index.js"
+    },
+    "./date-picker": {
+      "types": "./dist/components/ui/date-picker/index.d.ts",
+      "import": "./dist/components/ui/date-picker/index.js",
+      "default": "./dist/components/ui/date-picker/index.js"
     },
     "./desktop-nav": {
       "types": "./dist/components/ui/desktop-nav/index.d.ts",
@@ -106,6 +116,11 @@
       "types": "./dist/components/ui/field/index.d.ts",
       "import": "./dist/components/ui/field/index.js",
       "default": "./dist/components/ui/field/index.js"
+    },
+    "./file-upload": {
+      "types": "./dist/components/ui/file-upload/index.d.ts",
+      "import": "./dist/components/ui/file-upload/index.js",
+      "default": "./dist/components/ui/file-upload/index.js"
     },
     "./form": {
       "types": "./dist/components/ui/form/index.d.ts",

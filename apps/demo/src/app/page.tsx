@@ -9,7 +9,7 @@ import {
 import { Badge, Card, CardContent, buttonVariants } from "@nphuonha/ui-kit";
 import { CodeBlock } from "@/components/docs/code-block";
 import { ComponentDemo } from "@/content/components/demo-map";
-import { HeroSignup } from "@/components/home/hero-signup";
+import { HeroShowcase } from "@/components/home/hero-showcase";
 import { registry } from "@/content/components";
 import { pageMetadata } from "@/lib/seo";
 
@@ -49,7 +49,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <HeroSignup />
+        <HeroShowcase />
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-16 md:px-6">

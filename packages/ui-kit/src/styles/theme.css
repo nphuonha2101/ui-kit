@@ -21,6 +21,7 @@
   --field-foreground: #16181d;
   --secondary: #eceef4;
   --secondary-foreground: #16181d;
+  --switch-thumb: #ffffff;
   --muted: #eceef4;
   --muted-foreground: #63697a;
   --accent: #e8eaf6;
@@ -57,6 +58,7 @@
   --shadow-overlay: 0 16px 48px -12px rgb(16 18 26 / 0.20), 0 5px 16px -5px rgb(16 18 26 / 0.10);
   --shadow-raised: 0 2px 6px -2px rgb(16 18 26 / 0.12), 0 8px 22px -12px rgb(16 18 26 / 0.16);
   --shadow-soft: 0 1px 3px rgb(16 18 26 / 0.05), 0 4px 14px -6px rgb(16 18 26 / 0.12);
+  --shadow-control: 0 1px 2px rgb(16 18 26 / 0.08);
 
   --font-body: "Work Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono-family: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -89,6 +91,7 @@
   --field-foreground: #f1f3f8;
   --secondary: #1c2029;
   --secondary-foreground: #f1f3f8;
+  --switch-thumb: #f1f3f8;
   --muted: #1c2029;
   --muted-foreground: #9ba3b4;
   --accent: #232840;
@@ -118,4 +121,5 @@
   --shadow-overlay: 0 18px 52px -12px rgb(0 0 0 / 0.56), 0 7px 20px -7px rgb(0 0 0 / 0.38);
   --shadow-raised: 0 2px 7px -2px rgb(0 0 0 / 0.36), 0 9px 26px -12px rgb(0 0 0 / 0.48);
   --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.24), 0 6px 18px -10px rgb(0 0 0 / 0.42);
+  --shadow-control: 0 1px 2px rgb(0 0 0 / 0.28);
 }

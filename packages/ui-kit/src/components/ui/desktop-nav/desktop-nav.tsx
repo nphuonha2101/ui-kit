@@ -82,7 +82,7 @@ export const DesktopNav = React.forwardRef<HTMLElement, DesktopNavProps>(
               "relative inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-pill px-3.5 text-sm font-medium outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-ui)]",
               "focus-visible:ring-2 focus-visible:ring-ring/40",
               active
-                ? "surface-curved bg-card text-foreground shadow-sm"
+                ? "surface-curved bg-card text-foreground shadow-control"
                 : "text-muted-foreground hover:bg-card/60 hover:text-foreground",
               item.disabled && "pointer-events-none opacity-45",
             );

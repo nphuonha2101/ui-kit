@@ -100,7 +100,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
       >
         <NumberFieldPrimitive.Decrement
           aria-label="Decrease value"
-          className="flex size-7 shrink-0 items-center justify-center rounded-[8px] text-muted-foreground outline-none transition-colors hover:bg-surface-hover hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-40"
+          className="flex size-7 shrink-0 items-center justify-center rounded-xs text-muted-foreground outline-none transition-colors hover:bg-surface-hover hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-40"
         >
           <MinusIcon size={14} />
         </NumberFieldPrimitive.Decrement>
@@ -118,7 +118,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
         />
         <NumberFieldPrimitive.Increment
           aria-label="Increase value"
-          className="flex size-7 shrink-0 items-center justify-center rounded-[8px] text-muted-foreground outline-none transition-colors hover:bg-surface-hover hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-40"
+          className="flex size-7 shrink-0 items-center justify-center rounded-xs text-muted-foreground outline-none transition-colors hover:bg-surface-hover hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-40"
         >
           <PlusIcon size={14} />
         </NumberFieldPrimitive.Increment>

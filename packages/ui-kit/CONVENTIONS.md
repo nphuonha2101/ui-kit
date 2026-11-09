@@ -14,8 +14,8 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
   - `surface-curved-pill` — switch thumbs and pill controls.
   - `surface-inset` — native fields (input/textarea/select), where `::before` is unavailable.
   - Lighting tokens: `--light-top`, `--light-sheen`, `--light-bottom`, `--light-rim` (defined per light/dark theme).
-- **Shadows only lift, never outline**: keep subtle outer shadows for overlays (`--shadow-overlay`) and raised cards/buttons (`--shadow-soft`/`--shadow-raised`); the curved utilities only add inset edge light. Use `shadow-none` to drop the outer lift (keeping the rim) and `surface-flat` to remove the rim and gradient too.
-- **Shape** via tokens: `--radius-control` (~12px), `--radius-card` (~20px), `--radius-overlay`, `--radius-field`; pill (`rounded-pill`) for actions and switch thumbs.
+- **Shadows only lift, never outline**: keep subtle outer shadows for overlays (`--shadow-overlay`), raised cards/buttons (`--shadow-soft`/`--shadow-raised`) and tiny active indicators (`--shadow-control`); the curved utilities only add inset edge light. Use `shadow-none` to drop the outer lift (keeping the rim) and `surface-flat` to remove the rim and gradient too.
+- **Shape** via tokens: `--radius-2xs` (~4px), `--radius-xs` (~8px), `--radius-control` (~12px), `--radius-card` (~20px), `--radius-overlay`, `--radius-field`; pill (`rounded-pill`) for actions and switch thumbs.
 - **Typography**: tokenized (`--font-body`), clear hierarchy.
 - **Motion**: restrained 150–220ms, `--ease-out-ui`, CSS transitions for feedback/enter-exit; **no bouncy springs** by default. Honor `prefers-reduced-motion` (global guard in `base.css`).
 
@@ -34,7 +34,7 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - `dist/` and `.next/` are generated. Never edit build output by hand.
 
 ## Focus & interaction states
-- Interactive components use the kit ring, not the browser outline: `outline-none` + `focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background`.
+- Interactive components use the kit ring, not the browser outline: `outline-none` + `focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background`. Use `/50` for buttons, `/40` for compact controls and `/35` for large fields or inset surfaces.
 - The global `:focus-visible` outline in `base.css` is a fallback. Reset it when a component defines its own ring.
 - Targets under ~32px (for example the toast close button) use a compact inset ring (`focus-visible:ring-2 focus-visible:ring-inset`) instead of the offset outline. Never remove the focus indicator.
 - Hover, active, disabled and invalid states are part of the API. Use semantic tokens, never raw brand colors.

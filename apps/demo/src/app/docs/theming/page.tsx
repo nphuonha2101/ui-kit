@@ -13,10 +13,11 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const tokens = [
-  ["Surfaces", "--background, --card, --surface, --field, --popover, --muted"],
+  ["Surfaces", "--background, --card, --surface, --field, --popover, --muted, --switch-thumb"],
   ["Actions", "--primary, --primary-foreground, --primary-hover, --primary-soft, --ring"],
   ["Status", "--destructive, --success, --warning, --info"],
-  ["Shape", "--radius-control, --radius-field, --radius-card, --radius-overlay"],
+  ["Shape", "--radius-2xs, --radius-xs, --radius-control, --radius-field, --radius-card, --radius-overlay"],
+  ["Depth", "--shadow-control, --shadow-soft, --shadow-raised, --shadow-overlay"],
   ["Lighting", "--light-top, --light-sheen, --light-bottom, --light-rim"],
 ];
 

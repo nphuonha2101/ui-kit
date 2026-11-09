@@ -12,7 +12,7 @@
 [![Base UI](https://img.shields.io/badge/Base%20UI-1.9-4f46e5?style=flat-square)](https://base-ui.com)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind%20CSS-v4-38bdf8?style=flat-square)](https://tailwindcss.com)
 
-[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Forms](https://ui.nphuonha.id.vn/docs/forms) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [Upgrading](https://ui.nphuonha.id.vn/docs/upgrading) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
+[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Forms](https://ui.nphuonha.id.vn/docs/forms) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [Utilities](https://ui.nphuonha.id.vn/docs/utilities) · [Upgrading](https://ui.nphuonha.id.vn/docs/upgrading) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
 
 ## Why this kit
 

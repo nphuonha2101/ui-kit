@@ -50,7 +50,7 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
         ref={ref}
         aria-label={ariaLabel}
         className={cn(
-          "surface-curved relative rounded-[24px] bg-card p-1.5 shadow-[var(--shadow-raised)]",
+          "surface-curved relative rounded-xl bg-card p-1.5 shadow-[var(--shadow-raised)]",
           fixed
             ? "fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-40 mx-auto max-w-md"
             : "w-full",
@@ -68,7 +68,7 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
                   className={cn(
                     "relative flex h-7 min-w-12 items-center justify-center rounded-pill px-2.5 transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
                     active
-                      ? "bg-primary text-primary-foreground shadow-[var(--shadow-raised)]"
+                      ? "surface-curved bg-primary text-primary-foreground shadow-[var(--shadow-raised)]"
                       : "text-muted-foreground group-hover:bg-surface group-hover:text-foreground",
                   )}
                 >
@@ -78,7 +78,7 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
                       className={cn(
                         "absolute -right-1 -top-1 inline-flex min-w-4 items-center justify-center rounded-pill px-1 text-[9px] font-semibold leading-4",
                         active
-                          ? "bg-card text-foreground shadow-sm"
+                          ? "bg-card text-foreground shadow-control"
                           : "bg-primary text-primary-foreground",
                       )}
                     >
@@ -98,7 +98,7 @@ export const BottomNav = React.forwardRef<HTMLElement, BottomNavProps>(
             );
 
             const itemClassName = cn(
-              "group relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-[18px] px-1 py-1.5 outline-none transition-colors duration-[var(--duration-ui)]",
+              "group relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-lg px-1 py-1.5 outline-none transition-colors duration-[var(--duration-ui)]",
               "focus-visible:ring-2 focus-visible:ring-ring/40",
               item.disabled && "pointer-events-none opacity-45",
             );

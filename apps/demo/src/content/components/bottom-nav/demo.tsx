@@ -69,14 +69,14 @@ function BottomNavDemo() {
             <p className="text-sm leading-6 text-muted-foreground">{current.body}</p>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 rounded-control bg-card p-3 shadow-[var(--shadow-soft)]">
-                <span className="size-8 shrink-0 rounded-[10px] bg-primary-soft" />
+                <span className="size-8 shrink-0 rounded-sm bg-primary-soft" />
                 <div className="min-w-0 flex-1">
                   <div className="h-2 w-2/3 rounded-pill bg-surface" />
                   <div className="mt-2 h-2 w-1/2 rounded-pill bg-surface/70" />
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-control bg-card p-3 shadow-[var(--shadow-soft)]">
-                <span className="size-8 shrink-0 rounded-[10px] bg-surface" />
+                <span className="size-8 shrink-0 rounded-sm bg-surface" />
                 <div className="min-w-0 flex-1">
                   <div className="h-2 w-1/2 rounded-pill bg-surface" />
                   <div className="mt-2 h-2 w-2/3 rounded-pill bg-surface/70" />

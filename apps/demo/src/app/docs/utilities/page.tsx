@@ -62,6 +62,11 @@ const surfaces = [
 
 const shadows = [
   {
+    name: "shadow-control",
+    description: "Tiny active indicators: tab pills, nav highlights and badges.",
+    className: "shadow-control",
+  },
+  {
     name: "shadow-soft",
     description: "Resting cards and grouped panels. The default for Card.",
     className: "shadow-soft",
@@ -79,6 +84,8 @@ const shadows = [
 ];
 
 const radii = [
+  { name: "rounded-2xs", value: "4px", description: "Micro details such as breadcrumb ellipsis." },
+  { name: "rounded-xs", value: "8px", description: "Checkboxes, Kbd keys and stepper buttons." },
   { name: "rounded-control", value: "12px", description: "Buttons and compact controls." },
   { name: "rounded-field", value: "12px", description: "Inputs, textareas and selects." },
   { name: "rounded-card", value: "20px", description: "Cards and grouped panels." },
@@ -117,7 +124,8 @@ export default function UtilitiesPage() {
           <h2 className="text-xl font-semibold tracking-[-0.025em]">Surfaces</h2>
           <p className="text-sm leading-7 text-muted-foreground">
             Surface utilities paint the top-lit curve and inset rim. Pair them with a
-            background token and a radius. Use one surface treatment per element.
+            background token and a radius, and use one base surface treatment per element.
+            For nested surfaces, see the zero-depth options under Shadows.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {surfaces.map((surface) => (
@@ -167,7 +175,7 @@ export default function UtilitiesPage() {
             level of depth per surface; nested cards should drop the outer lift instead of
             stacking another shadow.
           </p>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {shadows.map((shadow) => (
               <div key={shadow.name} className="flex flex-col gap-2">
                 <div className={`flex h-24 items-center justify-center rounded-card bg-card p-4 text-xs text-muted-foreground ${shadow.className}`}>
@@ -250,7 +258,7 @@ export default function UtilitiesPage() {
           <div className="grid gap-2 sm:grid-cols-2">
             {fills.map((fill) => (
               <div key={fill.name} className="flex items-center gap-3 rounded-control bg-surface/50 p-2.5">
-                <span className={`size-9 shrink-0 rounded-[10px] ring-1 ring-border/60 ${fill.name}`} />
+                <span className={`size-9 shrink-0 rounded-sm ring-1 ring-border/60 ${fill.name}`} />
                 <div>
                   <code className="text-xs font-semibold text-foreground">{fill.name}</code>
                   <p className="text-xs leading-5 text-muted-foreground">{fill.description}</p>

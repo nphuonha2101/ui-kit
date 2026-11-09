@@ -89,7 +89,13 @@ export function SiteHeader() {
   const isActive = (href: string) => {
     const current = pathname.replace(/\/+$/, "") || "/";
     if (href === "/docs") {
-      return current === "/docs" || current.startsWith("/docs/installation");
+      if (current === "/docs") return true;
+      return (
+        current.startsWith("/docs/") &&
+        !current.startsWith("/docs/components") &&
+        !current.startsWith("/docs/theming") &&
+        !current.startsWith("/docs/utilities")
+      );
     }
     return current === href || current.startsWith(`${href}/`);
   };

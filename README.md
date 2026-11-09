@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-4f46e5?style=flat-square)](./LICENSE)
 [![Docs](https://img.shields.io/badge/docs-ui.nphuonha.id.vn-4f46e5?style=flat-square)](https://ui.nphuonha.id.vn)
 
-[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [Upgrading](https://ui.nphuonha.id.vn/docs/upgrading) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
+[Docs](https://ui.nphuonha.id.vn) · [Components](https://ui.nphuonha.id.vn/docs/components) · [Theming](https://ui.nphuonha.id.vn/docs/theming) · [Utilities](https://ui.nphuonha.id.vn/docs/utilities) · [Upgrading](https://ui.nphuonha.id.vn/docs/upgrading) · [For agents](https://ui.nphuonha.id.vn/docs/agents) · [llms.txt](https://ui.nphuonha.id.vn/llms.txt) · [Releases](https://github.com/nphuonha2101/ui-kit/releases)
 
 ## Why this kit
 
@@ -59,10 +59,12 @@ export function App() {
 
 Semantic CSS variables drive the whole system:
 
-- **Surfaces:** `--background`, `--card`, `--surface`, `--field`, `--popover`, `--muted`
+- **Surfaces:** `--background`, `--card`, `--surface`, `--field`, `--popover`, `--muted`, `--switch-thumb`
 - **Actions:** `--primary`, `--primary-foreground`, `--primary-hover`, `--primary-soft`, `--ring`
 - **Status:** `--destructive`, `--success`, `--warning`, `--info`
-- **Shape:** `--radius-control`, `--radius-field`, `--radius-card`, `--radius-overlay`
+- **Shape:** `--radius-2xs`, `--radius-xs`, `--radius-control`, `--radius-field`, `--radius-card`, `--radius-overlay`
+- **Depth:** `--shadow-control`, `--shadow-soft`, `--shadow-raised`, `--shadow-overlay`
+- **Lighting:** `--light-top`, `--light-sheen`, `--light-bottom`, `--light-rim`
 
 Change the accent from one color:
 
@@ -81,6 +83,10 @@ import { generateAccentVars } from "@nphuonha/ui-kit";
 
 const vars = generateAccentVars("#0d9488", "dark");
 ```
+
+## Utilities
+
+Surface treatments, shadow levels, radii and semantic fills are documented with live examples: https://ui.nphuonha.id.vn/docs/utilities
 
 ## Components
 

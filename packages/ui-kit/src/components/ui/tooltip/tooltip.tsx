@@ -35,7 +35,7 @@ export function Tooltip({
             <TooltipPrimitive.Popup
               role="tooltip"
               className={cn(
-                "z-50 max-w-xs rounded-[10px] bg-foreground px-2.5 py-1.5 text-xs font-medium text-background shadow-[var(--shadow-overlay)]",
+                "surface-curved relative z-50 max-w-xs rounded-sm bg-foreground px-2.5 py-1.5 text-xs font-medium text-background shadow-[var(--shadow-overlay)]",
                 "origin-[var(--transform-origin)] transition-[opacity,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
                 "data-[starting-style]:opacity-0 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[ending-style]:scale-95",
               )}

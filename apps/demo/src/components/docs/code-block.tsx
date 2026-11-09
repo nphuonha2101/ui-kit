@@ -66,7 +66,7 @@ export function CodeBlock({
           type="button"
           onClick={onCopy}
           aria-label={copied ? "Copied" : "Copy code"}
-          className="inline-flex size-7 items-center justify-center rounded-[7px] text-[#8b95a7] transition-colors hover:bg-white/10 hover:text-white"
+          className="inline-flex size-7 items-center justify-center rounded-xs text-[#8b95a7] transition-colors hover:bg-white/10 hover:text-white"
         >
           {copied ? <CheckIcon size={14} weight="bold" /> : <CopyIcon size={14} />}
         </button>

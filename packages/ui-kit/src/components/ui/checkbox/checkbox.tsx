@@ -26,7 +26,7 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         aria-invalid={error || undefined}
         aria-describedby={descriptionId}
         className={cn(
-          "surface-inset peer inline-flex size-5 shrink-0 items-center justify-center rounded-[7px] bg-field text-primary-foreground transition-[background-color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[checked]:bg-primary data-[indeterminate]:bg-primary disabled:cursor-not-allowed disabled:opacity-45",
+          "surface-inset peer inline-flex size-5 shrink-0 items-center justify-center rounded-xs bg-field text-primary-foreground transition-[background-color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[checked]:bg-primary data-[indeterminate]:bg-primary disabled:cursor-not-allowed disabled:opacity-45",
           error && "bg-destructive/15 data-[checked]:bg-destructive",
           className,
         )}

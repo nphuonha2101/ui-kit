@@ -50,11 +50,15 @@ export function Toaster({
         classNames: {
           toast: cn(
             // Sonner ships unlayered CSS, so kit utilities need `!` to win.
-            "surface-curved group relative font-sans !items-start !gap-3 !rounded-overlay !border-0 !px-4 !py-4 !text-sm !shadow-[var(--shadow-overlay)]",
+            // Sonner controls the toast height/transform, so its <li> cannot use
+            // surface-curved's absolute ::before rim. Paint the same rim directly
+            // on the element so it always follows the visible toast box.
+            "group relative font-sans !items-start !gap-3 !rounded-overlay !border-0 !px-4 !py-4 !text-sm",
             closeButton && "!pr-9",
             "!bg-[linear-gradient(to_bottom,var(--light-sheen-soft)_0%,transparent_28%,transparent_72%,var(--light-bottom)_100%)]",
             !richColors && "!bg-popover !text-popover-foreground",
-            "focus-visible:!outline-2 focus-visible:!outline-offset-2 focus-visible:!outline-ring/40",
+            "!shadow-[inset_0_1px_0_0_var(--light-top),inset_0_0_0_1px_rgb(255_255_255_/_0.08),inset_0_-1px_0_0_rgb(0_0_0_/_0.06),var(--shadow-overlay)]",
+            "focus-visible:!outline-none data-[removed=true]:!outline-none data-[removed=true]:!ring-0",
           ),
           title: "!text-sm !font-medium !leading-5",
           description: cn(
@@ -65,7 +69,7 @@ export function Toaster({
           icon: "!mx-0 !mt-0.5 !size-[18px] [&_svg]:size-[18px]",
           // 24px target: an inset ring stays compact instead of the 2px offset outline.
           closeButton:
-            "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground focus-visible:!outline-none focus-visible:!ring-2 focus-visible:!ring-inset focus-visible:!ring-ring/50",
+            "!left-auto !right-3 !top-3 !size-6 !transform-none !rounded-control !border-0 !bg-transparent !p-0 !text-muted-foreground hover:!bg-surface hover:!text-foreground focus-visible:!outline-none focus-visible:!ring-2 focus-visible:!ring-inset focus-visible:!ring-ring/40 focus-visible:!text-foreground group-data-[removed=true]:focus-visible:!ring-0",
           actionButton:
             "!ml-auto !mr-0 !h-8 !self-center !rounded-control !border-0 !bg-primary !px-2.5 !text-xs !font-medium !text-primary-foreground hover:!bg-primary-hover",
           cancelButton:

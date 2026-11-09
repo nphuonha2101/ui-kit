@@ -5,8 +5,11 @@ import { snippets as buttonLinkSnippets } from "./button-link/snippets";
 import { snippets as iconButtonSnippets } from "./icon-button/snippets";
 import { snippets as toggleSnippets } from "./toggle/snippets";
 import { snippets as toggleGroupSnippets } from "./toggle-group/snippets";
+import { snippets as calendarSnippets } from "./calendar/snippets";
 import { snippets as checkboxSnippets } from "./checkbox/snippets";
+import { snippets as datePickerSnippets } from "./date-picker/snippets";
 import { snippets as fieldSnippets } from "./field/snippets";
+import { snippets as fileUploadSnippets } from "./file-upload/snippets";
 import { snippets as inputSnippets } from "./input/snippets";
 import { snippets as labelSnippets } from "./label/snippets";
 import { snippets as numberFieldSnippets } from "./number-field/snippets";
@@ -47,8 +50,11 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "icon-button": iconButtonSnippets,
   "toggle": toggleSnippets,
   "toggle-group": toggleGroupSnippets,
+  "calendar": calendarSnippets,
   "checkbox": checkboxSnippets,
+  "date-picker": datePickerSnippets,
   "field": fieldSnippets,
+  "file-upload": fileUploadSnippets,
   "input": inputSnippets,
   "label": labelSnippets,
   "number-field": numberFieldSnippets,

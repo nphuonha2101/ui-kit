@@ -23,6 +23,11 @@ export const meta: ComponentMeta = {
       "description": "Optional supporting text."
     },
     {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name when there is no visible title."
+    },
+    {
       "name": "side",
       "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
       "default": "\"bottom\"",

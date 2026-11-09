@@ -58,12 +58,14 @@ export function FormField<
         const error =
           fieldState.error?.message ?? (fieldState.error ? "Invalid value" : undefined);
         const controlId = `${autoId}-${String(name)}`;
+        const labelId = `${controlId}-label`;
         const descriptionId = description ? `${controlId}-description` : undefined;
         const errorId = error ? `${controlId}-error` : undefined;
         const element = render({ field, fieldState });
         const elementProps = element.props as {
           id?: string;
           "aria-describedby"?: string;
+          "aria-labelledby"?: string;
           "aria-invalid"?: boolean;
         };
         const childId = elementProps.id ?? controlId;
@@ -71,11 +73,16 @@ export function FormField<
           [elementProps["aria-describedby"], descriptionId, errorId]
             .filter(Boolean)
             .join(" ") || undefined;
+        const labelledBy =
+          [elementProps["aria-labelledby"], label ? labelId : undefined]
+            .filter(Boolean)
+            .join(" ") || undefined;
         const child = React.cloneElement(
           element as React.ReactElement<Record<string, unknown>>,
           {
             id: childId,
             "aria-describedby": describedBy,
+            "aria-labelledby": labelledBy,
             "aria-invalid": error ? true : elementProps["aria-invalid"],
             ...(typeof element.type === "string"
               ? {}
@@ -86,7 +93,7 @@ export function FormField<
         return (
           <div className={cn("flex flex-col gap-1.5", className)}>
             {label ? (
-              <Label htmlFor={childId} requiredMark={required}>
+              <Label id={labelId} htmlFor={childId} requiredMark={required}>
                 {label}
               </Label>
             ) : null}

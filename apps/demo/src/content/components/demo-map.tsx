@@ -8,8 +8,11 @@ const buttonLinkDemo = dynamic(() => import("./button-link/demo").then((module) 
 const iconButtonDemo = dynamic(() => import("./icon-button/demo").then((module) => module.demo));
 const toggleDemo = dynamic(() => import("./toggle/demo").then((module) => module.demo));
 const toggleGroupDemo = dynamic(() => import("./toggle-group/demo").then((module) => module.demo));
+const calendarDemo = dynamic(() => import("./calendar/demo").then((module) => module.demo));
 const checkboxDemo = dynamic(() => import("./checkbox/demo").then((module) => module.demo));
+const datePickerDemo = dynamic(() => import("./date-picker/demo").then((module) => module.demo));
 const fieldDemo = dynamic(() => import("./field/demo").then((module) => module.demo));
+const fileUploadDemo = dynamic(() => import("./file-upload/demo").then((module) => module.demo));
 const inputDemo = dynamic(() => import("./input/demo").then((module) => module.demo));
 const labelDemo = dynamic(() => import("./label/demo").then((module) => module.demo));
 const numberFieldDemo = dynamic(() => import("./number-field/demo").then((module) => module.demo));
@@ -58,6 +61,33 @@ const toggletoggleSizesExample = dynamic(() =>
 );
 const toggleGrouptoggleGroupMultipleExample = dynamic(() =>
   import("./toggle-group/demo").then((module) => module.examples["toggle-group-multiple"]),
+);
+const calendarcalendarRangeExample = dynamic(() =>
+  import("./calendar/demo").then((module) => module.examples["calendar-range"]),
+);
+const calendarcalendarCompactExample = dynamic(() =>
+  import("./calendar/demo").then((module) => module.examples["calendar-compact"]),
+);
+const calendarcalendarConstraintsExample = dynamic(() =>
+  import("./calendar/demo").then((module) => module.examples["calendar-constraints"]),
+);
+const datePickerdatePickerClearableExample = dynamic(() =>
+  import("./date-picker/demo").then((module) => module.examples["date-picker-clearable"]),
+);
+const datePickerdatePickerConstraintsExample = dynamic(() =>
+  import("./date-picker/demo").then((module) => module.examples["date-picker-constraints"]),
+);
+const datePickerdatePickerStatesExample = dynamic(() =>
+  import("./date-picker/demo").then((module) => module.examples["date-picker-states"]),
+);
+const fileUploadfileUploadControlledExample = dynamic(() =>
+  import("./file-upload/demo").then((module) => module.examples["file-upload-controlled"]),
+);
+const fileUploadfileUploadImagesExample = dynamic(() =>
+  import("./file-upload/demo").then((module) => module.examples["file-upload-images"]),
+);
+const fileUploadfileUploadSingleExample = dynamic(() =>
+  import("./file-upload/demo").then((module) => module.examples["file-upload-single"]),
 );
 const selectselectFieldExample = dynamic(() =>
   import("./select/demo").then((module) => module.examples["select-field"]),
@@ -111,8 +141,11 @@ export const demoMap: Record<string, React.ComponentType> = {
   "icon-button": iconButtonDemo,
   "toggle": toggleDemo,
   "toggle-group": toggleGroupDemo,
+  "calendar": calendarDemo,
   "checkbox": checkboxDemo,
+  "date-picker": datePickerDemo,
   "field": fieldDemo,
+  "file-upload": fileUploadDemo,
   "input": inputDemo,
   "label": labelDemo,
   "number-field": numberFieldDemo,
@@ -154,6 +187,15 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "button-link-next": buttonLinkbuttonLinkNextExample,
   "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
+  "calendar-range": calendarcalendarRangeExample,
+  "calendar-compact": calendarcalendarCompactExample,
+  "calendar-constraints": calendarcalendarConstraintsExample,
+  "date-picker-clearable": datePickerdatePickerClearableExample,
+  "date-picker-constraints": datePickerdatePickerConstraintsExample,
+  "date-picker-states": datePickerdatePickerStatesExample,
+  "file-upload-controlled": fileUploadfileUploadControlledExample,
+  "file-upload-images": fileUploadfileUploadImagesExample,
+  "file-upload-single": fileUploadfileUploadSingleExample,
   "select-field": selectselectFieldExample,
   "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,
   "desktop-nav-header": desktopNavdesktopNavHeaderExample,

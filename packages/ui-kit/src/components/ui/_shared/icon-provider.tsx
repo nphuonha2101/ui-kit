@@ -2,20 +2,24 @@
 
 import * as React from "react";
 import {
+  CalendarBlankIcon,
   CaretDownIcon,
   CaretLeftIcon,
   CaretRightIcon,
   CaretUpDownIcon,
   CheckIcon,
+  FileIcon,
   ListIcon,
   MinusIcon,
   PlusIcon,
   SpinnerIcon,
+  UploadSimpleIcon,
   UserIcon,
   XIcon,
 } from "@phosphor-icons/react";
 
 export type KitIconName =
+  | "calendar"
   | "check"
   | "minus"
   | "plus"
@@ -24,8 +28,10 @@ export type KitIconName =
   | "chevronLeft"
   | "chevronRight"
   | "close"
+  | "file"
   | "menu"
   | "spinner"
+  | "upload"
   | "user";
 
 export type KitIcon = React.ComponentType<
@@ -33,6 +39,7 @@ export type KitIcon = React.ComponentType<
 >;
 
 const defaultIcons: Record<KitIconName, KitIcon> = {
+  calendar: CalendarBlankIcon,
   check: (props) => <CheckIcon {...props} weight="bold" />,
   minus: (props) => <MinusIcon {...props} weight="bold" />,
   plus: (props) => <PlusIcon {...props} weight="bold" />,
@@ -41,8 +48,10 @@ const defaultIcons: Record<KitIconName, KitIcon> = {
   chevronLeft: (props) => <CaretLeftIcon {...props} weight="bold" />,
   chevronRight: (props) => <CaretRightIcon {...props} weight="bold" />,
   close: (props) => <XIcon {...props} weight="bold" />,
+  file: FileIcon,
   menu: (props) => <ListIcon {...props} weight="bold" />,
   spinner: SpinnerIcon,
+  upload: UploadSimpleIcon,
   user: UserIcon,
 };
 

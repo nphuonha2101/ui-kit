@@ -3,8 +3,11 @@ import { meta as buttonLinkMeta } from "./button-link/meta";
 import { meta as iconButtonMeta } from "./icon-button/meta";
 import { meta as toggleMeta } from "./toggle/meta";
 import { meta as toggleGroupMeta } from "./toggle-group/meta";
+import { meta as calendarMeta } from "./calendar/meta";
 import { meta as checkboxMeta } from "./checkbox/meta";
+import { meta as datePickerMeta } from "./date-picker/meta";
 import { meta as fieldMeta } from "./field/meta";
+import { meta as fileUploadMeta } from "./file-upload/meta";
 import { meta as inputMeta } from "./input/meta";
 import { meta as labelMeta } from "./label/meta";
 import { meta as numberFieldMeta } from "./number-field/meta";
@@ -47,8 +50,11 @@ export const registry: ComponentMeta[] = [
   iconButtonMeta,
   toggleMeta,
   toggleGroupMeta,
+  calendarMeta,
   checkboxMeta,
+  datePickerMeta,
   fieldMeta,
+  fileUploadMeta,
   inputMeta,
   labelMeta,
   numberFieldMeta,

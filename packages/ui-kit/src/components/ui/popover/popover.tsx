@@ -15,6 +15,7 @@ export interface PopoverProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   className?: string;
+  "aria-label"?: string;
 }
 
 export function Popover({
@@ -28,6 +29,7 @@ export function Popover({
   defaultOpen,
   onOpenChange,
   className,
+  "aria-label": ariaLabel,
 }: PopoverProps) {
   return (
     <PopoverPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
@@ -35,6 +37,7 @@ export function Popover({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Positioner side={side} align={align} sideOffset={8} className="z-50">
           <PopoverPrimitive.Popup
+            aria-label={ariaLabel}
             className={cn(
               "surface-curved relative z-50 w-72 rounded-overlay bg-popover p-4 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
               "origin-[var(--transform-origin)] transition-[opacity,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",

@@ -90,7 +90,7 @@ Surface treatments, shadow levels, radii and semantic fills are documented with 
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Card`, `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `IconButton`, `Input`, `Kbd`, `Label`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Calendar`, `Card`, `Checkbox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `FileUpload`, `IconButton`, `Input`, `Kbd`, `Label`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 Each component page includes a live preview, copyable code, props and examples:
 
@@ -98,7 +98,7 @@ Each component page includes a live preview, copyable code, props and examples:
 
 ## Forms
 
-`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom Base UI controls (`Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `NumberField`) expose `value`/`onValueChange` APIs — use `Controller` or the optional `FormField` wrapper:
+`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom controls (`Calendar`, `Checkbox`, `DatePicker`, `FileUpload`, `NumberField`, `RadioGroup`, `Select`, `Slider`, `Switch`) expose controlled value APIs — use `Controller` or the optional `FormField` wrapper. `Calendar`/`DatePicker` use `value`/`onValueChange`, `FileUpload` uses `files`/`onFilesChange`, and all accept `onBlur`/`aria-invalid` for form state:
 
 ```tsx
 import { Input } from "@nphuonha/ui-kit";

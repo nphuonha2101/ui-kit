@@ -16,6 +16,7 @@ import {
   BreadcrumbSeparator,
   Button,
   ButtonLink,
+  Calendar,
   Card,
   CardContent,
   CardDescription,
@@ -23,10 +24,12 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
+  DatePicker,
   DesktopNav,
   Dialog,
   EmptyState,
   Field,
+  FileUpload,
   IconButton,
   IconProvider,
   Input,
@@ -217,6 +220,19 @@ export const ssrFixtures: SsrFixture[] = [
     ),
   },
   {
+    name: "Calendar",
+    render: () => (
+      <Calendar
+        mode="single"
+        locale="en-US"
+        defaultMonth={new Date(2026, 0, 1)}
+        defaultValue={new Date(2026, 0, 15)}
+        label="Start date"
+        description="Choose a launch date."
+      />
+    ),
+  },
+  {
     name: "Card",
     render: () => (
       <Card>
@@ -235,6 +251,17 @@ export const ssrFixtures: SsrFixture[] = [
     name: "Checkbox",
     render: () => (
       <Checkbox label="Accept terms" description="Required to continue" />
+    ),
+  },
+  {
+    name: "DatePicker",
+    render: () => (
+      <DatePicker
+        label="Start date"
+        description="Choose a launch date."
+        locale="en-US"
+        defaultValue={new Date(2026, 0, 15)}
+      />
     ),
   },
   {
@@ -266,6 +293,18 @@ export const ssrFixtures: SsrFixture[] = [
       <Field label="Email" description="We never share it." error="Email is required" required>
         <Input placeholder="you@example.com" />
       </Field>
+    ),
+  },
+  {
+    name: "FileUpload",
+    render: () => (
+      <FileUpload
+        label="Attachments"
+        description="PDF or images up to 5 MB."
+        accept="image/*,.pdf"
+        maxSize={5 * 1024 * 1024}
+        maxFiles={5}
+      />
     ),
   },
   {

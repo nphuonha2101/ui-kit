@@ -39,12 +39,16 @@ export function HeroShowcase() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-sm">
-      <div className="absolute -inset-6 rounded-[2rem] bg-primary/10 blur-3xl" aria-hidden />
+    <div data-motion="hero-card" className="relative mx-auto w-full max-w-md">
+      <div
+        data-motion="hero-glow"
+        className="absolute -inset-6 rounded-[2rem] bg-primary/10 blur-3xl"
+        aria-hidden
+      />
       <Card className="relative">
-        <CardHeader>
+        <CardHeader className="p-7 pb-0">
           <div className="flex items-start justify-between gap-3">
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <CardTitle className="flex items-center gap-2">
                 <RocketLaunchIcon size={17} className="text-primary" />
                 New in the kit
@@ -58,7 +62,7 @@ export function HeroShowcase() {
             </Toggle>
           </div>
         </CardHeader>
-        <CardContent className="flex flex-col gap-5">
+        <CardContent className="flex flex-col gap-6 p-7">
           <div className="flex items-center justify-between gap-3">
             <div className="flex -space-x-2">
               <Avatar alt="Minh Anh" size="sm" className="ring-2 ring-card" />
@@ -75,7 +79,7 @@ export function HeroShowcase() {
 
           <Progress value={progress} label="Release checklist" showValue size="sm" />
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3.5">
             {tasks.map((task) => (
               <div key={task.id} className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -101,7 +105,7 @@ export function HeroShowcase() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-sm font-medium">Auto-publish</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
                 Push the tag when everything is green.
               </p>
             </div>

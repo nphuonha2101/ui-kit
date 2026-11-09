@@ -11,7 +11,10 @@ export interface SheetProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   trigger?: React.ReactElement;
+  /** Optional content above the title, e.g. a brand logo. */
+  header?: React.ReactNode;
   title?: React.ReactNode;
+  "aria-label"?: string;
   description?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -34,6 +37,7 @@ export function Sheet({
   defaultOpen,
   onOpenChange,
   trigger,
+  header,
   title,
   description,
   children,
@@ -41,6 +45,7 @@ export function Sheet({
   side = "right",
   className,
   showClose = true,
+  "aria-label": ariaLabel,
 }: SheetProps) {
   const CloseIcon = useKitIcon("close");
   return (
@@ -49,6 +54,7 @@ export function Sheet({
       <DialogPrimitive.Portal>
         <DialogPrimitive.Backdrop className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
         <DialogPrimitive.Popup
+          aria-label={ariaLabel}
           className={cn(
             "surface-curved fixed z-50 flex flex-col gap-5 bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
             "transition-transform duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]",
@@ -56,9 +62,10 @@ export function Sheet({
             className,
           )}
         >
-          {(title || description || showClose) && (
+          {(header || title || description || showClose) && (
             <div className="flex items-start justify-between gap-4">
               <div className="grid gap-1">
+                {header ? <div>{header}</div> : null}
                 {title ? <DialogPrimitive.Title className="text-lg font-semibold tracking-[-0.02em] leading-tight">{title}</DialogPrimitive.Title> : null}
                 {description ? <DialogPrimitive.Description className="text-sm leading-relaxed text-muted-foreground">{description}</DialogPrimitive.Description> : null}
               </div>

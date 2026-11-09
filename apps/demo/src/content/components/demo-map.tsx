@@ -26,6 +26,7 @@ const tooltipDemo = dynamic(() => import("./tooltip/demo").then((module) => modu
 const bottomNavDemo = dynamic(() => import("./bottom-nav/demo").then((module) => module.demo));
 const breadcrumbDemo = dynamic(() => import("./breadcrumb/demo").then((module) => module.demo));
 const desktopNavDemo = dynamic(() => import("./desktop-nav/demo").then((module) => module.demo));
+const mobileNavDemo = dynamic(() => import("./mobile-nav/demo").then((module) => module.demo));
 const paginationDemo = dynamic(() => import("./pagination/demo").then((module) => module.demo));
 const tabsDemo = dynamic(() => import("./tabs/demo").then((module) => module.demo));
 const accordionDemo = dynamic(() => import("./accordion/demo").then((module) => module.demo));
@@ -60,6 +61,15 @@ const toggleGrouptoggleGroupMultipleExample = dynamic(() =>
 );
 const selectselectFieldExample = dynamic(() =>
   import("./select/demo").then((module) => module.examples["select-field"]),
+);
+const desktopNavdesktopNavSubmenuExample = dynamic(() =>
+  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-submenu"]),
+);
+const desktopNavdesktopNavHeaderExample = dynamic(() =>
+  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-header"]),
+);
+const desktopNavdesktopNavLogoExample = dynamic(() =>
+  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-logo"]),
 );
 const tabstabsSettingsExample = dynamic(() =>
   import("./tabs/demo").then((module) => module.examples["tabs-settings"]),
@@ -122,6 +132,7 @@ export const demoMap: Record<string, React.ComponentType> = {
   "bottom-nav": bottomNavDemo,
   "breadcrumb": breadcrumbDemo,
   "desktop-nav": desktopNavDemo,
+  "mobile-nav": mobileNavDemo,
   "pagination": paginationDemo,
   "tabs": tabsDemo,
   "accordion": accordionDemo,
@@ -147,6 +158,9 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
   "select-field": selectselectFieldExample,
+  "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,
+  "desktop-nav-header": desktopNavdesktopNavHeaderExample,
+  "desktop-nav-logo": desktopNavdesktopNavLogoExample,
   "tabs-settings": tabstabsSettingsExample,
   "accordion-multiple": accordionaccordionMultipleExample,
   "accordion-separated": accordionaccordionSeparatedExample,

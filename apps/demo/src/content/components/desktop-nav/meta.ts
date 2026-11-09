@@ -10,7 +10,12 @@ export const meta: ComponentMeta = {
     {
       "name": "items",
       "type": "DesktopNavItem[]",
-      "description": "Value/label entries. Add optional icon, activeIcon, href, badge or disabled per item."
+      "description": "Value/label entries. Add optional icon, activeIcon, href, badge, disabled or children per item."
+    },
+    {
+      "name": "items[].children",
+      "type": "DesktopNavItem[]",
+      "description": "Nested items rendered as a submenu. Children can nest again for multi-level menus."
     },
     {
       "name": "value",
@@ -32,6 +37,23 @@ export const meta: ComponentMeta = {
       "type": "string",
       "default": "\"Desktop navigation\"",
       "description": "Accessible name for the navigation landmark."
+    }
+  ],
+  "examples": [
+    {
+      "title": "Submenus and nested levels",
+      "description": "Items with children open a dropdown; children can nest again for multi-level menus.",
+      "demoKey": "desktop-nav-submenu"
+    },
+    {
+      "title": "Three-segment header",
+      "description": "Logo, centered navigation and actions. Container queries switch to a collapsible Sheet menu with an optional logo on narrow widths.",
+      "demoKey": "desktop-nav-header"
+    },
+    {
+      "title": "Navigation with logo",
+      "description": "A compact logo and horizontal navigation bar.",
+      "demoKey": "desktop-nav-logo"
     }
   ]
 };

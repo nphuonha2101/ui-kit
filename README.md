@@ -90,7 +90,7 @@ Surface treatments, shadow levels, radii and semantic fills are documented with 
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Card`, `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `IconButton`, `Input`, `Kbd`, `Label`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Card`, `Checkbox`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `IconButton`, `Input`, `Kbd`, `Label`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 Each component page includes a live preview, copyable code, props and examples:
 
@@ -138,6 +138,28 @@ const items: BottomNavItem[] = [
 
 <BottomNav items={items} defaultValue="home" fixed />;
 ```
+
+`DesktopNav` items can include `children` for submenus, including multiple levels:
+
+```tsx
+const items: DesktopNavItem[] = [
+  { value: "overview", label: "Overview" },
+  {
+    value: "components",
+    label: "Components",
+    children: [
+      { value: "buttons", label: "Buttons" },
+      {
+        value: "forms",
+        label: "Forms",
+        children: [{ value: "input", label: "Input" }],
+      },
+    ],
+  },
+];
+```
+
+The component docs include a three-segment header with logo/actions, a plain logo nav and a responsive `Sheet` menu for mobile.
 
 ## AI agents
 

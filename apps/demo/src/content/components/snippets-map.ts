@@ -23,6 +23,7 @@ import { snippets as tooltipSnippets } from "./tooltip/snippets";
 import { snippets as bottomNavSnippets } from "./bottom-nav/snippets";
 import { snippets as breadcrumbSnippets } from "./breadcrumb/snippets";
 import { snippets as desktopNavSnippets } from "./desktop-nav/snippets";
+import { snippets as mobileNavSnippets } from "./mobile-nav/snippets";
 import { snippets as paginationSnippets } from "./pagination/snippets";
 import { snippets as tabsSnippets } from "./tabs/snippets";
 import { snippets as accordionSnippets } from "./accordion/snippets";
@@ -64,6 +65,7 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "bottom-nav": bottomNavSnippets,
   "breadcrumb": breadcrumbSnippets,
   "desktop-nav": desktopNavSnippets,
+  "mobile-nav": mobileNavSnippets,
   "pagination": paginationSnippets,
   "tabs": tabsSnippets,
   "accordion": accordionSnippets,

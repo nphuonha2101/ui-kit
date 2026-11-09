@@ -35,3 +35,13 @@ html {
 .docs-link:hover {
   text-decoration-color: var(--foreground);
 }
+
+/* Scratch routes, e.g. /lab/desktop-nav, render on a blank canvas. */
+body.lab-blank > header,
+body.lab-blank > footer {
+  display: none;
+}
+
+body.lab-blank > main {
+  padding-top: 0;
+}

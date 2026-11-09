@@ -137,6 +137,11 @@
       "import": "./dist/components/ui/label/index.js",
       "default": "./dist/components/ui/label/index.js"
     },
+    "./mobile-nav": {
+      "types": "./dist/components/ui/mobile-nav/index.d.ts",
+      "import": "./dist/components/ui/mobile-nav/index.js",
+      "default": "./dist/components/ui/mobile-nav/index.js"
+    },
     "./number-field": {
       "types": "./dist/components/ui/number-field/index.d.ts",
       "import": "./dist/components/ui/number-field/index.js",

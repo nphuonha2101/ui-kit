@@ -28,4 +28,40 @@ describe("Sheet", () => {
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
   });
+
+  it("renders optional header content above the title", async () => {
+    const user = userEvent.setup();
+    render(
+      <Sheet
+        trigger={<Button>Open sheet</Button>}
+        header={<span>Acme</span>}
+        title="Menu"
+        description="Browse the site."
+      >
+        <p>Sheet body</p>
+      </Sheet>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+
+    expect(await screen.findByRole("dialog", { name: "Menu" })).toBeInTheDocument();
+    expect(screen.getByText("Acme")).toBeInTheDocument();
+  });
+
+  it("uses aria-label when there is no visible title", async () => {
+    const user = userEvent.setup();
+    render(
+      <Sheet
+        trigger={<Button>Open sheet</Button>}
+        header={<span>Acme</span>}
+        aria-label="Menu"
+      >
+        <p>Sheet body</p>
+      </Sheet>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open sheet" }));
+
+    expect(await screen.findByRole("dialog", { name: "Menu" })).toBeInTheDocument();
+  });
 });

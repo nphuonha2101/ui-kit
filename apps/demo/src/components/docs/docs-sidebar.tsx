@@ -157,21 +157,27 @@ export function DocsSidebar() {
 export function MobileDocsNav() {
   const [open, setOpen] = React.useState(false);
   return (
-    <div className="mb-6 lg:hidden">
+    <>
+      <Button
+        variant="secondary"
+        size="sm"
+        shape="pill"
+        startIcon={ListIcon}
+        onClick={() => setOpen(true)}
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] left-4 z-40 shadow-soft lg:hidden"
+      >
+        Browse docs
+      </Button>
+
       <Sheet
         open={open}
         onOpenChange={setOpen}
         side="left"
         title="Documentation"
         description="Browse the kit."
-        trigger={
-          <Button variant="outline" size="sm" startIcon={ListIcon}>
-            Browse docs
-          </Button>
-        }
       >
         <SidebarNav onNavigate={() => setOpen(false)} />
       </Sheet>
-    </div>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { buttonVariants } from "@nphuonha/ui-kit";
 export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-[70vh] w-full max-w-xl flex-col items-center justify-center gap-4 px-4 text-center">
-      <span className="flex size-12 items-center justify-center rounded-[14px] bg-primary-soft text-primary-soft-foreground">
+      <span className="flex size-12 items-center justify-center rounded-control bg-primary-soft text-primary-soft-foreground">
         <CompassIcon size={22} />
       </span>
       <p className="text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">

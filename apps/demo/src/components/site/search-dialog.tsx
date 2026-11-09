@@ -131,7 +131,7 @@ export function SearchDialog({
                 >
                   <span
                     className={cn(
-                      "flex size-9 shrink-0 items-center justify-center rounded-[10px] transition-colors",
+                      "flex size-9 shrink-0 items-center justify-center rounded-sm transition-colors",
                       selected
                         ? "bg-primary-soft text-primary-soft-foreground"
                         : "bg-surface text-muted-foreground",

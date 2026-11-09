@@ -33,6 +33,7 @@ export * from "./components/ui/icon-button";
 export * from "./components/ui/input";
 export * from "./components/ui/kbd";
 export * from "./components/ui/label";
+export * from "./components/ui/mobile-nav";
 export * from "./components/ui/number-field";
 export * from "./components/ui/pagination";
 export * from "./components/ui/popover";

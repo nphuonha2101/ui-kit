@@ -3,11 +3,20 @@
 import * as React from "react";
 import {
   ClockCounterClockwiseIcon,
+  ListIcon,
+  MagnifyingGlassIcon,
   PaletteIcon,
   SquaresFourIcon,
   StackIcon,
 } from "@phosphor-icons/react";
-import { DesktopNav } from "@nphuonha/ui-kit";
+import {
+  Button,
+  Card,
+  DesktopNav,
+  IconButton,
+  MobileNav,
+  type DesktopNavItem,
+} from "@nphuonha/ui-kit";
 
 const items = [
   { value: "overview", label: "Overview" },
@@ -39,6 +48,74 @@ const content = {
   },
 } as const;
 
+const submenuItems: DesktopNavItem[] = [
+  { value: "overview", label: "Overview" },
+  {
+    value: "components",
+    label: "Components",
+    children: [
+      { value: "buttons", label: "Buttons" },
+      {
+        value: "forms",
+        label: "Forms",
+        children: [
+          { value: "input", label: "Input" },
+          { value: "select", label: "Select" },
+          { value: "textarea", label: "Textarea" },
+        ],
+      },
+      {
+        value: "data",
+        label: "Data display",
+        children: [
+          { value: "table", label: "Table" },
+          { value: "pagination", label: "Pagination" },
+        ],
+      },
+    ],
+  },
+  { value: "themes", label: "Themes", badge: "New" },
+];
+
+const headerItems: DesktopNavItem[] = [
+  {
+    value: "product",
+    label: "Product",
+    children: [
+      { value: "overview", label: "Overview" },
+      { value: "features", label: "Features" },
+      { value: "pricing", label: "Pricing" },
+    ],
+  },
+  {
+    value: "resources",
+    label: "Resources",
+    children: [
+      { value: "docs", label: "Documentation" },
+      {
+        value: "guides",
+        label: "Guides",
+        children: [
+          { value: "getting-started", label: "Getting started" },
+          { value: "tokens", label: "Design tokens" },
+        ],
+      },
+    ],
+  },
+  { value: "customers", label: "Customers" },
+];
+
+function BrandMark() {
+  return (
+    <span className="flex items-center gap-2">
+      <span className="flex size-8 items-center justify-center rounded-control bg-primary text-sm font-semibold text-primary-foreground">
+        A
+      </span>
+      <span className="text-sm font-semibold tracking-[-0.02em]">Acme</span>
+    </span>
+  );
+}
+
 function DesktopNavDemo() {
   const [active, setActive] = React.useState("overview");
   const current = content[active as keyof typeof content];
@@ -54,7 +131,7 @@ function DesktopNavDemo() {
         />
       </div>
 
-      <div className="surface-curved relative overflow-hidden rounded-card bg-card p-5 shadow-soft">
+      <Card className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
@@ -86,10 +163,93 @@ function DesktopNavDemo() {
             </div>
           ))}
         </div>
+      </Card>
+    </div>
+  );
+}
+
+function DesktopNavSubmenuDemo() {
+  const [active, setActive] = React.useState("overview");
+
+  return (
+    <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
+      <DesktopNav
+        items={submenuItems}
+        value={active}
+        onValueChange={setActive}
+        aria-label="Submenu navigation"
+      />
+      <p className="text-sm text-muted-foreground">
+        Selected: <span className="font-medium text-foreground">{active}</span>
+      </p>
+    </div>
+  );
+}
+
+function DesktopNavHeaderDemo() {
+  const [active, setActive] = React.useState("overview");
+
+  return (
+    <div className="@container mx-auto w-full max-w-3xl">
+      <div className="surface-curved relative flex items-center gap-2 rounded-card bg-card p-2 shadow-soft">
+        <div className="flex min-w-0 items-center pl-1 pr-2">
+          <BrandMark />
+        </div>
+
+        <div className="hidden min-w-0 flex-1 justify-center @2xl:flex">
+          <DesktopNav
+            items={headerItems}
+            value={active}
+            onValueChange={setActive}
+            aria-label="Primary navigation"
+          />
+        </div>
+
+        <div className="ml-auto flex items-center gap-1">
+          <IconButton
+            aria-label="Search"
+            variant="ghost"
+            size="icon"
+            className="hidden @2xl:inline-flex"
+          >
+            <MagnifyingGlassIcon size={18} />
+          </IconButton>
+          <Button
+            size="sm"
+            shape="pill"
+            className="hidden @2xl:inline-flex"
+          >
+            Get started
+          </Button>
+
+          <MobileNav
+            items={headerItems}
+            value={active}
+            onValueChange={setActive}
+            logo={<BrandMark />}
+            trigger={
+              <IconButton
+                aria-label="Open menu"
+                variant="ghost"
+                size="icon"
+                className="@2xl:hidden"
+              >
+                <ListIcon size={18} />
+              </IconButton>
+            }
+          />
+        </div>
       </div>
+
+      <p className="mt-3 text-center text-sm text-muted-foreground">
+        Selected: <span className="font-medium text-foreground">{active}</span>
+      </p>
     </div>
   );
 }
 
 export const demo = DesktopNavDemo;
-export const examples = {};
+export const examples = {
+  "desktop-nav-submenu": DesktopNavSubmenuDemo,
+  "desktop-nav-header": DesktopNavHeaderDemo,
+};

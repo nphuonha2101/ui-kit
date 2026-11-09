@@ -136,7 +136,7 @@ export default function HomePage() {
             ].map((item) => (
               <Card key={item.title}>
                 <CardContent className="flex flex-col gap-3 pt-6">
-                  <span className="flex size-9 items-center justify-center rounded-[10px] bg-primary-soft text-primary-soft-foreground">
+                  <span className="flex size-9 items-center justify-center rounded-sm bg-primary-soft text-primary-soft-foreground">
                     <item.icon size={18} />
                   </span>
                   <div>

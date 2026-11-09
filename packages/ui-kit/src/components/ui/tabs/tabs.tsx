@@ -26,7 +26,7 @@ export function Tabs({ items, className, listClassName, panelClassName, ...props
           listClassName,
         )}
       >
-        <TabsPrimitive.Indicator className="surface-curved pointer-events-none absolute left-0 top-0 z-0 h-[var(--active-tab-height)] w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] translate-y-[var(--active-tab-top)] rounded-pill bg-card shadow-sm transition-[translate,width] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]" />
+        <TabsPrimitive.Indicator className="surface-curved pointer-events-none absolute left-0 top-0 z-0 h-[var(--active-tab-height)] w-[var(--active-tab-width)] translate-x-[var(--active-tab-left)] translate-y-[var(--active-tab-top)] rounded-pill bg-card shadow-control transition-[translate,width] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]" />
         {items.map((item) => (
           <TabsPrimitive.Tab
             key={item.value}

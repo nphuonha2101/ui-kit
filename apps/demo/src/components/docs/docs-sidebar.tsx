@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ListIcon } from "@phosphor-icons/react";
+import { CaretDownIcon, ListIcon } from "@phosphor-icons/react";
 import { Button, Sheet, cn } from "@nphuonha/ui-kit";
 import { componentGroups, getComponent } from "@/content/components";
 
@@ -11,6 +11,7 @@ const gettingStarted = [
   { href: "/docs", label: "Introduction" },
   { href: "/docs/installation", label: "Installation" },
   { href: "/docs/theming", label: "Theming" },
+  { href: "/docs/utilities", label: "Utilities" },
   { href: "/docs/forms", label: "Forms" },
   { href: "/docs/upgrading", label: "Upgrading" },
   { href: "/docs/agents", label: "For agents" },
@@ -40,8 +41,61 @@ function SidebarLink({
           : "text-muted-foreground hover:bg-surface/60 hover:text-foreground",
       )}
     >
-      {label}
+      <span className="truncate">{label}</span>
     </Link>
+  );
+}
+
+function SidebarGroup({
+  category,
+  components,
+  onNavigate,
+}: {
+  category: string;
+  components: { slug: string; title: string }[];
+  onNavigate?: () => void;
+}) {
+  const [open, setOpen] = React.useState(true);
+
+  return (
+    <div className="flex flex-col">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+        className="flex h-8 items-center justify-between gap-2 rounded-control px-2.5 text-[11px] font-medium text-muted-foreground/70 transition-colors hover:bg-surface/60 hover:text-foreground"
+      >
+        <span className="truncate">{category}</span>
+        <CaretDownIcon
+          size={12}
+          className={cn(
+            "shrink-0 transition-transform duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
+            open && "rotate-180",
+          )}
+        />
+      </button>
+      <div
+        aria-hidden={!open}
+        inert={!open}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        )}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="ml-3 flex flex-col gap-0.5 border-l border-border/60 pl-2 pt-0.5">
+            {components.map((component) => (
+              <SidebarLink
+                key={component.slug}
+                href={`/docs/components/${component.slug}`}
+                label={component.title}
+                onNavigate={onNavigate}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -63,23 +117,14 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
         <p className="mb-2 px-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Components
         </p>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
           {componentGroups.map((group) => (
-            <div key={group.category}>
-              <p className="px-2.5 pb-1 text-[11px] font-medium text-muted-foreground/70">
-                {group.category}
-              </p>
-              <div className="flex flex-col gap-0.5">
-                {group.components.map((component) => (
-                  <SidebarLink
-                    key={component.slug}
-                    href={`/docs/components/${component.slug}`}
-                    label={component.title}
-                    onNavigate={onNavigate}
-                  />
-                ))}
-              </div>
-            </div>
+            <SidebarGroup
+              key={group.category}
+              category={group.category}
+              components={group.components}
+              onNavigate={onNavigate}
+            />
           ))}
         </div>
       </div>

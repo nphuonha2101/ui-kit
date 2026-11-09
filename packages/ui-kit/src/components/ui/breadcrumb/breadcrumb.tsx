@@ -57,7 +57,7 @@ export function BreadcrumbLink({
   ...props
 }: BreadcrumbLinkProps) {
   const classes = cn(
-    "rounded-[4px] outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
+    "rounded-2xs outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
     className,
   );
 

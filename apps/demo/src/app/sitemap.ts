@@ -19,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/docs/utilities/`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/docs/forms/`,
       changeFrequency: "monthly",
       priority: 0.7,

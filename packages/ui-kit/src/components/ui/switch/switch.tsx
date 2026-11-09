@@ -26,7 +26,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         )}
         {...props}
       >
-        <SwitchPrimitive.Thumb className="surface-curved-pill relative pointer-events-none block h-5 w-7 rounded-pill bg-white shadow-[0_1px_3px_rgb(0_0_0_/_0.2)] transition-[transform,width] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] data-[checked]:translate-x-3 data-[unchecked]:translate-x-0 motion-safe:active:w-8 data-[checked]:motion-safe:active:translate-x-2" />
+        <SwitchPrimitive.Thumb className="surface-curved-pill relative pointer-events-none block h-5 w-7 rounded-pill bg-switch-thumb shadow-[var(--shadow-raised)] transition-[transform,width] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] data-[checked]:translate-x-3 data-[unchecked]:translate-x-0 motion-safe:active:w-8 data-[checked]:motion-safe:active:translate-x-2" />
       </SwitchPrimitive.Root>
     );
     if (!label && !description) return control;

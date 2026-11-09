@@ -26,6 +26,7 @@ const tooltipDemo = dynamic(() => import("./tooltip/demo").then((module) => modu
 const bottomNavDemo = dynamic(() => import("./bottom-nav/demo").then((module) => module.demo));
 const breadcrumbDemo = dynamic(() => import("./breadcrumb/demo").then((module) => module.demo));
 const desktopNavDemo = dynamic(() => import("./desktop-nav/demo").then((module) => module.demo));
+const mobileNavDemo = dynamic(() => import("./mobile-nav/demo").then((module) => module.demo));
 const paginationDemo = dynamic(() => import("./pagination/demo").then((module) => module.demo));
 const tabsDemo = dynamic(() => import("./tabs/demo").then((module) => module.demo));
 const accordionDemo = dynamic(() => import("./accordion/demo").then((module) => module.demo));
@@ -61,6 +62,12 @@ const toggleGrouptoggleGroupMultipleExample = dynamic(() =>
 const selectselectFieldExample = dynamic(() =>
   import("./select/demo").then((module) => module.examples["select-field"]),
 );
+const desktopNavdesktopNavSubmenuExample = dynamic(() =>
+  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-submenu"]),
+);
+const desktopNavdesktopNavHeaderExample = dynamic(() =>
+  import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-header"]),
+);
 const tabstabsSettingsExample = dynamic(() =>
   import("./tabs/demo").then((module) => module.examples["tabs-settings"]),
 );
@@ -75,6 +82,9 @@ const avataravatarSizesExample = dynamic(() =>
 );
 const cardcardProfileExample = dynamic(() =>
   import("./card/demo").then((module) => module.examples["card-profile"]),
+);
+const cardcardElevationExample = dynamic(() =>
+  import("./card/demo").then((module) => module.examples["card-elevation"]),
 );
 const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
   import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
@@ -119,6 +129,7 @@ export const demoMap: Record<string, React.ComponentType> = {
   "bottom-nav": bottomNavDemo,
   "breadcrumb": breadcrumbDemo,
   "desktop-nav": desktopNavDemo,
+  "mobile-nav": mobileNavDemo,
   "pagination": paginationDemo,
   "tabs": tabsDemo,
   "accordion": accordionDemo,
@@ -144,11 +155,14 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
   "select-field": selectselectFieldExample,
+  "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,
+  "desktop-nav-header": desktopNavdesktopNavHeaderExample,
   "tabs-settings": tabstabsSettingsExample,
   "accordion-multiple": accordionaccordionMultipleExample,
   "accordion-separated": accordionaccordionSeparatedExample,
   "avatar-sizes": avataravatarSizesExample,
   "card-profile": cardcardProfileExample,
+  "card-elevation": cardcardElevationExample,
   "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
   "progress-indeterminate": progressprogressIndeterminateExample,
   "progress-tones": progressprogressTonesExample,

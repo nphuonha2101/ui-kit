@@ -21,6 +21,7 @@ import { meta as tooltipMeta } from "./tooltip/meta";
 import { meta as bottomNavMeta } from "./bottom-nav/meta";
 import { meta as breadcrumbMeta } from "./breadcrumb/meta";
 import { meta as desktopNavMeta } from "./desktop-nav/meta";
+import { meta as mobileNavMeta } from "./mobile-nav/meta";
 import { meta as paginationMeta } from "./pagination/meta";
 import { meta as tabsMeta } from "./tabs/meta";
 import { meta as accordionMeta } from "./accordion/meta";
@@ -64,6 +65,7 @@ export const registry: ComponentMeta[] = [
   bottomNavMeta,
   breadcrumbMeta,
   desktopNavMeta,
+  mobileNavMeta,
   paginationMeta,
   tabsMeta,
   accordionMeta,

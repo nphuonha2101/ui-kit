@@ -6,9 +6,9 @@ export const toggleVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-transparent text-muted-foreground hover:bg-surface hover:text-foreground data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground",
+          "bg-transparent text-muted-foreground hover:bg-surface hover:text-foreground data-[pressed]:surface-curved-soft data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground",
         outline:
-          "bg-transparent text-foreground shadow-[inset_0_0_0_1.5px_var(--border)] hover:bg-surface data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground data-[pressed]:shadow-[inset_0_0_0_1.5px_var(--primary)]",
+          "bg-transparent text-foreground shadow-[inset_0_0_0_1.5px_var(--border)] hover:bg-surface data-[pressed]:surface-curved-soft data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground data-[pressed]:shadow-[inset_0_0_0_1.5px_var(--primary)]",
       },
       size: {
         sm: "h-9 px-3.5 text-[13px]",

@@ -28,6 +28,70 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.7.0",
+    date: "2026-11-09",
+    breaking: false,
+    summary:
+      "Additive release: MobileNav, nested DesktopNav submenus, a Sheet header slot and animated nav indicators. Existing APIs and imports keep working.",
+    changes: [
+      {
+        id: "mobile-nav",
+        kind: "additive",
+        surface: "MobileNav",
+        before:
+          "Mobile navigation required composing Sheet, a trigger and collapsible groups manually.",
+        after:
+          'import { MobileNav } from "@nphuonha/ui-kit";\n\n<MobileNav items={items} logo={<BrandMark />} />',
+        find: "<Sheet",
+        fix: 'Nothing required. Use MobileNav for a logo header, collapsible groups and multi-level mobile navigation. Sheet now also accepts header and aria-label for custom menus.',
+      },
+      {
+        id: "desktop-nav-submenus",
+        kind: "additive",
+        surface: "DesktopNav",
+        before:
+          "DesktopNav only accepted a flat item list.",
+        after:
+          'const items = [{ value: "components", label: "Components", children: [{ value: "buttons", label: "Buttons" }] }];',
+        find: "DesktopNavItem",
+        fix: "Nothing required. Add children to any item to render a submenu; children can nest recursively.",
+      },
+      {
+        id: "sheet-header-aria-label",
+        kind: "additive",
+        surface: "Sheet",
+        before:
+          "Sheet had no logo slot and required a visible title for its accessible name.",
+        after:
+          '<Sheet header={<BrandMark />} aria-label="Menu">...</Sheet>',
+        find: "<Sheet",
+        fix: "Nothing required. Use header for logos and aria-label when omitting the visible title.",
+      },
+      {
+        id: "depth-and-shape-tokens",
+        kind: "additive",
+        surface: "Theme tokens",
+        before:
+          "Small active indicators used Tailwind's shadow-sm and micro controls used arbitrary radius values.",
+        after:
+          'className="shadow-control rounded-xs"',
+        find: "shadow-sm",
+        fix: "Nothing required. shadow-control, rounded-xs and rounded-2xs are available alongside the existing soft/raised/overlay shadows and shape tokens.",
+      },
+      {
+        id: "nav-active-motion",
+        kind: "behavior",
+        surface: "BottomNav / DesktopNav",
+        before:
+          "Active items changed state without moving the active indicator.",
+        after:
+          "<BottomNav items={items} value={active} onValueChange={setActive} />",
+        find: "<BottomNav",
+        fix: "Nothing required. Active pills now slide between items and honor prefers-reduced-motion automatically.",
+      },
+    ],
+  },
+  {
     version: "0.6.0",
     date: "2026-11-09",
     breaking: false,

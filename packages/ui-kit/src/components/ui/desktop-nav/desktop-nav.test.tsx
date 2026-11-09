@@ -115,4 +115,48 @@ describe("DesktopNav", () => {
     await user.click(themes);
     expect(onValueChange).not.toHaveBeenCalled();
   });
+
+  it("marks a parent active when a descendant is selected", () => {
+    render(
+      <DesktopNav
+        items={[
+          {
+            value: "components",
+            label: "Components",
+            children: [{ value: "buttons", label: "Buttons" }],
+          },
+        ]}
+        value="buttons"
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "Components" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
+
+  it("opens a submenu and selects a nested item", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+
+    render(
+      <DesktopNav
+        items={[
+          {
+            value: "components",
+            label: "Components",
+            children: [{ value: "buttons", label: "Buttons" }],
+          },
+        ]}
+        defaultValue="components"
+        onValueChange={onValueChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Components" }));
+    await user.click(await screen.findByRole("menuitem", { name: "Buttons" }));
+
+    expect(onValueChange).toHaveBeenCalledWith("buttons");
+  });
 });

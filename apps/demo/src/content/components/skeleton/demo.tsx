@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "@nphuonha/ui-kit";
+import { Card, Skeleton } from "@nphuonha/ui-kit";
 
 function SkeletonDemo() {
   return (
@@ -25,14 +25,14 @@ function SkeletonLinesDemo() {
 
 function SkeletonCardDemo() {
   return (
-    <div className="mx-auto w-full max-w-sm rounded-card bg-card p-5 shadow-[var(--shadow-soft)]">
+    <Card className="mx-auto w-full max-w-sm p-5">
       <Skeleton className="mb-4 h-36 w-full" />
       <div className="flex flex-col gap-2">
         <Skeleton variant="text" className="w-1/2" />
         <Skeleton variant="text" />
         <Skeleton variant="text" className="w-3/4" />
       </div>
-    </div>
+    </Card>
   );
 }
 

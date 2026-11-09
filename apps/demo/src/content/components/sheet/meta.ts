@@ -23,6 +23,16 @@ export const meta: ComponentMeta = {
       "description": "Element that opens the sheet."
     },
     {
+      "name": "header",
+      "type": "ReactNode",
+      "description": "Optional content above the title, e.g. a brand logo."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name when the sheet has no visible title."
+    },
+    {
       "name": "side",
       "type": "\"right\" | \"left\" | \"bottom\"",
       "default": "\"right\"",

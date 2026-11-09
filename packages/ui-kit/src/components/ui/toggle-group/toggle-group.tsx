@@ -78,7 +78,7 @@ export function ToggleGroup({
               "relative inline-flex h-8 items-center justify-center gap-2 rounded-pill px-3.5 text-sm font-medium text-muted-foreground outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
               "focus-visible:ring-2 focus-visible:ring-ring/35 disabled:pointer-events-none disabled:opacity-45",
               variant === "segmented"
-                ? "data-[pressed]:surface-curved data-[pressed]:bg-card data-[pressed]:text-foreground data-[pressed]:shadow-sm"
+                ? "data-[pressed]:surface-curved data-[pressed]:bg-card data-[pressed]:text-foreground data-[pressed]:shadow-control"
                 : "hover:bg-surface data-[pressed]:bg-surface data-[pressed]:text-foreground",
               orientation === "vertical" && "w-full justify-start",
             )}

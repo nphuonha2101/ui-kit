@@ -6,6 +6,7 @@ import {
   PaletteIcon,
   RobotIcon,
   RocketLaunchIcon,
+  SparkleIcon,
   SquaresFourIcon,
   TerminalWindowIcon,
 } from "@/components/icons";
@@ -33,6 +34,12 @@ const links = [
     title: "Theming",
     description: "Semantic tokens, dark mode and runtime accent generation.",
     icon: PaletteIcon,
+  },
+  {
+    href: "/docs/utilities",
+    title: "Utilities",
+    description: "Surface, shadow, radius and fill classes with live examples.",
+    icon: SparkleIcon,
   },
   {
     href: "/docs/forms",
@@ -141,7 +148,7 @@ export function Example() {
                 href={item.href}
                 className="surface-curved group relative flex flex-col gap-3 rounded-card bg-card p-5 shadow-soft transition-transform hover:-translate-y-0.5"
               >
-                <span className="flex size-9 items-center justify-center rounded-[10px] bg-primary-soft text-primary-soft-foreground">
+                <span className="flex size-9 items-center justify-center rounded-sm bg-primary-soft text-primary-soft-foreground">
                   <item.icon size={18} />
                 </span>
                 <div>

@@ -43,6 +43,11 @@ export const meta: ComponentMeta = {
       "title": "Profile card",
       "description": "Combine the card parts with badges and actions.",
       "demoKey": "card-profile"
+    },
+    {
+      "title": "Elevation options",
+      "description": "Use shadow-none to keep the curved rim without the outer lift, or surface-flat for a fully flat surface.",
+      "demoKey": "card-elevation"
     }
   ]
 };

@@ -3,6 +3,7 @@ import type { ComponentSnippets } from "@/content/types";
 export const snippets: ComponentSnippets = {
   "preview": `import {
   Badge,
+  Card,
   Table,
   TableBody,
   TableCell,
@@ -11,9 +12,22 @@ export const snippets: ComponentSnippets = {
   TableRow,
 } from "@nphuonha/ui-kit";
 
+const invoices = [
+  { id: "INV-001", client: "Acme Studio", amount: "$1,200.00", status: "Paid" },
+  { id: "INV-002", client: "Northwind", amount: "$480.00", status: "Pending" },
+  { id: "INV-003", client: "Lumen Labs", amount: "$2,150.00", status: "Paid" },
+  { id: "INV-004", client: "Kite & Co.", amount: "$320.00", status: "Overdue" },
+];
+
+const statusVariant = {
+  Paid: "success",
+  Pending: "warning",
+  Overdue: "danger",
+} as const;
+
 export function Example() {
   return (
-    <div className="surface-curved relative w-full overflow-hidden rounded-card bg-card shadow-soft">
+    <Card className="w-full overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
@@ -24,15 +38,27 @@ export function Example() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">INV-001</TableCell>
-            <TableCell>Acme Studio</TableCell>
-            <TableCell><Badge variant="success">Paid</Badge></TableCell>
-            <TableCell className="text-right tabular-nums">$1,200.00</TableCell>
-          </TableRow>
+          {invoices.map((invoice) => (
+            <TableRow key={invoice.id}>
+              <TableCell className="font-medium text-foreground">
+                {invoice.id}
+              </TableCell>
+              <TableCell className="text-muted-foreground">
+                {invoice.client}
+              </TableCell>
+              <TableCell>
+                <Badge variant={statusVariant[invoice.status as keyof typeof statusVariant]}>
+                  {invoice.status}
+                </Badge>
+              </TableCell>
+              <TableCell className="text-right tabular-nums">
+                {invoice.amount}
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
-    </div>
+    </Card>
   );
 }`,
   "usage": `<Table>

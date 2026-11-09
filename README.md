@@ -110,6 +110,7 @@ import { Form, FormField } from "@nphuonha/ui-kit/form";
       control={form.control}
       name="email"
       label="Email"
+      required
       rules={{ required: "Email is required" }}
       render={({ field }) => <Input type="email" {...field} />}
     />

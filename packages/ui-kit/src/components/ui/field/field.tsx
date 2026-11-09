@@ -29,6 +29,10 @@ export function Field({ id, label, description, error, required, className, chil
             .filter(Boolean)
             .join(" ") || undefined,
         "aria-invalid": error ? true : (children.props as { "aria-invalid"?: boolean })["aria-invalid"],
+        required:
+          required ||
+          (children.props as { required?: boolean }).required ||
+          undefined,
       })
     : children;
 

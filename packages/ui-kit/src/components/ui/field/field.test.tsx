@@ -20,4 +20,15 @@ describe("Field", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAccessibleDescription("We never share it. Email is required");
   });
+
+  it("marks the label and forwards required to the control", () => {
+    render(
+      <Field label="Email" required>
+        <Input />
+      </Field>,
+    );
+
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(screen.getByRole("textbox")).toBeRequired();
+  });
 });

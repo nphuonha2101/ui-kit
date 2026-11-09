@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
 import { Input } from "../input";
+import { RadioGroup } from "../radio-group";
 import { Form, FormField } from "./form";
 
 type Values = { email: string };
@@ -17,6 +18,7 @@ function Demo({ onSubmit }: { onSubmit: (values: Values) => void }) {
           control={form.control}
           name="email"
           label="Email"
+          required
           rules={{ required: "Email is required" }}
           render={({ field }) => <Input type="email" {...field} />}
         />
@@ -43,6 +45,11 @@ describe("FormField", () => {
     );
   });
 
+  it("marks required fields", () => {
+    render(<Demo onSubmit={vi.fn()} />);
+    expect(screen.getByText("*")).toHaveClass("text-destructive");
+  });
+
   it("shows validation errors and wires aria attributes", async () => {
     const user = userEvent.setup();
     render(<Demo onSubmit={vi.fn()} />);
@@ -53,5 +60,48 @@ describe("FormField", () => {
     const error = await screen.findByText("Email is required");
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute("aria-describedby", error.id);
+  });
+
+  it("renders one error message for custom controls", async () => {
+    const user = userEvent.setup();
+    type Values = { plan: string };
+
+    function CustomDemo() {
+      const form = useForm<Values>({ defaultValues: { plan: "" } });
+      return (
+        <form onSubmit={form.handleSubmit(() => {})}>
+          <FormField
+            control={form.control}
+            name="plan"
+            label="Plan"
+            required
+            rules={{ required: "Choose a plan" }}
+            render={({ field }) => (
+              <RadioGroup
+                value={field.value}
+                onValueChange={field.onChange}
+                onBlur={field.onBlur}
+                options={[
+                  { value: "free", label: "Free" },
+                  { value: "pro", label: "Pro" },
+                ]}
+              />
+            )}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      );
+    }
+
+    render(<CustomDemo />);
+
+    await user.click(screen.getByRole("button", { name: "Submit" }));
+
+    expect(await screen.findAllByRole("alert")).toHaveLength(1);
+    expect(screen.getAllByText("Choose a plan")).toHaveLength(1);
+    expect(screen.getByRole("radiogroup")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
   });
 });

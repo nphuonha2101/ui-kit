@@ -81,6 +81,7 @@ export function FormsDemo() {
               control={control}
               name="name"
               label="Workspace name"
+              required
               rules={{ required: "Workspace name is required" }}
               render={({ field }) => (
                 <Input placeholder="Acme Studio" {...field} />
@@ -90,6 +91,7 @@ export function FormsDemo() {
               control={control}
               name="email"
               label="Work email"
+              required
               rules={{
                 required: "Work email is required",
                 pattern: {
@@ -108,6 +110,7 @@ export function FormsDemo() {
               control={control}
               name="role"
               label="Role"
+              required
               rules={{ required: "Choose a role" }}
               render={({ field }) => (
                 <Select
@@ -231,6 +234,7 @@ export function FormsDemo() {
                 onCheckedChange={field.onChange}
                 onBlur={field.onBlur}
                 label="I agree to the terms and privacy policy."
+                required
               />
             )}
           />

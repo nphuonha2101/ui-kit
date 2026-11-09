@@ -61,8 +61,8 @@ import { Field, Input } from "@nphuonha/ui-kit";
 
 const { register, handleSubmit, formState: { errors } } = useForm<Values>();
 
-<form onSubmit={handleSubmit(onSubmit)}>
-  <Field label="Email" error={errors.email?.message}>
+<form onSubmit={handleSubmit(onSubmit)} noValidate>
+  <Field label="Email" required error={errors.email?.message}>
     <Input
       type="email"
       {...register("email", { required: "Email is required" })}
@@ -82,6 +82,7 @@ const form = useForm<Values>();
       control={form.control}
       name="email"
       label="Email"
+      required
       rules={{ required: "Email is required" }}
       render={({ field }) => <Input type="email" {...field} />}
     />
@@ -96,6 +97,7 @@ import { FormField } from "@nphuonha/ui-kit/form";
   control={control}
   name="role"
   label="Role"
+  required
   rules={{ required: "Choose a role" }}
   render={({ field }) => (
     <Select

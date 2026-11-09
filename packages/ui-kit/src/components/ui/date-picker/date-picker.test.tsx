@@ -108,9 +108,15 @@ describe("DatePicker", () => {
     ).toBeDisabled();
   });
 
-  it("marks the label as required", () => {
+  it("marks the label and trigger as required", () => {
     render(<DatePicker label="Start date" required />);
+
+    const trigger = screen.getByRole("button", { name: "Start date" });
+    const required = screen.getByText("Required");
+
     expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(required).toHaveClass("sr-only");
+    expect(trigger.getAttribute("aria-describedby")).toContain(required.id);
   });
 
   it("formats the trigger label for the locale", () => {
@@ -198,6 +204,11 @@ describe("DatePicker", () => {
     await user.click(screen.getByRole("button", { name: "Submit" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Pick a date");
     expect(trigger).toHaveAttribute("aria-invalid", "true");
+    for (const id of (
+      trigger.getAttribute("aria-describedby") ?? ""
+    ).split(/\s+/)) {
+      if (id) expect(document.getElementById(id)).not.toBeNull();
+    }
 
     await user.click(trigger);
     await user.click(dayCell(new Date(2026, 0, 15)));

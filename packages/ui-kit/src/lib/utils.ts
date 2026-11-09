@@ -7,3 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
+
+/** True when an error prop should render a message (not just the invalid state). */
+export function hasErrorContent(error: React.ReactNode) {
+  return Boolean(error) && typeof error !== "boolean";
+}

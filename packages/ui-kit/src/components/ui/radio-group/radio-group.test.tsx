@@ -26,8 +26,28 @@ describe("RadioGroup", () => {
     expect(pro).toBeChecked();
   });
 
-  it("marks required and exposes aria-required", () => {
+  it("links an error message to the group", () => {
     render(
+      <RadioGroup
+        label="Plan"
+        error="Choose a plan"
+        options={[
+          { value: "free", label: "Free" },
+          { value: "pro", label: "Pro" },
+        ]}
+      />,
+    );
+
+    const group = screen.getByRole("radiogroup", { name: "Plan" });
+    const error = screen.getByRole("alert");
+
+    expect(error).toHaveTextContent("Choose a plan");
+    expect(group).toHaveAttribute("aria-invalid", "true");
+    expect(group).toHaveAttribute("aria-describedby", error.id);
+  });
+
+  it("marks required and exposes aria-required", () => {
+    const { container } = render(
       <RadioGroup
         label="Plan"
         required
@@ -43,5 +63,9 @@ describe("RadioGroup", () => {
       "aria-required",
       "true",
     );
+
+    const inputs = container.querySelectorAll('input[type="radio"]');
+    expect(inputs.length).toBeGreaterThan(0);
+    for (const input of Array.from(inputs)) expect(input).toBeRequired();
   });
 });

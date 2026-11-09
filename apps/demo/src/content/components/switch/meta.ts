@@ -33,6 +33,11 @@ export const meta: ComponentMeta = {
       "description": "Marks the label and native input as required."
     },
     {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Disables the switch."

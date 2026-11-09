@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "../../../lib/utils";
+import { cn, hasErrorContent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { IconButton } from "../icon-button";
 
@@ -190,7 +190,8 @@ export function Calendar(props: CalendarProps) {
   const labelId = `${calendarId}-label`;
   const monthLabelId = `${calendarId}-month`;
   const descriptionId = description ? `${calendarId}-description` : undefined;
-  const errorId = error ? `${calendarId}-error` : undefined;
+  const hasErrorMessage = hasErrorContent(error);
+  const errorId = hasErrorMessage ? `${calendarId}-error` : undefined;
 
   const defaultRange = isRange
     ? normalizeRange(props.defaultValue as CalendarRange | null | undefined)
@@ -616,7 +617,7 @@ export function Calendar(props: CalendarProps) {
           {description}
         </p>
       ) : null}
-      {error && typeof error !== "boolean" ? (
+      {hasErrorMessage ? (
         <p
           id={errorId}
           role="alert"

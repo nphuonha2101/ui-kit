@@ -31,4 +31,29 @@ describe("Field", () => {
     expect(screen.getByText("*")).toHaveClass("text-destructive");
     expect(screen.getByRole("textbox")).toBeRequired();
   });
+
+  it("styles the control as invalid when the field has an error", () => {
+    render(
+      <Field label="Email" error="Email is required">
+        <Input />
+      </Field>,
+    );
+
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(input).toHaveClass("bg-destructive/10");
+  });
+
+  it("uses the child id and preserves its invalid state", () => {
+    render(
+      <Field label="Email">
+        <Input id="custom-email" error />
+      </Field>,
+    );
+
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveAttribute("id", "custom-email");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByLabelText("Email")).toBe(input);
+  });
 });

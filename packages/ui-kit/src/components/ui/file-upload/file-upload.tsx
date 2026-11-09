@@ -1,7 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { cn, type IconComponent } from "../../../lib/utils";
+import {
+  cn,
+  hasErrorContent,
+  type IconComponent,
+} from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { IconButton } from "../icon-button";
 import { Label } from "../label";
@@ -169,7 +173,9 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
     const inputId = id ?? autoId;
     const buttonId = `${inputId}-dropzone`;
     const descriptionId = description ? `${inputId}-description` : undefined;
-    const errorId = error ? `${inputId}-error` : undefined;
+    const requiredId = required ? `${inputId}-required` : undefined;
+    const hasErrorMessage = hasErrorContent(error);
+    const errorId = hasErrorMessage ? `${inputId}-error` : undefined;
     const rejectionId = `${inputId}-rejections`;
     const inputRef = React.useRef<HTMLInputElement | null>(null);
     const dragDepth = React.useRef(0);
@@ -349,7 +355,13 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
     const hintText = hint ?? hintParts.join(" · ");
 
     const describedBy =
-      [ariaDescribedBy, descriptionId, errorId, rejectionId]
+      [
+        ariaDescribedBy,
+        descriptionId,
+        errorId,
+        requiredId,
+        rejectionMessages.length ? rejectionId : undefined,
+      ]
         .filter(Boolean)
         .join(" ") || undefined;
 
@@ -361,6 +373,11 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
           </Label>
         ) : null}
 
+        {requiredId ? (
+          <span id={requiredId} className="sr-only">
+            Required
+          </span>
+        ) : null}
         <input
           ref={setInputRef}
           id={inputId}
@@ -469,7 +486,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
             {description}
           </p>
         ) : null}
-        {error && typeof error !== "boolean" ? (
+        {hasErrorMessage ? (
           <p
             id={errorId}
             role="alert"

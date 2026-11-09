@@ -25,7 +25,7 @@ export const meta: ComponentMeta = {
     {
       "name": "required",
       "type": "boolean",
-      "description": "Shows the required mark."
+      "description": "Shows the required mark and forwards required to the control."
     },
     {
       "name": "id",

@@ -59,6 +59,13 @@ describe("FileUpload", () => {
       screen.getByText('"notes.txt" is not an accepted file type.'),
     ).toBeInTheDocument();
     expect(onReject).toHaveBeenCalledTimes(1);
+    const dropzone = screen.getByRole("button", {
+      name: /drop files here or browse/i,
+    });
+    const describedBy = dropzone.getAttribute("aria-describedby") ?? "";
+    expect(describedBy).toContain(
+      screen.getByRole("alert").id,
+    );
   });
 
   it("rejects files above maxSize", () => {
@@ -187,6 +194,11 @@ describe("FileUpload", () => {
     await user.click(screen.getByRole("button", { name: "Submit" }));
     expect(await screen.findByText("Add at least one file")).toBeInTheDocument();
     expect(dropzone).toHaveAttribute("aria-invalid", "true");
+    for (const id of (
+      dropzone.getAttribute("aria-describedby") ?? ""
+    ).split(/\s+/)) {
+      if (id) expect(document.getElementById(id)).not.toBeNull();
+    }
 
     const file = makeFile("attached.pdf");
     fireEvent.change(fileInput(container), { target: { files: [file] } });
@@ -401,8 +413,15 @@ describe("FileUpload", () => {
     const { container } = render(
       <FileUpload label="Attachments" required />,
     );
+    const dropzone = screen.getByRole("button", {
+      name: /drop files here or browse/i,
+    });
+    const required = screen.getByText("Required");
+
     expect(fileInput(container)).toBeRequired();
     expect(screen.getByText("*")).toHaveClass("text-destructive");
+    expect(required).toHaveClass("sr-only");
+    expect(dropzone.getAttribute("aria-describedby")).toContain(required.id);
   });
 
   it("appends to controlled files and reports the exact list", () => {

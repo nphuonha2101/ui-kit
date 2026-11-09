@@ -39,8 +39,8 @@ export const meta: ComponentMeta = {
     },
     {
       "name": "error",
-      "type": "boolean",
-      "description": "Applies the invalid visual state."
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
     },
     {
       "name": "disabled",

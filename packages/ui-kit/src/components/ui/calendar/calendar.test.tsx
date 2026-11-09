@@ -283,6 +283,48 @@ describe("Calendar", () => {
     expect(screen.getByText("Choose a launch date.")).toBeInTheDocument();
   });
 
+  it("keeps aria references valid with FormField boolean errors", async () => {
+    const user = userEvent.setup();
+    type Values = { start: Date | null };
+
+    function Demo() {
+      const form = useForm<Values>({ defaultValues: { start: null } });
+      return (
+        <form onSubmit={form.handleSubmit(() => {})}>
+          <FormField
+            control={form.control}
+            name="start"
+            label="Start date"
+            rules={{ required: "Pick a date" }}
+            render={({ field }) => (
+              <Calendar
+                mode="single"
+                locale="en-US"
+                defaultMonth={JANUARY_2026}
+                value={field.value}
+                onValueChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+            )}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      );
+    }
+
+    const { container } = render(<Demo />);
+    await user.click(screen.getByRole("button", { name: "Submit" }));
+
+    const error = await screen.findByRole("alert");
+    const grid = screen.getByRole("grid");
+    expect(grid).toHaveAttribute("aria-invalid", "true");
+    expect(grid.getAttribute("aria-describedby")).toContain(error.id);
+    for (const id of (grid.getAttribute("aria-describedby") ?? "").split(/\s+/)) {
+      if (id) expect(document.getElementById(id)).not.toBeNull();
+    }
+    expect(container.querySelectorAll('[aria-invalid="true"]').length).toBeGreaterThan(0);
+  });
+
   it("shows label, description and error", () => {
     render(
       <Calendar
@@ -299,9 +341,13 @@ describe("Calendar", () => {
     expect(screen.getByText("Start date")).toBeInTheDocument();
     expect(screen.getByText("*")).toHaveClass("text-destructive");
     expect(screen.getByText("Choose a launch date.")).toBeInTheDocument();
-    expect(screen.getByRole("alert")).toHaveTextContent("A date is required.");
+    const error = screen.getByRole("alert");
+    expect(error).toHaveTextContent("A date is required.");
     expect(screen.getByRole("grid")).toHaveAttribute("aria-invalid", "true");
     expect(screen.getByRole("grid")).toHaveAttribute("aria-required", "true");
+    expect(
+      screen.getByRole("grid").getAttribute("aria-describedby"),
+    ).toContain(error.id);
   });
 
   it("formats month, weekday and day labels for the locale", () => {

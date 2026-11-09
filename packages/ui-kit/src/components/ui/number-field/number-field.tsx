@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { NumberField as NumberFieldPrimitive } from "@base-ui/react/number-field";
-import { cn } from "../../../lib/utils";
+import { cn, hasErrorContent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { Label } from "../label";
 
@@ -66,9 +66,11 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
   const autoId = React.useId();
   const inputId = id ?? autoId;
   const descriptionId = description ? `${inputId}-description` : undefined;
-  const errorId = error ? `${inputId}-error` : undefined;
+  const hasErrorMessage = hasErrorContent(error);
+  const errorId = hasErrorMessage ? `${inputId}-error` : undefined;
   const describedBy =
     [descriptionId, errorId].filter(Boolean).join(" ") || undefined;
+  const invalid = Boolean(error) || Boolean(ariaInvalid);
   const MinusIcon = useKitIcon("minus");
   const PlusIcon = useKitIcon("plus");
 
@@ -95,7 +97,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
           "surface-inset flex h-10 w-full items-center gap-1 rounded-field bg-field px-1.5 text-field-foreground transition-[background-color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
           "focus-within:ring-2 focus-within:ring-ring/35 focus-within:ring-offset-2 focus-within:ring-offset-background",
           "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45",
-          error && "bg-destructive/10 focus-within:ring-destructive/30",
+          invalid && "bg-destructive/10 focus-within:ring-destructive/30",
         )}
       >
         <NumberFieldPrimitive.Decrement
@@ -109,7 +111,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
           id={inputId}
           onBlur={onBlur}
           aria-label={ariaLabel}
-          aria-invalid={error ? true : ariaInvalid || undefined}
+          aria-invalid={invalid || undefined}
           aria-describedby={
             [ariaDescribedBy, describedBy].filter(Boolean).join(" ") || undefined
           }
@@ -126,7 +128,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
     </NumberFieldPrimitive.Root>
   );
 
-  if (!label && !description && !error) {
+  if (!label && !description && !hasErrorMessage) {
     return <div className={className}>{control}</div>;
   }
 
@@ -143,7 +145,7 @@ export const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
           {description}
         </p>
       ) : null}
-      {error && typeof error !== "boolean" ? (
+      {hasErrorMessage ? (
         <p id={errorId} role="alert" className="text-xs font-medium text-destructive">
           {error}
         </p>

@@ -23,6 +23,36 @@ describe("Checkbox", () => {
     );
   });
 
+  it("toggles from the visible label", async () => {
+    const user = userEvent.setup();
+    render(<Checkbox label="Accept terms" />);
+
+    await user.click(screen.getByText("Accept terms"));
+
+    expect(screen.getByRole("checkbox")).toBeChecked();
+  });
+
+  it("renders and links an error message", () => {
+    render(<Checkbox label="Accept terms" error="You must accept the terms" />);
+
+    const checkbox = screen.getByRole("checkbox");
+    const error = screen.getByRole("alert");
+
+    expect(error).toHaveTextContent("You must accept the terms");
+    expect(checkbox).toHaveAttribute("aria-invalid", "true");
+    expect(checkbox).toHaveAttribute("aria-describedby", error.id);
+  });
+
+  it("uses a boolean error only for the invalid state", () => {
+    render(<Checkbox label="Accept terms" error />);
+
+    expect(screen.getByRole("checkbox")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
   it("marks required and forwards native required", () => {
     const { container } = render(
       <Checkbox label="Accept terms" required />,

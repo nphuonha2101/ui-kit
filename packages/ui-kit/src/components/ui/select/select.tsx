@@ -28,6 +28,7 @@ export interface SelectProps {
   "aria-labelledby"?: string;
   "aria-describedby"?: string;
   "aria-required"?: boolean;
+  "aria-invalid"?: boolean;
 }
 
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
@@ -46,12 +47,14 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       name,
       id,
       "aria-required": ariaRequired,
+      "aria-invalid": ariaInvalid,
       ...aria
     },
     ref,
   ) {
     const ChevronIcon = useKitIcon("chevron");
     const CheckIcon = useKitIcon("check");
+    const invalid = Boolean(error) || Boolean(ariaInvalid);
     return (
       <SelectPrimitive.Root value={value} defaultValue={defaultValue} onValueChange={onValueChange} disabled={disabled} required={required} name={name}>
         <SelectPrimitive.Trigger
@@ -59,10 +62,10 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           id={id}
           onBlur={onBlur}
           aria-required={required || ariaRequired || undefined}
-          aria-invalid={error || undefined}
+          aria-invalid={invalid || undefined}
           className={cn(
             "surface-inset inline-flex h-10 w-full items-center justify-between gap-2 rounded-field bg-field px-3.5 text-sm text-field-foreground outline-none transition-[background-color,box-shadow] duration-[var(--duration-ui)] hover:bg-field-hover focus-visible:bg-field focus-visible:ring-2 focus-visible:ring-ring/35 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45",
-            error && "bg-destructive/10 focus-visible:ring-destructive/30",
+            invalid && "bg-destructive/10 focus-visible:ring-destructive/30",
             className,
           )}
           {...aria}

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "../../../lib/utils";
+import { cn, hasErrorContent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { Button } from "../button";
 import { Calendar, type CalendarWeekStartsOn } from "../calendar";
@@ -95,7 +95,9 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     const autoId = React.useId();
     const triggerId = id ?? autoId;
     const descriptionId = description ? `${triggerId}-description` : undefined;
-    const errorId = error ? `${triggerId}-error` : undefined;
+    const requiredId = required ? `${triggerId}-required` : undefined;
+    const hasErrorMessage = hasErrorContent(error);
+    const errorId = hasErrorMessage ? `${triggerId}-error` : undefined;
     const [internalValue, setInternalValue] = React.useState<Date | null>(() =>
       toDay(defaultValue),
     );
@@ -125,8 +127,9 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     };
 
     const describedBy =
-      [ariaDescribedBy, descriptionId, errorId].filter(Boolean).join(" ") ||
-      undefined;
+      [ariaDescribedBy, descriptionId, errorId, requiredId]
+        .filter(Boolean)
+        .join(" ") || undefined;
     const displayValue = selected
       ? formatter.format(selected)
       : placeholder;
@@ -181,6 +184,11 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             name={name}
             value={selected ? toInputValue(selected) : ""}
           />
+        ) : null}
+        {requiredId ? (
+          <span id={requiredId} className="sr-only">
+            Required
+          </span>
         ) : null}
 
         <Popover
@@ -252,7 +260,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             {description}
           </p>
         ) : null}
-        {error && typeof error !== "boolean" ? (
+        {hasErrorMessage ? (
           <p
             id={errorId}
             role="alert"

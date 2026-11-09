@@ -64,6 +64,7 @@ export function FormField<
         const element = render({ field, fieldState });
         const elementProps = element.props as {
           id?: string;
+          required?: boolean;
           "aria-describedby"?: string;
           "aria-labelledby"?: string;
           "aria-invalid"?: boolean;
@@ -77,23 +78,23 @@ export function FormField<
           [elementProps["aria-labelledby"], label ? labelId : undefined]
             .filter(Boolean)
             .join(" ") || undefined;
+        const isRequired = required || elementProps.required;
+        const ariaInvalid = error ? true : elementProps["aria-invalid"];
         const child = React.cloneElement(
           element as React.ReactElement<Record<string, unknown>>,
           {
             id: childId,
-            "aria-describedby": describedBy,
-            "aria-labelledby": labelledBy,
-            "aria-invalid": error ? true : elementProps["aria-invalid"],
-            ...(typeof element.type === "string"
-              ? {}
-              : { error: error ? true : undefined }),
+            ...(describedBy ? { "aria-describedby": describedBy } : {}),
+            ...(labelledBy ? { "aria-labelledby": labelledBy } : {}),
+            ...(ariaInvalid !== undefined ? { "aria-invalid": ariaInvalid } : {}),
+            ...(typeof element.type !== "string" && error ? { error: true } : {}),
           },
         );
 
         return (
           <div className={cn("flex flex-col gap-1.5", className)}>
             {label ? (
-              <Label id={labelId} htmlFor={childId} requiredMark={required}>
+              <Label id={labelId} htmlFor={childId} requiredMark={isRequired}>
                 {label}
               </Label>
             ) : null}

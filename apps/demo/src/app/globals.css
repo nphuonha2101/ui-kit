@@ -24,6 +24,18 @@ html {
   background-size: 16px 16px;
 }
 
+/* Prevent a flash of final-state content before GSAP hydrates. The class is
+   added before first paint and handed over to the motion layer on mount. */
+@media (prefers-reduced-motion: no-preference) {
+  html.motion-ready [data-motion="hero-copy"] > *,
+  html.motion-ready [data-motion="hero-card"],
+  html.motion-ready [data-motion="reveal"],
+  html.motion-ready [data-motion="component-card"],
+  html.motion-ready [data-motion="feature-card"] {
+    opacity: 0;
+  }
+}
+
 .docs-link {
   font-weight: 500;
   color: var(--foreground);

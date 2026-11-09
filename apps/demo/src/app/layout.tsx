@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "@fontsource/work-sans/400.css";
 import "@fontsource/work-sans/500.css";
 import "@fontsource/work-sans/600.css";
@@ -9,6 +8,7 @@ import "@fontsource/google-sans-code/500.css";
 import "@fontsource/google-sans-code/600.css";
 import "./globals.css";
 import { Providers } from "@/components/site/providers";
+import { InlineScript } from "@/components/site/inline-script";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import {
@@ -97,18 +97,25 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-ui="kit" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{
+        <InlineScript
+          id="theme-init"
+          html={`(function(){try{
   var t=localStorage.getItem('ui-kit-theme');
   if(t==='dark'){document.documentElement.classList.add('dark');}
   var v=localStorage.getItem('ui-kit-accent-vars');
   if(v){var o=JSON.parse(v);for(var k in o){document.documentElement.style.setProperty(k,o[k]);}}
+}catch(e){}})();
+(function(){try{
+  if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('motion-ready');
+    window.setTimeout(function(){document.documentElement.classList.remove('motion-ready');},3000);
+  }
 }catch(e){}})();`}
-        </Script>
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <Providers>
           <SiteHeader />
           <main className="flex-1 pt-16">{children}</main>

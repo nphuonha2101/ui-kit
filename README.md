@@ -98,7 +98,7 @@ Each component page includes a live preview, copyable code, props and examples:
 
 ## Forms
 
-`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom controls (`Calendar`, `Checkbox`, `DatePicker`, `FileUpload`, `NumberField`, `RadioGroup`, `Select`, `Slider`, `Switch`) expose controlled value APIs — use `Controller` or the optional `FormField` wrapper. `Calendar`/`DatePicker` use `value`/`onValueChange`, `FileUpload` uses `files`/`onFilesChange`, and all accept `onBlur`/`aria-invalid` for form state:
+`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom controls (`Calendar`, `Checkbox`, `DatePicker`, `FileUpload`, `NumberField`, `RadioGroup`, `Select`, `Slider`, `Switch`) expose controlled value APIs — use `Controller` or the optional `FormField` wrapper. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`), `FileUpload` uses `files`/`onFilesChange`, and all accept `onBlur`/`aria-invalid` for form state:
 
 ```tsx
 import { Input } from "@nphuonha/ui-kit";

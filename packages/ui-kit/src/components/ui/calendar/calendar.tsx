@@ -369,7 +369,7 @@ export function Calendar(props: CalendarProps) {
     setInternalMonth((current) =>
       isSameMonth(current, selection) ? current : startOfMonth(selection),
     );
-  }, [singleValue?.getTime(), rangeValue.from?.getTime(), rangeValue.to?.getTime()]);
+  }, [singleValue?.getTime(), rangeValue.from?.getTime()]);
 
   const onGridKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;

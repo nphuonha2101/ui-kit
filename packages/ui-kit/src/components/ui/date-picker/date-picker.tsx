@@ -4,15 +4,16 @@ import * as React from "react";
 import { cn, hasErrorContent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { Button } from "../button";
-import { Calendar, type CalendarWeekStartsOn } from "../calendar";
+import {
+  Calendar,
+  type CalendarRange,
+  type CalendarWeekStartsOn,
+} from "../calendar";
 import { Label } from "../label";
 import { Popover } from "../popover";
 
-export interface DatePickerProps {
-  value?: Date | null;
-  defaultValue?: Date | null;
+interface DatePickerBaseProps {
   defaultMonth?: Date;
-  onValueChange?: (value: Date | null) => void;
   onBlur?: React.FocusEventHandler<HTMLButtonElement>;
   min?: Date;
   max?: Date;
@@ -26,6 +27,7 @@ export interface DatePickerProps {
   showToday?: boolean;
   id?: string;
   name?: string;
+  endName?: string;
   label?: React.ReactNode;
   description?: React.ReactNode;
   error?: React.ReactNode;
@@ -40,6 +42,26 @@ export interface DatePickerProps {
   "aria-invalid"?: boolean;
 }
 
+export interface DatePickerSingleProps extends DatePickerBaseProps {
+  mode?: "single";
+  value?: Date | null;
+  defaultValue?: Date | null;
+  onValueChange?: (value: Date | null) => void;
+}
+
+export interface DatePickerRangeProps extends DatePickerBaseProps {
+  mode: "range";
+  value?: CalendarRange | null;
+  defaultValue?: CalendarRange | null;
+  onValueChange?: (value: CalendarRange) => void;
+}
+
+export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
+
+type DatePickerValue = Date | CalendarRange | null;
+
+const EMPTY_RANGE: CalendarRange = { from: null, to: null };
+
 function startOfDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
@@ -49,6 +71,14 @@ function toDay(date?: Date | null) {
   return startOfDay(date);
 }
 
+function normalizeRange(range?: CalendarRange | null): CalendarRange {
+  if (!range) return EMPTY_RANGE;
+  const from = toDay(range.from);
+  const to = toDay(range.to);
+  if (from && to && to < from) return { from: to, to: from };
+  return { from, to };
+}
+
 function toInputValue(date: Date) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
@@ -56,12 +86,9 @@ function toInputValue(date: Date) {
 }
 
 export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
-  function DatePicker(
-    {
-      value,
-      defaultValue,
+  function DatePicker(props, ref) {
+    const {
       defaultMonth,
-      onValueChange,
       onBlur,
       min,
       max,
@@ -75,10 +102,11 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
       showToday = false,
       id,
       name,
+      endName,
       label,
       description,
       error,
-      placeholder = "Pick a date",
+      placeholder,
       className,
       popoverClassName,
       side = "bottom",
@@ -87,9 +115,9 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       "aria-invalid": ariaInvalid,
-    },
-    ref,
-  ) {
+    } = props as DatePickerBaseProps;
+
+    const isRange = props.mode === "range";
     const CalendarIcon = useKitIcon("calendar");
     const ChevronIcon = useKitIcon("chevronDown");
     const autoId = React.useId();
@@ -98,12 +126,23 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     const requiredId = required ? `${triggerId}-required` : undefined;
     const hasErrorMessage = hasErrorContent(error);
     const errorId = hasErrorMessage ? `${triggerId}-error` : undefined;
-    const [internalValue, setInternalValue] = React.useState<Date | null>(() =>
-      toDay(defaultValue),
+    const defaultRange = isRange
+      ? normalizeRange(props.defaultValue as CalendarRange | null | undefined)
+      : EMPTY_RANGE;
+    const defaultSingle = isRange
+      ? null
+      : toDay(props.defaultValue as Date | null | undefined);
+    const [internalValue, setInternalValue] = React.useState<DatePickerValue>(
+      () => (isRange ? defaultRange : defaultSingle),
     );
     const [open, setOpen] = React.useState(false);
-    const controlled = value !== undefined;
-    const selected = controlled ? toDay(value) : internalValue;
+    const controlled = props.value !== undefined;
+    const value = controlled ? props.value : internalValue;
+    const selectedDate = isRange ? null : toDay(value as Date | null);
+    const selectedRange = isRange
+      ? normalizeRange(value as CalendarRange | null)
+      : EMPTY_RANGE;
+    const hasValue = isRange ? Boolean(selectedRange.from) : Boolean(selectedDate);
     const invalid = Boolean(error) || Boolean(ariaInvalid);
     const localeKey = JSON.stringify(locale ?? null);
     const formatter = React.useMemo(
@@ -113,11 +152,27 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         }),
       [localeKey],
     );
+    const placeholderText =
+      placeholder ?? (isRange ? "Pick a date range" : "Pick a date");
 
-    const commit = (nextValue: Date | null) => {
+    const commit = (nextValue: DatePickerValue) => {
       if (!controlled) setInternalValue(nextValue);
-      onValueChange?.(nextValue);
+      if (isRange) {
+        (
+          props.onValueChange as
+            | ((nextValue: CalendarRange) => void)
+            | undefined
+        )?.(nextValue as CalendarRange);
+      } else {
+        (
+          props.onValueChange as
+            | ((nextValue: Date | null) => void)
+            | undefined
+        )?.(nextValue as Date | null);
+      }
     };
+
+    const clear = () => commit(isRange ? EMPTY_RANGE : null);
 
     const isUnavailable = (date: Date) => {
       const day = startOfDay(date);
@@ -130,9 +185,15 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
       [ariaDescribedBy, descriptionId, errorId, requiredId]
         .filter(Boolean)
         .join(" ") || undefined;
-    const displayValue = selected
-      ? formatter.format(selected)
-      : placeholder;
+    const displayValue = isRange
+      ? selectedRange.from
+        ? selectedRange.to
+          ? `${formatter.format(selectedRange.from)} – ${formatter.format(selectedRange.to)}`
+          : `${formatter.format(selectedRange.from)} – …`
+        : placeholderText
+      : selectedDate
+        ? formatter.format(selectedDate)
+        : placeholderText;
 
     const footer =
       clearable || showToday ? (
@@ -145,7 +206,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
               onClick={() => {
                 const today = startOfDay(new Date());
                 if (isUnavailable(today)) return;
-                commit(today);
+                commit(isRange ? { from: today, to: today } : today);
                 setOpen(false);
               }}
             >
@@ -160,7 +221,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
               size="sm"
               variant="ghost"
               onClick={() => {
-                commit(null);
+                clear();
                 setOpen(false);
               }}
             >
@@ -170,6 +231,17 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         </div>
       ) : null;
 
+    const calendarCommonProps = {
+      locale,
+      defaultMonth,
+      weekStartsOn,
+      showOutsideDays,
+      min,
+      max,
+      disabled: dateDisabled,
+      footer,
+    };
+
     return (
       <div className={cn("flex flex-col gap-1.5", className)}>
         {label ? (
@@ -178,12 +250,28 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           </Label>
         ) : null}
 
-        {name ? (
+        {name && !isRange ? (
           <input
             type="hidden"
             name={name}
-            value={selected ? toInputValue(selected) : ""}
+            value={selectedDate ? toInputValue(selectedDate) : ""}
           />
+        ) : null}
+        {name && isRange ? (
+          <>
+            <input
+              type="hidden"
+              name={name}
+              value={
+                selectedRange.from ? toInputValue(selectedRange.from) : ""
+              }
+            />
+            <input
+              type="hidden"
+              name={endName ?? `${name}-end`}
+              value={selectedRange.to ? toInputValue(selectedRange.to) : ""}
+            />
+          </>
         ) : null}
         {requiredId ? (
           <span id={requiredId} className="sr-only">
@@ -196,7 +284,13 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           onOpenChange={setOpen}
           side={side}
           align={align}
-          aria-label={typeof label === "string" ? label : "Choose a date"}
+          aria-label={
+            typeof label === "string"
+              ? label
+              : isRange
+                ? "Choose a date range"
+                : "Choose a date"
+          }
           className={cn("w-auto p-2.5", popoverClassName)}
           trigger={
             <button
@@ -224,7 +318,7 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
               <span
                 className={cn(
                   "min-w-0 flex-1 truncate text-left",
-                  !selected && "text-muted-foreground/70",
+                  !hasValue && "text-muted-foreground/70",
                 )}
               >
                 {displayValue}
@@ -237,22 +331,27 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             </button>
           }
         >
-          <Calendar
-            mode="single"
-            locale={locale}
-            defaultMonth={defaultMonth}
-            weekStartsOn={weekStartsOn}
-            showOutsideDays={showOutsideDays}
-            min={min}
-            max={max}
-            disabled={dateDisabled}
-            value={selected}
-            onValueChange={(next) => {
-              commit(next);
-              if (next) setOpen(false);
-            }}
-            footer={footer}
-          />
+          {isRange ? (
+            <Calendar
+              {...calendarCommonProps}
+              mode="range"
+              value={selectedRange}
+              onValueChange={(next) => {
+                commit(next);
+                if (next.from && next.to) setOpen(false);
+              }}
+            />
+          ) : (
+            <Calendar
+              {...calendarCommonProps}
+              mode="single"
+              value={selectedDate}
+              onValueChange={(next) => {
+                commit(next);
+                if (next) setOpen(false);
+              }}
+            />
+          )}
         </Popover>
 
         {description ? (

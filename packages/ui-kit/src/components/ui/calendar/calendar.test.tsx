@@ -518,6 +518,59 @@ describe("Calendar", () => {
     );
   });
 
+  it("selects a range across months", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Calendar
+        mode="range"
+        locale="en-US"
+        defaultMonth={JANUARY_2026}
+        onValueChange={onValueChange}
+      />,
+    );
+
+    const from = new Date(2026, 0, 25);
+    const to = new Date(2026, 1, 10);
+
+    await user.click(dayCell(from));
+    await user.click(screen.getByRole("button", { name: "Next month" }));
+    expect(screen.getByText("February 2026")).toBeInTheDocument();
+    await user.click(dayCell(to));
+
+    expect(onValueChange).toHaveBeenLastCalledWith({ from, to });
+    expect(screen.getByText("February 2026")).toBeInTheDocument();
+    expect(dayCell(to)).toHaveAttribute("aria-selected", "true");
+
+    await user.click(screen.getByRole("button", { name: "Previous month" }));
+    expect(screen.getByText("January 2026")).toBeInTheDocument();
+    expect(dayCell(from)).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("normalizes a range selected across months in reverse order", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Calendar
+        mode="range"
+        locale="en-US"
+        defaultMonth={new Date(2026, 1, 1)}
+        onValueChange={onValueChange}
+      />,
+    );
+
+    const from = new Date(2026, 0, 25);
+    const to = new Date(2026, 1, 10);
+
+    await user.click(dayCell(to));
+    await user.click(screen.getByRole("button", { name: "Previous month" }));
+    expect(screen.getByText("January 2026")).toBeInTheDocument();
+    await user.click(dayCell(from));
+
+    expect(onValueChange).toHaveBeenLastCalledWith({ from, to });
+    expect(dayCell(from)).toHaveAttribute("aria-selected", "true");
+  });
+
   it("supports a single-day range", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

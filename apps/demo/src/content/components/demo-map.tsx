@@ -71,6 +71,9 @@ const calendarcalendarCompactExample = dynamic(() =>
 const calendarcalendarConstraintsExample = dynamic(() =>
   import("./calendar/demo").then((module) => module.examples["calendar-constraints"]),
 );
+const datePickerdatePickerRangeExample = dynamic(() =>
+  import("./date-picker/demo").then((module) => module.examples["date-picker-range"]),
+);
 const datePickerdatePickerClearableExample = dynamic(() =>
   import("./date-picker/demo").then((module) => module.examples["date-picker-clearable"]),
 );
@@ -190,6 +193,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "calendar-range": calendarcalendarRangeExample,
   "calendar-compact": calendarcalendarCompactExample,
   "calendar-constraints": calendarcalendarConstraintsExample,
+  "date-picker-range": datePickerdatePickerRangeExample,
   "date-picker-clearable": datePickerdatePickerClearableExample,
   "date-picker-constraints": datePickerdatePickerConstraintsExample,
   "date-picker-states": datePickerdatePickerStatesExample,

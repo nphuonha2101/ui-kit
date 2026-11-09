@@ -54,7 +54,7 @@ export function HeroShowcase() {
                 New in the kit
               </CardTitle>
               <CardDescription>
-                Five new building blocks, ready to compose.
+                Four new building blocks, ready to compose.
               </CardDescription>
             </div>
             <Toggle size="icon-sm" aria-label="Watch release" defaultPressed>

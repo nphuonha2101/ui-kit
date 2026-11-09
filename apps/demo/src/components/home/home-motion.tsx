@@ -33,20 +33,25 @@ export function HomeMotion({ children }: { children: React.ReactNode }) {
 
       const hero = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      hero.from(heroCopy, {
-        y: 22,
-        autoAlpha: 0,
-        duration: 0.7,
-        stagger: 0.08,
-      });
+      hero.fromTo(
+        heroCopy,
+        { y: 22, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.7,
+          stagger: 0.08,
+        },
+      );
 
       if (heroCard) {
-        hero.from(
+        hero.fromTo(
           heroCard,
+          { y: 30, scale: 0.985, autoAlpha: 0 },
           {
-            y: 30,
-            scale: 0.985,
-            autoAlpha: 0,
+            y: 0,
+            scale: 1,
+            autoAlpha: 1,
             duration: 0.9,
           },
           "-=0.45",
@@ -65,17 +70,21 @@ export function HomeMotion({ children }: { children: React.ReactNode }) {
       }
 
       revealEls.forEach((el) => {
-        gsap.from(el, {
-          y: 24,
-          autoAlpha: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-            once: true,
+        gsap.fromTo(
+          el,
+          { y: 24, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              once: true,
+            },
           },
-        });
+        );
       });
 
       gsap.set(cardEls, { y: 26, autoAlpha: 0 });

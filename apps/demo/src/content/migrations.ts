@@ -28,6 +28,47 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.6.0",
+    date: "2026-11-09",
+    breaking: false,
+    summary:
+      "Additive release: five new components, ButtonLink for navigation, and a clearer disabled state for buttons. Existing imports and props keep working.",
+    changes: [
+      {
+        id: "new-components-0-6-0",
+        kind: "additive",
+        surface: "Components",
+        before:
+          "Accordion, Avatar, Progress, Skeleton and Toggle were not part of the kit.",
+        after:
+          'import { Accordion, Avatar, Progress, Skeleton, Toggle } from "@nphuonha/ui-kit";',
+        find: 'from "@nphuonha/ui-kit"',
+        fix: 'Nothing required. Each component also ships a subpath such as "@nphuonha/ui-kit/progress".',
+      },
+      {
+        id: "button-link",
+        kind: "additive",
+        surface: "ButtonLink",
+        before:
+          "Navigation links had to reuse buttonVariants manually on an anchor element.",
+        after:
+          '<ButtonLink href="/docs" variant="secondary">Read the docs</ButtonLink>',
+        find: "buttonVariants({",
+        fix: "Nothing required. Keep buttonVariants for custom elements or switch to ButtonLink for styled anchors and framework links via render.",
+      },
+      {
+        id: "button-disabled-state",
+        kind: "behavior",
+        surface: "Button",
+        before:
+          "Disabled buttons were dimmed but used pointer-events-none, so they showed no disabled cursor and could still match hover styles.",
+        after: "<Button disabled>Save</Button>",
+        find: "<Button",
+        fix: "Nothing required. Disabled buttons now show cursor-not-allowed, flatten their shadow and ignore hover styles.",
+      },
+    ],
+  },
+  {
     version: "0.5.0",
     date: "2026-11-08",
     breaking: false,

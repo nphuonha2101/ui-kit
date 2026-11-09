@@ -28,9 +28,9 @@ const GITHUB_URL = "https://github.com/nphuonha2101/ui-kit";
 
 function navLinkClass(active: boolean) {
   return cn(
-    "inline-flex h-10 items-center justify-center rounded-pill px-4 text-[13px] font-semibold tracking-[-0.01em] transition-colors",
+    "relative z-10 inline-flex h-10 items-center justify-center rounded-pill px-4 text-[13px] font-semibold tracking-[-0.01em] transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
     active
-      ? "bg-primary-soft text-primary-soft-foreground"
+      ? "text-primary-soft-foreground"
       : "text-muted-foreground hover:bg-surface hover:text-foreground",
   );
 }
@@ -40,6 +40,39 @@ export function SiteHeader() {
   const { dark, setDark } = useThemeSettings();
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const navRef = React.useRef<HTMLElement>(null);
+  const [indicator, setIndicator] = React.useState({
+    left: 0,
+    width: 0,
+    visible: false,
+  });
+
+  React.useEffect(() => {
+    const container = navRef.current;
+    if (!container) return;
+
+    const update = () => {
+      const active = container.querySelector<HTMLElement>('[aria-current="page"]');
+      if (!active) {
+        setIndicator((current) => ({ ...current, visible: false }));
+        return;
+      }
+      setIndicator({
+        left: active.offsetLeft,
+        width: active.offsetWidth,
+        visible: true,
+      });
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(container);
+    window.addEventListener("resize", update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -74,7 +107,19 @@ export function SiteHeader() {
             <BrandLogo className="px-1.5" />
           </Link>
 
-          <nav className="surface-curved pointer-events-auto relative hidden items-center gap-0.5 rounded-pill bg-card p-1 shadow-[var(--shadow-soft)] md:flex">
+          <nav
+            ref={navRef}
+            className="surface-curved pointer-events-auto relative hidden items-center gap-0.5 rounded-pill bg-card p-1 shadow-[var(--shadow-soft)] md:flex"
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute top-1 h-10 rounded-pill bg-primary-soft transition-[left,width,opacity] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]"
+              style={{
+                left: indicator.left,
+                width: indicator.width,
+                opacity: indicator.visible ? 1 : 0,
+              }}
+            />
             {nav.map((item) => (
               <Link
                 key={item.href}

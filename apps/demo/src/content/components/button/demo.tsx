@@ -18,7 +18,26 @@ function ButtonDemo() {
         <Button size="sm" startIcon={PlusIcon}>New item</Button>
         <Button loading>Loading</Button>
         <Button shape="pill">Pill action</Button>
+        <Button disabled>Disabled</Button>
       </div>
+    </div>
+  );
+}
+
+function ButtonStatesDemo() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-2">
+      <Button disabled>Primary disabled</Button>
+      <Button variant="secondary" disabled>
+        Secondary disabled
+      </Button>
+      <Button variant="outline" disabled>
+        Outline disabled
+      </Button>
+      <Button variant="danger" disabled>
+        Danger disabled
+      </Button>
+      <Button loading>Loading</Button>
     </div>
   );
 }
@@ -38,4 +57,5 @@ function ButtonSizesDemo() {
 export const demo = ButtonDemo;
 export const examples = {
   "button-sizes": ButtonSizesDemo,
+  "button-states": ButtonStatesDemo,
 };

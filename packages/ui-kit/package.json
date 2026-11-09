@@ -37,6 +37,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./accordion": {
+      "types": "./dist/components/ui/accordion/index.d.ts",
+      "import": "./dist/components/ui/accordion/index.js",
+      "default": "./dist/components/ui/accordion/index.js"
+    },
     "./alert": {
       "types": "./dist/components/ui/alert/index.d.ts",
       "import": "./dist/components/ui/alert/index.js",
@@ -46,6 +51,11 @@
       "types": "./dist/components/ui/alert-dialog/index.d.ts",
       "import": "./dist/components/ui/alert-dialog/index.js",
       "default": "./dist/components/ui/alert-dialog/index.js"
+    },
+    "./avatar": {
+      "types": "./dist/components/ui/avatar/index.d.ts",
+      "import": "./dist/components/ui/avatar/index.js",
+      "default": "./dist/components/ui/avatar/index.js"
     },
     "./badge": {
       "types": "./dist/components/ui/badge/index.d.ts",
@@ -142,6 +152,11 @@
       "import": "./dist/components/ui/popover/index.js",
       "default": "./dist/components/ui/popover/index.js"
     },
+    "./progress": {
+      "types": "./dist/components/ui/progress/index.d.ts",
+      "import": "./dist/components/ui/progress/index.js",
+      "default": "./dist/components/ui/progress/index.js"
+    },
     "./radio-group": {
       "types": "./dist/components/ui/radio-group/index.d.ts",
       "import": "./dist/components/ui/radio-group/index.js",
@@ -166,6 +181,11 @@
       "types": "./dist/components/ui/sheet/index.d.ts",
       "import": "./dist/components/ui/sheet/index.js",
       "default": "./dist/components/ui/sheet/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/components/ui/skeleton/index.d.ts",
+      "import": "./dist/components/ui/skeleton/index.js",
+      "default": "./dist/components/ui/skeleton/index.js"
     },
     "./slider": {
       "types": "./dist/components/ui/slider/index.d.ts",
@@ -201,6 +221,11 @@
       "types": "./dist/components/ui/toast/index.d.ts",
       "import": "./dist/components/ui/toast/index.js",
       "default": "./dist/components/ui/toast/index.js"
+    },
+    "./toggle": {
+      "types": "./dist/components/ui/toggle/index.d.ts",
+      "import": "./dist/components/ui/toggle/index.js",
+      "default": "./dist/components/ui/toggle/index.js"
     },
     "./toggle-group": {
       "types": "./dist/components/ui/toggle-group/index.d.ts",

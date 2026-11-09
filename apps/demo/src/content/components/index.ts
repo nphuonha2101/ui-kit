@@ -1,5 +1,6 @@
 import { meta as buttonMeta } from "./button/meta";
 import { meta as iconButtonMeta } from "./icon-button/meta";
+import { meta as toggleMeta } from "./toggle/meta";
 import { meta as toggleGroupMeta } from "./toggle-group/meta";
 import { meta as checkboxMeta } from "./checkbox/meta";
 import { meta as fieldMeta } from "./field/meta";
@@ -21,6 +22,8 @@ import { meta as breadcrumbMeta } from "./breadcrumb/meta";
 import { meta as desktopNavMeta } from "./desktop-nav/meta";
 import { meta as paginationMeta } from "./pagination/meta";
 import { meta as tabsMeta } from "./tabs/meta";
+import { meta as accordionMeta } from "./accordion/meta";
+import { meta as avatarMeta } from "./avatar/meta";
 import { meta as badgeMeta } from "./badge/meta";
 import { meta as cardMeta } from "./card/meta";
 import { meta as kbdMeta } from "./kbd/meta";
@@ -29,6 +32,8 @@ import { meta as separatorMeta } from "./separator/meta";
 import { meta as tableMeta } from "./table/meta";
 import { meta as alertMeta } from "./alert/meta";
 import { meta as emptyStateMeta } from "./empty-state/meta";
+import { meta as progressMeta } from "./progress/meta";
+import { meta as skeletonMeta } from "./skeleton/meta";
 import { meta as spinnerMeta } from "./spinner/meta";
 import { meta as toasterMeta } from "./toaster/meta";
 
@@ -37,6 +42,7 @@ import type { ComponentCategory, ComponentMeta } from "@/content/types";
 export const registry: ComponentMeta[] = [
   buttonMeta,
   iconButtonMeta,
+  toggleMeta,
   toggleGroupMeta,
   checkboxMeta,
   fieldMeta,
@@ -58,6 +64,8 @@ export const registry: ComponentMeta[] = [
   desktopNavMeta,
   paginationMeta,
   tabsMeta,
+  accordionMeta,
+  avatarMeta,
   badgeMeta,
   cardMeta,
   kbdMeta,
@@ -66,6 +74,8 @@ export const registry: ComponentMeta[] = [
   tableMeta,
   alertMeta,
   emptyStateMeta,
+  progressMeta,
+  skeletonMeta,
   spinnerMeta,
   toasterMeta,
 ];

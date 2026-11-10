@@ -68,6 +68,24 @@ export function SearchDialog({
 
   const active = filtered[activeIndex];
 
+  const listRef = React.useRef<HTMLDivElement | null>(null);
+  const optionRefs = React.useRef(new Map<string, HTMLButtonElement>());
+
+  // Keeps the highlighted option in view while arrowing. Only the list's own
+  // scrollTop is adjusted, so the page behind the dialog never moves.
+  React.useEffect(() => {
+    const list = listRef.current;
+    const el = active ? optionRefs.current.get(active.slug) : undefined;
+    if (!list || !el) return;
+    const listRect = list.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    if (elRect.top < listRect.top) {
+      list.scrollTop -= listRect.top - elRect.top;
+    } else if (elRect.bottom > listRect.bottom) {
+      list.scrollTop += elRect.bottom - listRect.bottom;
+    }
+  }, [active]);
+
   return (
     <Dialog
       open={open}
@@ -102,6 +120,7 @@ export function SearchDialog({
 
         <div
           id="search-results"
+          ref={listRef}
           role="listbox"
           aria-label="Components"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2"
@@ -122,6 +141,10 @@ export function SearchDialog({
                   type="button"
                   role="option"
                   aria-selected={selected}
+                  ref={(node) => {
+                    if (node) optionRefs.current.set(item.slug, node);
+                    else optionRefs.current.delete(item.slug);
+                  }}
                   onClick={() => go(item.slug)}
                   onMouseEnter={() => setActiveIndex(index)}
                   className={cn(

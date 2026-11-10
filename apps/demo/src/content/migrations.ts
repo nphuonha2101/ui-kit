@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.11.0",
+    date: "2026-11-10",
+    breaking: false,
+    summary:
+      "Additive release: scrollbar-styled utility brings token-styled native scrollbars (thin track, pill thumb matching ScrollArea) to any page or scroll container. Existing APIs keep working.",
+    changes: [
+      {
+        id: "scrollbar-styled-0-11-0",
+        kind: "additive",
+        surface: "scrollbar-styled",
+        before:
+          "Native scrollbars used the browser default; only ScrollArea had token-styled bars.",
+        after:
+          '<html className="scrollbar-styled"> for page-wide styling, or <div className="scrollbar-styled h-56 overflow-y-auto"> for one container.',
+        find: "scrollbar-none",
+        fix: "Nothing required. Put scrollbar-styled on <html> for page-wide effect (the viewport scrollbar follows the root element); scrollbar-none still opts out.",
+      },
+    ],
+  },
+  {
     version: "0.10.1",
     date: "2026-11-10",
     breaking: false,

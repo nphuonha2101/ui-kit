@@ -95,7 +95,7 @@ const structuredData = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-ui="kit" suppressHydrationWarning>
+    <html lang="en" data-ui="kit" suppressHydrationWarning className="scrollbar-styled">
       <body className="flex min-h-screen flex-col">
         <InlineScript
           id="theme-init"

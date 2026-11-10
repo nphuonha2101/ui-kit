@@ -17,7 +17,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Utilities",
   description:
-    "The visual utility classes behind the kit: surfaces, shadows, radii and semantic fills.",
+    "The visual utility classes behind the kit: surfaces, shadows, radii, semantic fills and scrollbars.",
   path: "/docs/utilities/",
 });
 
@@ -266,6 +266,59 @@ export default function UtilitiesPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">Scrollbars</h2>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Native scrollbars follow the muted tone: a thin transparent track with a
+            pill thumb, matching the ScrollArea component. For a page-wide effect, put
+            the class on <code className="text-[13px] font-semibold text-foreground">html</code> —
+            the viewport scrollbar follows the root element, not the body.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <div className="scrollbar-styled h-24 overflow-y-auto rounded-control bg-background p-3">
+                <div className="flex flex-col gap-2">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <div key={index} className="h-6 shrink-0 rounded-xs bg-surface" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs leading-5 text-muted-foreground">
+                <code className="font-semibold text-foreground">scrollbar-styled</code> —
+                token-styled native scrollbars for the element and its descendants.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="scrollbar-none h-24 overflow-y-auto rounded-control bg-background p-3">
+                <div className="flex flex-col gap-2">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <div key={index} className="h-6 shrink-0 rounded-xs bg-surface" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs leading-5 text-muted-foreground">
+                <code className="font-semibold text-foreground">scrollbar-none</code> —
+                keep scrolling without a visible bar. It wins over scrollbar-styled.
+              </p>
+            </div>
+          </div>
+          <CodeBlock
+            filename="Scrollbars"
+            code={`// Page-wide: the viewport scrollbar follows <html>
+<html className="scrollbar-styled">
+
+// Or scope to one scroll container
+<div className="scrollbar-styled h-56 overflow-y-auto">
+  ...
+</div>
+
+// Opt out of an inherited styled scrollbar
+<div className="scrollbar-none overflow-y-auto">
+  ...
+</div>`}
+          />
         </section>
 
         <section className="flex flex-col gap-3">

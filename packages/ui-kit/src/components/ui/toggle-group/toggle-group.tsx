@@ -14,13 +14,21 @@ export interface ToggleGroupItem {
 }
 
 export interface ToggleGroupProps {
+  /** Value/label entries. Add optional icon, disabled or aria-label per item. */
   items: ToggleGroupItem[];
+  /** Controlled pressed values. */
   value?: string[];
+  /** Initial pressed values for an uncontrolled group. */
   defaultValue?: string[];
+  /** Called when the pressed values change. */
   onValueChange?: (value: string[]) => void;
+  /** Allow more than one item to stay pressed. */
   multiple?: boolean;
+  /** Disables every item in the group. */
   disabled?: boolean;
+  /** Layout direction. */
   orientation?: "horizontal" | "vertical";
+  /** Surface treatment for the group. */
   variant?: "segmented" | "ghost";
   className?: string;
   "aria-label"?: string;

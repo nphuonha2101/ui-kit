@@ -6,10 +6,18 @@ import { cn } from "../../../lib/utils";
 
 export interface FieldsetProps
   extends Omit<React.ComponentPropsWithoutRef<typeof FieldsetPrimitive.Root>, "children"> {
+  /** Accessible name for the group, rendered as the fieldset legend. */
   legend?: React.ReactNode;
+  /** Helper text shown under the legend. */
   description?: React.ReactNode;
+  /** Fields and controls to group. */
   children: React.ReactNode;
+  /** Additional classes for the inner field stack. */
   contentClassName?: string;
+  /** Disables every field inside the group. */
+  disabled?: boolean;
+  /** Additional classes for the fieldset element. */
+  className?: string;
 }
 
 /**

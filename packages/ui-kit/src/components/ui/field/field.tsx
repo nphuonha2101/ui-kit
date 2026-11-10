@@ -5,10 +5,15 @@ import { cn, hasErrorContent } from "../../../lib/utils";
 import { Label } from "../label";
 
 export interface FieldProps {
+  /** Explicit control id. */
   id?: string;
+  /** Visible label for the control. */
   label?: React.ReactNode;
+  /** Helper text below the control. */
   description?: React.ReactNode;
+  /** Error message; also marks the control invalid. */
   error?: React.ReactNode;
+  /** Shows the required mark and forwards required to the control. */
   required?: boolean;
   className?: string;
   children: React.ReactNode;

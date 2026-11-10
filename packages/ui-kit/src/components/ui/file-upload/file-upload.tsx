@@ -20,26 +20,45 @@ export interface FileRejection {
 
 export interface FileUploadProps {
   id?: string;
+  /** Name of the underlying file input for native form submission. */
   name?: string;
+  /** Controlled file list. */
   files?: File[];
+  /** Initial files for uncontrolled usage. */
   defaultFiles?: File[];
+  /** Called with the next file list after adding or removing files. */
   onFilesChange?: (files: File[]) => void;
+  /** Called when files fail the type, size or count checks. */
   onReject?: (rejections: FileRejection[]) => void;
+  /** Native accept filter, such as "image/*,.pdf". */
   accept?: string;
+  /** Allows more than one file. When false, a new file replaces the current one. */
   multiple?: boolean;
+  /** Maximum number of files. */
   maxFiles?: number;
+  /** Maximum size per file in bytes. */
   maxSize?: number;
+  /** Disables selecting, dropping and removing files. */
   disabled?: boolean;
+  /** Marks the label as required and sets the native input's required flag. */
   required?: boolean;
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Dropzone prompt. */
   title?: React.ReactNode;
+  /** Dropzone hint. Defaults to a summary of accept, maxSize and maxFiles. */
   hint?: React.ReactNode;
+  /** Dropzone icon. Defaults to the kit upload icon. */
   icon?: IconComponent;
+  /** Shows image thumbnails for image files. */
   showPreviews?: boolean;
   className?: string;
   dropzoneClassName?: string;
+  /** Blur handler for react-hook-form. */
   onBlur?: React.FocusEventHandler<HTMLButtonElement>;
   "aria-label"?: string;
   "aria-labelledby"?: string;

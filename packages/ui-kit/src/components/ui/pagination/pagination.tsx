@@ -5,12 +5,19 @@ import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 
 export interface PaginationProps {
+  /** Controlled current page (1-based). */
   page?: number;
+  /** Initial page for uncontrolled usage. */
   defaultPage?: number;
+  /** Total number of pages. */
   pageCount: number;
+  /** Called when a page control is activated. */
   onPageChange?: (page: number) => void;
+  /** Pages shown on each side of the current page. */
   siblingCount?: number;
+  /** Disables every control. */
   disabled?: boolean;
+  /** Render page controls as links instead of buttons. */
   getHref?: (page: number) => string;
   className?: string;
   "aria-label"?: string;

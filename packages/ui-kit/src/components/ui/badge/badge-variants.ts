@@ -4,6 +4,7 @@ export const badgeVariants = cva(
   "surface-curved-soft relative inline-flex items-center gap-1 whitespace-nowrap rounded-pill px-2.5 py-0.5 text-xs font-semibold tracking-[-0.01em] transition-colors",
   {
     variants: {
+      /** Tone of the badge. */
       variant: {
         neutral: "bg-surface text-foreground",
         primary: "bg-primary-soft text-primary-soft-foreground",

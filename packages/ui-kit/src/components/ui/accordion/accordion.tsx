@@ -15,13 +15,23 @@ export interface AccordionItemData {
 }
 
 export interface AccordionProps {
+  /**
+   * Panel entries: value, title, content, and optional description, icon or disabled.
+   */
   items: AccordionItemData[];
+  /** Controlled list of open item values. */
   value?: string[];
+  /** Initial open items for an uncontrolled accordion. */
   defaultValue?: string[];
+  /** Called when the open items change. */
   onValueChange?: (value: string[]) => void;
+  /** Allow more than one panel to stay open. */
   multiple?: boolean;
+  /** Disables every item in the accordion. */
   disabled?: boolean;
+  /** Group panels in one surface or render each as its own card. */
   variant?: "joined" | "separated";
+  /** Additional classes for the root element. */
   className?: string;
   "aria-label"?: string;
 }

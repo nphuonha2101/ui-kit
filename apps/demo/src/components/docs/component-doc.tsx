@@ -10,6 +10,7 @@ import {
 } from "@nphuonha/ui-kit";
 import type { ComponentMeta, ComponentSnippets } from "@/content/types";
 import { registry } from "@/content/components";
+import { getComponentProps } from "@/content/props";
 import { buildComponentAgentPrompt } from "@/content/llms";
 import { ComponentDemo, ExampleDemo } from "@/content/components/demo-map";
 import { AgentCopyButton } from "./agent-copy-button";
@@ -28,6 +29,7 @@ export function ComponentDoc({
   const index = registry.findIndex((item) => item.slug === meta.slug);
   const previous = registry[index - 1];
   const next = registry[index + 1];
+  const props = getComponentProps(meta);
 
   const toc: TocItem[] = [
     { href: "#preview", label: "Preview" },
@@ -132,7 +134,7 @@ export function ComponentDoc({
             Props are additive to the underlying Base UI or native element.
           </p>
           <div className="mt-4">
-            <PropTable props={meta.props} title={meta.title} />
+            <PropTable props={props} title={meta.title} />
           </div>
         </section>
 

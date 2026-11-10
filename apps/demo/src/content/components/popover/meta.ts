@@ -5,39 +5,5 @@ export const meta: ComponentMeta = {
   "title": "Popover",
   "description": "A small floating surface anchored to a trigger.",
   "category": "Overlays",
-  "imports": "import { Button, Input, Popover } from \"@nphuonha/ui-kit\";",
-  "props": [
-    {
-      "name": "trigger",
-      "type": "ReactElement",
-      "description": "Element that opens the popover."
-    },
-    {
-      "name": "title",
-      "type": "ReactNode",
-      "description": "Optional title."
-    },
-    {
-      "name": "description",
-      "type": "ReactNode",
-      "description": "Optional supporting text."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "description": "Accessible name when there is no visible title."
-    },
-    {
-      "name": "side",
-      "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
-      "default": "\"bottom\"",
-      "description": "Preferred placement."
-    },
-    {
-      "name": "align",
-      "type": "\"start\" | \"center\" | \"end\"",
-      "default": "\"center\"",
-      "description": "Alignment along the trigger."
-    }
-  ]
+  "imports": "import { Button, Input, Popover } from \"@nphuonha/ui-kit\";"
 };

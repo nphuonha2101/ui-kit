@@ -13,13 +13,23 @@ export interface BottomNavItem {
   disabled?: boolean;
 }
 
+/**
+ * @docs aria-label Accessible name for the navigation landmark.
+ */
 export interface BottomNavProps
   extends Omit<React.ComponentPropsWithoutRef<"nav">, "onChange"> {
+  /**
+   * Value/label/icon entries. activeIcon swaps the icon for the selected item; add href, badge
+   * or disabled per item.
+   */
   items: BottomNavItem[];
+  /** Controlled active value. */
   value?: string;
+  /** Uncontrolled initial active value. */
   defaultValue?: string;
+  /** Called when the active item changes. */
   onValueChange?: (value: string) => void;
-  /** Pin the bar to the bottom of the viewport. */
+  /** Pins the bar to the bottom of the viewport with a safe-area offset. */
   fixed?: boolean;
 }
 

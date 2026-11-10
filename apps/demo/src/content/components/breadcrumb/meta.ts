@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   "description": "Composable breadcrumb navigation with separators, ellipsis and current page state.",
   "category": "Navigation",
   "imports": "import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@nphuonha/ui-kit\";",
-  "props": [
+  "manualProps": [
     {
       "name": "Breadcrumb",
       "type": "component",

@@ -12,21 +12,35 @@ export interface SliderMark {
 }
 
 export interface SliderProps<Value extends SliderValue = number> {
+  /** Controlled value. Pass an array for a range slider. @type number | readonly number[] */
   value?: Value;
+  /** Initial value for an uncontrolled slider. @type number | readonly number[] */
   defaultValue?: Value;
+  /** Called while the value changes. @type (value: number | readonly number[]) => void */
   onValueChange?: (value: Value) => void;
+  /** Minimum value. */
   min?: number;
+  /** Maximum value. */
   max?: number;
+  /** Step increment. */
   step?: number;
+  /** Disables the slider. */
   disabled?: boolean;
+  /** Slider direction. */
   orientation?: "horizontal" | "vertical";
   name?: string;
   id?: string;
+  /** Visible label associated with the slider. */
   label?: React.ReactNode;
+  /** Helper text below the control. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Show the formatted value next to the label. */
   showValue?: boolean;
+  /** Custom value formatter. */
   formatValue?: (value: number) => React.ReactNode;
+  /** Optional tick labels rendered below a horizontal slider. */
   marks?: SliderMark[];
   className?: string;
   ref?: React.Ref<HTMLDivElement>;

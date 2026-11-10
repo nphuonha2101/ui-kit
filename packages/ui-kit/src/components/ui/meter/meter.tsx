@@ -44,8 +44,11 @@ function thresholdTone(
 }
 
 export interface MeterProps {
+  /** Current measurement. */
   value: number;
+  /** Lower bound of the range. */
   min?: number;
+  /** Upper bound of the range. */
   max?: number;
   /** Upper bound of the low zone, matching the native `<meter>` element. */
   low?: number;
@@ -53,12 +56,18 @@ export interface MeterProps {
   high?: number;
   /** Best value in the range. When set, the tone follows the three meter zones. */
   optimum?: number;
+  /** Visible label, wired to the meter for assistive technology. */
   label?: React.ReactNode;
+  /** Show the formatted value beside the label. */
   showValue?: boolean;
+  /** Customize the visible value, for example with a unit. */
   formatValue?: (formattedValue: string, value: number) => React.ReactNode;
+  /** Track height. */
   size?: keyof typeof trackSizes;
+  /** Explicit indicator tone. Overrides the tone derived from optimum. */
   tone?: MeterTone;
   className?: string;
+  /** Accessible name when no visible label is rendered. */
   "aria-label"?: string;
   "aria-valuetext"?: string;
 }

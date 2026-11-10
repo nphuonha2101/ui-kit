@@ -3,10 +3,15 @@ import { cn, type IconComponent } from "../../../lib/utils";
 
 export interface EmptyStateProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Optional icon shown in a soft circular well. */
   icon?: IconComponent;
+  /** Primary empty state message. */
   title: React.ReactNode;
+  /** Supporting copy with the next step. */
   description?: React.ReactNode;
+  /** Optional action, usually a Button. */
   action?: React.ReactNode;
+  /** Compact spacing for nested panels. */
   size?: "sm" | "default";
 }
 

@@ -13,15 +13,25 @@ export interface CheckboxGroupOption {
 }
 
 export interface CheckboxGroupProps {
+  /** Option entries: value, label, and optional description or disabled state. */
   options: CheckboxGroupOption[];
+  /** Controlled list of selected option values. */
   value?: string[];
+  /** Initial selection for an uncontrolled group. */
   defaultValue?: string[];
+  /** Called with the next selected values. */
   onValueChange?: (value: string[]) => void;
+  /** Visible group label. */
   label?: React.ReactNode;
+  /** Helper text below the options. */
   description?: React.ReactNode;
+  /** Error message and invalid state for the group. */
   error?: React.ReactNode;
+  /** Marks the group as required. Validation stays with your form layer. */
   required?: boolean;
+  /** Disables every checkbox in the group. */
   disabled?: boolean;
+  /** Stack options or lay them out in a wrapping row. */
   orientation?: "vertical" | "horizontal";
   /** Name shared by the checkbox inputs for native form submission. */
   name?: string;

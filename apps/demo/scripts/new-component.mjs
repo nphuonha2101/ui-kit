@@ -49,7 +49,6 @@ const meta = {
   description: "Describe the component in one sentence.",
   category,
   imports: 'import { Button } from "@nphuonha/ui-kit";',
-  props: [],
   examples: [],
 };
 
@@ -93,5 +92,12 @@ execFileSync(process.execPath, ["scripts/gen-content-index.mjs"], {
   stdio: "inherit",
 });
 
+execFileSync(process.execPath, ["scripts/gen-props.mjs"], {
+  cwd: root,
+  stdio: "inherit",
+});
+
 console.log(`\nCreated src/content/components/${slug}`);
 console.log("Next: fill in meta.ts, snippets.ts and demo.tsx.");
+console.log("Props are generated from JSDoc on the exported *Props type in packages/ui-kit/src.");
+console.log("Run `npm run gen:props` after editing the component API.");

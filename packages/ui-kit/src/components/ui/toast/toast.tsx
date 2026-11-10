@@ -15,10 +15,15 @@ export interface ToasterIcons {
 }
 
 export interface ToasterProps {
+  /** Screen corner for toasts. */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
+  /** Toast appearance. */
   theme?: "light" | "dark" | "system";
+  /** Use semantic colors for status toasts. */
   richColors?: boolean;
+  /** Show a close button. */
   closeButton?: boolean;
+  /** Custom status and close icons from any icon pack. */
   icons?: ToasterIcons;
 }
 

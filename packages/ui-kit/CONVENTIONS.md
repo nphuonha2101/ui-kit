@@ -50,8 +50,9 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - Restyle sonner through `Toaster`'s `toastOptions.classNames`, not through global `[data-sonner-*]` selectors.
 
 ## Docs & agent context
-- Component docs live in `apps/demo/src/content/components/<slug>/`: `meta.ts` (props are the API source of truth), `snippets.ts`, and `demo.tsx` (must export `demo` and `examples`).
-- `apps/demo/src/content/components/{index.ts,snippets-map.ts,demo-map.tsx}` are generated. Run `npm run gen:content -w @nphuonha/ui-demo`; CI runs the `--check` variant.
+- Component docs live in `apps/demo/src/content/components/<slug>/`: `meta.ts` (title, category, description, examples), `snippets.ts`, and `demo.tsx` (must export `demo` and `examples`). Props are generated from JSDoc on the exported `*Props` type in the kit source.
+- `apps/demo/src/content/components/{index.ts,snippets-map.ts,demo-map.tsx,props-map.ts}` are generated. Run `npm run gen:content` / `npm run gen:props`; CI runs the `--check` variants.
+- Document props with `/** ... */` on the property declaration. Use `@default` for non-inferable defaults, `@type` for an explicit display type, and `@ignore` to hide. Curated inherited props use `@docs <name> <description>` (plus `@docsDefault` / `@docsType`) tags on the Props interface.
 - Scaffold content with `npm run new:component -w @nphuonha/ui-demo -- <slug> "<Title>" <Category>`.
 - Component pages and core setup guides (installation, upgrading) expose a "Copy for agent" button and a page-scoped `llms.txt` route. Keep prompts in `apps/demo/src/content/llms.ts` as the single source.
 - Any new docs page must be added to the sidebar, sitemap, root `llms.txt` links and README when it is part of the core setup flow.
@@ -65,7 +66,7 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 ## Adding or renaming a component
 1. Create the component folder, explicit `index.ts`, colocated test and (when needed) a server-safe `*-variants.ts`.
 2. Export it from the root barrel and add its `package.json` subpath export.
-3. Add docs content (`meta.ts`, `snippets.ts`, `demo.tsx`) and regenerate content indexes.
+3. Add docs content (`meta.ts`, `snippets.ts`, `demo.tsx`), JSDoc on the exported `*Props` type, and regenerate content/props indexes.
 4. Update the README component list and any affected page-scoped `llms.txt` content.
 5. Run typecheck, kit tests and the docs build; confirm focus, disabled, error and dark-mode states.
 

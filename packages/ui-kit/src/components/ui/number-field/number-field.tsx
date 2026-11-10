@@ -7,23 +7,38 @@ import { useKitIcon } from "../_shared/icon-provider";
 import { Label } from "../label";
 
 export interface NumberFieldProps {
+  /** Controlled numeric value. */
   value?: number | null;
+  /** Initial value for uncontrolled usage. */
   defaultValue?: number;
+  /** Called when the value changes. */
   onValueChange?: (value: number | null) => void;
+  /** Minimum allowed value. */
   min?: number;
+  /** Maximum allowed value. */
   max?: number;
+  /**
+   * Increment used by the buttons and arrow keys.
+   * @default 1
+   */
   step?: number;
   largeStep?: number;
   smallStep?: number;
+  /** Formatting options for display and input. */
   format?: Intl.NumberFormatOptions;
   locale?: Intl.LocalesArgument;
+  /** Disables the control. */
   disabled?: boolean;
   readOnly?: boolean;
+  /** Marks the label and native input as required. */
   required?: boolean;
   name?: string;
   id?: string;
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
   placeholder?: string;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;

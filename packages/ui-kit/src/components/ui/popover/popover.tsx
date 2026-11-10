@@ -5,16 +5,22 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { cn } from "../../../lib/utils";
 
 export interface PopoverProps {
+  /** Element that opens the popover. */
   trigger: React.ReactElement;
   children: React.ReactNode;
+  /** Optional title. */
   title?: React.ReactNode;
+  /** Optional supporting text. */
   description?: React.ReactNode;
+  /** Preferred placement. */
   side?: "top" | "bottom" | "left" | "right";
+  /** Alignment along the trigger. */
   align?: "start" | "center" | "end";
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   className?: string;
+  /** Accessible name when there is no visible title. */
   "aria-label"?: string;
 }
 

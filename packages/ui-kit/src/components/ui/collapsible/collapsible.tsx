@@ -6,16 +6,29 @@ import { cn, type IconComponent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 
 export interface CollapsibleProps {
+  /** Visible trigger label. */
   title: React.ReactNode;
+  /** Secondary line inside the trigger. */
   description?: React.ReactNode;
+  /** Optional leading icon. */
   icon?: IconComponent;
+  /** Panel content. */
   children: React.ReactNode;
+  /** Controlled open state. */
   open?: boolean;
+  /**
+   * Initial open state for an uncontrolled panel.
+   * @default false
+   */
   defaultOpen?: boolean;
+  /** Called when the panel opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Disables the trigger. */
   disabled?: boolean;
+  /** Surface treatment: card, separate card or bare disclosure. */
   variant?: "joined" | "separated" | "plain";
   className?: string;
+  /** Additional classes for the panel content. */
   contentClassName?: string;
   "aria-label"?: string;
 }

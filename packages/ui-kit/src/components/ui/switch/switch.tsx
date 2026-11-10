@@ -4,11 +4,20 @@ import * as React from "react";
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { cn, hasErrorContent } from "../../../lib/utils";
 
+/**
+ * @docs checked Controlled checked state.
+ * @docs defaultChecked Initial checked state.
+ * @docs disabled Disables the switch.
+ */
 export interface SwitchProps
   extends Omit<React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>, "children"> {
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Marks the label and native input as required. */
   required?: boolean;
 }
 

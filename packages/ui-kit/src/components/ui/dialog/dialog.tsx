@@ -7,15 +7,23 @@ import { IconButton } from "../icon-button";
 import { useKitIcon } from "../_shared/icon-provider";
 
 export interface DialogProps {
+  /** Controlled open state. */
   open?: boolean;
+  /** Uncontrolled initial state. */
   defaultOpen?: boolean;
+  /** Called when the dialog opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the dialog. */
   trigger?: React.ReactElement;
+  /** Dialog title. */
   title?: React.ReactNode;
+  /** Supporting description. */
   description?: React.ReactNode;
   children: React.ReactNode;
+  /** Actions rendered at the bottom. */
   footer?: React.ReactNode;
   className?: string;
+  /** Shows the close icon button. */
   showClose?: boolean;
   "aria-label"?: string;
 }

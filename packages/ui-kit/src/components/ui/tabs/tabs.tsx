@@ -12,9 +12,17 @@ export interface TabItem {
 }
 
 export interface TabsProps extends Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>, "children"> {
+  /** Value/label/content entries. */
   items: TabItem[];
+  /** Extra classes for the tab list. */
   listClassName?: string;
   panelClassName?: string;
+  /** Controlled active value. */
+  value?: string;
+  /** Initial active value for uncontrolled usage. */
+  defaultValue?: string;
+  /** Called when the active tab changes. */
+  onValueChange?: (value: string) => void;
 }
 
 export function Tabs({ items, className, listClassName, panelClassName, ...props }: TabsProps) {

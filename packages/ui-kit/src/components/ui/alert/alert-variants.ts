@@ -4,6 +4,7 @@ export const alertVariants = cva(
   "surface-curved-soft relative flex w-full items-start gap-3 rounded-card px-4 py-3.5 text-sm",
   {
     variants: {
+      /** Tone of the alert. */
       variant: {
         neutral: "bg-surface text-foreground",
         info: "bg-info/10 text-foreground",

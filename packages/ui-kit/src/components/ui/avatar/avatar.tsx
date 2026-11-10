@@ -33,11 +33,17 @@ const pixelSizes = {
 
 export interface AvatarProps
   extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
+  /** Image URL. Omit it to show the fallback immediately. */
   src?: string;
+  /** Accessible name. Initials are derived from it when no fallback is set. */
   alt?: string;
+  /** Custom content shown while the image loads or when it fails. */
   fallback?: React.ReactNode;
+  /** Control the avatar diameter. */
   size?: keyof typeof sizeClasses;
+  /** Corner treatment. */
   shape?: keyof typeof shapeClasses;
+  /** Milliseconds to wait before showing the fallback. */
   delay?: number;
 }
 

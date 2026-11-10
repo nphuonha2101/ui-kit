@@ -6,12 +6,7 @@ export const meta: ComponentMeta = {
   "description": "Composable table primitives with tonal headers, hairline rows and horizontal scroll.",
   "category": "Data Display",
   "imports": "import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@nphuonha/ui-kit\";",
-  "props": [
-    {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Extra classes for the scroll container that wraps the table."
-    },
+  "extraProps": [
     {
       "name": "TableHeader",
       "type": "component",

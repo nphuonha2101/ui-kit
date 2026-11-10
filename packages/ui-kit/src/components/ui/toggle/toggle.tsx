@@ -5,8 +5,18 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { cn, type IconComponent } from "../../../lib/utils";
 import { toggleVariants, type ToggleVariants } from "./toggle-variants";
 
+/**
+ * @docs pressed Controlled pressed state.
+ * @docs defaultPressed Initial pressed state for an uncontrolled toggle.
+ * @docs onPressedChange Called when the pressed state changes.
+ * @docs disabled Disables the toggle.
+ * @docsDefault defaultPressed false
+ * @docsType onPressedChange (pressed: boolean) => void
+ */
 export interface ToggleProps extends TogglePrimitive.Props, ToggleVariants {
+  /** Icon rendered before the label. */
   startIcon?: IconComponent;
+  /** Icon rendered after the label. */
   endIcon?: IconComponent;
 }
 

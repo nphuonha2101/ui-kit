@@ -6,37 +6,11 @@ export const meta: ComponentMeta = {
   "description": "A horizontal pill navigation for desktop headers, toolbars and section switchers.",
   "category": "Navigation",
   "imports": "import { DesktopNav } from \"@nphuonha/ui-kit\";",
-  "props": [
-    {
-      "name": "items",
-      "type": "DesktopNavItem[]",
-      "description": "Value/label entries. Add optional icon, activeIcon, href, badge, disabled or children per item."
-    },
+  "extraProps": [
     {
       "name": "items[].children",
       "type": "DesktopNavItem[]",
       "description": "Nested items rendered as a submenu. Children can nest again for multi-level menus."
-    },
-    {
-      "name": "value",
-      "type": "string",
-      "description": "Controlled active value."
-    },
-    {
-      "name": "defaultValue",
-      "type": "string",
-      "description": "Uncontrolled initial active value."
-    },
-    {
-      "name": "onValueChange",
-      "type": "(value: string) => void",
-      "description": "Called when the active item changes."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "default": "\"Desktop navigation\"",
-      "description": "Accessible name for the navigation landmark."
     }
   ],
   "examples": [

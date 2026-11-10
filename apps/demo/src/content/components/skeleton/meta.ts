@@ -6,25 +6,6 @@ export const meta: ComponentMeta = {
   "description": "A pulsing placeholder that preserves layout while content loads.",
   "category": "Feedback",
   "imports": "import { Skeleton } from \"@nphuonha/ui-kit\";",
-  "props": [
-    {
-      "name": "variant",
-      "type": "\"rect\" | \"text\" | \"circle\"",
-      "default": "\"rect\"",
-      "description": "Shape of the placeholder."
-    },
-    {
-      "name": "lines",
-      "type": "number",
-      "default": "1",
-      "description": "Render multiple text rows, with a shorter final line."
-    },
-    {
-      "name": "className",
-      "type": "string",
-      "description": "Control width, height and spacing."
-    }
-  ],
   "examples": [
     {
       "title": "Text lines",

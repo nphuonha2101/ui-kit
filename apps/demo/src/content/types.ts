@@ -25,7 +25,13 @@ export interface ComponentMeta {
   description: string;
   category: ComponentCategory;
   imports: string;
-  props: ComponentProp[];
+  /**
+   * Rows for compound components that do not expose a single Props type.
+   * When set, generated props are not used for this component.
+   */
+  manualProps?: ComponentProp[];
+  /** Extra rows merged after generated props, e.g. nested fields or compound parts. */
+  extraProps?: ComponentProp[];
   examples?: ComponentExampleMeta[];
 }
 

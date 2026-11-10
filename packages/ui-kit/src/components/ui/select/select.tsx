@@ -12,14 +12,24 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
+  /** Value/label entries. */
   options: SelectOption[];
+  /** Controlled value. */
   value?: string | null;
+  /** Uncontrolled initial value. */
   defaultValue?: string | null;
+  /** Called when the selection changes. */
   onValueChange?: (value: string | null) => void;
   onBlur?: React.FocusEventHandler<HTMLButtonElement>;
+  /** Text shown without a value. */
   placeholder?: string;
+  /** Disables the trigger. */
   disabled?: boolean;
+  /**
+   * Marks the native control as required. The visible * comes from Field or FormField.
+   */
   required?: boolean;
+  /** Applies the invalid visual state. */
   error?: boolean;
   className?: string;
   name?: string;

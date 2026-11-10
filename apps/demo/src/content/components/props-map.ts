@@ -204,7 +204,7 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "name": "fixed",
       "type": "boolean",
       "default": "false",
-      "description": "Pin the bar to the bottom of the viewport."
+      "description": "Pins the bar to the bottom of the viewport with a safe-area offset."
     },
     {
       "name": "aria-label",
@@ -1007,7 +1007,7 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "name": "size",
       "type": "\"sm\" | \"default\" | \"lg\" | \"icon\" | \"icon-sm\"",
       "default": "\"icon\"",
-      "description": "Control height and padding."
+      "description": "Square control size. All Button sizes are accepted; icon sizes are intended."
     },
     {
       "name": "shape",

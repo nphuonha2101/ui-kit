@@ -29,7 +29,7 @@ export interface BottomNavProps
   defaultValue?: string;
   /** Called when the active item changes. */
   onValueChange?: (value: string) => void;
-  /** Pin the bar to the bottom of the viewport. */
+  /** Pins the bar to the bottom of the viewport with a safe-area offset. */
   fixed?: boolean;
 }
 

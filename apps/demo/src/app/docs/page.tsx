@@ -56,7 +56,7 @@ const links = [
   {
     href: "/docs/components",
     title: "Components",
-    description: "Browse the MVP components with live previews and API notes.",
+    description: "Browse components with live previews and API notes.",
     icon: SquaresFourIcon,
   },
   {

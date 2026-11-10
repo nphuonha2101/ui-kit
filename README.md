@@ -3,7 +3,7 @@
 **Solid, borderless React UI kit** built on **Base UI** and **Tailwind CSS v4**. Tonal surfaces, top-lit curves, accessible primitives and an accent you can change at runtime.
 
 [![npm version](https://img.shields.io/npm/v/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
-[![CI](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml)
+[![CI/CD](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4f46e5?style=flat-square)](./LICENSE)
 [![Docs](https://img.shields.io/badge/docs-ui.nphuonha.id.vn-4f46e5?style=flat-square)](https://ui.nphuonha.id.vn)
 

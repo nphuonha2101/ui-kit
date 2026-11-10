@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { GithubLogoIcon, PackageIcon } from "@phosphor-icons/react";
+import { buildInfo } from "@/content/build-info";
 import { BrandLogo } from "./brand-logo";
 
 const GITHUB_URL = "https://github.com/nphuonha2101/ui-kit";
@@ -78,8 +79,16 @@ export function SiteFooter() {
         </div>
 
         <div className="mx-auto mt-14 flex max-w-5xl flex-col gap-4 border-t border-border/60 pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; {new Date().getFullYear()} nphuonha UI &bull; MIT License
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>&copy; {new Date().getFullYear()} nphuonha UI &bull; MIT License</span>
+            <span aria-hidden="true" className="text-border">·</span>
+            <a
+              href="/version.json"
+              title={`Commit ${buildInfo.commit} · built ${buildInfo.builtAt}`}
+              className="w-fit font-mono text-[11px] text-muted-foreground/80 transition-colors hover:text-foreground"
+            >
+              v{buildInfo.packageVersion} · {buildInfo.deployId}
+            </a>
           </p>
           <div className="flex items-center gap-4">
             <p>

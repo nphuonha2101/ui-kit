@@ -9,6 +9,7 @@ const iconButtonDemo = dynamic(() => import("./icon-button/demo").then((module) 
 const menuDemo = dynamic(() => import("./menu/demo").then((module) => module.demo));
 const toggleDemo = dynamic(() => import("./toggle/demo").then((module) => module.demo));
 const toggleGroupDemo = dynamic(() => import("./toggle-group/demo").then((module) => module.demo));
+const toolbarDemo = dynamic(() => import("./toolbar/demo").then((module) => module.demo));
 const calendarDemo = dynamic(() => import("./calendar/demo").then((module) => module.demo));
 const checkboxDemo = dynamic(() => import("./checkbox/demo").then((module) => module.demo));
 const checkboxGroupDemo = dynamic(() => import("./checkbox-group/demo").then((module) => module.demo));
@@ -75,6 +76,12 @@ const toggletoggleSizesExample = dynamic(() =>
 );
 const toggleGrouptoggleGroupMultipleExample = dynamic(() =>
   import("./toggle-group/demo").then((module) => module.examples["toggle-group-multiple"]),
+);
+const toolbartoolbarVerticalExample = dynamic(() =>
+  import("./toolbar/demo").then((module) => module.examples["toolbar-vertical"]),
+);
+const toolbartoolbarSearchExample = dynamic(() =>
+  import("./toolbar/demo").then((module) => module.examples["toolbar-search"]),
 );
 const calendarcalendarRangeExample = dynamic(() =>
   import("./calendar/demo").then((module) => module.examples["calendar-range"]),
@@ -198,6 +205,7 @@ export const demoMap: Record<string, React.ComponentType> = {
   "menu": menuDemo,
   "toggle": toggleDemo,
   "toggle-group": toggleGroupDemo,
+  "toolbar": toolbarDemo,
   "calendar": calendarDemo,
   "checkbox": checkboxDemo,
   "checkbox-group": checkboxGroupDemo,
@@ -253,6 +261,8 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "menu-submenu": menumenuSubmenuExample,
   "toggle-sizes": toggletoggleSizesExample,
   "toggle-group-multiple": toggleGrouptoggleGroupMultipleExample,
+  "toolbar-vertical": toolbartoolbarVerticalExample,
+  "toolbar-search": toolbartoolbarSearchExample,
   "calendar-range": calendarcalendarRangeExample,
   "calendar-compact": calendarcalendarCompactExample,
   "calendar-constraints": calendarcalendarConstraintsExample,

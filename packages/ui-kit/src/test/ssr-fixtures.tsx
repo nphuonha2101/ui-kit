@@ -63,6 +63,11 @@ import {
   Toaster,
   Toggle,
   ToggleGroup,
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarToggle,
   Tooltip,
   accentStyle,
 } from "../index";
@@ -489,6 +494,21 @@ export const ssrFixtures: SsrFixture[] = [
           { value: "list", label: "List", icon: TestIcon },
         ]}
       />
+    ),
+  },
+  {
+    name: "Toolbar",
+    render: () => (
+      <Toolbar aria-label="Formatting">
+        <ToolbarGroup aria-label="Text style">
+          <ToolbarToggle aria-label="Bold" defaultPressed>
+            B
+          </ToolbarToggle>
+          <ToolbarToggle aria-label="Italic">I</ToolbarToggle>
+        </ToolbarGroup>
+        <ToolbarSeparator />
+        <ToolbarButton>Undo</ToolbarButton>
+      </Toolbar>
     ),
   },
   {

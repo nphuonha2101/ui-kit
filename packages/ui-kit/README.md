@@ -117,7 +117,7 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 

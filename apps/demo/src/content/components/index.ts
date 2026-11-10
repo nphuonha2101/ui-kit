@@ -4,6 +4,7 @@ import { meta as iconButtonMeta } from "./icon-button/meta";
 import { meta as menuMeta } from "./menu/meta";
 import { meta as toggleMeta } from "./toggle/meta";
 import { meta as toggleGroupMeta } from "./toggle-group/meta";
+import { meta as toolbarMeta } from "./toolbar/meta";
 import { meta as calendarMeta } from "./calendar/meta";
 import { meta as checkboxMeta } from "./checkbox/meta";
 import { meta as checkboxGroupMeta } from "./checkbox-group/meta";
@@ -59,6 +60,7 @@ export const registry: ComponentMeta[] = [
   menuMeta,
   toggleMeta,
   toggleGroupMeta,
+  toolbarMeta,
   calendarMeta,
   checkboxMeta,
   checkboxGroupMeta,

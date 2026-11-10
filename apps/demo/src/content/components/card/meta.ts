@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   "description": "A borderless solid surface with a top-lit curved edge.",
   "category": "Data Display",
   "imports": "import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@nphuonha/ui-kit\";",
-  "props": [
+  "manualProps": [
     {
       "name": "Card",
       "type": "div",

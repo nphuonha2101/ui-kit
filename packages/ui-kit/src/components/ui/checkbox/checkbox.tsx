@@ -5,11 +5,21 @@ import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { cn, hasErrorContent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 
+/**
+ * @docs checked Controlled checked state.
+ * @docs defaultChecked Initial unchecked state.
+ * @docs indeterminate Shows the mixed state.
+ * @docs disabled Disables the control.
+ */
 export interface CheckboxProps
   extends Omit<React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "children"> {
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Marks the label and native input as required. */
   required?: boolean;
 }
 

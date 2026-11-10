@@ -5,10 +5,15 @@ import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import { cn } from "../../../lib/utils";
 
 export interface TooltipProps {
+  /** Tooltip text. */
   content: React.ReactNode;
+  /** Trigger element. */
   children: React.ReactElement;
+  /** Preferred placement. */
   side?: "top" | "bottom" | "left" | "right";
+  /** Alignment along the trigger. */
   align?: "start" | "center" | "end";
+  /** Open delay in milliseconds. */
   delay?: number;
   open?: boolean;
   defaultOpen?: boolean;

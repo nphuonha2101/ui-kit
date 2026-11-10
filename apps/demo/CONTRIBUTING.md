@@ -9,7 +9,7 @@ src/content/
   types.ts
   components/
     button/
-      meta.ts       # title, category, description, props, example metadata
+      meta.ts       # title, category, description, example metadata
       snippets.ts   # preview code, usage code, example code
       demo.tsx      # "use client" live demo
     input/
@@ -17,6 +17,7 @@ src/content/
     index.ts        # generated: registry, groups, search index
     snippets-map.ts # generated: slug -> snippets
     demo-map.tsx    # generated: slug -> lazy demo
+    props-map.ts    # generated: slug -> props extracted from kit JSDoc
 ```
 
 Why the split:
@@ -36,16 +37,32 @@ This creates `src/content/components/date-picker/{meta,snippets,demo}.tsx` and r
 
 Then fill in:
 
-1. `meta.ts` — description, imports, props, examples.
+1. `meta.ts` — description, imports, example metadata.
 2. `demo.tsx` — the live preview. Export `demo` and `examples`.
 3. `snippets.ts` — the code shown in the **Code** tab. It must match the demo.
+4. The exported `*Props` type in `packages/ui-kit/src` — add JSDoc to every prop that should appear in the API table. `npm run gen:props` turns that JSDoc into `props-map.ts`.
 
-Regenerate the indexes after manual file changes:
+Regenerate the indexes and props map after manual file changes:
 
 ```bash
 npm run gen:content
+npm run gen:props
 npm run check:content   # CI-safe check
+npm run check:props     # CI-safe check
 ```
+
+## Props docs
+
+The API table is generated from the kit source, not written by hand:
+
+- Add `/** ... */` to each prop on the exported `*Props` type in `packages/ui-kit/src`.
+- `@default` overrides a value that cannot be inferred from destructuring or `cva` `defaultVariants`.
+- `@type` overrides the displayed type for a generic or opaque prop.
+- `@ignore` hides a prop that has JSDoc.
+- For curated inherited props (Base UI/native), add `@docs <name> <description>` to the `*Props` interface. Use `@docsDefault <name> <value>` and `@docsType <name> <type>` when needed.
+- Compound components that document parts rather than one Props type use `manualProps` in `meta.ts`. Components that mix generated props with part rows (Table, Kbd, DesktopNav) use `extraProps`.
+
+Run `npm run gen:props` after changing a component API. CI runs `check:props`.
 
 ## Keeping code and preview in sync
 
@@ -80,6 +97,7 @@ Rules:
 
 ```bash
 npm run check:content
+npm run check:props
 npm run typecheck
 npm run build
 ```

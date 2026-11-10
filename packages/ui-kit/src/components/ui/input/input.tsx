@@ -3,7 +3,13 @@
 import * as React from "react";
 import { cn } from "../../../lib/utils";
 
+/**
+ * @docs type Native input type.
+ * @docs placeholder Hint text when empty.
+ * @docs disabled Disables the field.
+ */
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  /** Applies the invalid visual state. */
   error?: boolean;
 }
 

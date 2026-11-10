@@ -12,21 +12,33 @@ const slotSizes = {
 export interface OTPFieldProps {
   /** Number of character slots. */
   length?: number;
+  /** Controlled code value. */
   value?: string;
+  /** Initial code for an uncontrolled field. */
   defaultValue?: string;
+  /** Called with the current code on every edit. */
   onValueChange?: (value: string) => void;
+  /** Called when all slots are filled or a complete code is pasted. */
   onValueComplete?: (value: string) => void;
+  /** Visible label, linked to the first slot. */
   label?: React.ReactNode;
+  /** Helper text below the slots. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Marks the label and native control as required. */
   required?: boolean;
+  /** Disables every slot. */
   disabled?: boolean;
+  /** Keeps the value visible but not editable. */
   readOnly?: boolean;
   /** Mask entered characters, useful for one-time PINs. */
   mask?: boolean;
+  /** Name used when the owning form is submitted. */
   name?: string;
   /** Submit the owning form as soon as every slot is filled. */
   autoSubmit?: boolean;
+  /** Slot size. */
   size?: keyof typeof slotSizes;
   id?: string;
   className?: string;

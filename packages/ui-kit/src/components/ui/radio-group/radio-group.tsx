@@ -12,13 +12,29 @@ export interface RadioOption {
   disabled?: boolean;
 }
 
-export interface RadioGroupProps extends Omit<React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive>, "children"> {
+export interface RadioGroupProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive>,
+    "children" | "value" | "defaultValue" | "onValueChange"
+  > {
+  /** Value/label/description entries. */
   options?: RadioOption[];
+  /** Group label. */
   label?: React.ReactNode;
+  /** Group helper text. */
   description?: React.ReactNode;
+  /** Group error message. */
   error?: React.ReactNode;
+  /** Marks the group label and native input as required. */
   required?: boolean;
+  /** Layout direction. */
   orientation?: "vertical" | "horizontal";
+  /** Controlled selected value. */
+  value?: string;
+  /** Initial selected value for uncontrolled usage. */
+  defaultValue?: string;
+  /** Called when the selected value changes. */
+  onValueChange?: (value: string) => void;
   children?: React.ReactNode;
   ref?: React.Ref<HTMLDivElement>;
 }

@@ -3,7 +3,13 @@
 import * as React from "react";
 import { cn } from "../../../lib/utils";
 
+/**
+ * @docs placeholder Hint text when empty.
+ * @docs rows Native textarea rows.
+ * @docs disabled Disables the field.
+ */
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Applies the invalid visual state. */
   error?: boolean;
 }
 

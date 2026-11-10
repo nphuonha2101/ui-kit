@@ -4,7 +4,11 @@ import * as React from "react";
 import { Button, type ButtonProps } from "../button";
 import { cn } from "../../../lib/utils";
 
+/**
+ * @docs disabled Disables the button.
+ */
 export interface IconButtonProps extends Omit<ButtonProps, "startIcon" | "endIcon" | "children"> {
+  /** Required accessible name for the action. */
   "aria-label": string;
   children: React.ReactNode;
 }

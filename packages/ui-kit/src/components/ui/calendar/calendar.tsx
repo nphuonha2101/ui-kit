@@ -15,23 +15,39 @@ export interface CalendarRange {
 export type CalendarSize = "sm" | "default";
 
 interface CalendarBaseProps {
+  /** Controlled visible month. */
   month?: Date;
+  /** Initial visible month. Defaults to the selected date or today. */
   defaultMonth?: Date;
+  /** Called when the visible month changes. */
   onMonthChange?: (month: Date) => void;
+  /** Earliest selectable day. */
   min?: Date;
+  /** Latest selectable day. */
   max?: Date;
+  /** Disables individual days. */
   disabled?: (date: Date) => boolean;
+  /** Locale used for month, weekday and day labels. */
   locale?: Intl.LocalesArgument;
+  /** First day of the week. Defaults to the locale's week info. */
   weekStartsOn?: CalendarWeekStartsOn;
+  /** Renders days from the previous and next months. */
   showOutsideDays?: boolean;
+  /** Day cell size. */
   size?: CalendarSize;
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /** Marks the label and grid as required. Use form rules to enforce the value. */
   required?: boolean;
+  /** Slot below the grid for actions or a selection summary. */
   footer?: React.ReactNode;
   className?: string;
   id?: string;
+  /** Blur handler for react-hook-form. */
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   "aria-label"?: string;
   "aria-labelledby"?: string;
@@ -40,16 +56,29 @@ interface CalendarBaseProps {
 }
 
 export interface CalendarSingleProps extends CalendarBaseProps {
+  /**
+   * Selection model.
+   * @default "single"
+   */
   mode?: "single";
+  /** Controlled selection. Use Date for single and { from, to } for range. */
   value?: Date | null;
+  /** Initial selection for uncontrolled usage. */
   defaultValue?: Date | null;
+  /** Called when the selection changes. @type (value: Date | CalendarRange | null) => void */
   onValueChange?: (value: Date | null) => void;
 }
 
 export interface CalendarRangeProps extends CalendarBaseProps {
+  /**
+   * Selection model.
+   */
   mode: "range";
+  /** Controlled selection. Use Date for single and { from, to } for range. */
   value?: CalendarRange | null;
+  /** Initial selection for uncontrolled usage. */
   defaultValue?: CalendarRange | null;
+  /** Called when the selection changes. @type (value: Date | CalendarRange | null) => void */
   onValueChange?: (value: CalendarRange) => void;
 }
 

@@ -6,49 +6,6 @@ export const meta: ComponentMeta = {
   "description": "A borderless select trigger and a floating option list.",
   "category": "Forms",
   "imports": "import { Field, Select } from \"@nphuonha/ui-kit\";",
-  "props": [
-    {
-      "name": "options",
-      "type": "SelectOption[]",
-      "description": "Value/label entries."
-    },
-    {
-      "name": "value",
-      "type": "string | null",
-      "description": "Controlled value."
-    },
-    {
-      "name": "defaultValue",
-      "type": "string | null",
-      "description": "Uncontrolled initial value."
-    },
-    {
-      "name": "onValueChange",
-      "type": "(value: string | null) => void",
-      "description": "Called when the selection changes."
-    },
-    {
-      "name": "placeholder",
-      "type": "string",
-      "default": "\"Select…\"",
-      "description": "Text shown without a value."
-    },
-    {
-      "name": "disabled",
-      "type": "boolean",
-      "description": "Disables the trigger."
-    },
-    {
-      "name": "required",
-      "type": "boolean",
-      "description": "Marks the native control as required. The visible * comes from Field or FormField."
-    },
-    {
-      "name": "error",
-      "type": "boolean",
-      "description": "Applies the invalid visual state."
-    }
-  ],
   "examples": [
     {
       "title": "Inside a field",

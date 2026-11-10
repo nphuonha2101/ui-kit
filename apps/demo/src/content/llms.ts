@@ -1,11 +1,12 @@
 import { componentGroups } from "./components";
+import { getComponentProps } from "./props";
 import { latestRelease, releases, type ApiMigration } from "./migrations";
 import type { ComponentMeta, ComponentSnippets } from "./types";
 
 export const DOCS_URL = "https://ui.nphuonha.id.vn";
 
 export function buildComponentAgentPrompt(meta: ComponentMeta, snippets: ComponentSnippets) {
-  const props = meta.props
+  const props = getComponentProps(meta)
     .map(
       (prop) =>
         `- ${prop.name} (${prop.type}${prop.default ? `, default: ${prop.default}` : ""}) — ${prop.description}`,

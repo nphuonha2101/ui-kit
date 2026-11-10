@@ -10,22 +10,39 @@ import type { DesktopNavItem } from "../desktop-nav";
 export type MobileNavItem = DesktopNavItem;
 
 export interface MobileNavProps {
+  /**
+   * Navigation items. Items with children render as collapsible groups and can nest further.
+   * @type MobileNavItem[]
+   */
   items: MobileNavItem[];
+  /** Controlled open state. */
   open?: boolean;
+  /** Uncontrolled initial open state. */
   defaultOpen?: boolean;
+  /** Called when the menu opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Controlled active value. */
   value?: string;
+  /** Uncontrolled initial active value. */
   defaultValue?: string;
+  /** Called when a leaf item is selected. */
   onValueChange?: (value: string) => void;
+  /** Custom trigger. Defaults to an IconButton with a menu icon. */
   trigger?: React.ReactElement;
   /** Brand or page mark shown above the menu. */
   logo?: React.ReactNode;
+  /** Optional visible menu title. */
   title?: React.ReactNode;
+  /** Optional supporting copy. */
   description?: React.ReactNode;
+  /** Extra content below the navigation, such as account or theme controls. */
   children?: React.ReactNode;
+  /** Actions rendered at the bottom of the menu. */
   footer?: React.ReactNode;
+  /** Panel edge. */
   side?: "right" | "left" | "bottom";
   className?: string;
+  /** Accessible name when no visible title is provided. */
   "aria-label"?: string;
 }
 

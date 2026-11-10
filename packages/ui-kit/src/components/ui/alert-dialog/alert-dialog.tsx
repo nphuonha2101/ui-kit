@@ -6,18 +6,30 @@ import { cn, type IconComponent } from "../../../lib/utils";
 import { Button } from "../button";
 
 export interface AlertDialogProps {
+  /** Controlled open state. */
   open?: boolean;
+  /** Initial open state for uncontrolled usage. */
   defaultOpen?: boolean;
+  /** Called when the dialog opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the dialog. */
   trigger?: React.ReactElement;
+  /** Dialog title and accessible name. */
   title: React.ReactNode;
+  /** Explanation of the consequence. */
   description?: React.ReactNode;
   children?: React.ReactNode;
+  /** Confirm button label. */
   confirmLabel?: React.ReactNode;
+  /** Cancel button label. */
   cancelLabel?: React.ReactNode;
+  /** Called when the confirm button is pressed. */
   onConfirm?: () => void;
+  /** Colors the icon well and confirm button. */
   tone?: "danger" | "default";
+  /** Optional status icon. */
   icon?: IconComponent;
+  /** Shows a spinner and disables the confirm button. */
   loading?: boolean;
   className?: string;
 }

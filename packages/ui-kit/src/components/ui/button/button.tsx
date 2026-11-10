@@ -6,9 +6,15 @@ import { Spinner } from "../spinner";
 import { buttonVariants, type ButtonVariants } from "./button-variants";
 import { cn, type IconComponent } from "../../../lib/utils";
 
+/**
+ * @docs disabled Disables the button.
+ */
 export interface ButtonProps extends ButtonPrimitive.Props, ButtonVariants {
+  /** Shows a spinner and disables interaction. */
   loading?: boolean;
+  /** Icon rendered before the label. */
   startIcon?: IconComponent;
+  /** Icon rendered after the label. */
   endIcon?: IconComponent;
 }
 

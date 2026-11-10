@@ -50,6 +50,9 @@ jobs:
       - name: Verify docs content
         run: npm run check:content -w @nphuonha/ui-demo
 
+      - name: Verify generated props
+        run: npm run check:props -w @nphuonha/ui-demo
+
       - name: Build kit
         run: npm run build:kit
 

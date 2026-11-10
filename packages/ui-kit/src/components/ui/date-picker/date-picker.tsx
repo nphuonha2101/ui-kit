@@ -13,24 +13,51 @@ import { Label } from "../label";
 import { Popover } from "../popover";
 
 interface DatePickerBaseProps {
+  /** Initial month shown in the popup. */
   defaultMonth?: Date;
+  /** Blur handler for react-hook-form. */
   onBlur?: React.FocusEventHandler<HTMLButtonElement>;
+  /** Earliest selectable day. */
   min?: Date;
+  /** Latest selectable day. */
   max?: Date;
+  /** Disables individual days. */
   dateDisabled?: (date: Date) => boolean;
+  /** Locale used for the trigger label and calendar. */
   locale?: Intl.LocalesArgument;
+  /** First day of the week. Defaults to the locale's week info. */
   weekStartsOn?: CalendarWeekStartsOn;
+  /**
+   * Renders days from the previous and next months.
+   * @default true
+   */
   showOutsideDays?: boolean;
+  /** Disables the trigger. */
   disabled?: boolean;
+  /** Marks the label as required. Use form rules to enforce the value. */
   required?: boolean;
+  /** Adds a Clear action to the popup. */
   clearable?: boolean;
+  /** Adds a Today action to the popup. */
   showToday?: boolean;
   id?: string;
+  /** Name for a hidden input with a YYYY-MM-DD value. */
   name?: string;
+  /**
+   * Name for the range end hidden input.
+   * @default name + "-end"
+   */
   endName?: string;
+  /** Visible label. */
   label?: React.ReactNode;
+  /** Helper text. */
   description?: React.ReactNode;
+  /** Error message and invalid state. */
   error?: React.ReactNode;
+  /**
+   * Text shown when no date is selected. Defaults to "Pick a date" in single
+   * mode and "Pick a date range" in range mode.
+   */
   placeholder?: React.ReactNode;
   className?: string;
   popoverClassName?: string;
@@ -43,16 +70,29 @@ interface DatePickerBaseProps {
 }
 
 export interface DatePickerSingleProps extends DatePickerBaseProps {
+  /**
+   * Selection model. Range uses { from, to } values.
+   * @default "single"
+   */
   mode?: "single";
+  /** Controlled selection. Date for single, { from, to } for range. */
   value?: Date | null;
+  /** Initial selection for uncontrolled usage. */
   defaultValue?: Date | null;
+  /** Called when the selection changes. Range mode reports { from, to }. @type (value: Date | CalendarRange | null) => void */
   onValueChange?: (value: Date | null) => void;
 }
 
 export interface DatePickerRangeProps extends DatePickerBaseProps {
+  /**
+   * Selection model. Range uses { from, to } values.
+   */
   mode: "range";
+  /** Controlled selection. Date for single, { from, to } for range. */
   value?: CalendarRange | null;
+  /** Initial selection for uncontrolled usage. */
   defaultValue?: CalendarRange | null;
+  /** Called when the selection changes. Range mode reports { from, to }. @type (value: Date | CalendarRange | null) => void */
   onValueChange?: (value: CalendarRange) => void;
 }
 

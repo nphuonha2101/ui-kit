@@ -47,13 +47,21 @@ export type MenuEntry =
   | MenuSubmenuEntry;
 
 export interface MenuProps {
+  /**
+   * Element that opens the menu. It receives the trigger props and keyboard behavior.
+   */
   trigger: React.ReactElement;
+  /** Menu entries: items, separators, labels, groups and submenus. */
   items: MenuEntry[];
+  /** Preferred side of the trigger. */
   side?: "top" | "bottom" | "left" | "right";
+  /** Alignment against the trigger. */
   align?: "start" | "center" | "end";
+  /** Gap between the trigger and the popup. */
   sideOffset?: number;
   /** Additional classes for the popup. */
   className?: string;
+  /** Accessible name for the menu popup. */
   "aria-label"?: string;
 }
 

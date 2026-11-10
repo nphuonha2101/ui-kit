@@ -18,14 +18,22 @@ const tones = {
 } as const;
 
 export interface ProgressProps {
+  /** Current value. Pass null for an indeterminate bar. */
   value: number | null;
+  /** Lower bound of the value range. */
   min?: number;
+  /** Upper bound of the value range. */
   max?: number;
+  /** Visible label, wired to the progress bar for assistive technology. */
   label?: React.ReactNode;
+  /** Show the formatted percentage beside the label. */
   showValue?: boolean;
+  /** Track height. */
   size?: keyof typeof trackSizes;
+  /** Semantic color of the indicator. */
   tone?: keyof typeof tones;
   className?: string;
+  /** Accessible name when no visible label is rendered. */
   "aria-label"?: string;
   "aria-labelledby"?: string;
   "aria-valuetext"?: string;

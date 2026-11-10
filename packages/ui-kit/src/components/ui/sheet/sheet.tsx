@@ -7,17 +7,25 @@ import { IconButton } from "../icon-button";
 import { useKitIcon } from "../_shared/icon-provider";
 
 export interface SheetProps {
+  /** Controlled open state. */
   open?: boolean;
   defaultOpen?: boolean;
+  /** Called when the sheet opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the sheet. */
   trigger?: React.ReactElement;
   /** Optional content above the title, e.g. a brand logo. */
   header?: React.ReactNode;
+  /** Sheet title. */
   title?: React.ReactNode;
+  /** Accessible name when the sheet has no visible title. */
   "aria-label"?: string;
+  /** Supporting description. */
   description?: React.ReactNode;
   children: React.ReactNode;
+  /** Actions rendered at the bottom. */
   footer?: React.ReactNode;
+  /** Panel edge. */
   side?: "right" | "left" | "bottom";
   className?: string;
   showClose?: boolean;

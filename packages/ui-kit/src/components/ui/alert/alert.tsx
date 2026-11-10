@@ -3,10 +3,15 @@ import type { VariantProps } from "class-variance-authority";
 import { cn, type IconComponent } from "../../../lib/utils";
 import { alertVariants } from "./alert-variants";
 
+/**
+ * @docs children Supporting message.
+ */
 export interface AlertProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof alertVariants> {
+  /** Bold heading. */
   title?: string;
+  /** Optional leading icon. */
   icon?: IconComponent;
 }
 

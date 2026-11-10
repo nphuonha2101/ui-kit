@@ -17,11 +17,21 @@ export interface DesktopNavItem {
   children?: DesktopNavItem[];
 }
 
+/**
+ * @docs aria-label Accessible name for the navigation landmark.
+ */
 export interface DesktopNavProps
   extends Omit<React.ComponentPropsWithoutRef<"nav">, "onChange"> {
+  /**
+   * Value/label entries. Add optional icon, activeIcon, href, badge, disabled or children per
+   * item.
+   */
   items: DesktopNavItem[];
+  /** Controlled active value. */
   value?: string;
+  /** Uncontrolled initial active value. */
   defaultValue?: string;
+  /** Called when the active item changes. */
   onValueChange?: (value: string) => void;
 }
 

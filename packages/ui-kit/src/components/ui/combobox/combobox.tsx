@@ -13,17 +13,27 @@ export interface ComboboxOption {
 }
 
 interface ComboboxBaseProps {
+  /** Value/label entries with optional description and disabled state. */
   options: ComboboxOption[];
+  /** Input placeholder shown before a value is selected. */
   placeholder?: string;
+  /** Message shown when no option matches the query. */
   emptyMessage?: React.ReactNode;
+  /** Disables the input, trigger and option list. */
   disabled?: boolean;
+  /**
+   * Marks the native control as required. The visible * comes from Field or FormField.
+   */
   required?: boolean;
+  /** Applies the invalid visual state. */
   error?: boolean;
+  /** Name used when the owning form is submitted. */
   name?: string;
   id?: string;
   className?: string;
   ref?: React.Ref<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  /** Accessible name when no visible label is rendered. */
   "aria-label"?: string;
   "aria-labelledby"?: string;
   "aria-describedby"?: string;
@@ -33,15 +43,29 @@ interface ComboboxBaseProps {
 export type ComboboxProps = ComboboxBaseProps &
   (
     | {
+        /**
+         * Allow more than one selected value. Selected values render as removable chips.
+         * @default false
+         */
         multiple?: false;
+        /** Controlled value: a string in single mode, an array in multiple mode. */
         value?: string | null;
+        /** Uncontrolled initial value. */
         defaultValue?: string | null;
+        /** Called with the next value when the selection changes. */
         onValueChange?: (value: string | null) => void;
       }
     | {
+        /**
+         * Allow more than one selected value. Selected values render as removable chips.
+         * @default false
+         */
         multiple: true;
+        /** Controlled value: a string in single mode, an array in multiple mode. */
         value?: string[];
+        /** Uncontrolled initial value. */
         defaultValue?: string[];
+        /** Called with the next value when the selection changes. */
         onValueChange?: (value: string[]) => void;
       }
   );

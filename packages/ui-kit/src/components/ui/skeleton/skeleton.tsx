@@ -7,8 +7,13 @@ const variantClasses = {
   circle: "size-10 rounded-full",
 } as const;
 
+/**
+ * @docs className Control width, height and spacing.
+ */
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Shape of the placeholder. */
   variant?: keyof typeof variantClasses;
+  /** Render multiple text rows, with a shorter final line. */
   lines?: number;
 }
 

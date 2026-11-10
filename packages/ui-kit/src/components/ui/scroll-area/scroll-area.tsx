@@ -4,10 +4,20 @@ import * as React from "react";
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import { cn } from "../../../lib/utils";
 
+/**
+ * @docs className Extra classes for the root; set a height or max-height here.
+ */
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Which scrollbars to render. */
   orientation?: "vertical" | "horizontal" | "both";
+  /**
+   * Auto shows the scrollbar on hover, focus or scroll. Hidden keeps scrolling without a
+   * visible bar.
+   */
   scrollbar?: "auto" | "hidden";
+  /** Extra classes for the scrollable viewport. */
   viewportClassName?: string;
+  /** Extra classes for the content wrapper. */
   contentClassName?: string;
 }
 

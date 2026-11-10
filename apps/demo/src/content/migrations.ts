@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.10.0",
+    date: "2026-11-10",
+    breaking: false,
+    summary:
+      "Additive release: Toolbar brings roving keyboard focus to action bars, formatting controls and compact forms. Existing APIs keep working.",
+    changes: [
+      {
+        id: "toolbar-0-10-0",
+        kind: "additive",
+        surface: "Toolbar",
+        before:
+          "Toolbars had to be composed manually from buttons, links and inputs, without shared keyboard navigation.",
+        after:
+          'import { Toolbar, ToolbarButton, ToolbarGroup, ToolbarInput, ToolbarLink, ToolbarSeparator, ToolbarToggle } from "@nphuonha/ui-kit";\n\n<Toolbar aria-label="Formatting">\n  <ToolbarToggle aria-label="Bold" defaultPressed>B</ToolbarToggle>\n  <ToolbarSeparator />\n  <ToolbarButton>Undo</ToolbarButton>\n</Toolbar>',
+        find: 'from "@nphuonha/ui-kit"',
+        fix: "Nothing required. Use ToolbarButton with render to compose menus, popovers or selects; place a single ToolbarInput last in a horizontal toolbar.",
+      },
+    ],
+  },
+  {
     version: "0.9.0",
     date: "2026-11-10",
     breaking: false,

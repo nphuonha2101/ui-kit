@@ -2095,6 +2095,40 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Surface treatment for the group."
     }
   ],
+  "toolbar": [
+    {
+      "name": "variant",
+      "type": "\"plain\" | \"surface\"",
+      "default": "\"surface\"",
+      "description": "Surface treatment."
+    },
+    {
+      "name": "orientation",
+      "type": "\"vertical\" | \"horizontal\"",
+      "default": "\"horizontal\"",
+      "description": "Layout direction."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables every control in the toolbar."
+    },
+    {
+      "name": "loopFocus",
+      "type": "boolean",
+      "description": "Wraps keyboard focus at the ends. Defaults to true."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name for the toolbar."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Additional classes for the toolbar."
+    }
+  ],
   "tooltip": [
     {
       "name": "content",

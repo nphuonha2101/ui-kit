@@ -6,6 +6,7 @@ import { snippets as iconButtonSnippets } from "./icon-button/snippets";
 import { snippets as menuSnippets } from "./menu/snippets";
 import { snippets as toggleSnippets } from "./toggle/snippets";
 import { snippets as toggleGroupSnippets } from "./toggle-group/snippets";
+import { snippets as toolbarSnippets } from "./toolbar/snippets";
 import { snippets as calendarSnippets } from "./calendar/snippets";
 import { snippets as checkboxSnippets } from "./checkbox/snippets";
 import { snippets as checkboxGroupSnippets } from "./checkbox-group/snippets";
@@ -59,6 +60,7 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "menu": menuSnippets,
   "toggle": toggleSnippets,
   "toggle-group": toggleGroupSnippets,
+  "toolbar": toolbarSnippets,
   "calendar": calendarSnippets,
   "checkbox": checkboxSnippets,
   "checkbox-group": checkboxGroupSnippets,

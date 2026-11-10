@@ -117,17 +117,17 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `MobileNav`, `NumberField`, `Pagination`, `Popover`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
-For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider` and `NumberField`. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`); `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
+For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Combobox`, `Checkbox`, `CheckboxGroup`, `RadioGroup`, `Switch`, `Slider`, `NumberField` and `OTPField`. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`); `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
 
 ```tsx
 import { Form, FormField } from "@nphuonha/ui-kit/form";
 ```
 
-For required fields, set `required` on controls that own their label (`Checkbox`, `Switch`, `RadioGroup`, `NumberField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea` and `Select`. With `FormField`, `required` controls the red mark and `rules` controls validation.
+For required fields, set `required` on controls that own their label (`Checkbox`, `CheckboxGroup`, `Switch`, `RadioGroup`, `NumberField`, `OTPField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea`, `Select` and `Combobox`. With `FormField`, `required` controls the red mark and `rules` controls validation.
 
 Install `react-hook-form` (optional peer dependency) when using the `form` entry.
 

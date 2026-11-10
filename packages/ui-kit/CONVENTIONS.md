@@ -23,8 +23,8 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - **Prop-driven & consistent**: prefer clear props over compound anatomy for core controls.
 - **Controls**: comfortable `h-10` default; shared focus/disabled/error states.
 - **Forms**: `label`, `description`, `error` (with `aria-invalid`/`aria-describedby`/`role="alert"` where relevant), `required` mark.
-  - Controls that own their label (`Checkbox`, `Switch`, `RadioGroup`, `NumberField`, `Calendar`, `DatePicker`, `FileUpload`) expose `required` and render the red `*` themselves.
-  - Label-less controls (`Input`, `Textarea`, `Select`) get label/description/error/required from `Field` (native or other form libraries) or `FormField` (react-hook-form). `Select` still forwards `required` to its native control.
+  - Controls that own their label (`Checkbox`, `CheckboxGroup`, `Switch`, `RadioGroup`, `NumberField`, `OTPField`, `Calendar`, `DatePicker`, `FileUpload`) expose `required` and render the red `*` themselves.
+  - Label-less controls (`Input`, `Textarea`, `Select`, `Combobox`) get label/description/error/required from `Field` (native or other form libraries) or `FormField` (react-hook-form). `Select` and `Combobox` still forward `required` to their native control.
   - With `FormField`, set `required` and `rules` on `FormField`; do not also pass `label`/`required`/`error` to the child. `required` owns the visual mark, `rules` owns validation. Do not enable duplicate native validation unless the form uses `noValidate`.
   - Label-owning controls render their own error message and link it with `aria-describedby`; label-less controls get the message from `Field`/`FormField`. Never pass the same message to both `FormField` and its child.
   - `Slider` has no `required` state because it always has a value.

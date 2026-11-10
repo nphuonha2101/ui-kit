@@ -254,6 +254,38 @@
   }
 }
 
+/* Collapsible panel height animation. Base UI exposes the measured height as
+ * --collapsible-panel-height while the panel opens and closes. */
+@utility collapsible-panel {
+  overflow: hidden;
+
+  &[data-open] {
+    animation: kit-collapsible-down var(--duration-ui-slow) var(--ease-out-ui);
+  }
+
+  &[data-closed] {
+    animation: kit-collapsible-up var(--duration-ui-slow) var(--ease-out-ui);
+  }
+}
+
+@keyframes kit-collapsible-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--collapsible-panel-height);
+  }
+}
+
+@keyframes kit-collapsible-up {
+  from {
+    height: var(--collapsible-panel-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
 @keyframes kit-progress-indeterminate {
   from {
     transform: translateX(-100%);

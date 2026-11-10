@@ -1,0 +1,10 @@
+import type { ComponentSnippets } from "@/content/types";
+
+export const snippets: ComponentSnippets = {
+  "preview": "import { Combobox, Field } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <div className=\"mx-auto w-full max-w-sm\">\n      <Field label=\"Framework\" required>\n        <Combobox\n          placeholder=\"Search frameworks…\"\n          required\n          options={[\n            { value: \"next\", label: \"Next.js\" },\n            { value: \"vite\", label: \"Vite\" },\n            { value: \"remix\", label: \"Remix\" },\n            { value: \"svelte\", label: \"SvelteKit\" },\n          ]}\n        />\n      </Field>\n    </div>\n  );\n}",
+  "usage": "<Combobox\n  aria-label=\"Framework\"\n  options={options}\n  onValueChange={setFramework}\n/>",
+  "examples": {
+    "combobox-multiple": "import { Combobox, Field } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <div className=\"mx-auto w-full max-w-sm\">\n      <Field label=\"Frameworks\" description=\"Pick every framework you use.\">\n        <Combobox\n          multiple\n          placeholder=\"Add a framework…\"\n          defaultValue={[\"next\", \"vite\"]}\n          options={[\n            { value: \"next\", label: \"Next.js\" },\n            { value: \"vite\", label: \"Vite\" },\n            { value: \"remix\", label: \"Remix\" },\n            { value: \"svelte\", label: \"SvelteKit\" },\n            { value: \"astro\", label: \"Astro\" },\n          ]}\n        />\n      </Field>\n    </div>\n  );\n}",
+    "combobox-empty": "import { Combobox, Field } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <div className=\"mx-auto w-full max-w-sm\">\n      <Field label=\"Assignee\">\n        <Combobox\n          placeholder=\"Search people…\"\n          emptyMessage=\"No teammates match that search.\"\n          options={[\n            { value: \"ana\", label: \"Ana Duarte\", description: \"Design\" },\n            { value: \"minh\", label: \"Minh Tran\", description: \"Engineering\" },\n          ]}\n        />\n      </Field>\n    </div>\n  );\n}"
+  }
+};

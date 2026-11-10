@@ -92,6 +92,21 @@
       "import": "./dist/components/ui/checkbox/index.js",
       "default": "./dist/components/ui/checkbox/index.js"
     },
+    "./checkbox-group": {
+      "types": "./dist/components/ui/checkbox-group/index.d.ts",
+      "import": "./dist/components/ui/checkbox-group/index.js",
+      "default": "./dist/components/ui/checkbox-group/index.js"
+    },
+    "./collapsible": {
+      "types": "./dist/components/ui/collapsible/index.d.ts",
+      "import": "./dist/components/ui/collapsible/index.js",
+      "default": "./dist/components/ui/collapsible/index.js"
+    },
+    "./combobox": {
+      "types": "./dist/components/ui/combobox/index.d.ts",
+      "import": "./dist/components/ui/combobox/index.js",
+      "default": "./dist/components/ui/combobox/index.js"
+    },
     "./date-picker": {
       "types": "./dist/components/ui/date-picker/index.d.ts",
       "import": "./dist/components/ui/date-picker/index.js",
@@ -117,6 +132,11 @@
       "import": "./dist/components/ui/field/index.js",
       "default": "./dist/components/ui/field/index.js"
     },
+    "./fieldset": {
+      "types": "./dist/components/ui/fieldset/index.d.ts",
+      "import": "./dist/components/ui/fieldset/index.js",
+      "default": "./dist/components/ui/fieldset/index.js"
+    },
     "./file-upload": {
       "types": "./dist/components/ui/file-upload/index.d.ts",
       "import": "./dist/components/ui/file-upload/index.js",
@@ -131,11 +151,6 @@
       "types": "./dist/components/ui/icon-button/index.d.ts",
       "import": "./dist/components/ui/icon-button/index.js",
       "default": "./dist/components/ui/icon-button/index.js"
-    },
-    "./icons": {
-      "types": "./dist/components/ui/_shared/icon-provider.d.ts",
-      "import": "./dist/components/ui/_shared/icon-provider.js",
-      "default": "./dist/components/ui/_shared/icon-provider.js"
     },
     "./input": {
       "types": "./dist/components/ui/input/index.d.ts",
@@ -152,6 +167,16 @@
       "import": "./dist/components/ui/label/index.js",
       "default": "./dist/components/ui/label/index.js"
     },
+    "./menu": {
+      "types": "./dist/components/ui/menu/index.d.ts",
+      "import": "./dist/components/ui/menu/index.js",
+      "default": "./dist/components/ui/menu/index.js"
+    },
+    "./meter": {
+      "types": "./dist/components/ui/meter/index.d.ts",
+      "import": "./dist/components/ui/meter/index.js",
+      "default": "./dist/components/ui/meter/index.js"
+    },
     "./mobile-nav": {
       "types": "./dist/components/ui/mobile-nav/index.d.ts",
       "import": "./dist/components/ui/mobile-nav/index.js",
@@ -162,6 +187,11 @@
       "import": "./dist/components/ui/number-field/index.js",
       "default": "./dist/components/ui/number-field/index.js"
     },
+    "./otp-field": {
+      "types": "./dist/components/ui/otp-field/index.d.ts",
+      "import": "./dist/components/ui/otp-field/index.js",
+      "default": "./dist/components/ui/otp-field/index.js"
+    },
     "./pagination": {
       "types": "./dist/components/ui/pagination/index.d.ts",
       "import": "./dist/components/ui/pagination/index.js",
@@ -171,6 +201,11 @@
       "types": "./dist/components/ui/popover/index.d.ts",
       "import": "./dist/components/ui/popover/index.js",
       "default": "./dist/components/ui/popover/index.js"
+    },
+    "./preview-card": {
+      "types": "./dist/components/ui/preview-card/index.d.ts",
+      "import": "./dist/components/ui/preview-card/index.js",
+      "default": "./dist/components/ui/preview-card/index.js"
     },
     "./progress": {
       "types": "./dist/components/ui/progress/index.d.ts",
@@ -256,6 +291,11 @@
       "types": "./dist/components/ui/tooltip/index.d.ts",
       "import": "./dist/components/ui/tooltip/index.js",
       "default": "./dist/components/ui/tooltip/index.js"
+    },
+    "./icons": {
+      "types": "./dist/components/ui/_shared/icon-provider.d.ts",
+      "import": "./dist/components/ui/_shared/icon-provider.js",
+      "default": "./dist/components/ui/_shared/icon-provider.js"
     },
     "./styles.css": "./dist/styles.css",
     "./base.css": "./dist/styles/base.css",

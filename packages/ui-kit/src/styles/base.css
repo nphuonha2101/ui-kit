@@ -125,6 +125,46 @@
   }
 }
 
+/* Token-styled native scrollbars (thin track, pill thumb matching ScrollArea).
+ * Apply on <html> for page-wide styling — the viewport scrollbar follows the
+ * root element, not <body>. Descendants are covered too, so it also works on
+ * any scroll container. Place before scrollbar-none so opting out
+ * still wins on equal specificity. */
+@utility scrollbar-styled {
+  &:not(.scrollbar-none),
+  & *:not(.scrollbar-none) {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted-foreground) 32%, transparent)
+      transparent;
+  }
+
+  &:not(.scrollbar-none)::-webkit-scrollbar,
+  & *:not(.scrollbar-none)::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &:not(.scrollbar-none)::-webkit-scrollbar-track,
+  &:not(.scrollbar-none)::-webkit-scrollbar-corner,
+  & *:not(.scrollbar-none)::-webkit-scrollbar-track,
+  & *:not(.scrollbar-none)::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &:not(.scrollbar-none)::-webkit-scrollbar-thumb,
+  & *:not(.scrollbar-none)::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--muted-foreground) 32%, transparent);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+
+  &:not(.scrollbar-none)::-webkit-scrollbar-thumb:hover,
+  & *:not(.scrollbar-none)::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--muted-foreground) 55%, transparent);
+  }
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   -ms-overflow-style: none;

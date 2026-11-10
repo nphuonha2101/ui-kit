@@ -1,16 +1,21 @@
 import { meta as buttonMeta } from "./button/meta";
 import { meta as buttonLinkMeta } from "./button-link/meta";
 import { meta as iconButtonMeta } from "./icon-button/meta";
+import { meta as menuMeta } from "./menu/meta";
 import { meta as toggleMeta } from "./toggle/meta";
 import { meta as toggleGroupMeta } from "./toggle-group/meta";
 import { meta as calendarMeta } from "./calendar/meta";
 import { meta as checkboxMeta } from "./checkbox/meta";
+import { meta as checkboxGroupMeta } from "./checkbox-group/meta";
+import { meta as comboboxMeta } from "./combobox/meta";
 import { meta as datePickerMeta } from "./date-picker/meta";
 import { meta as fieldMeta } from "./field/meta";
+import { meta as fieldsetMeta } from "./fieldset/meta";
 import { meta as fileUploadMeta } from "./file-upload/meta";
 import { meta as inputMeta } from "./input/meta";
 import { meta as labelMeta } from "./label/meta";
 import { meta as numberFieldMeta } from "./number-field/meta";
+import { meta as otpFieldMeta } from "./otp-field/meta";
 import { meta as radioGroupMeta } from "./radio-group/meta";
 import { meta as selectMeta } from "./select/meta";
 import { meta as sliderMeta } from "./slider/meta";
@@ -19,6 +24,7 @@ import { meta as textareaMeta } from "./textarea/meta";
 import { meta as alertDialogMeta } from "./alert-dialog/meta";
 import { meta as dialogMeta } from "./dialog/meta";
 import { meta as popoverMeta } from "./popover/meta";
+import { meta as previewCardMeta } from "./preview-card/meta";
 import { meta as sheetMeta } from "./sheet/meta";
 import { meta as tooltipMeta } from "./tooltip/meta";
 import { meta as bottomNavMeta } from "./bottom-nav/meta";
@@ -31,12 +37,14 @@ import { meta as accordionMeta } from "./accordion/meta";
 import { meta as avatarMeta } from "./avatar/meta";
 import { meta as badgeMeta } from "./badge/meta";
 import { meta as cardMeta } from "./card/meta";
+import { meta as collapsibleMeta } from "./collapsible/meta";
 import { meta as kbdMeta } from "./kbd/meta";
 import { meta as scrollAreaMeta } from "./scroll-area/meta";
 import { meta as separatorMeta } from "./separator/meta";
 import { meta as tableMeta } from "./table/meta";
 import { meta as alertMeta } from "./alert/meta";
 import { meta as emptyStateMeta } from "./empty-state/meta";
+import { meta as meterMeta } from "./meter/meta";
 import { meta as progressMeta } from "./progress/meta";
 import { meta as skeletonMeta } from "./skeleton/meta";
 import { meta as spinnerMeta } from "./spinner/meta";
@@ -48,16 +56,21 @@ export const registry: ComponentMeta[] = [
   buttonMeta,
   buttonLinkMeta,
   iconButtonMeta,
+  menuMeta,
   toggleMeta,
   toggleGroupMeta,
   calendarMeta,
   checkboxMeta,
+  checkboxGroupMeta,
+  comboboxMeta,
   datePickerMeta,
   fieldMeta,
+  fieldsetMeta,
   fileUploadMeta,
   inputMeta,
   labelMeta,
   numberFieldMeta,
+  otpFieldMeta,
   radioGroupMeta,
   selectMeta,
   sliderMeta,
@@ -66,6 +79,7 @@ export const registry: ComponentMeta[] = [
   alertDialogMeta,
   dialogMeta,
   popoverMeta,
+  previewCardMeta,
   sheetMeta,
   tooltipMeta,
   bottomNavMeta,
@@ -78,12 +92,14 @@ export const registry: ComponentMeta[] = [
   avatarMeta,
   badgeMeta,
   cardMeta,
+  collapsibleMeta,
   kbdMeta,
   scrollAreaMeta,
   separatorMeta,
   tableMeta,
   alertMeta,
   emptyStateMeta,
+  meterMeta,
   progressMeta,
   skeletonMeta,
   spinnerMeta,

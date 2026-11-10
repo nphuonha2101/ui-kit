@@ -1,0 +1,10 @@
+import type { ComponentSnippets } from "@/content/types";
+
+export const snippets: ComponentSnippets = {
+  "preview": "import { Button, Menu } from \"@nphuonha/ui-kit\";\nimport { PencilSimpleIcon, CopyIcon, TrashIcon } from \"@phosphor-icons/react\";\n\nexport function Example() {\n  return (\n    <Menu\n      trigger={<Button variant=\"secondary\">Actions</Button>}\n      items={[\n        { label: \"Edit\", icon: PencilSimpleIcon, shortcut: \"E\" },\n        { label: \"Duplicate\", icon: CopyIcon },\n        { type: \"separator\" },\n        { label: \"Delete\", icon: TrashIcon, danger: true },\n      ]}\n    />\n  );\n}",
+  "usage": "<Menu\n  trigger={<Button>Actions</Button>}\n  items={[\n    { label: \"Edit\", onSelect: edit },\n    { label: \"Delete\", danger: true, onSelect: remove },\n  ]}\n/>",
+  "examples": {
+    "menu-groups": "import { Button, Menu } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <Menu\n      trigger={<Button variant=\"secondary\">Open menu</Button>}\n      items={[\n        {\n          type: \"group\",\n          label: \"Document\",\n          items: [\n            { label: \"Rename\", shortcut: \"F2\" },\n            { label: \"Move to…\", shortcut: \"⌘⇧M\" },\n            { label: \"Duplicate\", shortcut: \"⌘D\" },\n          ],\n        },\n        { type: \"separator\" },\n        {\n          type: \"group\",\n          label: \"Danger zone\",\n          items: [{ label: \"Move to trash\", danger: true }],\n        },\n      ]}\n    />\n  );\n}",
+    "menu-submenu": "import { Button, Menu } from \"@nphuonha/ui-kit\";\n\nexport function Example() {\n  return (\n    <Menu\n      trigger={<Button variant=\"secondary\">Export</Button>}\n      items={[\n        {\n          type: \"submenu\",\n          label: \"Download as\",\n          items: [\n            { label: \"PDF\" },\n            { label: \"CSV\" },\n            { label: \"Markdown\" },\n          ],\n        },\n        { type: \"separator\" },\n        { label: \"Copy link\" },\n      ]}\n    />\n  );\n}"
+  }
+};

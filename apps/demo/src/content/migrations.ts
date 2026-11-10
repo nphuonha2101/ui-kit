@@ -28,6 +28,49 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.9.0",
+    date: "2026-11-10",
+    breaking: false,
+    summary:
+      "Additive release: Combobox, Menu, CheckboxGroup, Fieldset, OTPField, Collapsible, Meter and PreviewCard, plus Field/FormField validation support for the new form controls. Existing APIs keep working.",
+    changes: [
+      {
+        id: "new-components-0-9-0",
+        kind: "additive",
+        surface:
+          "Combobox / Menu / CheckboxGroup / Fieldset / OTPField / Collapsible / Meter / PreviewCard",
+        before:
+          "Searchable selects, action menus, checkbox groups, fieldsets, OTP codes, standalone disclosures, meters and hover previews had to be composed manually.",
+        after:
+          'import { Collapsible, Combobox, Fieldset, Menu, Meter, OTPField, PreviewCard } from "@nphuonha/ui-kit";\nimport { CheckboxGroup } from "@nphuonha/ui-kit/checkbox-group";',
+        find: 'from "@nphuonha/ui-kit"',
+        fix: "Nothing required. Subpath exports are available for every new component. Menu uses a trigger plus items; Collapsible uses title/content; Meter accepts low/high/optimum for threshold tones.",
+      },
+      {
+        id: "combobox-validation-0-9-0",
+        kind: "additive",
+        surface: "Combobox / Field / FormField",
+        before:
+          "A searchable select could not share the kit's label, required, error and aria wiring.",
+        after:
+          '<Field label="Framework" required error={errors.framework?.message}>\n  <Combobox value={value} onValueChange={setValue} options={options} />\n</Field>',
+        find: "<Combobox",
+        fix: "Nothing required. Combobox is label-less like Select: use Field or FormField for label/description/error. required also reaches the native input, and aria-invalid/aria-describedby/aria-labelledby are forwarded.",
+      },
+      {
+        id: "group-otp-validation-0-9-0",
+        kind: "additive",
+        surface: "CheckboxGroup / OTPField",
+        before:
+          "Multi-checkbox groups and one-time-code inputs had no shared label, required mark or error wiring.",
+        after:
+          '<CheckboxGroup label="Channels" required error={error} value={value} onValueChange={setValue} options={options} />\n\n<OTPField label="Verification code" required onValueComplete={verify} />',
+        find: "<CheckboxGroup",
+        fix: "Nothing required. Both own their label and error message, so use Controller rather than FormField when both are used with react-hook-form. OTPField forwards required/name to the native control and supports autoSubmit.",
+      },
+    ],
+  },
+  {
     version: "0.8.0",
     date: "2026-11-09",
     breaking: false,

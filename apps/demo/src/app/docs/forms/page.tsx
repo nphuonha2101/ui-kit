@@ -258,16 +258,20 @@ export default function FormsPage() {
             Custom controls
           </h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            DatePicker, Checkbox, FileUpload, NumberField, Select, Slider and Switch use
-            value/onValueChange or checked/onCheckedChange. Map the Controller field
-            explicitly:
+            DatePicker, Checkbox, CheckboxGroup, Combobox, FileUpload, NumberField,
+            OTPField, Select, Slider and Switch use value/onValueChange or
+            checked/onCheckedChange. Map the Controller field explicitly:
           </p>
           <CodeBlock code={customExample} filename="Select with FormField" />
           <p className="text-sm leading-7 text-muted-foreground">
-            RadioGroup renders its own label and error message, so Controller is a
-            better fit:
+            RadioGroup, CheckboxGroup and OTPField render their own label and error
+            message, so Controller is a better fit:
           </p>
           <CodeBlock code={controllerExample} filename="RadioGroup with Controller" />
+          <p className="text-sm leading-7 text-muted-foreground">
+            Combobox follows the same FormField pattern as Select: map value,
+            onValueChange and onBlur, and let FormField own the label and error.
+          </p>
           <p className="text-sm leading-7 text-muted-foreground">
             DatePicker and FileUpload work with FormField too. FormField forwards the
             field id, aria attributes and validation state to both controls.

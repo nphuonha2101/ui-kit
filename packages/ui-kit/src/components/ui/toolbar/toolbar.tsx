@@ -6,7 +6,7 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { cn } from "../../../lib/utils";
 
 const itemClass = cn(
-  "inline-flex h-8 min-w-8 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-control px-2.5 text-sm font-medium text-muted-foreground transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] outline-none select-none",
+  "relative inline-flex h-8 min-w-8 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-control px-2.5 text-sm font-medium text-muted-foreground transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] outline-none select-none",
   "hover:bg-surface-hover hover:text-foreground",
   "focus-visible:ring-2 focus-visible:ring-ring/40",
   "data-[pressed]:surface-curved-soft data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground data-[pressed]:hover:bg-primary-soft/75",
@@ -38,7 +38,7 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
       ref={ref}
       orientation={orientation}
       className={cn(
-        "inline-flex",
+        "relative inline-flex",
         orientation === "vertical" ? "flex-col items-stretch" : "items-center",
         variant === "surface"
           ? "surface-curved-soft gap-0.5 rounded-control bg-surface p-1"

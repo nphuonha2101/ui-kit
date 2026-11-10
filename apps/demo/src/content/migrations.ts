@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.10.1",
+    date: "2026-11-10",
+    breaking: false,
+    summary:
+      "Patch release: Toolbar keeps its curved surface treatment. The container and its buttons/toggles are now positioned, so the surface rim renders on the toolbar instead of leaking onto an ancestor. No API changes.",
+    changes: [
+      {
+        id: "toolbar-surface-0-10-1",
+        kind: "behavior",
+        surface: "Toolbar",
+        before:
+          "The Toolbar container and its buttons/toggles were unpositioned, so the surface-curved-soft rim painted onto the nearest positioned ancestor and the toolbar looked flat.",
+        after:
+          "Toolbar and its button/toggle items are relatively positioned, so the surface rim and the pressed toggle treatment render on the controls themselves.",
+        find: "<Toolbar",
+        fix: "Nothing required. Update to 0.10.1; markup and props are unchanged.",
+      },
+    ],
+  },
+  {
     version: "0.10.0",
     date: "2026-11-10",
     breaking: false,

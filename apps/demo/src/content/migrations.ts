@@ -28,6 +28,48 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.12.0",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Isolation release: kit CSS no longer touches anything outside <div data-ui=\"kit\"> — no Tailwind preflight, no :root tokens, no bare html/body resets. Portalled overlays carry their own scope, and Skeleton placeholders use a stronger tone.",
+    changes: [
+      {
+        id: "style-isolation-0-12-0",
+        kind: "behavior",
+        surface: "styles.css / theme tokens",
+        before:
+          "The kit stylesheet imported full tailwindcss (including preflight) and defined --background/--foreground/... on :root, so importing the kit could reset and recolor the host page.",
+        after:
+          "The kit ships theme + utilities only (no preflight); all base rules and tokens live under [data-ui=\"kit\"]. The host app owns its reset with its own @import \"tailwindcss\".",
+        find: '@nphuonha/ui-kit/styles.css',
+        fix: "Add your own @import \"tailwindcss\" to your global CSS, keep kit usage inside <div data-ui=\"kit\">, and do not rely on kit tokens outside the wrapper.",
+      },
+      {
+        id: "portal-scope-0-12-0",
+        kind: "additive",
+        surface:
+          "Dialog / AlertDialog / Sheet / Popover / Menu / Select / Combobox / Tooltip / PreviewCard / Toaster",
+        before:
+          "Portalled overlays rendered into <body> depended on the wrapper's token scope and broke visually outside of it.",
+        after:
+          "Every portalled root carries its own data-ui=\"kit\" scope via the shared kitScope helper, so overlays render correctly even outside the wrapper.",
+        find: "<Dialog",
+        fix: "Nothing required. Keep .dark on <html> and apply accentStyle to documentElement so portals inherit dark mode and accent.",
+      },
+      {
+        id: "skeleton-contrast-0-12-0",
+        kind: "behavior",
+        surface: "Skeleton",
+        before:
+          "Skeleton placeholders used bg-surface, which nearly disappeared against the page background.",
+        after: "Skeleton placeholders use bg-surface-hover.",
+        find: "<Skeleton",
+        fix: "Nothing required. Override with className if you need the old tone.",
+      },
+    ],
+  },
+  {
     version: "0.11.0",
     date: "2026-11-10",
     breaking: false,

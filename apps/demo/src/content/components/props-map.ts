@@ -634,14 +634,14 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Rows in their natural order. Sorting and pagination are applied inside."
     },
     {
+      "name": "caption",
+      "type": "string",
+      "description": "Accessible name for the table, rendered as a visually hidden caption. Required so every table is announced with a meaningful name."
+    },
+    {
       "name": "getRowId",
       "type": "(row: T, index: number) => string",
       "description": "Stable id per row. Defaults to the row index."
-    },
-    {
-      "name": "caption",
-      "type": "string",
-      "description": "Accessible name announced for the table."
     },
     {
       "name": "sortKey",
@@ -671,6 +671,12 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Called when sorting changes."
     },
     {
+      "name": "sortLocale",
+      "type": "string",
+      "default": "\"en\"",
+      "description": "Locale used for string sorting. Defaults to \"en\" for deterministic output."
+    },
+    {
       "name": "pageSize",
       "type": "number",
       "default": "10",
@@ -690,7 +696,7 @@ export const propsMap: Record<string, ComponentProp[]> = {
     {
       "name": "onPageChange",
       "type": "(page: number) => void",
-      "description": "Called when the page changes."
+      "description": "Called when the reader activates a pagination control. Automatic page resets after search or sort changes do not call it."
     },
     {
       "name": "selectable",
@@ -701,7 +707,7 @@ export const propsMap: Record<string, ComponentProp[]> = {
     {
       "name": "selectedIds",
       "type": "string[]",
-      "description": "Controlled selected row ids."
+      "description": "Controlled selected row ids. Selection survives filtering and sorting; the header checkbox only toggles rows on the current page."
     },
     {
       "name": "defaultSelectedIds",
@@ -741,6 +747,29 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "type": "string",
       "default": "\"Search…\"",
       "description": "Placeholder for the search box."
+    },
+    {
+      "name": "searchLabel",
+      "type": "string",
+      "default": "\"Search table\"",
+      "description": "Accessible label for the search box."
+    },
+    {
+      "name": "selectAllLabel",
+      "type": "string",
+      "default": "\"Select all rows on this page\"",
+      "description": "Accessible label for the select-all checkbox."
+    },
+    {
+      "name": "paginationLabel",
+      "type": "string",
+      "default": "\"Pagination\"",
+      "description": "Accessible label for the pagination navigation."
+    },
+    {
+      "name": "showingLabel",
+      "type": "(range: { start: number; end: number; total: number; }) => ReactNode",
+      "description": "Custom visible range text."
     },
     {
       "name": "searchValue",

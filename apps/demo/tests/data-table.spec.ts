@@ -71,3 +71,22 @@ test("upgrading table: search + dialog copy buttons", async ({ page }) => {
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
 });
+
+test("data-table docs demo: keyboard sorting and selection", async ({ page }) => {
+  await page.goto("/docs/components/data-table");
+  await waitForHydration(page);
+
+  const table = page.getByRole("table").first();
+  const header = table.getByRole("columnheader", { name: "Invoice" });
+  await header.getByRole("button").focus();
+  await page.keyboard.press("Enter");
+  await expect(header).toHaveAttribute("aria-sort", "ascending");
+
+  const selectionTable = page.getByRole("table").nth(1);
+  const checkbox = selectionTable.getByRole("checkbox", {
+    name: "Select row INV-002",
+  });
+  await checkbox.focus();
+  await page.keyboard.press("Space");
+  await expect(checkbox).toBeChecked();
+});

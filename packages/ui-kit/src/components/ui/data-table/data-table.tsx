@@ -53,10 +53,13 @@ export interface DataTableProps<T>
   columns: DataTableColumn<T>[];
   /** Rows in their natural order. Sorting and pagination are applied inside. */
   rows: T[];
+  /**
+   * Accessible name for the table, rendered as a visually hidden caption.
+   * Required so every table is announced with a meaningful name.
+   */
+  caption: string;
   /** Stable id per row. Defaults to the row index. */
   getRowId?: (row: T, index: number) => string;
-  /** Accessible name announced for the table. */
-  caption?: string;
   /** Controlled sorted column key. */
   sortKey?: string | null;
   /** Initial sorted column key for uncontrolled usage. */
@@ -67,17 +70,25 @@ export interface DataTableProps<T>
   defaultSortDirection?: DataTableSortDirection;
   /** Called when sorting changes. */
   onSortChange?: (key: string | null, direction: DataTableSortDirection) => void;
+  /** Locale used for string sorting. Defaults to "en" for deterministic output. */
+  sortLocale?: string;
   /** Rows per page. Defaults to 10. Set to 0 to disable pagination. */
   pageSize?: number;
   /** Controlled current page (1-based). */
   page?: number;
   /** Initial page for uncontrolled usage. */
   defaultPage?: number;
-  /** Called when the page changes. */
+  /**
+   * Called when the reader activates a pagination control. Automatic page
+   * resets after search or sort changes do not call it.
+   */
   onPageChange?: (page: number) => void;
   /** Shows a leading checkbox column with select-all for the visible page. */
   selectable?: boolean;
-  /** Controlled selected row ids. */
+  /**
+   * Controlled selected row ids. Selection survives filtering and sorting;
+   * the header checkbox only toggles rows on the current page.
+   */
   selectedIds?: string[];
   /** Initial selection for uncontrolled usage. */
   defaultSelectedIds?: string[];
@@ -93,6 +104,14 @@ export interface DataTableProps<T>
   searchable?: boolean;
   /** Placeholder for the search box. */
   searchPlaceholder?: string;
+  /** Accessible label for the search box. */
+  searchLabel?: string;
+  /** Accessible label for the select-all checkbox. */
+  selectAllLabel?: string;
+  /** Accessible label for the pagination navigation. */
+  paginationLabel?: string;
+  /** Custom visible range text. */
+  showingLabel?: (range: { start: number; end: number; total: number }) => React.ReactNode;
   /** Controlled search text. */
   searchValue?: string;
   /** Initial search text for uncontrolled usage. */
@@ -107,6 +126,7 @@ export interface DataTableProps<T>
 
 /** Ascending comparison with nullish values last. TanStack inverts for desc. */
 function compareAscending(
+  collator: Intl.Collator,
   a: string | number | null | undefined,
   b: string | number | null | undefined,
 ) {
@@ -114,22 +134,20 @@ function compareAscending(
   if (a == null) return 1;
   if (b == null) return -1;
   if (typeof a === "number" && typeof b === "number") return a - b;
-  return String(a).localeCompare(String(b), undefined, {
-    numeric: true,
-    sensitivity: "base",
-  });
+  return collator.compare(String(a), String(b));
 }
 
 export function DataTable<T>({
   columns,
   rows,
-  getRowId,
   caption,
+  getRowId,
   sortKey,
   defaultSortKey = null,
   sortDirection,
   defaultSortDirection = "asc",
   onSortChange,
+  sortLocale = "en",
   pageSize = 10,
   page,
   defaultPage = 1,
@@ -143,6 +161,10 @@ export function DataTable<T>({
   emptyDescription,
   searchable = false,
   searchPlaceholder = "Search…",
+  searchLabel = "Search table",
+  selectAllLabel = "Select all rows on this page",
+  paginationLabel = "Pagination",
+  showingLabel,
   searchValue,
   defaultSearchValue = "",
   onSearchChange,
@@ -155,6 +177,14 @@ export function DataTable<T>({
   const isPageControlled = page !== undefined;
   const isSortControlled = sortKey !== undefined || sortDirection !== undefined;
   const effectivePageSize = pageSize > 0 ? pageSize : Math.max(rows.length, 1);
+  const collator = React.useMemo(
+    () =>
+      new Intl.Collator(sortLocale, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+    [sortLocale],
+  );
 
   const [internalSorting, setInternalSorting] = React.useState<SortingState>(() =>
     defaultSortKey
@@ -185,9 +215,14 @@ export function DataTable<T>({
     [globalFilter, columns, getSearchText],
   );
 
-  const filteredCount = React.useMemo(
-    () => rows.filter(matchesSearch).length,
+  // One predicate pass per render, reused by the count and the filter model.
+  const matchedFlags = React.useMemo(
+    () => rows.map(matchesSearch),
     [rows, matchesSearch],
+  );
+  const filteredCount = React.useMemo(
+    () => matchedFlags.reduce((count, matched) => (matched ? count + 1 : count), 0),
+    [matchedFlags],
   );
 
   // Original position per row, so labels stay stable after sorting/filtering.
@@ -214,6 +249,13 @@ export function DataTable<T>({
     };
   }, [isPageControlled, page, internalPagination.pageIndex, effectivePageSize, maxPageIndex]);
 
+  // Keep a controlled page in sync when data shrinks below the requested page.
+  React.useEffect(() => {
+    if (!isPageControlled) return;
+    const clamped = Math.min(Math.max(page ?? 1, 1), maxPageIndex + 1);
+    if ((page ?? 1) !== clamped) onPageChange?.(clamped);
+  }, [isPageControlled, page, maxPageIndex, onPageChange]);
+
   const rowSelection: RowSelectionState = React.useMemo(() => {
     if (selectedIds !== undefined) {
       return Object.fromEntries(selectedIds.map((id) => [id, true]));
@@ -236,6 +278,7 @@ export function DataTable<T>({
             accessorFn: (row: T) => sortValue(row) ?? null,
             sortingFn: (rowA: Row<T>, rowB: Row<T>, columnId: string) =>
               compareAscending(
+                collator,
                 rowA.getValue(columnId) as string | number | null,
                 rowB.getValue(columnId) as string | number | null,
               ),
@@ -245,9 +288,34 @@ export function DataTable<T>({
         // global filter (TanStack skips columns without accessorFn).
         return { ...base, accessorFn: () => null, enableSorting: false };
       }),
-    [columns],
+    [columns, collator],
   );
 
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+    const seenColumns = new Set<string>();
+    for (const column of columns) {
+      if (seenColumns.has(column.key)) {
+        console.warn(`DataTable: duplicate column key "${column.key}".`);
+      }
+      seenColumns.add(column.key);
+      if (column.sortable && !column.sortValue) {
+        console.warn(
+          `DataTable: column "${column.key}" is sortable but has no sortValue.`,
+        );
+      }
+    }
+    const seenRows = new Set<string>();
+    rows.forEach((row, index) => {
+      const id = getRowId?.(row, index) ?? String(index);
+      if (seenRows.has(id)) {
+        console.warn(`DataTable: duplicate row id "${id}".`);
+      }
+      seenRows.add(id);
+    });
+  }, [columns, rows, getRowId]);
+
+  const pageChangeRequested = React.useRef(false);
   const table = useReactTable({
     data: rows,
     columns: tanstackColumns,
@@ -267,7 +335,10 @@ export function DataTable<T>({
       if (!isPageControlled) {
         setInternalPagination({ pageIndex: next.pageIndex, pageSize: effectivePageSize });
       }
-      onPageChange?.(next.pageIndex + 1);
+      if (pageChangeRequested.current) {
+        pageChangeRequested.current = false;
+        onPageChange?.(next.pageIndex + 1);
+      }
     },
     onRowSelectionChange: (updater) => {
       const next = typeof updater === "function" ? updater(rowSelection) : updater;
@@ -287,7 +358,7 @@ export function DataTable<T>({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getColumnCanGlobalFilter: () => true,
-    globalFilterFn: (row) => matchesSearch(row.original),
+    globalFilterFn: (row) => matchedFlags[row.index] ?? true,
     enableRowSelection: selectable,
     enableSortingRemoval: false,
     autoResetPageIndex: !isPageControlled,
@@ -311,10 +382,13 @@ export function DataTable<T>({
             value={globalFilter}
             onChange={(event) => table.setGlobalFilter(event.target.value)}
             placeholder={searchPlaceholder}
-            aria-label="Search table"
+            aria-label={searchLabel}
             className="max-w-xs"
           />
-          <p className="font-mono text-[11px] text-muted-foreground">
+          <p
+            aria-live="polite"
+            className="font-mono text-[11px] text-muted-foreground"
+          >
             {total} of {rows.length}
           </p>
         </div>
@@ -323,13 +397,13 @@ export function DataTable<T>({
         <EmptyState size="sm" title={emptyTitle} description={emptyDescription} />
       ) : (
         <Table containerClassName={containerClassName}>
-          {caption ? <caption className="sr-only">{caption}</caption> : null}
+          <caption className="sr-only">{caption}</caption>
           <TableHeader>
             <TableRow>
               {selectable ? (
                 <TableHead className="w-10">
                   <Checkbox
-                    aria-label="Select all rows on this page"
+                    aria-label={selectAllLabel}
                     checked={table.getIsAllPageRowsSelected()}
                     indeterminate={table.getIsSomePageRowsSelected()}
                     onCheckedChange={(checked) =>
@@ -411,12 +485,18 @@ export function DataTable<T>({
       {pageSize > 0 && pageCount > 1 ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[11px] text-muted-foreground">
-            Showing {rangeStart}–{rangeEnd} of {total}
+            {showingLabel
+              ? showingLabel({ start: rangeStart, end: rangeEnd, total })
+              : `Showing ${rangeStart}–${rangeEnd} of ${total}`}
           </p>
           <Pagination
+            aria-label={paginationLabel}
             page={activePageIndex + 1}
             pageCount={pageCount}
-            onPageChange={(next) => table.setPageIndex(next - 1)}
+            onPageChange={(next) => {
+              pageChangeRequested.current = true;
+              table.setPageIndex(next - 1);
+            }}
           />
         </div>
       ) : null}

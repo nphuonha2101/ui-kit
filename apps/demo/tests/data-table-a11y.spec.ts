@@ -32,6 +32,13 @@ for (const route of routes) {
     expect(overflow).toBeLessThanOrEqual(0);
     expect(errors).toEqual([]);
 
+    await page.evaluate(() => document.documentElement.classList.add("dark"));
+    await expect(page.getByRole("table").first()).toBeVisible();
+    const darkOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(darkOverflow).toBeLessThanOrEqual(0);
+
     await page.setViewportSize({ width: 390, height: 844 });
     await page.reload();
     await expect(page.getByRole("table").first()).toBeVisible();

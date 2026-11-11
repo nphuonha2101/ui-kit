@@ -41,7 +41,7 @@ export const releases: ReleaseMigration[] = [
         before:
           "Sortable, searchable or paginated tables had to be composed manually from Table primitives, an input, Pagination and Checkbox.",
         after:
-          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} searchable />',
+          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} searchable />',
         find: "<Table",
         fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, add searchable with getSearchText for render-only columns, or add selectable for checkboxes and an action column for row buttons and dialogs.",
       },

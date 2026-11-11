@@ -47,7 +47,7 @@ function rowIds() {
 
 describe("DataTable", () => {
   it("renders headers and cells with table semantics", () => {
-    render(<DataTable columns={columns} rows={rows} getRowId={(row) => row.id} />);
+    render(<DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} />);
 
     expect(screen.getByRole("table")).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /invoice/i })).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe("DataTable", () => {
   it("sorts ascending then descending when a sortable header is activated", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={0} />,
+      <DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={0} />,
     );
 
     expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
@@ -81,7 +81,7 @@ describe("DataTable", () => {
       amount: (index + 1) * 100,
     }));
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many}
         getRowId={(row) => row.id}
@@ -102,7 +102,7 @@ describe("DataTable", () => {
       amount: (index + 1) * 100,
     }));
     const { rerender } = render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many}
         getRowId={(row) => row.id}
@@ -114,7 +114,7 @@ describe("DataTable", () => {
     expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
 
     rerender(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many.slice(0, 7)}
         getRowId={(row) => row.id}
@@ -131,7 +131,7 @@ describe("DataTable", () => {
       amount: (index + 1) * 100,
     }));
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many}
         getRowId={(row) => row.id}
@@ -147,7 +147,7 @@ describe("DataTable", () => {
     const user = userEvent.setup();
     const onSortChange = vi.fn();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -168,7 +168,7 @@ describe("DataTable", () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -188,7 +188,7 @@ describe("DataTable", () => {
   it("filters rows through the search box", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -206,7 +206,7 @@ describe("DataTable", () => {
   it("falls back to sortable values when no search text is provided", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -221,7 +221,7 @@ describe("DataTable", () => {
 
   it("supports controlled search", () => {
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -238,7 +238,7 @@ describe("DataTable", () => {
   it("shows the empty state when search matches nothing", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -268,7 +268,7 @@ describe("DataTable", () => {
       },
     ];
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={noteColumns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -289,7 +289,7 @@ describe("DataTable", () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         pageSize={0}
@@ -305,7 +305,7 @@ describe("DataTable", () => {
   it("uses a custom row label when provided", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -328,7 +328,7 @@ describe("DataTable", () => {
       amount: (index + 1) * 100,
     }));
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many}
         getRowId={(row) => row.id}
@@ -345,7 +345,7 @@ describe("DataTable", () => {
 
   it("applies a default sort on mount", () => {
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -365,7 +365,7 @@ describe("DataTable", () => {
   it("keeps sorting when columns get a new identity", async () => {
     const user = userEvent.setup();
     const { rerender } = render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns.map((column) => ({ ...column }))}
         rows={rows}
         getRowId={(row) => row.id}
@@ -377,7 +377,7 @@ describe("DataTable", () => {
     expect(rowIds()).toEqual(["INV-001", "INV-002", "INV-003"]);
 
     rerender(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns.map((column) => ({ ...column }))}
         rows={rows}
         getRowId={(row) => row.id}
@@ -390,7 +390,7 @@ describe("DataTable", () => {
   it("shows a mixed state when only some rows are selected", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -408,7 +408,7 @@ describe("DataTable", () => {
   it("keeps row labels stable after sorting", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -428,7 +428,7 @@ describe("DataTable", () => {
   it("keeps selection attached to the same row after sorting", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -446,7 +446,7 @@ describe("DataTable", () => {
 
   it("marks sortable but unsorted headers as aria-sort none", () => {
     render(
-      <DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={0} />,
+      <DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={0} />,
     );
 
     expect(screen.getByRole("columnheader", { name: /client/i })).toHaveAttribute(
@@ -458,7 +458,7 @@ describe("DataTable", () => {
   it("keeps the search box usable when nothing matches", async () => {
     const user = userEvent.setup();
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={rows}
         getRowId={(row) => row.id}
@@ -481,7 +481,7 @@ describe("DataTable", () => {
       amount: (index + 1) * 100,
     }));
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={many}
         getRowId={(row) => row.id}
@@ -499,7 +499,7 @@ describe("DataTable", () => {
 
   it("renders an empty state when there are no rows", () => {
     render(
-      <DataTable
+      <DataTable caption="Invoices"
         columns={columns}
         rows={[]}
         emptyTitle="No invoices"
@@ -509,5 +509,130 @@ describe("DataTable", () => {
 
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
     expect(screen.getByText("No invoices")).toBeInTheDocument();
+  });
+
+  it("exposes the caption as the accessible table name", () => {
+    render(<DataTable caption="Open invoices" columns={columns} rows={rows} />);
+
+    expect(screen.getByRole("table", { name: "Open invoices" })).toBeInTheDocument();
+  });
+
+  it("applies custom labels", async () => {
+    const user = userEvent.setup();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        searchable
+        searchLabel="Filter invoices"
+        selectable
+        selectAllLabel="Pick every invoice"
+        paginationLabel="Invoice pages"
+        showingLabel={({ start, end, total }) => `${start} to ${end} / ${total}`}
+      />,
+    );
+
+    expect(screen.getByLabelText("Filter invoices")).toBeInTheDocument();
+    expect(screen.getByLabelText("Pick every invoice")).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Invoice pages" })).toBeInTheDocument();
+    expect(screen.getByText("1 to 5 / 12")).toBeInTheDocument();
+    await user.type(screen.getByLabelText("Filter invoices"), "Client 1");
+    expect(screen.getByText("4 of 12")).toBeInTheDocument();
+  });
+
+  it("announces the result count", () => {
+    render(
+      <DataTable caption="Invoices" columns={columns} rows={rows} searchable />,
+    );
+
+    expect(screen.getByText("3 of 3")).toHaveAttribute("aria-live", "polite");
+  });
+
+  it("syncs an out-of-range controlled page", () => {
+    const onPageChange = vi.fn();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        page={99}
+        onPageChange={onPageChange}
+      />,
+    );
+
+    expect(onPageChange).toHaveBeenLastCalledWith(3);
+    expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
+  });
+
+  it("does not report automatic page resets from search", async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        searchable
+        onPageChange={onPageChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Page 3" }));
+    expect(onPageChange).toHaveBeenLastCalledWith(3);
+
+    onPageChange.mockClear();
+    await user.type(screen.getByLabelText("Search table"), "Client 1");
+    expect(onPageChange).not.toHaveBeenCalled();
+  });
+
+  it("sorts with a deterministic en collator", async () => {
+    const user = userEvent.setup();
+    const names = [
+      { id: "1", client: "Zebra", amount: 1 },
+      { id: "2", client: "Ähre", amount: 2 },
+      { id: "3", client: "apple", amount: 3 },
+    ];
+    render(
+      <DataTable
+        caption="Names"
+        columns={[
+          {
+            key: "client",
+            header: "Client",
+            render: (row) => row.client,
+            sortable: true,
+            sortValue: (row) => row.client,
+          },
+        ]}
+        rows={names}
+        getRowId={(row) => row.id}
+        pageSize={0}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /client/i }));
+    expect(rowIds()).toEqual(["Ähre", "apple", "Zebra"]);
   });
 });

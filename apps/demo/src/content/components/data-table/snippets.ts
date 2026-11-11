@@ -56,6 +56,7 @@ export function Example() {
   columns={columns}
   rows={rows}
   getRowId={(row) => row.id}
+  caption="Selectable invoices"
   pageSize={0}
   selectable
   selectedIds={selectedIds}
@@ -76,6 +77,7 @@ export function Example() {
   ]}
   rows={rows}
   getRowId={(row) => row.id}
+  caption="Invoices with a row action"
   pageSize={0}
 />
 

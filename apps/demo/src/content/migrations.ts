@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.12.1",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Patch release: the scrollbar-styled thumb is stronger so the page scrollbar stays perceivable. No API changes.",
+    changes: [
+      {
+        id: "scrollbar-thumb-contrast-0-12-1",
+        kind: "behavior",
+        surface: "scrollbar-styled",
+        before:
+          "The resting thumb used muted-foreground at 32% (55% on hover), which could read as invisible on low-contrast displays — and Firefox has no hover state for scrollbar-color, so the faint rest tone was all it ever showed.",
+        after:
+          "The resting thumb uses muted-foreground at 50% (70% on hover in WebKit).",
+        find: "scrollbar-styled",
+        fix: "Nothing required. Override with your own scrollbar-color if you need the old tone.",
+      },
+    ],
+  },
+  {
     version: "0.12.0",
     date: "2026-11-11",
     breaking: false,

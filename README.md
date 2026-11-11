@@ -90,7 +90,7 @@ Surface treatments, shadow levels, radii and semantic fills are documented with 
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Calendar`, `Card`, `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`, `Label`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`, `ButtonLink`, `Calendar`, `Card`, `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DataTable`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`, `Label`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
 
 Each component page includes a live preview, copyable code, props and examples:
 
@@ -98,7 +98,7 @@ Each component page includes a live preview, copyable code, props and examples:
 
 ## Forms
 
-`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom controls (`Calendar`, `Checkbox`, `CheckboxGroup`, `Combobox`, `DatePicker`, `FileUpload`, `NumberField`, `OTPField`, `RadioGroup`, `Select`, `Slider`, `Switch`) expose controlled value APIs — use `Controller` or the optional `FormField` wrapper. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`), `FileUpload` uses `files`/`onFilesChange`, and all accept `onBlur`/`aria-invalid` for form state:
+`Input` and `Textarea` forward refs to the native elements, so react-hook-form's `register()` works directly. Custom controls (`Calendar`, `Checkbox`, `CheckboxGroup`, `Combobox`, `DataTable`, `DatePicker`, `FileUpload`, `NumberField`, `OTPField`, `RadioGroup`, `Select`, `Slider`, `Switch`) expose controlled value APIs — use `Controller` or the optional `FormField` wrapper. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`), `FileUpload` uses `files`/`onFilesChange`, and all accept `onBlur`/`aria-invalid` for form state:
 
 ```tsx
 import { Input } from "@nphuonha/ui-kit";

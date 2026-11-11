@@ -622,6 +622,120 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Called with the next value when the selection changes."
     }
   ],
+  "data-table": [
+    {
+      "name": "columns",
+      "type": "DataTableColumn<T>[]",
+      "description": "Column definitions. Actions go in a final column with `render`."
+    },
+    {
+      "name": "rows",
+      "type": "T[]",
+      "description": "Rows in their natural order. Sorting and pagination are applied inside."
+    },
+    {
+      "name": "getRowId",
+      "type": "(row: T, index: number) => string",
+      "description": "Stable id per row. Defaults to the row index."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "Accessible name announced for the grid."
+    },
+    {
+      "name": "sortKey",
+      "type": "string | null",
+      "description": "Controlled sorted column key."
+    },
+    {
+      "name": "defaultSortKey",
+      "type": "string | null",
+      "default": "null",
+      "description": "Initial sorted column key for uncontrolled usage."
+    },
+    {
+      "name": "sortDirection",
+      "type": "DataTableSortDirection",
+      "description": "Controlled sort direction."
+    },
+    {
+      "name": "defaultSortDirection",
+      "type": "DataTableSortDirection",
+      "default": "\"asc\"",
+      "description": "Initial sort direction for uncontrolled usage."
+    },
+    {
+      "name": "onSortChange",
+      "type": "(key: string | null, direction: DataTableSortDirection) => void",
+      "description": "Called when sorting changes."
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "default": "10",
+      "description": "Rows per page. Defaults to 10. Set to 0 to disable pagination."
+    },
+    {
+      "name": "page",
+      "type": "number",
+      "description": "Controlled current page (1-based)."
+    },
+    {
+      "name": "defaultPage",
+      "type": "number",
+      "default": "1",
+      "description": "Initial page for uncontrolled usage."
+    },
+    {
+      "name": "onPageChange",
+      "type": "(page: number) => void",
+      "description": "Called when the page changes."
+    },
+    {
+      "name": "selectable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a leading checkbox column with select-all for the visible page."
+    },
+    {
+      "name": "selectedIds",
+      "type": "string[]",
+      "description": "Controlled selected row ids."
+    },
+    {
+      "name": "defaultSelectedIds",
+      "type": "string[]",
+      "default": "[]",
+      "description": "Initial selection for uncontrolled usage."
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(ids: string[]) => void",
+      "description": "Called when the selection changes."
+    },
+    {
+      "name": "getRowLabel",
+      "type": "(row: T, index: number) => string",
+      "description": "Accessible label for a row checkbox. Defaults to the row id."
+    },
+    {
+      "name": "emptyTitle",
+      "type": "ReactNode",
+      "default": "\"No rows\"",
+      "description": "Empty state title."
+    },
+    {
+      "name": "emptyDescription",
+      "type": "ReactNode",
+      "description": "Empty state supporting copy."
+    },
+    {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Extra classes for the scroll container around the table."
+    }
+  ],
   "date-picker": [
     {
       "name": "mode",

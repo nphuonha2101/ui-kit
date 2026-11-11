@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.13.0",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Additive release: DataTable brings sorting, client-side pagination, row selection and custom action columns on top of the Table primitives. Existing imports and props keep working.",
+    changes: [
+      {
+        id: "data-table-0-13-0",
+        kind: "additive",
+        surface: "DataTable",
+        before:
+          "Sortable or paginated tables had to be composed manually from Table primitives, Pagination and Checkbox.",
+        after:
+          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} />',
+        find: "<Table",
+        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, or add selectable for checkboxes and an action column for row buttons and dialogs.",
+      },
+    ],
+  },
+  {
     version: "0.12.1",
     date: "2026-11-11",
     breaking: false,

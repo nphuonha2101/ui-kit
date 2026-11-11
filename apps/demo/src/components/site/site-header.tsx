@@ -38,7 +38,7 @@ function navLinkClass(active: boolean) {
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { dark, setDark } = useThemeSettings();
+  const { setDark } = useThemeSettings();
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const navRef = React.useRef<HTMLElement>(null);
@@ -182,13 +182,14 @@ export function SiteHeader() {
             </Popover>
 
             <IconButton
-              aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+              aria-label="Toggle color theme"
               variant="ghost"
               size="icon"
               shape="pill"
-              onClick={() => setDark(!dark)}
+              onClick={() => setDark((current) => !current)}
             >
-              {dark ? <SunIcon size={18} /> : <MoonIcon size={18} />}
+              <MoonIcon size={18} className="dark:hidden" />
+              <SunIcon size={18} className="hidden dark:block" />
             </IconButton>
 
             <span

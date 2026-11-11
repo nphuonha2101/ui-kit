@@ -622,6 +622,283 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Called with the next value when the selection changes."
     }
   ],
+  "data-table": [
+    {
+      "name": "columns",
+      "type": "DataTableColumn<T>[]",
+      "description": "Column definitions. Actions go in a final column with `render`."
+    },
+    {
+      "name": "rows",
+      "type": "T[]",
+      "description": "Rows in their natural order. Sorting and pagination are applied inside."
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "description": "Accessible name for the table, rendered as a visually hidden caption. Required so every table is announced with a meaningful name."
+    },
+    {
+      "name": "getRowId",
+      "type": "(row: T, index: number) => string",
+      "description": "Stable id per row. Defaults to the row index."
+    },
+    {
+      "name": "sortKey",
+      "type": "string | null",
+      "description": "Controlled sorted column key."
+    },
+    {
+      "name": "defaultSortKey",
+      "type": "string | null",
+      "default": "null",
+      "description": "Initial sorted column key for uncontrolled usage."
+    },
+    {
+      "name": "sortDirection",
+      "type": "DataTableSortDirection",
+      "description": "Controlled sort direction."
+    },
+    {
+      "name": "defaultSortDirection",
+      "type": "DataTableSortDirection",
+      "default": "\"asc\"",
+      "description": "Initial sort direction for uncontrolled usage."
+    },
+    {
+      "name": "onSortChange",
+      "type": "(key: string | null, direction: DataTableSortDirection) => void",
+      "description": "Called when sorting changes."
+    },
+    {
+      "name": "sorting",
+      "type": "DataTableSort[]",
+      "description": "Controlled sort list. Takes precedence over `sortKey`/`sortDirection`."
+    },
+    {
+      "name": "defaultSorting",
+      "type": "DataTableSort[]",
+      "description": "Initial sort list for uncontrolled multi-sort."
+    },
+    {
+      "name": "onSortingChange",
+      "type": "(sorting: DataTableSort[]) => void",
+      "description": "Called with the full sort list, including multi-sort entries."
+    },
+    {
+      "name": "multiSort",
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows shift-click multi-column sorting."
+    },
+    {
+      "name": "sortLocale",
+      "type": "string",
+      "default": "\"en\"",
+      "description": "Locale used for string sorting. Defaults to \"en\" for deterministic output."
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "default": "10",
+      "description": "Rows per page. Defaults to 10. Set to 0 to disable pagination."
+    },
+    {
+      "name": "page",
+      "type": "number",
+      "description": "Controlled current page (1-based)."
+    },
+    {
+      "name": "defaultPage",
+      "type": "number",
+      "default": "1",
+      "description": "Initial page for uncontrolled usage."
+    },
+    {
+      "name": "onPageChange",
+      "type": "(page: number) => void",
+      "description": "Called when the reader activates a pagination control. Automatic page resets after search or sort changes do not call it."
+    },
+    {
+      "name": "selectable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a leading checkbox column with select-all for the visible page."
+    },
+    {
+      "name": "selectedIds",
+      "type": "string[]",
+      "description": "Controlled selected row ids. Selection survives filtering and sorting; the header checkbox only toggles rows on the current page."
+    },
+    {
+      "name": "defaultSelectedIds",
+      "type": "string[]",
+      "default": "[]",
+      "description": "Initial selection for uncontrolled usage."
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(ids: string[]) => void",
+      "description": "Called when the selection changes."
+    },
+    {
+      "name": "getRowLabel",
+      "type": "(row: T, index: number) => string",
+      "description": "Accessible label for a row checkbox. Defaults to the row id."
+    },
+    {
+      "name": "emptyTitle",
+      "type": "ReactNode",
+      "default": "\"No rows\"",
+      "description": "Empty state title."
+    },
+    {
+      "name": "emptyDescription",
+      "type": "ReactNode",
+      "description": "Empty state supporting copy."
+    },
+    {
+      "name": "searchable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a search box that filters rows across `getSearchText`."
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "default": "\"Search…\"",
+      "description": "Placeholder for the search box."
+    },
+    {
+      "name": "searchLabel",
+      "type": "string",
+      "default": "\"Search table\"",
+      "description": "Accessible label for the search box."
+    },
+    {
+      "name": "selectAllLabel",
+      "type": "string",
+      "default": "\"Select all rows on this page\"",
+      "description": "Accessible label for the select-all checkbox."
+    },
+    {
+      "name": "paginationLabel",
+      "type": "string",
+      "default": "\"Pagination\"",
+      "description": "Accessible label for the pagination navigation."
+    },
+    {
+      "name": "showingLabel",
+      "type": "(range: { start: number; end: number; total: number; }) => ReactNode",
+      "description": "Custom visible range text."
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "description": "Controlled search text."
+    },
+    {
+      "name": "defaultSearchValue",
+      "type": "string",
+      "default": "\"\"",
+      "description": "Initial search text for uncontrolled usage."
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) => void",
+      "description": "Called when the search text changes."
+    },
+    {
+      "name": "getSearchText",
+      "type": "(row: T) => string",
+      "description": "Text matched against the search. Defaults to joining sortable column values."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows skeleton rows while data is loading."
+    },
+    {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "default": "false",
+      "description": "Keeps header cells visible while the page scrolls."
+    },
+    {
+      "name": "manualPagination",
+      "type": "boolean",
+      "default": "false",
+      "description": "Pagination is handled by the caller. Set `rowCount` to the server total and control `page`/`onPageChange`."
+    },
+    {
+      "name": "rowCount",
+      "type": "number",
+      "description": "Total rows on the server when `manualPagination` is set."
+    },
+    {
+      "name": "manualSorting",
+      "type": "boolean",
+      "default": "false",
+      "description": "Sorting is handled by the caller. Pair with controlled `sortKey`."
+    },
+    {
+      "name": "manualFiltering",
+      "type": "boolean",
+      "default": "false",
+      "description": "Filtering is handled by the caller. Pair with controlled `searchValue`."
+    },
+    {
+      "name": "columnVisibility",
+      "type": "Record<string, boolean>",
+      "description": "Controlled column visibility keyed by column key."
+    },
+    {
+      "name": "defaultColumnVisibility",
+      "type": "Record<string, boolean>",
+      "description": "Initial column visibility for uncontrolled usage."
+    },
+    {
+      "name": "onColumnVisibilityChange",
+      "type": "(visibility: Record<string, boolean>) => void",
+      "description": "Called when column visibility changes."
+    },
+    {
+      "name": "columnMenu",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a Columns popover for toggling column visibility."
+    },
+    {
+      "name": "columnMenuLabel",
+      "type": "string",
+      "default": "\"Columns\"",
+      "description": "Accessible label for the column menu trigger."
+    },
+    {
+      "name": "virtualized",
+      "type": "boolean",
+      "default": "false",
+      "description": "Virtualizes body rows inside a fixed-height scroll area."
+    },
+    {
+      "name": "virtualHeight",
+      "type": "number",
+      "default": "360",
+      "description": "Height of the virtualized scroll area in pixels. Defaults to 360."
+    },
+    {
+      "name": "estimateRowHeight",
+      "type": "number",
+      "default": "48",
+      "description": "Estimated row height in pixels. Defaults to 48."
+    },
+    {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Extra classes for the scroll container around the table."
+    }
+  ],
   "date-picker": [
     {
       "name": "mode",

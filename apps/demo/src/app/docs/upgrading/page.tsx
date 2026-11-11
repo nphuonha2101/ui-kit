@@ -6,17 +6,13 @@ import {
   InfoIcon,
   TerminalWindowIcon,
 } from "@/components/icons";
-import { Alert, Badge, buttonVariants } from "@nphuonha/ui-kit";
+import { Alert, buttonVariants } from "@nphuonha/ui-kit";
 import { AgentCopyButton } from "@/components/docs/agent-copy-button";
 import { CodeBlock } from "@/components/docs/code-block";
+import { MigrationTable } from "@/components/docs/migration-table";
 import { PageHeader } from "@/components/docs/page-header";
 import { DOCS_URL, UPGRADING_AGENT_PROMPT } from "@/content/llms";
-import {
-  latestRelease,
-  releases,
-  type MigrationKind,
-  type ReleaseMigration,
-} from "@/content/migrations";
+import { latestRelease, releases } from "@/content/migrations";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -26,87 +22,12 @@ export const metadata: Metadata = pageMetadata({
   path: "/docs/upgrading/",
 });
 
-const kindBadge: Record<
-  MigrationKind,
-  { label: string; variant: "neutral" | "info" | "warning" | "danger" | "success" }
-> = {
-  additive: { label: "Additive", variant: "info" },
-  behavior: { label: "Behavior", variant: "warning" },
-  rename: { label: "Rename", variant: "danger" },
-  remove: { label: "Removed", variant: "danger" },
-  replace: { label: "Replaced", variant: "danger" },
-};
-
 const checklist = [
   "Read the installed version from package.json and choose the target version.",
   "Apply only the releases between those versions, oldest first.",
   "Run typecheck and tests. Type errors usually point at renamed or removed props.",
   "Spot-check focus rings, overlays, dark mode and the runtime accent.",
 ];
-
-function ReleaseCard({ release }: { release: ReleaseMigration }) {
-  return (
-    <article className="surface-curved relative rounded-card bg-card p-5 shadow-soft">
-      <header className="flex flex-wrap items-center gap-2">
-        <h3 className="text-lg font-semibold tracking-[-0.02em]">v{release.version}</h3>
-        <Badge variant={release.breaking ? "danger" : "success"}>
-          {release.breaking ? "Breaking changes" : "No breaking changes"}
-        </Badge>
-        <span className="ml-auto font-mono text-xs text-muted-foreground">
-          {release.date}
-        </span>
-      </header>
-
-      <p className="mt-2 text-sm leading-6 text-muted-foreground">{release.summary}</p>
-
-      {release.changes.length > 0 ? (
-        <div className="mt-4 overflow-x-auto rounded-control bg-surface/40">
-          <table className="w-full min-w-[760px] text-left text-sm">
-            <thead className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-              <tr>
-                <th className="px-4 py-3 font-semibold">Surface</th>
-                <th className="px-4 py-3 font-semibold">Before</th>
-                <th className="px-4 py-3 font-semibold">After</th>
-                <th className="px-4 py-3 font-semibold">Fix</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border/60">
-              {release.changes.map((change) => {
-                const badge = kindBadge[change.kind];
-                return (
-                  <tr key={change.id} className="align-top transition-colors hover:bg-surface/50">
-                    <td className="whitespace-nowrap px-4 py-3">
-                      <div className="font-medium text-foreground">{change.surface}</div>
-                      <Badge variant={badge.variant} className="mt-1.5">
-                        {badge.label}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3">
-                      <code className="break-words font-mono text-xs text-muted-foreground">
-                        {change.before}
-                      </code>
-                    </td>
-                    <td className="px-4 py-3">
-                      <code className="break-words font-mono text-xs text-foreground">
-                        {change.after}
-                      </code>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      <p className="leading-6">{change.fix}</p>
-                      <code className="mt-1.5 inline-block break-all font-mono text-[11px] text-muted-foreground/80">
-                        find: {change.find}
-                      </code>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      ) : null}
-    </article>
-  );
-}
 
 export default function UpgradingPage() {
   return (
@@ -122,6 +43,19 @@ export default function UpgradingPage() {
           Additive changes ship in minor releases. Breaking API changes require a major
           release (or a minor while the package is 0.x) and always get a migration row below.
         </Alert>
+
+        <section className="flex flex-col gap-4">
+          <div>
+            <h2 className="text-xl font-semibold tracking-[-0.025em]">
+              Release migrations
+            </h2>
+            <p className="mt-1 text-sm leading-7 text-muted-foreground">
+              Every row ever shipped, newest first. Search or sort, then open a row
+              for the full Before/After and copy buttons.
+            </p>
+          </div>
+          <MigrationTable releases={releases} />
+        </section>
 
         <section className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold tracking-[-0.025em]">Upgrade checklist</h2>
@@ -167,21 +101,6 @@ npm test`}
             language="markdown"
             filename="Prompt to copy"
           />
-        </section>
-
-        <section className="flex flex-col gap-4">
-          <div>
-            <h2 className="text-xl font-semibold tracking-[-0.025em]">
-              Release migrations
-            </h2>
-            <p className="mt-1 text-sm leading-7 text-muted-foreground">
-              Apply entries oldest → newest. Additive rows are optional; rename, remove and
-              replace rows are required.
-            </p>
-          </div>
-          {releases.map((release) => (
-            <ReleaseCard key={release.version} release={release} />
-          ))}
         </section>
 
         <section className="flex flex-col gap-3">

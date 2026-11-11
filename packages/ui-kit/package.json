@@ -1,6 +1,6 @@
 {
   "name": "@nphuonha/ui-kit",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "Solid, clean, flat, modern React UI kit (Base UI + Tailwind v4).",
   "license": "MIT",
   "author": "nphuonha",
@@ -111,6 +111,11 @@
       "types": "./dist/components/ui/date-picker/index.d.ts",
       "import": "./dist/components/ui/date-picker/index.js",
       "default": "./dist/components/ui/date-picker/index.js"
+    },
+    "./data-table": {
+      "types": "./dist/components/ui/data-table/index.d.ts",
+      "import": "./dist/components/ui/data-table/index.js",
+      "default": "./dist/components/ui/data-table/index.js"
     },
     "./desktop-nav": {
       "types": "./dist/components/ui/desktop-nav/index.d.ts",
@@ -324,8 +329,8 @@
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19",
-    "tailwindcss": ">=4",
-    "react-hook-form": ">=7"
+    "react-hook-form": ">=7",
+    "tailwindcss": ">=4"
   },
   "peerDependenciesMeta": {
     "react-hook-form": {
@@ -335,6 +340,8 @@
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@phosphor-icons/react": "^2.1.10",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.14.26",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "sonner": "^2.0.7",

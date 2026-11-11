@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.13.0",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Additive release: DataTable brings sorting (single and shift-click multi-sort), search, client-side pagination, row selection, column visibility, row virtualization, server-side pagination/sorting/filtering with loading skeletons, and custom action columns on top of the Table primitives. Existing imports and props keep working.",
+    changes: [
+      {
+        id: "data-table-0-13-0",
+        kind: "additive",
+        surface: "DataTable",
+        before:
+          "Sortable, searchable or paginated tables had to be composed manually from Table primitives, an input, Pagination and Checkbox.",
+        after:
+          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} searchable />',
+        find: "<Table",
+        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, add searchable with getSearchText for render-only columns, add selectable for checkboxes, use manualPagination/manualSorting/manualFiltering with rowCount and loading for server data, multiSort for shift-click sorting, columnMenu for visibility, virtualized for long pages, or add an action column for row buttons and dialogs.",
+      },
+    ],
+  },
+  {
     version: "0.12.1",
     date: "2026-11-11",
     breaking: false,

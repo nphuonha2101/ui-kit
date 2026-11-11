@@ -15,6 +15,14 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/* Theme flips apply with transitions disabled for one frame. Animating fills
+   while gradients and rims swap instantly reads as a flash. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+}
+
 .preview-canvas {
   background-color: var(--card);
   background-image: radial-gradient(

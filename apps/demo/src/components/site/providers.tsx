@@ -5,7 +5,7 @@ import { Toaster, generateAccentVars } from "@nphuonha/ui-kit";
 
 type ThemeSettings = {
   dark: boolean;
-  setDark: (dark: boolean) => void;
+  setDark: React.Dispatch<React.SetStateAction<boolean>>;
   accent: string | null;
   setAccent: (accent: string | null) => void;
 };
@@ -30,7 +30,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [accent, setAccent] = React.useState<string | null>(null);
   const [ready, setReady] = React.useState(false);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     try {
       const storedTheme = localStorage.getItem("ui-kit-theme");
       const storedAccent = localStorage.getItem("ui-kit-accent");
@@ -42,11 +42,34 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setReady(true);
   }, []);
 
+  const themeSwitchTimer = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (themeSwitchTimer.current) window.clearTimeout(themeSwitchTimer.current);
+    };
+  }, []);
+
   useIsomorphicLayoutEffect(() => {
     if (!ready) return;
     const root = document.documentElement;
     root.dataset.ui = "kit";
-    root.classList.toggle("dark", dark);
+
+    if (root.classList.contains("dark") !== dark) {
+      // Suppress component transitions for the frame(s) where CSS variables
+      // flip; otherwise surfaces animate the fill while gradients and rims
+      // switch instantly, which reads as a flash.
+      root.classList.add("theme-switching");
+      root.classList.toggle("dark", dark);
+      void root.offsetHeight;
+      if (themeSwitchTimer.current) window.clearTimeout(themeSwitchTimer.current);
+      themeSwitchTimer.current = window.setTimeout(() => {
+        root.classList.remove("theme-switching");
+        themeSwitchTimer.current = null;
+      }, 120);
+    } else {
+      root.classList.toggle("dark", dark);
+    }
 
     if (accent) {
       const vars = generateAccentVars(accent, dark ? "dark" : "light");

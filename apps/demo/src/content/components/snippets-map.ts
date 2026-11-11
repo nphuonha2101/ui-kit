@@ -41,6 +41,7 @@ import { snippets as avatarSnippets } from "./avatar/snippets";
 import { snippets as badgeSnippets } from "./badge/snippets";
 import { snippets as cardSnippets } from "./card/snippets";
 import { snippets as collapsibleSnippets } from "./collapsible/snippets";
+import { snippets as dataTableSnippets } from "./data-table/snippets";
 import { snippets as kbdSnippets } from "./kbd/snippets";
 import { snippets as scrollAreaSnippets } from "./scroll-area/snippets";
 import { snippets as separatorSnippets } from "./separator/snippets";
@@ -95,6 +96,7 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "badge": badgeSnippets,
   "card": cardSnippets,
   "collapsible": collapsibleSnippets,
+  "data-table": dataTableSnippets,
   "kbd": kbdSnippets,
   "scroll-area": scrollAreaSnippets,
   "separator": separatorSnippets,

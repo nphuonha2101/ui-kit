@@ -4,7 +4,7 @@ export const SITE_URL = "https://ui.nphuonha.id.vn";
 export const SITE_NAME = "nphuonha UI";
 export const SITE_TITLE = "nphuonha UI — Solid, borderless React UI kit";
 export const SITE_DESCRIPTION =
-  "A solid, borderless React UI kit built on Base UI and Tailwind CSS v4. Accessible components, semantic tokens and a runtime-customizable accent.";
+  "A solid, borderless React UI kit for Tailwind v4. Base UI primitives where they exist, first-party calendar, date/time, color and data-grid controls where they don't, plus semantic tokens and a runtime-customizable accent.";
 
 export const OG_IMAGE = {
   url: "/og.png",

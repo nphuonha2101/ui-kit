@@ -71,5 +71,30 @@ function MobileNavDemo() {
   );
 }
 
+function MobileNavLargeDemo() {
+  const [active, setActive] = React.useState("home");
+
+  return (
+    <div className="mx-auto flex w-full max-w-sm flex-col gap-4">
+      <div className="surface-curved relative flex items-center justify-between rounded-card bg-card p-3 shadow-soft">
+        <BrandMark />
+        <MobileNav
+          items={items}
+          value={active}
+          onValueChange={setActive}
+          size="lg"
+          itemsAlign="center"
+          logo={<BrandMark />}
+        />
+      </div>
+      <p className="text-center text-sm text-muted-foreground">
+        Selected: <span className="font-medium text-foreground">{active}</span>
+      </p>
+    </div>
+  );
+}
+
 export const demo = MobileNavDemo;
-export const examples = {};
+export const examples = {
+  "mobile-nav-large": MobileNavLargeDemo,
+};

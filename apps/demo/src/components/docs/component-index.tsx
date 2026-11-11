@@ -10,7 +10,7 @@ export function ComponentIndex() {
     <div className="max-w-5xl">
       <PageHeader
         title="Components"
-        description="Accessible behavior from Base UI, borderless solid surfaces and a consistent prop-driven API."
+        description="Base UI behavior where primitives exist, first-party controls where they don't, borderless solid surfaces and a consistent prop-driven API."
       />
 
       <div className="flex flex-col gap-12">

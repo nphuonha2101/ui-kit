@@ -77,5 +77,30 @@ export function Example() {
   value={active}
   onValueChange={setActive}
 />`,
-  "examples": {}
+  "examples": {
+    "mobile-nav-large": `"use client";
+
+import * as React from "react";
+import { MobileNav, type MobileNavItem } from "@nphuonha/ui-kit";
+
+const items: MobileNavItem[] = [
+  { value: "home", label: "Home" },
+  { value: "components", label: "Components" },
+  { value: "pricing", label: "Pricing" },
+];
+
+export function Example() {
+  const [active, setActive] = React.useState("home");
+
+  return (
+    <MobileNav
+      items={items}
+      value={active}
+      onValueChange={setActive}
+      size="lg"
+      itemsAlign="center"
+    />
+  );
+}`,
+  }
 };

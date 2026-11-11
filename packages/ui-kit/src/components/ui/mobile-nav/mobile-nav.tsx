@@ -8,6 +8,7 @@ import { Sheet } from "../sheet";
 import type { DesktopNavItem } from "../desktop-nav";
 
 export type MobileNavItem = DesktopNavItem;
+export type MobileNavSize = "default" | "lg";
 
 export interface MobileNavProps {
   /**
@@ -41,6 +42,17 @@ export interface MobileNavProps {
   footer?: React.ReactNode;
   /** Panel edge. */
   side?: "right" | "left" | "bottom";
+  /**
+   * Item size. Use "lg" for full-screen menus with larger tap targets.
+   * @default "default"
+   */
+  size?: MobileNavSize;
+  /**
+   * Vertical placement of the item list. Center keeps large items in easy
+   * thumb reach on full-screen menus.
+   * @default "start"
+   */
+  itemsAlign?: "start" | "center";
   className?: string;
   /** Accessible name when no visible title is provided. */
   "aria-label"?: string;
@@ -78,29 +90,42 @@ function MobileNavLeaf({
   activeValue,
   onSelect,
   depth,
+  size,
 }: {
   item: MobileNavItem;
   activeValue?: string;
   onSelect: (value: string) => void;
   depth: number;
+  size: MobileNavSize;
 }) {
   const active = item.value === activeValue;
+  const large = size === "lg";
   const Icon: IconComponent | undefined =
     (active && item.activeIcon) || item.icon;
   const className = cn(
-    "flex min-h-10 w-full items-center gap-2 rounded-control px-3 text-left text-sm transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] hover:bg-surface",
+    "flex w-full items-center text-left transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
+    large
+      ? depth === 0
+        ? "min-h-12 gap-3 py-1 text-[1.75rem] font-semibold leading-tight tracking-[-0.04em] hover:text-foreground"
+        : "min-h-10 gap-2.5 py-0.5 text-base hover:text-foreground"
+      : "min-h-10 gap-2 rounded-control px-3 text-sm hover:bg-surface",
     active
-      ? "bg-primary-soft font-medium text-primary-soft-foreground"
+      ? large
+        ? "text-primary"
+        : "bg-primary-soft font-medium text-primary-soft-foreground"
       : depth === 0
-        ? "text-foreground"
+        ? large
+          ? "text-muted-foreground"
+          : "text-foreground"
         : "text-muted-foreground",
     item.disabled && "pointer-events-none opacity-45",
   );
+  const iconSize = large ? (depth === 0 ? 20 : 18) : 17;
   const content = (
     <>
       {Icon ? (
         <Icon
-          size={17}
+          size={iconSize}
           className={cn(
             "shrink-0",
             active ? "text-primary-soft-foreground" : "text-muted-foreground",
@@ -153,16 +178,19 @@ function MobileNavGroup({
   activeValue,
   onSelect,
   depth,
+  size,
 }: {
   item: MobileNavItem;
   activeValue?: string;
   onSelect: (value: string) => void;
   depth: number;
+  size: MobileNavSize;
 }) {
   const [open, setOpen] = React.useState(false);
   const ChevronDownIcon = useKitIcon("chevronDown");
   const Icon = item.icon;
   const subtreeActive = containsValue(item, activeValue);
+  const large = size === "lg";
 
   return (
     <div className="flex flex-col">
@@ -172,19 +200,31 @@ function MobileNavGroup({
         disabled={item.disabled}
         onClick={() => setOpen((current) => !current)}
         className={cn(
-          "flex min-h-10 w-full items-center gap-2 rounded-control px-3 text-left text-sm font-medium transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] hover:bg-surface disabled:pointer-events-none disabled:opacity-45",
-          subtreeActive ? "text-foreground" : "text-foreground",
+          "flex w-full items-center text-left font-medium transition-colors duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] disabled:pointer-events-none disabled:opacity-45",
+          large
+            ? depth === 0
+              ? "min-h-12 gap-3 py-1 text-[1.75rem] font-semibold leading-tight tracking-[-0.04em] hover:text-foreground"
+              : "min-h-10 gap-2.5 py-0.5 text-base hover:text-foreground"
+            : "min-h-10 gap-2 rounded-control px-3 text-sm hover:bg-surface",
+          large
+            ? subtreeActive
+              ? "text-primary"
+              : "text-muted-foreground"
+            : "text-foreground",
         )}
       >
         {Icon ? (
-          <Icon size={17} className="shrink-0 text-muted-foreground" />
+          <Icon
+            size={large ? (depth === 0 ? 20 : 18) : 17}
+            className="shrink-0 text-muted-foreground"
+          />
         ) : null}
         <span className="min-w-0 flex-1 truncate">{item.label}</span>
         {item.badge != null ? (
           <NavBadge badge={item.badge} active={subtreeActive} />
         ) : null}
         <ChevronDownIcon
-          size={15}
+          size={large ? 18 : 15}
           className={cn(
             "shrink-0 text-muted-foreground transition-transform duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
             open && "rotate-180",
@@ -200,12 +240,13 @@ function MobileNavGroup({
         )}
       >
         <div className="min-h-0 overflow-hidden">
-          <div className="pt-1">
+          <div className={cn("pt-1", open && "mobile-nav-item")}>
             <MobileNavItems
               items={item.children ?? []}
               activeValue={activeValue}
               onSelect={onSelect}
               depth={depth + 1}
+              size={size}
             />
           </div>
         </div>
@@ -219,11 +260,13 @@ function MobileNavItems({
   activeValue,
   onSelect,
   depth = 0,
+  size,
 }: {
   items: MobileNavItem[];
   activeValue?: string;
   onSelect: (value: string) => void;
   depth?: number;
+  size: MobileNavSize;
 }) {
   return (
     <div
@@ -232,25 +275,39 @@ function MobileNavItems({
         depth > 0 && "ml-3 border-l border-border/60 pl-3",
       )}
     >
-      {items.map((item) =>
-        item.children?.length ? (
+      {items.map((item, index) => {
+        const content = item.children?.length ? (
           <MobileNavGroup
-            key={item.value}
             item={item}
             activeValue={activeValue}
             onSelect={onSelect}
             depth={depth}
+            size={size}
           />
         ) : (
           <MobileNavLeaf
-            key={item.value}
             item={item}
             activeValue={activeValue}
             onSelect={onSelect}
             depth={depth}
+            size={size}
           />
-        ),
-      )}
+        );
+
+        if (depth > 0) {
+          return <React.Fragment key={item.value}>{content}</React.Fragment>;
+        }
+
+        return (
+          <div
+            key={item.value}
+            className="mobile-nav-item"
+            style={{ animationDelay: `${index * 45}ms` }}
+          >
+            {content}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -270,6 +327,8 @@ export function MobileNav({
   children,
   footer,
   side = "right",
+  size = "default",
+  itemsAlign = "start",
   className,
   "aria-label": ariaLabel = "Menu",
 }: MobileNavProps) {
@@ -309,11 +368,18 @@ export function MobileNav({
       className={className}
       aria-label={title ? undefined : ariaLabel}
     >
-      <nav aria-label="Mobile navigation">
+      <nav
+        aria-label="Mobile navigation"
+        className={cn(
+          "w-full",
+          itemsAlign === "center" && "flex min-h-full flex-col justify-center",
+        )}
+      >
         <MobileNavItems
           items={items}
           activeValue={activeValue}
           onSelect={select}
+          size={size}
         />
       </nav>
       {children ? <div className="mt-6">{children}</div> : null}

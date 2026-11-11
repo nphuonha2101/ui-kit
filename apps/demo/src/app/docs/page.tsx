@@ -18,7 +18,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Introduction",
   description:
-    "A modern, borderless React UI kit built on Base UI and Tailwind CSS v4, with semantic tokens and a runtime-customizable accent.",
+    "A modern, borderless React UI kit for Tailwind v4. Base UI primitives where they exist, first-party calendar, date/time, color and data-grid controls where they don't.",
   path: "/docs/",
 });
 
@@ -80,17 +80,59 @@ export default function IntroductionPage() {
           <h2 className="text-xl font-semibold tracking-[-0.025em]">The idea</h2>
           <p className="text-sm leading-7 text-muted-foreground">
             Most component libraries give you a fixed visual language or a pile of unstyled
-            primitives. This kit sits in between: behavior and accessibility come from{" "}
+            primitives. This kit sits in between.{" "}
             <a href="https://base-ui.com" target="_blank" rel="noreferrer" className="docs-link">
               Base UI
-            </a>
-            , while the visual language is owned here — semantic tokens, solid fills, a
-            top-lit curved edge and a restrained motion system.
+            </a>{" "}
+            supplies behavior and accessibility where a matching primitive exists. Where Base
+            UI has no primitive — calendar, date/time, color and data grid — the control is
+            first-party and follows the same focus, keyboard and ARIA contract. The visual
+            language is owned here: semantic tokens, solid fills, a top-lit curved edge and a
+            restrained motion system.
           </p>
           <p className="text-sm leading-7 text-muted-foreground">
             There are no gray outlined boxes. Depth comes from tonal surfaces, a light rim on
             the top edge and a barely-there vertical gradient. The accent is generated from one
             color, so the whole system re-tones without hand-editing every variable.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">
+            What comes from Base UI?
+          </h2>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Base UI is the behavior layer where a matching primitive exists — it is not a
+            wrapper around every component. Base UI 1.9 has no calendar, time, color or
+            data-grid primitive, so those controls are implemented first-party.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              [
+                "Base UI primitives",
+                "Dialog, AlertDialog, Sheet, Popover, Menu, Select, Combobox, Tooltip, PreviewCard, Tabs, Accordion, Collapsible, Checkbox, RadioGroup, Switch, Slider, NumberField, OTPField, Toggle, ToggleGroup, Toolbar, Progress, Meter, Avatar, ScrollArea and Fieldset.",
+              ],
+              [
+                "First-party controls",
+                "Calendar, DatePicker, DateTimePicker, TimeField, ColorPicker, DataTable, Table, FileUpload, Input, Textarea, Button, Badge, Card, Alert, Breadcrumb, Pagination and the navigation components.",
+              ],
+              [
+                "Third-party engines",
+                "Toaster uses sonner. DataTable uses TanStack Table and Virtual on top of the kit's own Table primitives.",
+              ],
+            ].map(([title, body]) => (
+              <Card key={title}>
+                <CardContent className="pt-5">
+                  <h3 className="text-sm font-semibold">{title}</h3>
+                  <p className="mt-1.5 text-xs leading-5 text-muted-foreground">{body}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <p className="text-sm leading-7 text-muted-foreground">
+            First-party controls are not thin wrappers: they own keyboard handling, ARIA,
+            validation and popover state. That is why some of them are larger than their Base
+            UI-backed peers.
           </p>
         </section>
 

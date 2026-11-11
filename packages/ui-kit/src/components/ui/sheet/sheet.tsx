@@ -74,7 +74,7 @@ export function Sheet({
         >
           {(header || title || description || showClose) && (
             <div className="flex items-start justify-between gap-4">
-              <div className="grid gap-1">
+              <div className="grid min-w-0 flex-1 gap-1">
                 {header ? <div>{header}</div> : null}
                 {title ? <DialogPrimitive.Title className="text-lg font-semibold tracking-[-0.02em] leading-tight">{title}</DialogPrimitive.Title> : null}
                 {description ? <DialogPrimitive.Description className="text-sm leading-relaxed text-muted-foreground">{description}</DialogPrimitive.Description> : null}

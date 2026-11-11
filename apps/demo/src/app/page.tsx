@@ -27,8 +27,9 @@ export default function HomePage() {
             The foundation for your design system.
           </h1>
           <p className="mt-6 max-w-xl text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
-            A solid, borderless React UI kit built on Base UI. Tonal surfaces, top-lit curves,
-            and a vibrant accent you can change at runtime.
+            A solid, borderless React UI kit for Tailwind v4. Base UI powers the primitives it
+            covers; calendar, date/time, color and data-grid controls are first-party. Tonal
+            surfaces, top-lit curves, and a vibrant accent you can change at runtime.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <ButtonLink render={<Link href="/docs" />} size="lg">
@@ -127,8 +128,8 @@ export default function HomePage() {
               },
               {
                 icon: ShieldCheckIcon,
-                title: "Base UI behavior",
-                body: "Accessible focus, overlays and form semantics come from headless primitives.",
+                title: "Base UI where it fits",
+                body: "Overlays and form primitives use Base UI. Calendar, date/time, color and data-grid controls are first-party with the same a11y contract.",
               },
               {
                 icon: PaletteIcon,

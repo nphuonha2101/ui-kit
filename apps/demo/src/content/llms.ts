@@ -123,7 +123,7 @@ export function buildLlmsTxt() {
 
   return `# @nphuonha/ui-kit
 
-> Solid, borderless React UI kit built on Base UI and Tailwind CSS v4. Components use semantic tokens, a top-lit solid surface language and a runtime-customizable accent.
+> Solid, borderless React UI kit for Tailwind CSS v4. Base UI supplies overlay and form primitives where available; calendar, date/time, color and data-grid controls are first-party. Components use semantic tokens, a top-lit solid surface language and a runtime-customizable accent.
 
 Docs: ${DOCS_URL}
 Agent guide: ${DOCS_URL}/docs/agents
@@ -145,6 +145,13 @@ import { Button, Card, CardContent, Input } from "@nphuonha/ui-kit";
 - Add class="dark" to the same element for dark mode.
 - Import the stylesheet exactly once.
 - The package ships compiled ESM and .d.ts files. Do not add a transpilePackages step.
+
+## Base UI coverage
+
+- Base UI primitives: Dialog, AlertDialog, Sheet, Popover, Menu, Select, Combobox, Tooltip, PreviewCard, Tabs, Accordion, Collapsible, Checkbox, CheckboxGroup, RadioGroup, Switch, Slider, NumberField, OTPField, Toggle, ToggleGroup, Toolbar, Progress, Meter, Avatar, ScrollArea, Fieldset.
+- First-party controls (Base UI 1.9 has no primitive): Calendar, DatePicker, DateTimePicker, TimeField, ColorPicker, DataTable, Table, FileUpload, Input, Textarea, Button, Badge, Card, Alert, Breadcrumb, Pagination, BottomNav, DesktopNav, MobileNav, Field/Form, Kbd, Skeleton, Spinner, EmptyState.
+- Third-party engines: Toaster uses sonner; DataTable uses TanStack Table and Virtual on top of the kit's Table primitives.
+- First-party controls must keep the same focus, keyboard, ARIA and validation contract as Base UI-backed components.
 
 ## Rules for agents
 

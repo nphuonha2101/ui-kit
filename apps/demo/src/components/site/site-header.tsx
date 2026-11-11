@@ -38,7 +38,7 @@ function navLinkClass(active: boolean) {
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { setDark } = useThemeSettings();
+  const { setDark, accent } = useThemeSettings();
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const navRef = React.useRef<HTMLElement>(null);
@@ -223,6 +223,8 @@ export function SiteHeader() {
               onOpenChange={setMenuOpen}
               items={mobileItems}
               value={activeMobileHref}
+              size="lg"
+              itemsAlign="center"
               logo={<BrandLogo logoClassName="h-6" />}
               trigger={
                 <IconButton
@@ -236,37 +238,66 @@ export function SiteHeader() {
                 </IconButton>
               }
               footer={
-                <Link
-                  href="/docs/installation"
-                  onClick={closeMenu}
-                  className={cn(buttonVariants({ shape: "pill" }), "w-full")}
-                >
-                  Get started
-                  <ArrowRightIcon size={14} />
-                </Link>
-              }
-            >
-              <div className="flex flex-col gap-5">
-                <div className="border-t border-border/60 pt-5">
-                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Accent
-                  </p>
-                  <AccentPicker />
-                </div>
-                <div className="border-t border-border/60 pt-5">
+                <div className="flex w-full flex-col gap-4">
                   <Link
-                    href={GITHUB_URL}
-                    target="_blank"
-                    rel="noreferrer"
+                    href="/docs/installation"
                     onClick={closeMenu}
-                    className="flex h-11 items-center gap-2.5 rounded-control px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                    className={cn(buttonVariants({ shape: "pill" }), "w-full")}
                   >
-                    <GithubLogoIcon size={18} />
-                    GitHub repository
+                    Get started
+                    <ArrowRightIcon size={14} />
                   </Link>
+                  <div className="flex items-center justify-center gap-2 pb-1">
+                    <Popover
+                      trigger={
+                        <IconButton
+                          aria-label="Choose accent color"
+                          variant="ghost"
+                          size="icon"
+                          shape="pill"
+                          className="relative"
+                        >
+                          <PaletteIcon size={18} />
+                          <span
+                            aria-hidden
+                            className="absolute right-2 top-2 size-1.5 rounded-full ring-1 ring-card"
+                            style={{ background: accent ?? "#4f46e5" }}
+                          />
+                        </IconButton>
+                      }
+                      title="Accent"
+                      description="Recolor the system at runtime."
+                      align="center"
+                      side="top"
+                    >
+                      <AccentPicker compact />
+                    </Popover>
+
+                    <IconButton
+                      aria-label="Toggle color theme"
+                      variant="ghost"
+                      size="icon"
+                      shape="pill"
+                      onClick={() => setDark((current) => !current)}
+                    >
+                      <MoonIcon size={18} className="dark:hidden" />
+                      <SunIcon size={18} className="hidden dark:block" />
+                    </IconButton>
+
+                    <Link
+                      href={GITHUB_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="GitHub repository"
+                      onClick={closeMenu}
+                      className="inline-flex size-10 items-center justify-center rounded-pill text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                    >
+                      <GithubLogoIcon size={18} />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </MobileNav>
+              }
+            />
           </div>
         </div>
       </header>

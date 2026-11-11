@@ -131,7 +131,8 @@ export function ComponentDoc({
         <section id="api-reference" className="mt-10 scroll-mt-24">
           <h2 className="text-xl font-semibold tracking-[-0.025em]">API Reference</h2>
           <p className="mt-2 text-sm leading-7 text-muted-foreground">
-            Props are additive to the underlying Base UI or native element.
+            Props are additive to the underlying Base UI primitive, native
+            element or first-party implementation.
           </p>
           <div className="mt-4">
             <PropTable props={props} title={meta.title} />

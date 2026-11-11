@@ -32,7 +32,7 @@ export const releases: ReleaseMigration[] = [
     date: "2026-11-11",
     breaking: false,
     summary:
-      "Additive release: ColorPicker (hex, presets, optional eyedropper), TimeField (accessible segmented HH:mm) and DateTimePicker (local single/range selection with default 09:00/17:00 times). No existing APIs change.",
+      "Additive release: ColorPicker (hex, presets, optional eyedropper), TimeField (accessible segmented HH:mm), DateTimePicker (local single/range selection with default 09:00/17:00 times) and MobileNav size/alignment options. No existing APIs change.",
     changes: [
       {
         id: "color-picker-0-14-0",
@@ -66,6 +66,17 @@ export const releases: ReleaseMigration[] = [
           'import { DateTimePicker } from "@nphuonha/ui-kit";\n\n<DateTimePicker label="Publish at" value={value} onValueChange={setValue} clearable showNow />',
         find: '<input type="datetime-local"',
         fix: "Nothing required. Single mode uses Date; range mode uses { from, to }. Values are local time, default times are 09:00/17:00 (override with defaultTime/defaultEndTime), and hidden inputs submit YYYY-MM-DDTHH:mm values.",
+      },
+      {
+        id: "mobile-nav-size-0-14-0",
+        kind: "additive",
+        surface: "MobileNav",
+        before:
+          "MobileNav items used one compact size with no entrance motion or vertical placement control.",
+        after:
+          'import { MobileNav } from "@nphuonha/ui-kit";\n\n<MobileNav items={items} size="lg" itemsAlign="center" />',
+        find: "<MobileNav",
+        fix: "Nothing required. Pass size=\"lg\" for display-sized menu items and itemsAlign=\"center\" to center the list vertically in the sheet. Top-level items now stagger in when the menu opens; the animation honors prefers-reduced-motion.",
       },
     ],
   },

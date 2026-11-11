@@ -192,7 +192,7 @@ export default function FormsPage() {
       </div>
       <PageHeader
         title="Forms"
-        description="Form controls are library-agnostic. Native inputs work with register; custom Base UI controls use Controller or the FormField wrapper."
+        description="Form controls are library-agnostic. Native inputs work with register; custom value controls use Controller or the FormField wrapper."
       />
 
       <div className="flex flex-col gap-10">

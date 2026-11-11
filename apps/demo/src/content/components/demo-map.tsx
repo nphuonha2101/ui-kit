@@ -183,6 +183,9 @@ const desktopNavdesktopNavSubmenuExample = dynamic(() =>
 const desktopNavdesktopNavHeaderExample = dynamic(() =>
   import("./desktop-nav/demo").then((module) => module.examples["desktop-nav-header"]),
 );
+const mobileNavmobileNavLargeExample = dynamic(() =>
+  import("./mobile-nav/demo").then((module) => module.examples["mobile-nav-large"]),
+);
 const tabstabsSettingsExample = dynamic(() =>
   import("./tabs/demo").then((module) => module.examples["tabs-settings"]),
 );
@@ -345,6 +348,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "preview-card-top": previewCardpreviewCardTopExample,
   "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,
   "desktop-nav-header": desktopNavdesktopNavHeaderExample,
+  "mobile-nav-large": mobileNavmobileNavLargeExample,
   "tabs-settings": tabstabsSettingsExample,
   "accordion-multiple": accordionaccordionMultipleExample,
   "accordion-separated": accordionaccordionSeparatedExample,

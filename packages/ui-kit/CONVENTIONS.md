@@ -1,6 +1,6 @@
 # UI Kit Conventions (Solid / Clean / Flat / Modern)
 
-Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned tokens, styles, and a consistent **prop-driven** API. Visual direction: solid surfaces, clean hierarchy, flat-first depth, modern rounded shapes, vibrant-but-customizable accent (inspired by M3 Expressive, not M3 Expressive).
+Single-suite, not-shadcn component kit: **Base UI** where a matching primitive exists, first-party controls where it does not, plus owned tokens, styles, and a consistent **prop-driven** API. Visual direction: solid surfaces, clean hierarchy, flat-first depth, modern rounded shapes, vibrant-but-customizable accent (inspired by M3 Expressive, not M3 Expressive).
 
 ## Foundations
 - **Semantic tokens only** in components (no app-specific variables, no hardcoded brand paints). Core contract lives in `src/styles/theme.css` and is mapped in `src/styles/base.css`.
@@ -47,7 +47,7 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - Hover, active, disabled and invalid states are part of the API. Use semantic tokens, never raw brand colors.
 
 ## Third-party styling
-- Base UI owns behavior and accessibility. `sonner` is the toast engine only and injects **unlayered** CSS at runtime.
+- Base UI owns behavior and accessibility where a primitive is used. First-party controls (calendar, date/time, color, data grid) implement the equivalent focus, keyboard, ARIA and validation contract. `sonner` is the toast engine only and injects **unlayered** CSS at runtime.
 - Kit utilities that must beat sonner need the `!` important modifier, including `focus-visible` box-shadow/outline overrides.
 - Restyle sonner through `Toaster`'s `toastOptions.classNames`, not through global `[data-sonner-*]` selectors.
 
@@ -73,6 +73,6 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 5. Run typecheck, kit tests and the docs build; confirm focus, disabled, error and dark-mode states.
 
 ## Stack notes
-- Overlays/behavior: `@base-ui/react`. Toast: `sonner` (restyled via tokens).
+- Overlays/behavior: `@base-ui/react` where a primitive exists; first-party controls keep the same a11y contract. Toast: `sonner` (restyled via tokens). Data grid: TanStack Table/Virtual.
 - Prefer CSS transitions; avoid adding animation libraries for core MVP unless necessary.
 - When adding components, follow the token contract + these conventions and add/extend colocated tests.

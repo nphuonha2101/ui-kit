@@ -361,6 +361,23 @@
   }
 }
 
+/* Mobile navigation item entrance. The component sets a per-item animation
+ * delay, so large menu items rise in with a short stagger. */
+@utility mobile-nav-item {
+  animation: kit-mobile-nav-item var(--duration-ui-slow) var(--ease-out-ui) both;
+}
+
+@keyframes kit-mobile-nav-item {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes kit-progress-indeterminate {
   from {
     transform: translateX(-100%);

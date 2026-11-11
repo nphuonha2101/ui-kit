@@ -77,4 +77,30 @@ describe("MobileNav", () => {
       "/pricing",
     );
   });
+
+  it("staggers items and supports large centered items", async () => {
+    const user = userEvent.setup();
+    render(
+      <MobileNav
+        items={items}
+        size="lg"
+        itemsAlign="center"
+        defaultValue="home"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
+
+    const home = screen.getByRole("button", { name: "Home" });
+    expect(home).toHaveClass("text-[1.75rem]");
+    expect(home.parentElement).toHaveClass("mobile-nav-item");
+    expect(home.parentElement?.style.animationDelay).toBe("0ms");
+
+    const pricing = screen.getByRole("link", { name: "Pricing" });
+    expect(pricing.parentElement?.style.animationDelay).toBe("90ms");
+
+    expect(
+      screen.getByRole("navigation", { name: "Mobile navigation" }),
+    ).toHaveClass("justify-center");
+  });
 });

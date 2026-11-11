@@ -5,5 +5,12 @@ export const meta: ComponentMeta = {
   "title": "MobileNav",
   "description": "A compact mobile menu with an optional logo, collapsible submenus and multi-level items.",
   "category": "Navigation",
-  "imports": "import { MobileNav } from \"@nphuonha/ui-kit\";"
+  "imports": "import { MobileNav } from \"@nphuonha/ui-kit\";",
+  "examples": [
+    {
+      "title": "Large items",
+      "description": "Use size=\"lg\" and itemsAlign=\"center\" for a full-screen menu with display-sized items and a staggered entrance.",
+      "demoKey": "mobile-nav-large"
+    }
+  ]
 };

@@ -1746,6 +1746,18 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Panel edge."
     },
     {
+      "name": "size",
+      "type": "MobileNavSize",
+      "default": "\"default\"",
+      "description": "Item size. Use \"lg\" for full-screen menus with larger tap targets."
+    },
+    {
+      "name": "itemsAlign",
+      "type": "\"center\" | \"start\"",
+      "default": "\"start\"",
+      "description": "Vertical placement of the item list. Center keeps large items in easy thumb reach on full-screen menus."
+    },
+    {
       "name": "aria-label",
       "type": "string",
       "default": "\"Menu\"",

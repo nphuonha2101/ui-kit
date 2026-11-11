@@ -1,6 +1,6 @@
 # nphuonha UI
 
-**Solid, borderless React UI kit** built on **Base UI** and **Tailwind CSS v4**. Tonal surfaces, top-lit curves, accessible primitives and an accent you can change at runtime.
+**Solid, borderless React UI kit** for **Tailwind CSS v4**. Base UI supplies primitives where they exist; calendar, date/time, color and data-grid controls are first-party. Tonal surfaces, top-lit curves and an accent you can change at runtime.
 
 [![npm version](https://img.shields.io/npm/v/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
 [![CI/CD](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/nphuonha2101/ui-kit/actions/workflows/ci.yml)
@@ -11,7 +11,7 @@
 
 ## Why this kit
 
-- **Behavior from Base UI** — focus management, overlays and form semantics are accessible by default.
+- **Base UI where it fits** — overlays and form primitives use Base UI; calendar, date/time, color and data-grid controls are first-party with the same a11y contract.
 - **Owned visual language** — semantic tokens, solid filled surfaces and a top-lit curved edge; no gray outlined boxes.
 - **Runtime accent** — generate the full primary palette from one color and re-tone the whole app.
 - **Prop-driven API** — consistent variants, sizes, icons and loading semantics across components.

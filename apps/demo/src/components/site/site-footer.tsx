@@ -53,7 +53,8 @@ export function SiteFooter() {
             </Link>
             <p className="mt-4 max-w-[260px] text-sm leading-relaxed text-muted-foreground">
               Solid surfaces, borderless components and an accent you can change at
-              runtime. Built with React, Next.js and Base UI.
+              runtime. Built with React, Next.js, Tailwind v4 and Base UI where
+              primitives exist.
             </p>
           </div>
 

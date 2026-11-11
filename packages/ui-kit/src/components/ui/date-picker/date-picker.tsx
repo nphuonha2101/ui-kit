@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cn, hasErrorContent } from "../../../lib/utils";
-import { useKitIcon } from "../_shared/icon-provider";
+import { PickerTrigger } from "../_shared/picker-trigger";
 import { Button } from "../button";
 import {
   Calendar,
@@ -158,8 +158,6 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     } = props as DatePickerBaseProps;
 
     const isRange = props.mode === "range";
-    const CalendarIcon = useKitIcon("calendar");
-    const ChevronIcon = useKitIcon("chevronDown");
     const autoId = React.useId();
     const triggerId = id ?? autoId;
     const descriptionId = description ? `${triggerId}-description` : undefined;
@@ -333,42 +331,20 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           }
           className={cn("w-auto p-2.5", popoverClassName)}
           trigger={
-            <button
+            <PickerTrigger
               ref={ref}
               id={triggerId}
-              type="button"
               disabled={disabled}
+              invalid={invalid}
               aria-label={ariaLabel}
               aria-labelledby={ariaLabelledBy}
               aria-invalid={invalid || undefined}
               aria-describedby={describedBy}
               onBlur={onBlur}
-              className={cn(
-                "surface-inset flex h-10 w-full items-center gap-2 rounded-field bg-field px-3.5 text-sm text-field-foreground transition-[background-color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] outline-none",
-                "hover:bg-field-hover focus-visible:bg-field focus-visible:ring-2 focus-visible:ring-ring/35 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                "disabled:cursor-not-allowed disabled:opacity-45",
-                invalid && "bg-destructive/10 focus-visible:ring-destructive/30",
-              )}
+              placeholder={!hasValue}
             >
-              <CalendarIcon
-                size={16}
-                className="shrink-0 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <span
-                className={cn(
-                  "min-w-0 flex-1 truncate text-left",
-                  !hasValue && "text-muted-foreground/70",
-                )}
-              >
-                {displayValue}
-              </span>
-              <ChevronIcon
-                size={14}
-                className="shrink-0 text-muted-foreground"
-                aria-hidden="true"
-              />
-            </button>
+              {displayValue}
+            </PickerTrigger>
           }
         >
           {isRange ? (

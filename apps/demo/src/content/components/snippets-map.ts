@@ -10,8 +10,10 @@ import { snippets as toolbarSnippets } from "./toolbar/snippets";
 import { snippets as calendarSnippets } from "./calendar/snippets";
 import { snippets as checkboxSnippets } from "./checkbox/snippets";
 import { snippets as checkboxGroupSnippets } from "./checkbox-group/snippets";
+import { snippets as colorPickerSnippets } from "./color-picker/snippets";
 import { snippets as comboboxSnippets } from "./combobox/snippets";
 import { snippets as datePickerSnippets } from "./date-picker/snippets";
+import { snippets as dateTimePickerSnippets } from "./date-time-picker/snippets";
 import { snippets as fieldSnippets } from "./field/snippets";
 import { snippets as fieldsetSnippets } from "./fieldset/snippets";
 import { snippets as fileUploadSnippets } from "./file-upload/snippets";
@@ -24,6 +26,7 @@ import { snippets as selectSnippets } from "./select/snippets";
 import { snippets as sliderSnippets } from "./slider/snippets";
 import { snippets as switchSnippets } from "./switch/snippets";
 import { snippets as textareaSnippets } from "./textarea/snippets";
+import { snippets as timeFieldSnippets } from "./time-field/snippets";
 import { snippets as alertDialogSnippets } from "./alert-dialog/snippets";
 import { snippets as dialogSnippets } from "./dialog/snippets";
 import { snippets as popoverSnippets } from "./popover/snippets";
@@ -65,8 +68,10 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "calendar": calendarSnippets,
   "checkbox": checkboxSnippets,
   "checkbox-group": checkboxGroupSnippets,
+  "color-picker": colorPickerSnippets,
   "combobox": comboboxSnippets,
   "date-picker": datePickerSnippets,
+  "date-time-picker": dateTimePickerSnippets,
   "field": fieldSnippets,
   "fieldset": fieldsetSnippets,
   "file-upload": fileUploadSnippets,
@@ -79,6 +84,7 @@ const snippetsMap: Record<string, ComponentSnippets> = {
   "slider": sliderSnippets,
   "switch": switchSnippets,
   "textarea": textareaSnippets,
+  "time-field": timeFieldSnippets,
   "alert-dialog": alertDialogSnippets,
   "dialog": dialogSnippets,
   "popover": popoverSnippets,

@@ -557,6 +557,75 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Additional classes for the panel content."
     }
   ],
+  "color-picker": [
+    {
+      "name": "value",
+      "type": "string | null",
+      "description": "Controlled color as a hex string."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | null",
+      "description": "Initial color for uncontrolled usage."
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string | null) => void",
+      "description": "Called with a normalized lowercase hex string, or null when cleared."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables the trigger and popup controls."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the label as required. Use form rules to enforce the value."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Adds a Clear action to the popup."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Name for a hidden input with the hex value."
+    },
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "description": "Visible label."
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "description": "Helper text."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
+    },
+    {
+      "name": "swatches",
+      "type": "string[]",
+      "description": "Preset colors shown below the picker."
+    },
+    {
+      "name": "showEyeDropper",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows the eyedropper action when the browser supports it."
+    },
+    {
+      "name": "placeholder",
+      "type": "ReactNode",
+      "description": "Text shown when no color is selected."
+    }
+  ],
   "combobox": [
     {
       "name": "options",
@@ -1014,6 +1083,148 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "name": "placeholder",
       "type": "ReactNode",
       "description": "Text shown when no date is selected. Defaults to \"Pick a date\" in single mode and \"Pick a date range\" in range mode."
+    }
+  ],
+  "date-time-picker": [
+    {
+      "name": "mode",
+      "type": "\"single\" | \"range\"",
+      "default": "\"single\"",
+      "description": "Selection model. Selection model. Range uses { from, to } values."
+    },
+    {
+      "name": "value",
+      "type": "Date | DateTimeRange | null",
+      "description": "Controlled selection. Controlled range selection."
+    },
+    {
+      "name": "defaultValue",
+      "type": "Date | DateTimeRange | null",
+      "description": "Initial selection for uncontrolled usage. Initial range selection for uncontrolled usage."
+    },
+    {
+      "name": "onValueChange",
+      "type": "((value: Date | null) => void) | ((value: DateTimeRange) => void)",
+      "description": "Called when the selection changes. Called when the range changes."
+    },
+    {
+      "name": "defaultMonth",
+      "type": "Date",
+      "description": "Initial month shown in the popup."
+    },
+    {
+      "name": "onBlur",
+      "type": "FocusEventHandler<HTMLButtonElement>",
+      "description": "Blur handler for react-hook-form."
+    },
+    {
+      "name": "min",
+      "type": "Date",
+      "description": "Earliest allowed instant."
+    },
+    {
+      "name": "max",
+      "type": "Date",
+      "description": "Latest allowed instant."
+    },
+    {
+      "name": "dateDisabled",
+      "type": "(date: Date) => boolean",
+      "description": "Disables individual days."
+    },
+    {
+      "name": "locale",
+      "type": "Intl.LocalesArgument",
+      "description": "Locale used for the trigger label, calendar and time fields."
+    },
+    {
+      "name": "weekStartsOn",
+      "type": "CalendarWeekStartsOn",
+      "description": "First day of the week. Defaults to the locale's week info."
+    },
+    {
+      "name": "showOutsideDays",
+      "type": "boolean",
+      "default": "true",
+      "description": "Renders days from the previous and next months."
+    },
+    {
+      "name": "hourCycle",
+      "type": "12 | 24",
+      "default": "locale",
+      "description": "Display cycle for the time fields. Defaults to the locale."
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "default": "1",
+      "description": "Minute increment used by the time fields."
+    },
+    {
+      "name": "defaultTime",
+      "type": "string",
+      "default": "\"09:00\"",
+      "description": "Time used when a date is picked and no time has been chosen yet."
+    },
+    {
+      "name": "defaultEndTime",
+      "type": "string",
+      "default": "\"17:00\"",
+      "description": "End time used in range mode before an end time is chosen."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables the trigger."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the label as required. Use form rules to enforce the value."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Adds a Clear action to the popup."
+    },
+    {
+      "name": "showNow",
+      "type": "boolean",
+      "default": "false",
+      "description": "Adds a Now action to the popup."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Name for a hidden input with a YYYY-MM-DDTHH:mm value."
+    },
+    {
+      "name": "endName",
+      "type": "string",
+      "default": "name + \"-end\"",
+      "description": "Name for the range end hidden input."
+    },
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "description": "Visible label."
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "description": "Helper text."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
+    },
+    {
+      "name": "placeholder",
+      "type": "ReactNode",
+      "default": "\"Pick a date and time\"",
+      "description": "Text shown when no value is selected."
     }
   ],
   "desktop-nav": [
@@ -2243,6 +2454,91 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "name": "disabled",
       "type": "boolean",
       "description": "Disables the field."
+    }
+  ],
+  "time-field": [
+    {
+      "name": "value",
+      "type": "string | null",
+      "description": "Controlled value in 24-hour \"HH:mm\" form."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | null",
+      "description": "Initial value for uncontrolled usage."
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string | null) => void",
+      "description": "Called with \"HH:mm\" when the value is complete, or null when it is not."
+    },
+    {
+      "name": "hourCycle",
+      "type": "TimeFieldHourCycle",
+      "default": "locale",
+      "description": "Display cycle. Defaults to the locale's preferred cycle."
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "default": "1",
+      "description": "Minute increment used by arrow keys and snapping."
+    },
+    {
+      "name": "min",
+      "type": "string",
+      "description": "Earliest allowed time in \"HH:mm\" form."
+    },
+    {
+      "name": "max",
+      "type": "string",
+      "description": "Latest allowed time in \"HH:mm\" form."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables the field."
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "description": "Prevents edits while keeping the value readable."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "description": "Marks the label and group as required. Use form rules to enforce the value."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Name for a hidden input with an \"HH:mm\" value."
+    },
+    {
+      "name": "label",
+      "type": "ReactNode",
+      "description": "Visible label."
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "description": "Helper text."
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message and invalid state."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a Clear action when a value is present."
+    },
+    {
+      "name": "locale",
+      "type": "Intl.LocalesArgument",
+      "description": "Locale used for segment order, labels and digits."
     }
   ],
   "toaster": [

@@ -24,7 +24,9 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
+  ColorPicker,
   DatePicker,
+  DateTimePicker,
   DesktopNav,
   Dialog,
   EmptyState,
@@ -60,6 +62,7 @@ import {
   TableRow,
   Tabs,
   Textarea,
+  TimeField,
   Toaster,
   Toggle,
   ToggleGroup,
@@ -259,6 +262,17 @@ export const ssrFixtures: SsrFixture[] = [
     ),
   },
   {
+    name: "ColorPicker",
+    render: () => (
+      <ColorPicker
+        label="Brand color"
+        description="Choose an accent color."
+        defaultValue="#0d9488"
+        swatches={["#0d9488", "#e11d48"]}
+      />
+    ),
+  },
+  {
     name: "DatePicker",
     render: () => (
       <DatePicker
@@ -266,6 +280,17 @@ export const ssrFixtures: SsrFixture[] = [
         description="Choose a launch date."
         locale="en-US"
         defaultValue={new Date(2026, 0, 15)}
+      />
+    ),
+  },
+  {
+    name: "DateTimePicker",
+    render: () => (
+      <DateTimePicker
+        label="Publish at"
+        description="Choose a date and time."
+        locale="en-US"
+        defaultValue={new Date(2026, 0, 15, 9, 30)}
       />
     ),
   },
@@ -475,6 +500,17 @@ export const ssrFixtures: SsrFixture[] = [
   {
     name: "Textarea",
     render: () => <Textarea placeholder="Message" />,
+  },
+  {
+    name: "TimeField",
+    render: () => (
+      <TimeField
+        label="Opening time"
+        description="When the store opens."
+        locale="en-US"
+        defaultValue="09:30"
+      />
+    ),
   },
   {
     name: "Toaster",

@@ -28,6 +28,48 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.14.0",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Additive release: ColorPicker (hex, presets, optional eyedropper), TimeField (accessible segmented HH:mm) and DateTimePicker (local single/range selection with default 09:00/17:00 times). No existing APIs change.",
+    changes: [
+      {
+        id: "color-picker-0-14-0",
+        kind: "additive",
+        surface: "ColorPicker",
+        before:
+          "Color choice relied on a native <input type=\"color\">, which is hard to style, inconsistent across browsers and cannot show presets or a hex field.",
+        after:
+          'import { ColorPicker } from "@nphuonha/ui-kit";\n\n<ColorPicker label="Brand color" value={color} onValueChange={setColor} swatches={["#0d9488", "#e11d48"]} clearable />',
+        find: '<input type="color"',
+        fix: "Nothing required. Replace native color inputs with ColorPicker for a themed trigger, saturation/hue controls, hex input, presets and an optional eyedropper. Values are normalized #rrggbb strings.",
+      },
+      {
+        id: "time-field-0-14-0",
+        kind: "additive",
+        surface: "TimeField",
+        before:
+          "Time entry used a native <input type=\"time\"> or free-form text, with inconsistent styling, parsing and keyboard behavior.",
+        after:
+          'import { TimeField } from "@nphuonha/ui-kit";\n\n<TimeField label="Opening time" value={time} onValueChange={setTime} hourCycle={24} step={15} clearable />',
+        find: '<input type="time"',
+        fix: "Nothing required. TimeField stores canonical 24-hour \"HH:mm\" strings, shows locale-ordered hour/minute (and AM/PM) segments, and supports step, min/max, required/error and a hidden input for forms.",
+      },
+      {
+        id: "date-time-picker-0-14-0",
+        kind: "additive",
+        surface: "DateTimePicker",
+        before:
+          "Date and time selection required composing Calendar, a time input and popover state manually; native <input type=\"datetime-local\"> could not show a calendar or range.",
+        after:
+          'import { DateTimePicker } from "@nphuonha/ui-kit";\n\n<DateTimePicker label="Publish at" value={value} onValueChange={setValue} clearable showNow />',
+        find: '<input type="datetime-local"',
+        fix: "Nothing required. Single mode uses Date; range mode uses { from, to }. Values are local time, default times are 09:00/17:00 (override with defaultTime/defaultEndTime), and hidden inputs submit YYYY-MM-DDTHH:mm values.",
+      },
+    ],
+  },
+  {
     version: "0.13.1",
     date: "2026-11-11",
     breaking: false,

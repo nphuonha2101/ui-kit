@@ -24,7 +24,11 @@ test("data-table docs demo: search, sort, paginate", async ({ page }) => {
   await search.fill("");
   await expect(table.getByRole("cell", { name: "Acme Studio" })).toBeVisible();
 
-  await page.getByRole("button", { name: "Page 2" }).click();
+  await page
+    .getByRole("navigation", { name: "Pagination" })
+    .first()
+    .getByRole("button", { name: "Page 2" })
+    .click();
   await expect(table.getByRole("row")).toHaveCount(3);
 });
 

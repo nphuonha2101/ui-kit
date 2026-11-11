@@ -152,13 +152,15 @@ export function DataTable<T>({
     return sortKey ? [{ id: sortKey, desc: (sortDirection ?? "asc") === "desc" }] : [];
   }, [isSortControlled, internalSorting, sortKey, sortDirection]);
 
-  const pagination: PaginationState = React.useMemo(
-    () => ({
-      pageIndex: isPageControlled ? (page ?? 1) - 1 : internalPagination.pageIndex,
+  const maxPageIndex = Math.max(Math.ceil(rows.length / effectivePageSize) - 1, 0);
+
+  const pagination: PaginationState = React.useMemo(() => {
+    const rawIndex = isPageControlled ? (page ?? 1) - 1 : internalPagination.pageIndex;
+    return {
+      pageIndex: Math.min(Math.max(rawIndex, 0), maxPageIndex),
       pageSize: effectivePageSize,
-    }),
-    [isPageControlled, page, internalPagination.pageIndex, effectivePageSize],
-  );
+    };
+  }, [isPageControlled, page, internalPagination.pageIndex, effectivePageSize, maxPageIndex]);
 
   const rowSelection: RowSelectionState = React.useMemo(() => {
     if (selectedIds !== undefined) {

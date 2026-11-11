@@ -92,6 +92,76 @@ describe("DataTable", () => {
     expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
   });
 
+  it("clamps to the last valid page when rows shrink", async () => {
+    const user = userEvent.setup();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    const { rerender } = render(
+      <DataTable
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Page 3" }));
+    expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
+
+    rerender(
+      <DataTable
+        columns={columns}
+        rows={many.slice(0, 7)}
+        getRowId={(row) => row.id}
+        pageSize={5}
+      />,
+    );
+    expect(screen.getByText("Showing 6–7 of 7")).toBeInTheDocument();
+  });
+
+  it("clamps an out-of-range controlled page", () => {
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        page={99}
+      />,
+    );
+
+    expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
+  });
+
+  it("reports controlled sorting without changing order", async () => {
+    const user = userEvent.setup();
+    const onSortChange = vi.fn();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        sortKey="amount"
+        sortDirection="desc"
+        onSortChange={onSortChange}
+      />,
+    );
+
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(onSortChange).toHaveBeenLastCalledWith("id", "asc");
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+  });
+
   it("selects rows and reports selection changes", async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
@@ -111,6 +181,24 @@ describe("DataTable", () => {
 
     await user.click(screen.getByRole("checkbox", { name: "Select row INV-001" }));
     expect(onSelectionChange).toHaveBeenLastCalledWith(["INV-003", "INV-002"]);
+  });
+
+  it("shows a mixed state when only some rows are selected", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        selectable
+      />,
+    );
+
+    await user.click(screen.getByRole("checkbox", { name: "Select row INV-001" }));
+    expect(
+      screen.getByRole("checkbox", { name: "Select all rows on this page" }),
+    ).toHaveAttribute("aria-checked", "mixed");
   });
 
   it("renders an empty state when there are no rows", () => {

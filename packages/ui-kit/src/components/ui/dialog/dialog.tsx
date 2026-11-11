@@ -52,7 +52,7 @@ export function Dialog({
           {...kitScope}
           aria-label={ariaLabel}
           className={cn(
-            "surface-curved fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 grid-cols-1 gap-5 rounded-overlay bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
+            "surface-curved fixed left-1/2 top-1/2 z-50 flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 flex-col gap-5 rounded-overlay bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
             "transition-[opacity,transform] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]",
             "data-[starting-style]:opacity-0 data-[starting-style]:-translate-x-1/2 data-[starting-style]:-translate-y-[47%] data-[starting-style]:scale-[0.97]",
             "data-[ending-style]:opacity-0 data-[ending-style]:-translate-x-1/2 data-[ending-style]:-translate-y-[47%] data-[ending-style]:scale-[0.97]",
@@ -60,7 +60,7 @@ export function Dialog({
           )}
         >
           {(title || description || showClose) && (
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex shrink-0 items-start justify-between gap-4">
               <div className="grid gap-1">
                 {title ? <DialogPrimitive.Title className="text-lg font-semibold tracking-[-0.02em] leading-tight">{title}</DialogPrimitive.Title> : null}
                 {description ? <DialogPrimitive.Description className="text-sm leading-relaxed text-muted-foreground">{description}</DialogPrimitive.Description> : null}
@@ -72,8 +72,14 @@ export function Dialog({
               ) : null}
             </div>
           )}
-          <div className="min-w-0">{children}</div>
-          {footer ? <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">{footer}</div> : null}
+          <div className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
+            {children}
+          </div>
+          {footer ? (
+            <div className="flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              {footer}
+            </div>
+          ) : null}
         </DialogPrimitive.Popup>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>

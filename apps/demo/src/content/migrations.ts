@@ -28,6 +28,37 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.13.1",
+    date: "2026-11-11",
+    breaking: false,
+    summary:
+      "Patch release: Dialog caps itself to the viewport and scrolls its body, keeping the header and footer in reach on short screens. scrollbar-styled uses the platform scrollbar width in Firefox instead of a hairline. No API changes.",
+    changes: [
+      {
+        id: "dialog-viewport-scroll-0-13-1",
+        kind: "behavior",
+        surface: "Dialog",
+        before:
+          "The popup had no height cap, so long content could push the title or footer outside the viewport on short screens — with page scroll locked behind the modal, those parts were unreachable.",
+        after:
+          "The popup is capped at calc(100dvh - 2rem). The body becomes the scroll area while the header and footer stay fixed, so long release notes and forms remain fully reachable.",
+        find: "<Dialog",
+        fix: "Nothing required. Keep title and description short and pass long copy as children. Custom layouts rendered inside Dialog should keep min-h-0 so they can shrink and scroll.",
+      },
+      {
+        id: "firefox-scrollbar-width-0-13-1",
+        kind: "behavior",
+        surface: "scrollbar-styled",
+        before:
+          "Firefox rendered scrollbar-styled with scrollbar-width: thin, which resolves to a hairline bar that is hard to see and drag.",
+        after:
+          "Firefox uses scrollbar-width: auto (the platform width); WebKit keeps the 8px custom bar. scrollbar-none still opts out.",
+        find: "scrollbar-styled",
+        fix: "Nothing required. Add scrollbar-none to any container that should keep the previous opt-out behavior.",
+      },
+    ],
+  },
+  {
     version: "0.13.0",
     date: "2026-11-11",
     breaking: false,

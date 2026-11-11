@@ -40,6 +40,11 @@ test("data-table docs demo: selection reflects in the readout", async ({ page })
   await expect(rowCheckbox).toBeChecked();
   await expect(page.getByText("Selected: INV-001")).toBeVisible();
 
+  const heights = await selectionTable
+    .locator("tbody tr")
+    .evaluateAll((rows) => rows.map((row) => Math.round(row.getBoundingClientRect().height)));
+  expect(new Set(heights).size).toBe(1);
+
   const selectAll = selectionTable.getByRole("checkbox", {
     name: "Select all rows on this page",
   });

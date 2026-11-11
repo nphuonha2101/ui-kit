@@ -518,6 +518,7 @@ export function DataTable<T>({
         {selectable ? (
           <TableHead className={cn("w-10", stickyHeadClassName)}>
             <Checkbox
+              className="flex"
               aria-label={selectAllLabel}
               checked={table.getIsAllPageRowsSelected()}
               indeterminate={table.getIsSomePageRowsSelected()}
@@ -699,6 +700,7 @@ export function DataTable<T>({
                     {selectable ? (
                       <TableCell>
                         <Checkbox
+                          className="flex"
                           aria-label={
                             getRowLabel?.(row.original, originalIndex.get(row.original) ?? 0) ??
                             `Select row ${row.id}`

@@ -793,6 +793,41 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Text matched against the search. Defaults to joining sortable column values."
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows skeleton rows while data is loading."
+    },
+    {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "default": "false",
+      "description": "Keeps header cells visible while the page scrolls."
+    },
+    {
+      "name": "manualPagination",
+      "type": "boolean",
+      "default": "false",
+      "description": "Pagination is handled by the caller. Set `rowCount` to the server total and control `page`/`onPageChange`."
+    },
+    {
+      "name": "rowCount",
+      "type": "number",
+      "description": "Total rows on the server when `manualPagination` is set."
+    },
+    {
+      "name": "manualSorting",
+      "type": "boolean",
+      "default": "false",
+      "description": "Sorting is handled by the caller. Pair with controlled `sortKey`."
+    },
+    {
+      "name": "manualFiltering",
+      "type": "boolean",
+      "default": "false",
+      "description": "Filtering is handled by the caller. Pair with controlled `searchValue`."
+    },
+    {
       "name": "containerClassName",
       "type": "string",
       "description": "Extra classes for the scroll container around the table."

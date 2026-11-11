@@ -50,6 +50,47 @@ export function Example() {
   pageSize={5}
 />`,
   "examples": {
+    "data-table-async": `const [page, setPage] = React.useState(1);
+const [sortKey, setSortKey] = React.useState<string | null>("id");
+const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc");
+const [search, setSearch] = React.useState("");
+const [loading, setLoading] = React.useState(true);
+const [result, setResult] = React.useState({ rows: [], total: 0 });
+
+React.useEffect(() => {
+  setLoading(true);
+  fetchInvoices({ page, pageSize, sortKey, sortDirection, search })
+    .then((response) => setResult(response))
+    .finally(() => setLoading(false));
+}, [page, pageSize, sortKey, sortDirection, search]);
+
+<DataTable
+  columns={columns}
+  rows={result.rows}
+  getRowId={(row) => row.id}
+  caption="Invoices"
+  pageSize={pageSize}
+  searchable
+  searchValue={search}
+  onSearchChange={(value) => {
+    setSearch(value);
+    setPage(1);
+  }}
+  sortKey={sortKey}
+  sortDirection={sortDirection}
+  onSortChange={(key, direction) => {
+    setSortKey(key);
+    setSortDirection(direction);
+    setPage(1);
+  }}
+  manualSorting
+  manualFiltering
+  manualPagination
+  rowCount={result.total}
+  page={page}
+  onPageChange={setPage}
+  loading={loading}
+/>`,
     "data-table-selection": `const [selectedIds, setSelectedIds] = React.useState<string[]>([]);
 
 <DataTable

@@ -32,7 +32,7 @@ export const releases: ReleaseMigration[] = [
     date: "2026-11-11",
     breaking: false,
     summary:
-      "Additive release: DataTable brings sorting, search, client-side pagination, row selection and custom action columns on top of the Table primitives. Existing imports and props keep working.",
+      "Additive release: DataTable brings sorting, search, client-side pagination, row selection, server-side pagination/sorting/filtering with loading skeletons, and custom action columns on top of the Table primitives. Existing imports and props keep working.",
     changes: [
       {
         id: "data-table-0-13-0",
@@ -43,7 +43,7 @@ export const releases: ReleaseMigration[] = [
         after:
           'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable caption="Invoices" columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} searchable />',
         find: "<Table",
-        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, add searchable with getSearchText for render-only columns, or add selectable for checkboxes and an action column for row buttons and dialogs.",
+        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, add searchable with getSearchText for render-only columns, add selectable for checkboxes, use manualPagination/manualSorting/manualFiltering with rowCount and loading for server data, or add an action column for row buttons and dialogs.",
       },
     ],
   },

@@ -151,8 +151,94 @@ function ActionsExample() {
   );
 }
 
+const asyncInvoices: Invoice[] = Array.from({ length: 5000 }, (_, index) => ({
+  id: `INV-${String(index + 1).padStart(5, "0")}`,
+  client: `Client ${index + 1}`,
+  status: (["Paid", "Pending", "Overdue"] as const)[index % 3],
+  amount: 100 + index * 7,
+}));
+
+function sortInvoices(list: Invoice[], key: string | null, direction: "asc" | "desc") {
+  if (!key) return list;
+  const sorted = [...list].sort((a, b) => {
+    if (key === "amount") return a.amount - b.amount;
+    return String(a[key as "id" | "client" | "status"]).localeCompare(
+      String(b[key as "id" | "client" | "status"]),
+      "en",
+      { numeric: true },
+    );
+  });
+  return direction === "desc" ? sorted.reverse() : sorted;
+}
+
+function AsyncExample() {
+  const [page, setPage] = React.useState(1);
+  const [sortKey, setSortKey] = React.useState<string | null>("id");
+  const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc");
+  const [search, setSearch] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
+  const [result, setResult] = React.useState<{ rows: Invoice[]; total: number }>({
+    rows: [],
+    total: 0,
+  });
+  const pageSize = 8;
+
+  React.useEffect(() => {
+    setLoading(true);
+    const timer = window.setTimeout(() => {
+      const query = search.trim().toLowerCase();
+      const filtered = query
+        ? asyncInvoices.filter((invoice) =>
+            `${invoice.id} ${invoice.client} ${invoice.status} ${invoice.amount}`
+              .toLowerCase()
+              .includes(query),
+          )
+        : asyncInvoices;
+      const sorted = sortInvoices(filtered, sortKey, sortDirection);
+      const start = (page - 1) * pageSize;
+      setResult({ rows: sorted.slice(start, start + pageSize), total: sorted.length });
+      setLoading(false);
+    }, 450);
+    return () => window.clearTimeout(timer);
+  }, [page, sortKey, sortDirection, search]);
+
+  return (
+    <Card className="w-full overflow-hidden p-2">
+      <DataTable
+        columns={columns}
+        rows={result.rows}
+        getRowId={(row) => row.id}
+        caption="Server-paginated invoices"
+        pageSize={pageSize}
+        searchable
+        searchPlaceholder="Search 5,000 invoices…"
+        searchValue={search}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
+        sortKey={sortKey}
+        sortDirection={sortDirection}
+        onSortChange={(key, direction) => {
+          setSortKey(key);
+          setSortDirection(direction);
+          setPage(1);
+        }}
+        manualSorting
+        manualFiltering
+        manualPagination
+        rowCount={result.total}
+        page={page}
+        onPageChange={setPage}
+        loading={loading}
+      />
+    </Card>
+  );
+}
+
 export const demo = DataTableDemo;
 export const examples = {
   "data-table-selection": SelectionExample,
   "data-table-actions": ActionsExample,
+  "data-table-async": AsyncExample,
 };

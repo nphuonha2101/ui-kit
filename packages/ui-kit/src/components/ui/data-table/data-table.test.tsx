@@ -903,4 +903,142 @@ describe("DataTable", () => {
 
     expect(screen.getByText("No rows")).toBeInTheDocument();
   });
+
+  it("shows skeleton rows while loading", () => {
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        searchable
+        loading
+      />,
+    );
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("table").closest("[aria-busy]")).toHaveAttribute(
+      "aria-busy",
+      "true",
+    );
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    expect(screen.queryByRole("cell", { name: "Acme Studio" })).not.toBeInTheDocument();
+    expect(screen.queryByText("No rows")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Page 2" })).not.toBeInTheDocument();
+  });
+
+  it("supports manual pagination with a server row count", async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn();
+    const pageRows = Array.from({ length: 10 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={pageRows}
+        getRowId={(row) => row.id}
+        pageSize={10}
+        page={1}
+        onPageChange={onPageChange}
+        manualPagination
+        rowCount={95}
+        searchable
+      />,
+    );
+
+    expect(screen.getByText("95 results")).toBeInTheDocument();
+    expect(screen.getByText("Showing 1–10 of 95")).toBeInTheDocument();
+    expect(screen.getByRole("table").querySelectorAll("tbody tr")).toHaveLength(10);
+
+    await user.click(screen.getByRole("button", { name: "Page 2" }));
+    expect(onPageChange).toHaveBeenLastCalledWith(2);
+  });
+
+  it("does not reorder rows in manual sorting mode", async () => {
+    const user = userEvent.setup();
+    const onSortChange = vi.fn();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        manualSorting
+        onSortChange={onSortChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(onSortChange).toHaveBeenLastCalledWith("id", "asc");
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+  });
+
+  it("does not filter rows in manual filtering mode", async () => {
+    const user = userEvent.setup();
+    const onSearchChange = vi.fn();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+        manualFiltering
+        onSearchChange={onSearchChange}
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "zzz");
+    expect(onSearchChange).toHaveBeenLastCalledWith("zzz");
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+  });
+
+  it("sticks the header when requested", () => {
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        pageSize={0}
+        stickyHeader
+      />,
+    );
+
+    expect(screen.getByRole("columnheader", { name: /invoice/i }).className).toContain(
+      "sticky",
+    );
+  });
+
+  it("renders only one page for a large dataset", async () => {
+    const user = userEvent.setup();
+    const many = Array.from({ length: 5000 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(5, "0")}`,
+      client: `Row ${index + 1}`,
+      amount: index + 1,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={10}
+        searchable
+      />,
+    );
+
+    expect(screen.getByRole("table").querySelectorAll("tbody tr")).toHaveLength(10);
+    expect(screen.getByText("5000 of 5000")).toBeInTheDocument();
+
+    await user.type(screen.getByLabelText("Search table"), "Row 4999");
+    expect(screen.getByRole("table").querySelectorAll("tbody tr")).toHaveLength(1);
+    expect(screen.getByRole("cell", { name: "Row 4999" })).toBeInTheDocument();
+  });
 });

@@ -90,3 +90,18 @@ test("data-table docs demo: keyboard sorting and selection", async ({ page }) =>
   await page.keyboard.press("Space");
   await expect(checkbox).toBeChecked();
 });
+
+test("data-table async example: loads server data and searches", async ({ page }) => {
+  await page.goto("/docs/components/data-table");
+  await waitForHydration(page);
+
+  const table = page.getByRole("table").nth(3);
+  await expect(table).toBeVisible();
+  await expect(page.getByText("5000 results")).toBeVisible({ timeout: 8000 });
+
+  await page.getByLabel("Search table").nth(1).fill("Client 4999");
+  await expect(table.getByRole("cell", { name: "Client 4999" })).toBeVisible({
+    timeout: 8000,
+  });
+  await expect(page.getByText("1 result")).toBeVisible({ timeout: 8000 });
+});

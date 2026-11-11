@@ -19,6 +19,7 @@ import { Checkbox } from "../checkbox";
 import { EmptyState } from "../empty-state";
 import { Input } from "../input";
 import { Pagination } from "../pagination";
+import { Skeleton } from "../skeleton";
 import {
   Table,
   TableBody,
@@ -120,6 +121,21 @@ export interface DataTableProps<T>
   onSearchChange?: (value: string) => void;
   /** Text matched against the search. Defaults to joining sortable column values. */
   getSearchText?: (row: T) => string;
+  /** Shows skeleton rows while data is loading. */
+  loading?: boolean;
+  /** Keeps header cells visible while the page scrolls. */
+  stickyHeader?: boolean;
+  /**
+   * Pagination is handled by the caller. Set `rowCount` to the server total
+   * and control `page`/`onPageChange`.
+   */
+  manualPagination?: boolean;
+  /** Total rows on the server when `manualPagination` is set. */
+  rowCount?: number;
+  /** Sorting is handled by the caller. Pair with controlled `sortKey`. */
+  manualSorting?: boolean;
+  /** Filtering is handled by the caller. Pair with controlled `searchValue`. */
+  manualFiltering?: boolean;
   /** Extra classes for the scroll container around the table. */
   containerClassName?: string;
 }
@@ -169,6 +185,12 @@ export function DataTable<T>({
   defaultSearchValue = "",
   onSearchChange,
   getSearchText,
+  loading = false,
+  stickyHeader = false,
+  manualPagination = false,
+  rowCount,
+  manualSorting = false,
+  manualFiltering = false,
   className,
   containerClassName,
   ...props
@@ -221,9 +243,14 @@ export function DataTable<T>({
     [rows, matchesSearch],
   );
   const filteredCount = React.useMemo(
-    () => matchedFlags.reduce((count, matched) => (matched ? count + 1 : count), 0),
-    [matchedFlags],
+    () =>
+      manualFiltering
+        ? rows.length
+        : matchedFlags.reduce((count, matched) => (matched ? count + 1 : count), 0),
+    [manualFiltering, rows.length, matchedFlags],
   );
+  const total = manualPagination ? (rowCount ?? rows.length) : filteredCount;
+  const manualPageCount = Math.max(1, Math.ceil(total / effectivePageSize));
 
   // Original position per row, so labels stay stable after sorting/filtering.
   const originalIndex = React.useMemo(() => {
@@ -239,7 +266,7 @@ export function DataTable<T>({
     return sortKey ? [{ id: sortKey, desc: (sortDirection ?? "asc") === "desc" }] : [];
   }, [isSortControlled, internalSorting, sortKey, sortDirection]);
 
-  const maxPageIndex = Math.max(Math.ceil(filteredCount / effectivePageSize) - 1, 0);
+  const maxPageIndex = Math.max(Math.ceil(total / effectivePageSize) - 1, 0);
 
   const pagination: PaginationState = React.useMemo(() => {
     const rawIndex = isPageControlled ? (page ?? 1) - 1 : internalPagination.pageIndex;
@@ -363,11 +390,14 @@ export function DataTable<T>({
     enableRowSelection: selectable,
     enableSortingRemoval: false,
     autoResetPageIndex: !isPageControlled,
+    manualPagination,
+    manualSorting,
+    manualFiltering,
+    pageCount: manualPagination ? manualPageCount : undefined,
   });
 
   const pageRows = table.getRowModel().rows;
-  const total = filteredCount;
-  const pageCount = table.getPageCount();
+  const pageCount = manualPagination ? manualPageCount : table.getPageCount();
   const activePageIndex = table.getState().pagination.pageIndex;
   const rangeStart = total === 0 ? 0 : activePageIndex * effectivePageSize + 1;
   const rangeEnd =
@@ -375,8 +405,73 @@ export function DataTable<T>({
       ? Math.min(activePageIndex * effectivePageSize + effectivePageSize, total)
       : total;
 
+  const stickyHeadClassName = stickyHeader ? "sticky top-0 z-10 bg-card" : undefined;
+
+  const tableHeader = (
+    <TableHeader>
+      <TableRow>
+        {selectable ? (
+          <TableHead className={cn("w-10", stickyHeadClassName)}>
+            <Checkbox
+              aria-label={selectAllLabel}
+              checked={table.getIsAllPageRowsSelected()}
+              indeterminate={table.getIsSomePageRowsSelected()}
+              onCheckedChange={(checked) =>
+                table.toggleAllPageRowsSelected(checked === true)
+              }
+            />
+          </TableHead>
+        ) : null}
+        {columns.map((column) => {
+          const tableColumn = table.getColumn(column.key);
+          const sorted = tableColumn?.getIsSorted() ?? false;
+          const canSort = tableColumn?.getCanSort() ?? false;
+          return (
+            <TableHead
+              key={column.key}
+              aria-sort={
+                canSort
+                  ? sorted === "asc"
+                    ? "ascending"
+                    : sorted === "desc"
+                      ? "descending"
+                      : "none"
+                  : undefined
+              }
+              className={cn(column.headerClassName, stickyHeadClassName)}
+            >
+              {canSort ? (
+                <button
+                  type="button"
+                  onClick={tableColumn?.getToggleSortingHandler()}
+                  className="inline-flex items-center gap-1 rounded-xs transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40"
+                >
+                  <span>{column.header}</span>
+                  <ChevronDownIcon
+                    size={13}
+                    className={cn(
+                      "transition-transform duration-[var(--duration-ui)]",
+                      sorted === "asc" && "rotate-180",
+                      !sorted && "opacity-40",
+                    )}
+                  />
+                </button>
+              ) : (
+                column.header
+              )}
+            </TableHead>
+          );
+        })}
+      </TableRow>
+    </TableHeader>
+  );
+
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)} {...props}>
+    <div
+      className={cn("flex w-full flex-col gap-3", className)}
+      aria-busy={loading || undefined}
+      {...props}
+    >
       {searchable ? (
         <div className="flex items-center justify-between gap-3">
           <Input
@@ -390,71 +485,46 @@ export function DataTable<T>({
             aria-live="polite"
             className="font-mono text-[11px] text-muted-foreground"
           >
-            {total} of {rows.length}
+            {loading
+              ? "Loading…"
+              : manualPagination
+                ? `${total} result${total === 1 ? "" : "s"}`
+                : `${total} of ${rows.length}`}
           </p>
         </div>
       ) : null}
-      {total === 0 ? (
+      {loading ? (
+        <Table containerClassName={containerClassName}>
+          <caption className="sr-only">{caption}</caption>
+          {tableHeader}
+          <TableBody>
+            {Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {selectable ? (
+                  <TableCell>
+                    <Skeleton className="size-5 rounded-xs" />
+                  </TableCell>
+                ) : null}
+                {columns.map((column, columnIndex) => (
+                  <TableCell key={column.key}>
+                    <Skeleton
+                      className={cn(
+                        "h-4",
+                        (rowIndex + columnIndex) % 3 === 0 ? "w-24" : "w-32",
+                      )}
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : total === 0 ? (
         <EmptyState size="sm" title={emptyTitle} description={emptyDescription} />
       ) : (
         <Table containerClassName={containerClassName}>
           <caption className="sr-only">{caption}</caption>
-          <TableHeader>
-            <TableRow>
-              {selectable ? (
-                <TableHead className="w-10">
-                  <Checkbox
-                    aria-label={selectAllLabel}
-                    checked={table.getIsAllPageRowsSelected()}
-                    indeterminate={table.getIsSomePageRowsSelected()}
-                    onCheckedChange={(checked) =>
-                      table.toggleAllPageRowsSelected(checked === true)
-                    }
-                  />
-                </TableHead>
-              ) : null}
-              {columns.map((column) => {
-                const tableColumn = table.getColumn(column.key);
-                const sorted = tableColumn?.getIsSorted() ?? false;
-                const canSort = tableColumn?.getCanSort() ?? false;
-                return (
-                  <TableHead
-                    key={column.key}
-                    aria-sort={
-                      canSort
-                        ? sorted === "asc"
-                          ? "ascending"
-                          : sorted === "desc"
-                            ? "descending"
-                            : "none"
-                        : undefined
-                    }
-                    className={column.headerClassName}
-                  >
-                    {canSort ? (
-                      <button
-                        type="button"
-                        onClick={tableColumn?.getToggleSortingHandler()}
-                        className="inline-flex items-center gap-1 rounded-xs transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40"
-                      >
-                        <span>{column.header}</span>
-                        <ChevronDownIcon
-                          size={13}
-                          className={cn(
-                            "transition-transform duration-[var(--duration-ui)]",
-                            sorted === "asc" && "rotate-180",
-                            !sorted && "opacity-40",
-                          )}
-                        />
-                      </button>
-                    ) : (
-                      column.header
-                    )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          </TableHeader>
+          {tableHeader}
           <TableBody>
             {pageRows.map((row) => {
               const selected = row.getIsSelected();
@@ -483,7 +553,7 @@ export function DataTable<T>({
           </TableBody>
         </Table>
       )}
-      {pageSize > 0 && pageCount > 1 ? (
+      {!loading && pageSize > 0 && pageCount > 1 ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[11px] text-muted-foreground">
             {showingLabel

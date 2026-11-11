@@ -1,6 +1,17 @@
 "use client";
 
 import * as React from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type ColumnDef,
+  type PaginationState,
+  type Row,
+  type RowSelectionState,
+  type SortingState,
+} from "@tanstack/react-table";
 import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { Checkbox } from "../checkbox";
@@ -80,22 +91,19 @@ export interface DataTableProps<T>
   containerClassName?: string;
 }
 
-function compareValues(
+/** Ascending comparison with nullish values last. TanStack inverts for desc. */
+function compareAscending(
   a: string | number | null | undefined,
   b: string | number | null | undefined,
-  direction: DataTableSortDirection,
 ) {
   if (a == null && b == null) return 0;
   if (a == null) return 1;
   if (b == null) return -1;
-  if (typeof a === "number" && typeof b === "number") {
-    return direction === "asc" ? a - b : b - a;
-  }
-  const result = String(a).localeCompare(String(b), undefined, {
+  if (typeof a === "number" && typeof b === "number") return a - b;
+  return String(a).localeCompare(String(b), undefined, {
     numeric: true,
     sensitivity: "base",
   });
-  return direction === "asc" ? result : -result;
 }
 
 export function DataTable<T>({
@@ -124,101 +132,115 @@ export function DataTable<T>({
   ...props
 }: DataTableProps<T>) {
   const ChevronDownIcon = useKitIcon("chevronDown");
-  const resolveId = React.useCallback(
-    (row: T, index: number) => getRowId?.(row, index) ?? String(index),
-    [getRowId],
+  const isPageControlled = page !== undefined;
+  const isSortControlled = sortKey !== undefined || sortDirection !== undefined;
+  const effectivePageSize = pageSize > 0 ? pageSize : Math.max(rows.length, 1);
+
+  const [internalSorting, setInternalSorting] = React.useState<SortingState>(() =>
+    defaultSortKey
+      ? [{ id: defaultSortKey, desc: defaultSortDirection === "desc" }]
+      : [],
+  );
+  const [internalPagination, setInternalPagination] =
+    React.useState<PaginationState>({ pageIndex: defaultPage - 1, pageSize });
+  const [internalSelection, setInternalSelection] = React.useState<RowSelectionState>(() =>
+    Object.fromEntries(defaultSelectedIds.map((id) => [id, true])),
   );
 
-  const [internalSortKey, setInternalSortKey] = React.useState<string | null>(defaultSortKey);
-  const [internalDirection, setInternalDirection] =
-    React.useState<DataTableSortDirection>(defaultSortDirection);
-  const activeSortKey = sortKey !== undefined ? sortKey : internalSortKey;
-  const activeDirection = sortDirection ?? internalDirection;
+  const sorting: SortingState = React.useMemo(() => {
+    if (!isSortControlled) return internalSorting;
+    return sortKey ? [{ id: sortKey, desc: (sortDirection ?? "asc") === "desc" }] : [];
+  }, [isSortControlled, internalSorting, sortKey, sortDirection]);
 
-  const [internalPage, setInternalPage] = React.useState(defaultPage);
-  const [internalSelected, setInternalSelected] = React.useState<string[]>(defaultSelectedIds);
-  const activeSelected = selectedIds ?? internalSelected;
-
-  const sorted = React.useMemo(() => {
-    const column = columns.find((entry) => entry.key === activeSortKey);
-    if (!column?.sortable || !column.sortValue) return rows;
-    const { sortValue } = column;
-    return rows
-      .map((row, index) => ({ row, index }))
-      .sort((a, b) => {
-        const result = compareValues(sortValue(a.row), sortValue(b.row), activeDirection);
-        return result !== 0 ? result : a.index - b.index;
-      })
-      .map((entry) => entry.row);
-  }, [columns, rows, activeSortKey, activeDirection]);
-
-  const paginated = pageSize > 0;
-  const pageCount = paginated ? Math.max(1, Math.ceil(sorted.length / pageSize)) : 1;
-  const activePage = Math.min(Math.max(page ?? internalPage, 1), pageCount);
-
-  React.useEffect(() => {
-    if (page === undefined) {
-      setInternalPage((current) => Math.min(Math.max(current, 1), pageCount));
-    }
-  }, [page, pageCount]);
-
-  const resetPage = React.useCallback(() => {
-    if (page === undefined) setInternalPage(1);
-  }, [page]);
-
-  const visibleRows = paginated
-    ? sorted.slice((activePage - 1) * pageSize, activePage * pageSize)
-    : sorted;
-
-  const changeSort = (key: string) => {
-    const nextDirection =
-      activeSortKey === key ? (activeDirection === "asc" ? "desc" : "asc") : "asc";
-    if (sortKey === undefined) setInternalSortKey(key);
-    if (sortDirection === undefined) setInternalDirection(nextDirection);
-    onSortChange?.(key, nextDirection);
-    resetPage();
-  };
-
-  const changePage = (next: number) => {
-    if (page === undefined) setInternalPage(next);
-    onPageChange?.(next);
-  };
-
-  const toggleRow = (id: string) => {
-    const next = activeSelected.includes(id)
-      ? activeSelected.filter((entry) => entry !== id)
-      : [...activeSelected, id];
-    if (selectedIds === undefined) setInternalSelected(next);
-    onSelectionChange?.(next);
-  };
-
-  const visibleIds = visibleRows.map((row, index) =>
-    resolveId(row, paginated ? (activePage - 1) * pageSize + index : index),
+  const pagination: PaginationState = React.useMemo(
+    () => ({
+      pageIndex: isPageControlled ? (page ?? 1) - 1 : internalPagination.pageIndex,
+      pageSize: effectivePageSize,
+    }),
+    [isPageControlled, page, internalPagination.pageIndex, effectivePageSize],
   );
-  const allVisibleSelected =
-    visibleIds.length > 0 && visibleIds.every((id) => activeSelected.includes(id));
-  const someVisibleSelected =
-    !allVisibleSelected && visibleIds.some((id) => activeSelected.includes(id));
 
-  const toggleVisible = () => {
-    const selected = new Set(activeSelected);
-    if (allVisibleSelected) {
-      visibleIds.forEach((id) => selected.delete(id));
-    } else {
-      visibleIds.forEach((id) => selected.add(id));
+  const rowSelection: RowSelectionState = React.useMemo(() => {
+    if (selectedIds !== undefined) {
+      return Object.fromEntries(selectedIds.map((id) => [id, true]));
     }
-    const next = [...selected];
-    if (selectedIds === undefined) setInternalSelected(next);
-    onSelectionChange?.(next);
-  };
+    return internalSelection;
+  }, [selectedIds, internalSelection]);
 
-  const total = sorted.length;
-  const rangeStart = total === 0 ? 0 : (activePage - 1) * pageSize + 1;
-  const rangeEnd = paginated ? Math.min(activePage * pageSize, total) : total;
+  const tanstackColumns = React.useMemo<ColumnDef<T, unknown>[]>(
+    () =>
+      columns.map((column) => {
+        const base = {
+          id: column.key,
+          header: () => column.header,
+          cell: ({ row }: { row: Row<T> }) => column.render(row.original),
+        };
+        if (column.sortable && column.sortValue) {
+          const sortValue = column.sortValue;
+          return {
+            ...base,
+            accessorFn: (row: T) => sortValue(row) ?? null,
+            sortingFn: (rowA: Row<T>, rowB: Row<T>, columnId: string) =>
+              compareAscending(
+                rowA.getValue(columnId) as string | number | null,
+                rowB.getValue(columnId) as string | number | null,
+              ),
+          };
+        }
+        return { ...base, enableSorting: false };
+      }),
+    [columns],
+  );
+
+  const table = useReactTable({
+    data: rows,
+    columns: tanstackColumns,
+    getRowId: (row, index) => getRowId?.(row, index) ?? String(index),
+    state: { sorting, pagination, rowSelection },
+    onSortingChange: (updater) => {
+      const next = typeof updater === "function" ? updater(sorting) : updater;
+      const [first] = next;
+      if (!isSortControlled) setInternalSorting(next);
+      onSortChange?.(first?.id ?? null, first?.desc ? "desc" : "asc");
+    },
+    onPaginationChange: (updater) => {
+      const next =
+        typeof updater === "function"
+          ? updater({ pageIndex: pagination.pageIndex, pageSize: effectivePageSize })
+          : updater;
+      if (!isPageControlled) {
+        setInternalPagination({ pageIndex: next.pageIndex, pageSize: effectivePageSize });
+      }
+      onPageChange?.(next.pageIndex + 1);
+    },
+    onRowSelectionChange: (updater) => {
+      const next = typeof updater === "function" ? updater(rowSelection) : updater;
+      if (selectedIds === undefined) setInternalSelection(next);
+      onSelectionChange?.(
+        Object.keys(next).filter((id) => next[id]),
+      );
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    enableRowSelection: selectable,
+    enableSortingRemoval: false,
+    autoResetPageIndex: !isPageControlled,
+  });
+
+  const pageRows = table.getRowModel().rows;
+  const total = rows.length;
+  const pageCount = table.getPageCount();
+  const activePageIndex = table.getState().pagination.pageIndex;
+  const rangeStart = total === 0 ? 0 : activePageIndex * effectivePageSize + 1;
+  const rangeEnd =
+    pageSize > 0
+      ? Math.min(activePageIndex * effectivePageSize + effectivePageSize, total)
+      : total;
 
   return (
     <div className={cn("flex w-full flex-col gap-3", className)} {...props}>
-      {sorted.length === 0 ? (
+      {total === 0 ? (
         <EmptyState size="sm" title={emptyTitle} description={emptyDescription} />
       ) : (
         <Table containerClassName={containerClassName}>
@@ -229,21 +251,24 @@ export function DataTable<T>({
                 <TableHead className="w-10">
                   <Checkbox
                     aria-label="Select all rows on this page"
-                    checked={allVisibleSelected}
-                    indeterminate={someVisibleSelected}
-                    onCheckedChange={toggleVisible}
+                    checked={table.getIsAllPageRowsSelected()}
+                    indeterminate={table.getIsSomePageRowsSelected()}
+                    onCheckedChange={(checked) =>
+                      table.toggleAllPageRowsSelected(checked === true)
+                    }
                   />
                 </TableHead>
               ) : null}
               {columns.map((column) => {
-                const active = activeSortKey === column.key && column.sortable;
+                const tableColumn = table.getColumn(column.key);
+                const sorted = tableColumn?.getIsSorted() ?? false;
                 return (
                   <TableHead
                     key={column.key}
                     aria-sort={
-                      column.sortable
-                        ? active
-                          ? activeDirection === "asc"
+                      tableColumn?.getCanSort()
+                        ? sorted
+                          ? sorted === "asc"
                             ? "ascending"
                             : "descending"
                           : "none"
@@ -251,10 +276,10 @@ export function DataTable<T>({
                     }
                     className={column.headerClassName}
                   >
-                    {column.sortable && column.sortValue ? (
+                    {tableColumn?.getCanSort() ? (
                       <button
                         type="button"
-                        onClick={() => changeSort(column.key)}
+                        onClick={tableColumn.getToggleSortingHandler()}
                         className="inline-flex items-center gap-1 rounded-xs transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40"
                       >
                         <span>{column.header}</span>
@@ -262,8 +287,8 @@ export function DataTable<T>({
                           size={13}
                           className={cn(
                             "transition-transform duration-[var(--duration-ui)]",
-                            active && activeDirection === "asc" && "rotate-180",
-                            !active && "opacity-40",
+                            sorted && sorted === "asc" && "rotate-180",
+                            !sorted && "opacity-40",
                           )}
                         />
                       </button>
@@ -276,24 +301,24 @@ export function DataTable<T>({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {visibleRows.map((row, index) => {
-              const absoluteIndex = paginated ? (activePage - 1) * pageSize + index : index;
-              const id = resolveId(row, absoluteIndex);
-              const selected = activeSelected.includes(id);
+            {pageRows.map((row) => {
+              const selected = row.getIsSelected();
               return (
-                <TableRow key={id} data-state={selected ? "selected" : undefined}>
+                <TableRow key={row.id} data-state={selected ? "selected" : undefined}>
                   {selectable ? (
                     <TableCell>
                       <Checkbox
-                        aria-label={getRowLabel?.(row, absoluteIndex) ?? `Select row ${id}`}
+                        aria-label={
+                          getRowLabel?.(row.original, row.index) ?? `Select row ${row.id}`
+                        }
                         checked={selected}
-                        onCheckedChange={() => toggleRow(id)}
+                        onCheckedChange={(checked) => row.toggleSelected(checked === true)}
                       />
                     </TableCell>
                   ) : null}
                   {columns.map((column) => (
                     <TableCell key={column.key} className={column.cellClassName}>
-                      {column.render(row)}
+                      {column.render(row.original)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -302,12 +327,16 @@ export function DataTable<T>({
           </TableBody>
         </Table>
       )}
-      {paginated && pageCount > 1 ? (
+      {pageSize > 0 && pageCount > 1 ? (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[11px] text-muted-foreground">
             Showing {rangeStart}–{rangeEnd} of {total}
           </p>
-          <Pagination page={activePage} pageCount={pageCount} onPageChange={changePage} />
+          <Pagination
+            page={activePageIndex + 1}
+            pageCount={pageCount}
+            onPageChange={(next) => table.setPageIndex(next - 1)}
+          />
         </div>
       ) : null}
     </div>

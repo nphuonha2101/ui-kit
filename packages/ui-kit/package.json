@@ -329,8 +329,8 @@
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19",
-    "tailwindcss": ">=4",
-    "react-hook-form": ">=7"
+    "react-hook-form": ">=7",
+    "tailwindcss": ">=4"
   },
   "peerDependenciesMeta": {
     "react-hook-form": {
@@ -340,6 +340,7 @@
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@phosphor-icons/react": "^2.1.10",
+    "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "sonner": "^2.0.7",

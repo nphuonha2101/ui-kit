@@ -20,6 +20,8 @@ describe("Popover", () => {
     await user.click(screen.getByRole("button", { name: "Open popover" }));
 
     expect(await screen.findByRole("dialog", { name: "Updates" })).toBeInTheDocument();
+    // Portal renders into <body>: it must carry its own kit scope.
+    expect(screen.getByRole("dialog", { name: "Updates" })).toHaveAttribute("data-ui", "kit");
     expect(screen.getByText("Popover body")).toBeInTheDocument();
   });
 });

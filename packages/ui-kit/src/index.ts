@@ -2,7 +2,11 @@
 // Usage:
 //   import "@nphuonha/ui-kit/styles.css";
 //   import { Button } from "@nphuonha/ui-kit";
-// Scope with <div data-ui="kit"> (put on <html> for portalled overlays).
+// Scope with <div data-ui="kit">. Kit styles never touch anything outside it.
+// Portalled overlays (Dialog, Popover, Menu, Select, Tooltip, Toaster, …)
+// carry their own data-ui="kit" scope, so they work even outside the wrapper.
+// Keep `.dark` on <html> and apply accentStyle to documentElement so portals
+// inherit dark mode + accent.
 
 export { cn } from "./lib/utils";
 export type { IconComponent } from "./lib/utils";

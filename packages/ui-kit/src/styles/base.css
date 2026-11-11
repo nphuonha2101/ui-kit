@@ -1,9 +1,23 @@
 /*
  * Shared structural layer — solid, clean, flat, modern.
  * Tokens are defined in theme.css.
+ *
+ * ISOLATION CONTRACT (do not regress):
+ * - This file must NOT emit Tailwind preflight and must NOT touch
+ *   bare `html`, `body`, `*`, `:root` selectors. The host app owns
+ *   its own reset via its own `@import "tailwindcss"`.
+ * - Every base rule below is scoped under `[data-ui="kit"]` so importing
+ *   the kit never restyles the user's own page outside the wrapper.
+ * - Only `@theme`, `@utility`, `keyframes` and `[data-ui="kit"]`-scoped
+ *   `@layer base` rules are allowed here.
  */
 
-@import "tailwindcss";
+/* Theme + utilities only — intentionally NO preflight.
+ * Host app provides its own `@import "tailwindcss"` (which includes
+ * preflight). Importing full `tailwindcss` here would inject a second
+ * global reset into the user's page. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 @import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -83,41 +97,47 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  html {
+  /* Kit root carries its own surface/typography. Never style bare `body`. */
+  [data-ui="kit"] {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-text-size-adjust: 100%;
   }
 
-  body {
-    @apply bg-background text-foreground antialiased;
-    margin: 0;
-    font-family: var(--font-body);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  /* Default border color only inside the kit — was `*` (global leak).
+   * The scope root itself is included so portalled roots carrying
+   * data-ui="kit" match too. */
+  [data-ui="kit"],
+  [data-ui="kit"] *,
+  [data-ui="kit"] *::before,
+  [data-ui="kit"] *::after {
+    @apply border-border;
   }
 
-  ::selection {
+  [data-ui="kit"] ::selection {
     background: color-mix(in srgb, var(--primary) 24%, transparent);
     color: var(--foreground);
   }
 
-  a,
-  button {
+  [data-ui="kit"] a,
+  [data-ui="kit"] button {
     -webkit-tap-highlight-color: transparent;
   }
 
-  :focus-visible {
+  /* Component-level ring (cva) is primary; this scoped fallback covers
+   * native elements inside the kit without touching user content. */
+  [data-ui="kit"] :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  [data-ui="kit"],
+  [data-ui="kit"] *,
+  [data-ui="kit"] *::before,
+  [data-ui="kit"] *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

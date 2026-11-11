@@ -4,6 +4,7 @@ import * as React from "react";
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import { cn, type IconComponent } from "../../../lib/utils";
 import { Button } from "../button";
+import { kitScope } from "../_shared/scope";
 
 export interface AlertDialogProps {
   /** Controlled open state. */
@@ -58,8 +59,9 @@ export function AlertDialog({
     >
       {trigger ? <AlertDialogPrimitive.Trigger render={trigger} /> : null}
       <AlertDialogPrimitive.Portal>
-        <AlertDialogPrimitive.Backdrop className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
+        <AlertDialogPrimitive.Backdrop {...kitScope} className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
         <AlertDialogPrimitive.Popup
+          {...kitScope}
           className={cn(
             "surface-curved fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 gap-4 rounded-overlay bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
             "transition-[opacity,transform] duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)]",

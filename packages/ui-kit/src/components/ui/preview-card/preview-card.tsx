@@ -3,6 +3,7 @@
 import * as React from "react";
 import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card";
 import { cn } from "../../../lib/utils";
+import { kitScope } from "../_shared/scope";
 
 export interface PreviewCardProps {
   /** Link or button that opens the preview card. */
@@ -60,6 +61,7 @@ export function PreviewCard({
           className="z-50"
         >
           <PreviewCardPrimitive.Popup
+            {...kitScope}
             className={cn(
               "surface-curved relative z-50 w-80 rounded-overlay bg-popover p-4 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
               "origin-[var(--transform-origin)] transition-[opacity,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",

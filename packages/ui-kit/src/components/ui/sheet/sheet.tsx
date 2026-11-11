@@ -5,6 +5,7 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { cn } from "../../../lib/utils";
 import { IconButton } from "../icon-button";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface SheetProps {
   /** Controlled open state. */
@@ -60,8 +61,9 @@ export function Sheet({
     <DialogPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger ? <DialogPrimitive.Trigger render={trigger} /> : null}
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Backdrop className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
+        <DialogPrimitive.Backdrop {...kitScope} className="fixed inset-0 z-50 bg-overlay backdrop-blur-[2px] transition-opacity duration-[var(--duration-ui-slow)] data-[starting-style]:opacity-0 data-[ending-style]:opacity-0" />
         <DialogPrimitive.Popup
+          {...kitScope}
           aria-label={ariaLabel}
           className={cn(
             "surface-curved fixed z-50 flex flex-col gap-5 bg-popover p-6 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",

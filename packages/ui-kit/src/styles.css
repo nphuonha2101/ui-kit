@@ -1,5 +1,9 @@
 @import "./styles/base.css";
 @import "./styles/theme.css";
 
+/* Isolation: this file emits kit theme + custom utilities only — no preflight,
+ * no bare html/body/* reset. Host app owns its reset via its own
+ * `@import "tailwindcss"`. Wrap kit usage in <div data-ui="kit">. */
+
 /* Scan the kit's own components when the published stylesheet is imported. */
 @source "./components";

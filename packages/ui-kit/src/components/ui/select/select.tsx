@@ -4,6 +4,7 @@ import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface SelectOption {
   value: string;
@@ -88,6 +89,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         <SelectPrimitive.Portal>
           <SelectPrimitive.Positioner sideOffset={6} className="z-50 outline-none">
             <SelectPrimitive.Popup
+              {...kitScope}
               className={cn(
                 "surface-curved relative min-w-[var(--anchor-width)] rounded-overlay bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
                 "origin-[var(--transform-origin)] transition-[opacity,transform] duration-[var(--duration-ui)] data-[starting-style]:opacity-0 data-[starting-style]:scale-[0.97] data-[ending-style]:opacity-0 data-[ending-style]:scale-[0.97]",

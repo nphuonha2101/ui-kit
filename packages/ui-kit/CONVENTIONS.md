@@ -6,6 +6,8 @@ Single-suite, not-shadcn component kit: **Base UI** for behavior/a11y + owned to
 - **Semantic tokens only** in components (no app-specific variables, no hardcoded brand paints). Core contract lives in `src/styles/theme.css` and is mapped in `src/styles/base.css`.
 - **Accent is customizable** via CSS vars (`--primary`, `--primary-foreground`, `--primary-hover/active`, `--primary-soft*`, `--ring`). Use `generateAccentVars`/`accentStyle` from `@nphuonha/ui-kit` to derive a palette from one color (light/dark).
 - **Scope**: wrap with `data-ui="kit"` (put on `<html>`/portal root so overlay portals inherit tokens). Dark mode via `.dark`.
+- **Isolation**: kit CSS must never touch bare `html`/`body`/`*`/`:root` — every base rule lives under `[data-ui="kit"]`, and the kit ships theme + utilities only (no Tailwind preflight; the host owns its reset).
+- **Portals**: Base UI portals render into `<body>`, outside the wrapper. Every portalled root (Backdrop/Popup) spreads `kitScope` from `_shared/scope` so tokens travel with it. Keep `.dark` on `<html>` and apply `accentStyle` to `documentElement` so portals inherit them.
 
 ## Visual
 - **Flat-first, softly curved**: separate surfaces with tonal solid fills; use a **top-lit rim + micro vertical gradient** for convexity instead of full outlines.

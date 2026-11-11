@@ -4,6 +4,7 @@ import * as React from "react";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { cn, type IconComponent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface DesktopNavItem {
   value: string;
@@ -188,7 +189,7 @@ export const DesktopNav = React.forwardRef<HTMLElement, DesktopNavProps>(
                   alignOffset={-4}
                   className="z-50 outline-none"
                 >
-                  <MenuPrimitive.Popup className={menuPopupClass}>
+                  <MenuPrimitive.Popup {...kitScope} className={menuPopupClass}>
                     {renderMenuItems(item.children)}
                   </MenuPrimitive.Popup>
                 </MenuPrimitive.Positioner>
@@ -329,7 +330,7 @@ export const DesktopNav = React.forwardRef<HTMLElement, DesktopNavProps>(
                       align="start"
                       className="z-50 outline-none"
                     >
-                      <MenuPrimitive.Popup className={menuPopupClass}>
+                      <MenuPrimitive.Popup {...kitScope} className={menuPopupClass}>
                         {renderMenuItems(item.children)}
                       </MenuPrimitive.Popup>
                     </MenuPrimitive.Positioner>

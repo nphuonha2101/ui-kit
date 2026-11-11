@@ -52,16 +52,26 @@ export function App() {
 }
 ```
 
-- Scope tokens/overlays with `data-ui="kit"` (add to `<html>` for portalled overlays).
-- Dark mode: add the `dark` class to the same element.
-- Change the accent at runtime:
-
+- Scope with `<div data-ui="kit">`. Kit CSS never touches anything outside
+  this wrapper — no global reset, no `:root` tokens.
+- Portalled overlays (`Dialog`, `AlertDialog`, `Sheet`, `Popover`, `Menu`,
+  `Select`, `Combobox`, `Tooltip`, `PreviewCard`, `Toaster`) render into
+  `<body>` and carry their own `data-ui="kit"` scope, so they work even
+  outside the wrapper. Keep the `dark` class on `<html>` and apply
+  `accentStyle` to `documentElement` so portals inherit dark mode + accent.
+- Dark mode: add the `dark` class to `<html>`.
+- Change the accent at runtime (on `documentElement` so portals inherit it):
 ```tsx
 import { accentStyle } from "@nphuonha/ui-kit";
 
+// Inline on the wrapper for simple cases…
 <div data-ui="kit" style={accentStyle("#0d9488", "light")}>
   <App />
 </div>
+
+// …or on documentElement when using portalled overlays, so toasts,
+// dialogs and menus outside the wrapper inherit the accent:
+Object.assign(document.documentElement.style, accentStyle("#0d9488", "light"));
 ```
 
 Or generate variables directly:
@@ -72,7 +82,9 @@ import { generateAccentVars } from "@nphuonha/ui-kit";
 const vars = generateAccentVars("#0d9488", "dark");
 ```
 
-Tailwind v4: the package stylesheet imports Tailwind. If your setup ignores `@source` from dependencies, add:
+Tailwind v4: the host app owns its reset via its own `@import "tailwindcss"`.
+The kit stylesheet only adds theme tokens + utilities (no preflight) scoped
+under `[data-ui="kit"]`. If your setup ignores `@source` from dependencies, add:
 
 ```css
 @source "../node_modules/@nphuonha/ui-kit/dist/components";

@@ -4,6 +4,7 @@ import * as React from "react";
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
 import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface ComboboxOption {
   value: string;
@@ -195,6 +196,7 @@ export function Combobox({
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner sideOffset={6} className="z-50 outline-none">
         <ComboboxPrimitive.Popup
+          {...kitScope}
           className={cn(
             "surface-curved relative max-h-[min(22rem,var(--available-height))] w-[var(--anchor-width)] min-w-[var(--anchor-width)] overflow-hidden rounded-overlay bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",
             "origin-[var(--transform-origin)] transition-[opacity,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",

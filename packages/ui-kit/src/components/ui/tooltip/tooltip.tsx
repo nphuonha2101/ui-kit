@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import { cn } from "../../../lib/utils";
+import { kitScope } from "../_shared/scope";
 
 export interface TooltipProps {
   /** Tooltip text. */
@@ -38,6 +39,7 @@ export function Tooltip({
         <TooltipPrimitive.Portal>
           <TooltipPrimitive.Positioner side={side} align={align} sideOffset={6} className="z-50">
             <TooltipPrimitive.Popup
+              {...kitScope}
               role="tooltip"
               className={cn(
                 "surface-curved relative z-50 max-w-xs rounded-sm bg-foreground px-2.5 py-1.5 text-xs font-medium text-background shadow-[var(--shadow-overlay)]",

@@ -21,6 +21,8 @@ describe("Dialog", () => {
 
     const dialog = await screen.findByRole("dialog", { name: "Confirm action" });
     expect(dialog).toBeInTheDocument();
+    // Portal renders into <body>: it must carry its own kit scope.
+    expect(dialog).toHaveAttribute("data-ui", "kit");
     expect(screen.getByText("Body")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Close" }));

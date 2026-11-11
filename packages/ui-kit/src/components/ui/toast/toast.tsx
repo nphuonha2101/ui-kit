@@ -4,6 +4,7 @@ import type * as React from "react";
 import { Toaster as SonnerToaster, toast } from "sonner";
 import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface ToasterIcons {
   success?: React.ReactNode;
@@ -45,6 +46,9 @@ export function Toaster({
   const CloseIcon = useKitIcon("close");
 
   return (
+    // display:contents keeps layout untouched while guaranteeing kit tokens
+    // resolve even if <Toaster /> is mounted outside <div data-ui="kit">.
+    <div {...kitScope} className="contents">
     <SonnerToaster
       position={position}
       theme={theme}
@@ -87,6 +91,7 @@ export function Toaster({
         },
       }}
     />
+    </div>
   );
 }
 

@@ -1,9 +1,12 @@
 /* Modern, borderless, solid-surface theme.
  * Depth comes from tonal surface steps + soft shadows, not outlined boxes.
  * Accent is customizable: override --primary* / --ring (see generateAccentVars in lib/color).
+ *
+ * ISOLATION: tokens live ONLY under `[data-ui="kit"]` — never `:root`.
+ * Generic names like --background/--foreground would otherwise override
+ * (or be overridden by) the host page's own variables and break user CSS.
  */
 
-:root,
 [data-ui="kit"] {
   color-scheme: light;
 

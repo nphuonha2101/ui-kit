@@ -4,6 +4,7 @@ import * as React from "react";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { cn, type IconComponent } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { kitScope } from "../_shared/scope";
 
 export interface MenuItemEntry {
   type?: "item";
@@ -137,7 +138,7 @@ export function Menu({
                 sideOffset={4}
                 className="z-50 outline-none"
               >
-                <MenuPrimitive.Popup className={cn(popupClassName, className)}>
+                <MenuPrimitive.Popup {...kitScope} className={cn(popupClassName, className)}>
                   {renderEntries(entry.items)}
                 </MenuPrimitive.Popup>
               </MenuPrimitive.Positioner>
@@ -188,6 +189,7 @@ export function Menu({
           className="z-50 outline-none"
         >
           <MenuPrimitive.Popup
+            {...kitScope}
             aria-label={ariaLabel}
             className={cn(popupClassName, className)}
           >

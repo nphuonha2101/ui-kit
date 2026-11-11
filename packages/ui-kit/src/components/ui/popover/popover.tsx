@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { cn } from "../../../lib/utils";
+import { kitScope } from "../_shared/scope";
 
 export interface PopoverProps {
   /** Element that opens the popover. */
@@ -43,6 +44,7 @@ export function Popover({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Positioner side={side} align={align} sideOffset={8} className="z-50">
           <PopoverPrimitive.Popup
+            {...kitScope}
             aria-label={ariaLabel}
             className={cn(
               "surface-curved relative z-50 w-72 rounded-overlay bg-popover p-4 text-popover-foreground shadow-[var(--shadow-overlay)] outline-none",

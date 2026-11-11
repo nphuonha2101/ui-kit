@@ -34,7 +34,7 @@ export function Skeleton({
           <div
             key={index}
             className={cn(
-              "h-3.5 animate-pulse rounded-pill bg-surface",
+              "h-3.5 animate-pulse rounded-pill bg-surface-hover",
               index === lines - 1 ? "w-3/5" : "w-full",
             )}
           />
@@ -47,7 +47,7 @@ export function Skeleton({
     <div
       aria-hidden="true"
       className={cn(
-        "animate-pulse bg-surface",
+        "animate-pulse bg-surface-hover",
         variantClasses[variant],
         className,
       )}

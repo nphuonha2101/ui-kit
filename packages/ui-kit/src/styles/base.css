@@ -187,6 +187,19 @@
   }
 }
 
+/* Firefox-only: `scrollbar-width` accepts auto/thin/none (no px), and
+ * `thin` renders hairline there. Fall back to the platform width so the
+ * bar stays usable. Unlayered so it beats the layered `thin` above;
+ * Chrome/Safari don't match this @supports and keep the 8px
+ * ::-webkit-scrollbar treatment. Opting out with scrollbar-none still
+ * wins via :not(.scrollbar-none). */
+@supports (-moz-appearance: none) {
+  .scrollbar-styled:not(.scrollbar-none),
+  .scrollbar-styled :not(.scrollbar-none) {
+    scrollbar-width: auto;
+  }
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   -ms-overflow-style: none;

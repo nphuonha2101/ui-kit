@@ -44,8 +44,8 @@ function CodeRow({
         <code
           className={
             mono
-              ? "flex-1 break-words font-mono text-xs text-foreground"
-              : "flex-1 break-words text-sm leading-6 text-muted-foreground"
+              ? "flex-1 whitespace-pre-wrap break-words font-mono text-xs leading-5 text-foreground"
+              : "flex-1 whitespace-pre-wrap break-words text-sm leading-6 text-muted-foreground"
           }
         >
           {value}
@@ -70,7 +70,7 @@ function ReleaseDetailDialog({
         if (!open) onClose();
       }}
       title={release ? `v${release.version}` : undefined}
-      description={release ? `${release.date} · ${release.summary}` : undefined}
+      description={release ? release.date : undefined}
       className="max-w-2xl"
       footer={
         release ? (
@@ -84,9 +84,10 @@ function ReleaseDetailDialog({
       }
     >
       {release ? (
-        release.changes.length > 0 ? (
-          <div className="flex max-h-[60vh] flex-col gap-5 overflow-y-auto pr-1">
-            {release.changes.map((change) => (
+        <div className="flex flex-col gap-5">
+          <p className="text-sm leading-6 text-muted-foreground">{release.summary}</p>
+          {release.changes.length > 0 ? (
+            release.changes.map((change) => (
               <section key={change.id} className="flex flex-col gap-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-sm font-semibold text-foreground">
@@ -101,13 +102,13 @@ function ReleaseDetailDialog({
                 <CodeRow label="Find" value={change.find} />
                 <p className="text-sm leading-6 text-muted-foreground">{change.fix}</p>
               </section>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm leading-6 text-muted-foreground">
-            No action required for this release.
-          </p>
-        )
+            ))
+          ) : (
+            <p className="text-sm leading-6 text-muted-foreground">
+              No action required for this release.
+            </p>
+          )}
+        </div>
       ) : null}
     </Dialog>
   );

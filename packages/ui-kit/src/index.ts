@@ -34,6 +34,7 @@ export * from "./components/ui/checkbox-group";
 export * from "./components/ui/collapsible";
 export * from "./components/ui/combobox";
 export * from "./components/ui/date-picker";
+export * from "./components/ui/data-table";
 export * from "./components/ui/desktop-nav";
 export * from "./components/ui/dialog";
 export * from "./components/ui/empty-state";

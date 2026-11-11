@@ -2,14 +2,28 @@
 
 import * as React from "react";
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { Badge, Input, Select, Switch, cn } from "@nphuonha/ui-kit";
+import {
+  Badge,
+  Button,
+  DataTable,
+  Dialog,
+  Input,
+  Select,
+  Switch,
+  cn,
+  type DataTableColumn,
+} from "@nphuonha/ui-kit";
 import { copyText } from "@/lib/clipboard";
 import {
   InlineCopyButton,
   ReleaseCopyButton,
   formatReleaseCopy,
 } from "@/components/docs/migration-copy";
-import type { MigrationKind, ReleaseMigration } from "@/content/migrations";
+import type {
+  ApiMigration,
+  MigrationKind,
+  ReleaseMigration,
+} from "@/content/migrations";
 
 const kindBadge: Record<
   MigrationKind,
@@ -32,6 +46,79 @@ function compareVersions(a: string, b: string) {
   return 0;
 }
 
+function MigrationDetailDialog({
+  release,
+  change,
+  onClose,
+}: {
+  release: ReleaseMigration;
+  change: ApiMigration | null;
+  onClose: () => void;
+}) {
+  return (
+    <Dialog
+      open={change !== null}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+      title={change?.surface}
+      description={
+        change
+          ? `v${release.version} · ${kindBadge[change.kind].label} · ${release.date}`
+          : undefined
+      }
+    >
+      {change ? (
+        <div className="flex flex-col gap-4 text-sm">
+          <div>
+            <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              Before
+            </p>
+            <div className="flex items-start gap-1.5 rounded-control bg-surface/60 p-3">
+              <code className="flex-1 break-words font-mono text-xs text-muted-foreground">
+                {change.before}
+              </code>
+              <InlineCopyButton
+                text={change.before}
+                label={`Copy before snippet for ${change.surface}`}
+              />
+            </div>
+          </div>
+          <div>
+            <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              After
+            </p>
+            <div className="flex items-start gap-1.5 rounded-control bg-surface/60 p-3">
+              <code className="flex-1 break-words font-mono text-xs text-foreground">
+                {change.after}
+              </code>
+              <InlineCopyButton
+                text={change.after}
+                label={`Copy after snippet for ${change.surface}`}
+              />
+            </div>
+          </div>
+          <div>
+            <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              Find
+            </p>
+            <div className="flex items-start gap-1.5 rounded-control bg-surface/60 p-3">
+              <code className="flex-1 break-all font-mono text-[11px] text-muted-foreground">
+                {change.find}
+              </code>
+              <InlineCopyButton
+                text={change.find}
+                label={`Copy find pattern for ${change.surface}`}
+              />
+            </div>
+          </div>
+          <p className="leading-6 text-muted-foreground">{change.fix}</p>
+        </div>
+      ) : null}
+    </Dialog>
+  );
+}
+
 function ReleaseCard({
   release,
   open,
@@ -43,6 +130,63 @@ function ReleaseCard({
 }) {
   const anchor = `v-${release.version.replaceAll(".", "-")}`;
   const changeCount = release.changes.length;
+  const [detail, setDetail] = React.useState<ApiMigration | null>(null);
+  const columns = React.useMemo<DataTableColumn<ApiMigration>[]>(
+    () => [
+      {
+        key: "surface",
+        header: "Surface",
+        render: (change) => (
+          <div>
+            <div className="font-medium whitespace-nowrap text-foreground">
+              {change.surface}
+            </div>
+            <Badge variant={kindBadge[change.kind].variant} className="mt-1.5">
+              {kindBadge[change.kind].label}
+            </Badge>
+          </div>
+        ),
+        sortable: true,
+        sortValue: (change) => change.surface,
+      },
+      {
+        key: "before",
+        header: "Before",
+        render: (change) => (
+          <code
+            title={change.before}
+            className="block max-w-44 truncate font-mono text-xs text-muted-foreground sm:max-w-60"
+          >
+            {change.before}
+          </code>
+        ),
+      },
+      {
+        key: "after",
+        header: "After",
+        render: (change) => (
+          <code
+            title={change.after}
+            className="block max-w-44 truncate font-mono text-xs text-foreground sm:max-w-60"
+          >
+            {change.after}
+          </code>
+        ),
+      },
+      {
+        key: "actions",
+        header: <span className="sr-only">Actions</span>,
+        render: (change) => (
+          <Button variant="ghost" size="sm" onClick={() => setDetail(change)}>
+            View detail
+          </Button>
+        ),
+        headerClassName: "text-right",
+        cellClassName: "whitespace-nowrap text-right",
+      },
+    ],
+    [],
+  );
   return (
     <article
       id={anchor}
@@ -88,68 +232,23 @@ function ReleaseCard({
             {release.summary}
           </p>
 
-          {changeCount > 0 ? (
-            <div className="mt-4 overflow-x-auto rounded-control bg-surface/40">
-              <table className="w-full min-w-[760px] text-left text-sm">
-                <thead className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                  <tr>
-                    <th className="px-4 py-3 font-semibold">Surface</th>
-                    <th className="px-4 py-3 font-semibold">Before</th>
-                    <th className="px-4 py-3 font-semibold">After</th>
-                    <th className="px-4 py-3 font-semibold">Fix</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/60">
-                  {release.changes.map((change) => {
-                    const badge = kindBadge[change.kind];
-                    return (
-                      <tr
-                        key={change.id}
-                        className="align-top transition-colors hover:bg-surface/50"
-                      >
-                        <td className="whitespace-nowrap px-4 py-3">
-                          <div className="font-medium text-foreground">
-                            {change.surface}
-                          </div>
-                          <Badge variant={badge.variant} className="mt-1.5">
-                            {badge.label}
-                          </Badge>
-                        </td>
-                        <td className="px-4 py-3">
-                          <code className="break-words font-mono text-xs text-muted-foreground">
-                            {change.before}
-                          </code>
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-start gap-1.5">
-                            <code className="flex-1 break-words font-mono text-xs text-foreground">
-                              {change.after}
-                            </code>
-                            <InlineCopyButton
-                              text={change.after}
-                              label={`Copy after snippet for ${change.surface}`}
-                            />
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-muted-foreground">
-                          <p className="leading-6">{change.fix}</p>
-                          <div className="mt-1.5 flex items-start gap-1.5">
-                            <code className="flex-1 break-all font-mono text-[11px] text-muted-foreground/80">
-                              find: {change.find}
-                            </code>
-                            <InlineCopyButton
-                              text={change.find}
-                              label={`Copy find pattern for ${change.surface}`}
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
+          <div className="mt-4">
+            <DataTable
+              columns={columns}
+              rows={release.changes}
+              getRowId={(change) => change.id}
+              caption={`Migration rows for v${release.version}`}
+              defaultSortKey="surface"
+              pageSize={5}
+              emptyTitle="No migration rows"
+              emptyDescription="No action required for this release."
+            />
+          </div>
+          <MigrationDetailDialog
+            release={release}
+            change={detail}
+            onClose={() => setDetail(null)}
+          />
         </div>
       ) : (
         <p className="mt-1.5 truncate text-sm text-muted-foreground">{release.summary}</p>

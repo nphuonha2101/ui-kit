@@ -39,6 +39,7 @@ import { meta as avatarMeta } from "./avatar/meta";
 import { meta as badgeMeta } from "./badge/meta";
 import { meta as cardMeta } from "./card/meta";
 import { meta as collapsibleMeta } from "./collapsible/meta";
+import { meta as dataTableMeta } from "./data-table/meta";
 import { meta as kbdMeta } from "./kbd/meta";
 import { meta as scrollAreaMeta } from "./scroll-area/meta";
 import { meta as separatorMeta } from "./separator/meta";
@@ -95,6 +96,7 @@ export const registry: ComponentMeta[] = [
   badgeMeta,
   cardMeta,
   collapsibleMeta,
+  dataTableMeta,
   kbdMeta,
   scrollAreaMeta,
   separatorMeta,

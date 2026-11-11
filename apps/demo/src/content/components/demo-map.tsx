@@ -44,6 +44,7 @@ const avatarDemo = dynamic(() => import("./avatar/demo").then((module) => module
 const badgeDemo = dynamic(() => import("./badge/demo").then((module) => module.demo));
 const cardDemo = dynamic(() => import("./card/demo").then((module) => module.demo));
 const collapsibleDemo = dynamic(() => import("./collapsible/demo").then((module) => module.demo));
+const dataTableDemo = dynamic(() => import("./data-table/demo").then((module) => module.demo));
 const kbdDemo = dynamic(() => import("./kbd/demo").then((module) => module.demo));
 const scrollAreaDemo = dynamic(() => import("./scroll-area/demo").then((module) => module.demo));
 const separatorDemo = dynamic(() => import("./separator/demo").then((module) => module.demo));
@@ -173,6 +174,12 @@ const collapsiblecollapsibleSeparatedExample = dynamic(() =>
 const collapsiblecollapsiblePlainExample = dynamic(() =>
   import("./collapsible/demo").then((module) => module.examples["collapsible-plain"]),
 );
+const dataTabledataTableSelectionExample = dynamic(() =>
+  import("./data-table/demo").then((module) => module.examples["data-table-selection"]),
+);
+const dataTabledataTableActionsExample = dynamic(() =>
+  import("./data-table/demo").then((module) => module.examples["data-table-actions"]),
+);
 const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
   import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
 );
@@ -240,6 +247,7 @@ export const demoMap: Record<string, React.ComponentType> = {
   "badge": badgeDemo,
   "card": cardDemo,
   "collapsible": collapsibleDemo,
+  "data-table": dataTableDemo,
   "kbd": kbdDemo,
   "scroll-area": scrollAreaDemo,
   "separator": separatorDemo,
@@ -293,6 +301,8 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "card-elevation": cardcardElevationExample,
   "collapsible-separated": collapsiblecollapsibleSeparatedExample,
   "collapsible-plain": collapsiblecollapsiblePlainExample,
+  "data-table-selection": dataTabledataTableSelectionExample,
+  "data-table-actions": dataTabledataTableActionsExample,
   "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
   "meter-thresholds": metermeterThresholdsExample,
   "meter-sizes": metermeterSizesExample,

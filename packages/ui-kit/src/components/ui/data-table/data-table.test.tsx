@@ -183,6 +183,108 @@ describe("DataTable", () => {
     expect(onSelectionChange).toHaveBeenLastCalledWith(["INV-003", "INV-002"]);
   });
 
+  it("falls back to index-based row ids", async () => {
+    const user = userEvent.setup();
+    const onSelectionChange = vi.fn();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        pageSize={0}
+        selectable
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("checkbox", { name: "Select row 1" }));
+    expect(onSelectionChange).toHaveBeenLastCalledWith(["1"]);
+  });
+
+  it("uses a custom row label when provided", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        getRowLabel={(row) => `Pick ${row.id}`}
+        pageSize={0}
+        selectable
+      />,
+    );
+
+    await user.click(screen.getByRole("checkbox", { name: "Pick INV-002" }));
+    expect(screen.getByRole("checkbox", { name: "Pick INV-002" })).toBeChecked();
+  });
+
+  it("reports page changes through onPageChange", async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        onPageChange={onPageChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Page 3" }));
+    expect(onPageChange).toHaveBeenLastCalledWith(3);
+    await user.click(screen.getByRole("button", { name: "Previous page" }));
+    expect(onPageChange).toHaveBeenLastCalledWith(2);
+  });
+
+  it("applies a default sort on mount", () => {
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        defaultSortKey="amount"
+        defaultSortDirection="desc"
+      />,
+    );
+
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+    expect(screen.getByRole("columnheader", { name: /amount/i })).toHaveAttribute(
+      "aria-sort",
+      "descending",
+    );
+  });
+
+  it("keeps sorting when columns get a new identity", async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <DataTable
+        columns={columns.map((column) => ({ ...column }))}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(rowIds()).toEqual(["INV-001", "INV-002", "INV-003"]);
+
+    rerender(
+      <DataTable
+        columns={columns.map((column) => ({ ...column }))}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+      />,
+    );
+    expect(rowIds()).toEqual(["INV-001", "INV-002", "INV-003"]);
+  });
+
   it("shows a mixed state when only some rows are selected", async () => {
     const user = userEvent.setup();
     render(

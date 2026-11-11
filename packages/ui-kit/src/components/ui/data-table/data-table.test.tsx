@@ -635,4 +635,272 @@ describe("DataTable", () => {
     await user.click(screen.getByRole("button", { name: /client/i }));
     expect(rowIds()).toEqual(["Ähre", "apple", "Zebra"]);
   });
+
+  it("keeps nullish values last in both directions", async () => {
+    const user = userEvent.setup();
+    const list: { id: string; client: string | null }[] = [
+      { id: "1", client: "Beta" },
+      { id: "2", client: null },
+      { id: "3", client: "Alpha" },
+    ];
+    render(
+      <DataTable
+        caption="Clients"
+        columns={[
+          {
+            key: "client",
+            header: "Client",
+            render: (row) => row.client ?? "—",
+            sortable: true,
+            sortValue: (row) => row.client,
+          },
+        ]}
+        rows={list}
+        getRowId={(row) => row.id}
+        pageSize={0}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /client/i }));
+    expect(rowIds()).toEqual(["Alpha", "Beta", "—"]);
+    await user.click(screen.getByRole("button", { name: /client/i }));
+    expect(rowIds()).toEqual(["Beta", "Alpha", "—"]);
+  });
+
+  it("sorts numbers inside strings naturally", async () => {
+    const user = userEvent.setup();
+    const list = [
+      { id: "1", client: "Item 2" },
+      { id: "2", client: "Item 10" },
+      { id: "3", client: "Item 1" },
+    ];
+    render(
+      <DataTable
+        caption="Items"
+        columns={[
+          {
+            key: "client",
+            header: "Item",
+            render: (row) => row.client,
+            sortable: true,
+            sortValue: (row) => row.client,
+          },
+        ]}
+        rows={list}
+        getRowId={(row) => row.id}
+        pageSize={0}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /item/i }));
+    expect(rowIds()).toEqual(["Item 1", "Item 2", "Item 10"]);
+  });
+
+  it("keeps selections from other pages when selecting the current page", async () => {
+    const user = userEvent.setup();
+    const onSelectionChange = vi.fn();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        selectable
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("checkbox", { name: "Select row INV-001" }));
+    await user.click(screen.getByRole("button", { name: "Page 2" }));
+    await user.click(screen.getByRole("checkbox", { name: "Select all rows on this page" }));
+
+    const ids = onSelectionChange.mock.calls.at(-1)?.[0] as string[];
+    expect(ids).toEqual(
+      expect.arrayContaining(["INV-001", "INV-006", "INV-007", "INV-008", "INV-009", "INV-010"]),
+    );
+    expect(ids).not.toContain("INV-002");
+  });
+
+  it("respects a controlled selection", async () => {
+    const user = userEvent.setup();
+    const onSelectionChange = vi.fn();
+    const { rerender } = render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        selectable
+        selectedIds={["INV-001"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+
+    expect(screen.getByRole("checkbox", { name: "Select row INV-001" })).toBeChecked();
+    await user.click(screen.getByRole("checkbox", { name: "Select row INV-002" }));
+    expect(onSelectionChange).toHaveBeenLastCalledWith(["INV-001", "INV-002"]);
+    expect(screen.getByRole("checkbox", { name: "Select row INV-002" })).not.toBeChecked();
+
+    rerender(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        selectable
+        selectedIds={["INV-001", "INV-002"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    expect(screen.getByRole("checkbox", { name: "Select row INV-002" })).toBeChecked();
+  });
+
+  it("applies defaultSelectedIds", () => {
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        selectable
+        defaultSelectedIds={["INV-002"]}
+      />,
+    );
+
+    expect(screen.getByRole("checkbox", { name: "Select row INV-002" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Select row INV-001" })).not.toBeChecked();
+  });
+
+  it("applies defaultSearchValue and reports search changes", async () => {
+    const user = userEvent.setup();
+    const onSearchChange = vi.fn();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+        defaultSearchValue="acme"
+        onSearchChange={onSearchChange}
+      />,
+    );
+
+    expect(screen.getByLabelText("Search table")).toHaveValue("acme");
+    expect(rowIds()).toEqual(["INV-001"]);
+    await user.type(screen.getByLabelText("Search table"), "!");
+    expect(onSearchChange).toHaveBeenLastCalledWith("acme!");
+  });
+
+  it("trims whitespace in search queries", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "  acme  ");
+    expect(rowIds()).toEqual(["INV-001"]);
+  });
+
+  it("reports uncontrolled sorting changes", async () => {
+    const user = userEvent.setup();
+    const onSortChange = vi.fn();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        onSortChange={onSortChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(onSortChange).toHaveBeenLastCalledWith("id", "asc");
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(onSortChange).toHaveBeenLastCalledWith("id", "desc");
+  });
+
+  it("clamps the page when pageSize changes", async () => {
+    const user = userEvent.setup();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Client ${index + 1}`,
+      amount: (index + 1) * 100,
+    }));
+    const { rerender } = render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Page 3" }));
+    expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
+
+    rerender(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={10}
+      />,
+    );
+    expect(screen.getByText("Showing 11–12 of 12")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Page 2" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
+
+  it("warns about duplicate keys, duplicate ids and sortable columns without values", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(
+      <DataTable
+        caption="Warnings"
+        columns={[
+          { key: "a", header: "A", render: () => null },
+          { key: "a", header: "A2", render: () => null },
+          { key: "b", header: "B", render: () => null, sortable: true },
+        ]}
+        rows={[{}, {}, {}]}
+        getRowId={(_, index) => (index < 2 ? "same" : String(index))}
+      />,
+    );
+
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('duplicate column key "a"'));
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('column "b" is sortable but has no sortValue'),
+    );
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('duplicate row id "same"'));
+    warn.mockRestore();
+  });
+
+  it("uses the default empty title", () => {
+    render(<DataTable caption="Invoices" columns={columns} rows={[]} />);
+
+    expect(screen.getByText("No rows")).toBeInTheDocument();
+  });
 });

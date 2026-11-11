@@ -39,7 +39,7 @@ export interface DataTableColumn<T> {
   render: (row: T) => React.ReactNode;
   /** Shows the sort control. Requires `sortValue`. */
   sortable?: boolean;
-  /** Comparable value used when this column sorts. Nullish values sort last. */
+  /** Comparable value used when this column sorts. Nullish values sort last in both directions. */
   sortValue?: (row: T) => string | number | null | undefined;
   /** Extra classes for the header cell. */
   headerClassName?: string;
@@ -275,7 +275,8 @@ export function DataTable<T>({
           const sortValue = column.sortValue;
           return {
             ...base,
-            accessorFn: (row: T) => sortValue(row) ?? null,
+            accessorFn: (row: T) => sortValue(row) ?? undefined,
+            sortUndefined: "last" as const,
             sortingFn: (rowA: Row<T>, rowB: Row<T>, columnId: string) =>
               compareAscending(
                 collator,

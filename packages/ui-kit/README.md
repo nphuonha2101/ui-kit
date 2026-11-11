@@ -104,7 +104,7 @@ Variants live in server-safe `*-variants.ts` files and can be used from server c
 
 ## Icons
 
-The kit uses **Phosphor** for its internal affordances (calendar, check, minus, chevron, chevronDown, close, file, spinner, upload, user). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
+The kit uses **Phosphor** for its internal affordances (calendar, check, clock, eyedropper, minus, chevron, chevronDown, close, file, spinner, upload, user). User-facing icons are pack-agnostic — pass any component that accepts `size` and `className`:
 
 ```tsx
 <Button startIcon={Plus}>New item</Button>
@@ -129,17 +129,17 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `DataTable`, `DatePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `ColorPicker`, `Combobox`, `DataTable`, `DatePicker`, `DateTimePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `TimeField`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 
-For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `DatePicker`, `FileUpload`, `Select`, `Combobox`, `Checkbox`, `CheckboxGroup`, `RadioGroup`, `Switch`, `Slider`, `NumberField` and `OTPField`. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker range mode uses `{ from, to }`); `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
+For forms, `Input` and `Textarea` work with react-hook-form's `register()`. Use `Controller` or the optional `FormField` wrapper from `@nphuonha/ui-kit/form` for `Calendar`, `ColorPicker`, `DatePicker`, `DateTimePicker`, `TimeField`, `FileUpload`, `Select`, `Combobox`, `Checkbox`, `CheckboxGroup`, `RadioGroup`, `Switch`, `Slider`, `NumberField` and `OTPField`. `Calendar`/`DatePicker` use `value`/`onValueChange` (DatePicker and DateTimePicker range modes use `{ from, to }`); `DateTimePicker` uses local `Date` values, `TimeField` uses `"HH:mm"` strings, `ColorPicker` uses `#rrggbb` strings; `FileUpload` uses `files`/`onFilesChange`; all accept `onBlur`/`aria-invalid`:
 
 ```tsx
 import { Form, FormField } from "@nphuonha/ui-kit/form";
 ```
 
-For required fields, set `required` on controls that own their label (`Checkbox`, `CheckboxGroup`, `Switch`, `RadioGroup`, `NumberField`, `OTPField`, `Calendar`, `DatePicker`, `FileUpload`) and on `Field`/`FormField` for `Input`, `Textarea`, `Select` and `Combobox`. With `FormField`, `required` controls the red mark and `rules` controls validation.
+For required fields, set `required` on controls that own their label (`Checkbox`, `CheckboxGroup`, `Switch`, `RadioGroup`, `NumberField`, `OTPField`, `Calendar`, `ColorPicker`, `DatePicker`, `DateTimePicker`, `FileUpload`, `TimeField`) and on `Field`/`FormField` for `Input`, `Textarea`, `Select` and `Combobox`. With `FormField`, `required` controls the red mark and `rules` controls validation.
 
 Install `react-hook-form` (optional peer dependency) when using the `form` entry.
 

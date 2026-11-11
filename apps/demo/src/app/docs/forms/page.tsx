@@ -258,9 +258,10 @@ export default function FormsPage() {
             Custom controls
           </h2>
           <p className="text-sm leading-7 text-muted-foreground">
-            DatePicker, Checkbox, CheckboxGroup, Combobox, FileUpload, NumberField,
-            OTPField, Select, Slider and Switch use value/onValueChange or
-            checked/onCheckedChange. Map the Controller field explicitly:
+            ColorPicker, DatePicker, DateTimePicker, TimeField, Checkbox,
+            CheckboxGroup, Combobox, FileUpload, NumberField, OTPField, Select,
+            Slider and Switch use value/onValueChange or checked/onCheckedChange.
+            Map the Controller field explicitly:
           </p>
           <CodeBlock code={customExample} filename="Select with FormField" />
           <p className="text-sm leading-7 text-muted-foreground">
@@ -273,8 +274,9 @@ export default function FormsPage() {
             onValueChange and onBlur, and let FormField own the label and error.
           </p>
           <p className="text-sm leading-7 text-muted-foreground">
-            DatePicker and FileUpload work with FormField too. FormField forwards the
-            field id, aria attributes and validation state to both controls.
+            DatePicker, DateTimePicker, TimeField, ColorPicker and FileUpload work
+            with FormField too. FormField forwards the field id, aria attributes
+            and validation state to all of them.
           </p>
           <CodeBlock code={datePickerExample} filename="DatePicker with FormField" />
           <CodeBlock code={fileUploadExample} filename="FileUpload with FormField" />

@@ -13,8 +13,10 @@ const toolbarDemo = dynamic(() => import("./toolbar/demo").then((module) => modu
 const calendarDemo = dynamic(() => import("./calendar/demo").then((module) => module.demo));
 const checkboxDemo = dynamic(() => import("./checkbox/demo").then((module) => module.demo));
 const checkboxGroupDemo = dynamic(() => import("./checkbox-group/demo").then((module) => module.demo));
+const colorPickerDemo = dynamic(() => import("./color-picker/demo").then((module) => module.demo));
 const comboboxDemo = dynamic(() => import("./combobox/demo").then((module) => module.demo));
 const datePickerDemo = dynamic(() => import("./date-picker/demo").then((module) => module.demo));
+const dateTimePickerDemo = dynamic(() => import("./date-time-picker/demo").then((module) => module.demo));
 const fieldDemo = dynamic(() => import("./field/demo").then((module) => module.demo));
 const fieldsetDemo = dynamic(() => import("./fieldset/demo").then((module) => module.demo));
 const fileUploadDemo = dynamic(() => import("./file-upload/demo").then((module) => module.demo));
@@ -27,6 +29,7 @@ const selectDemo = dynamic(() => import("./select/demo").then((module) => module
 const sliderDemo = dynamic(() => import("./slider/demo").then((module) => module.demo));
 const switchDemo = dynamic(() => import("./switch/demo").then((module) => module.demo));
 const textareaDemo = dynamic(() => import("./textarea/demo").then((module) => module.demo));
+const timeFieldDemo = dynamic(() => import("./time-field/demo").then((module) => module.demo));
 const alertDialogDemo = dynamic(() => import("./alert-dialog/demo").then((module) => module.demo));
 const dialogDemo = dynamic(() => import("./dialog/demo").then((module) => module.demo));
 const popoverDemo = dynamic(() => import("./popover/demo").then((module) => module.demo));
@@ -99,6 +102,15 @@ const checkboxGroupcheckboxGroupHorizontalExample = dynamic(() =>
 const checkboxGroupcheckboxGroupErrorExample = dynamic(() =>
   import("./checkbox-group/demo").then((module) => module.examples["checkbox-group-error"]),
 );
+const colorPickercolorPickerPresetsExample = dynamic(() =>
+  import("./color-picker/demo").then((module) => module.examples["color-picker-presets"]),
+);
+const colorPickercolorPickerCustomExample = dynamic(() =>
+  import("./color-picker/demo").then((module) => module.examples["color-picker-custom"]),
+);
+const colorPickercolorPickerStatesExample = dynamic(() =>
+  import("./color-picker/demo").then((module) => module.examples["color-picker-states"]),
+);
 const comboboxcomboboxMultipleExample = dynamic(() =>
   import("./combobox/demo").then((module) => module.examples["combobox-multiple"]),
 );
@@ -116,6 +128,18 @@ const datePickerdatePickerConstraintsExample = dynamic(() =>
 );
 const datePickerdatePickerStatesExample = dynamic(() =>
   import("./date-picker/demo").then((module) => module.examples["date-picker-states"]),
+);
+const dateTimePickerdateTimePickerRangeExample = dynamic(() =>
+  import("./date-time-picker/demo").then((module) => module.examples["date-time-picker-range"]),
+);
+const dateTimePickerdateTimePickerConstraintsExample = dynamic(() =>
+  import("./date-time-picker/demo").then((module) => module.examples["date-time-picker-constraints"]),
+);
+const dateTimePickerdateTimePickerActionsExample = dynamic(() =>
+  import("./date-time-picker/demo").then((module) => module.examples["date-time-picker-actions"]),
+);
+const dateTimePickerdateTimePickerStatesExample = dynamic(() =>
+  import("./date-time-picker/demo").then((module) => module.examples["date-time-picker-states"]),
 );
 const fieldsetfieldsetDisabledExample = dynamic(() =>
   import("./fieldset/demo").then((module) => module.examples["fieldset-disabled"]),
@@ -137,6 +161,15 @@ const otpFieldotpFieldErrorExample = dynamic(() =>
 );
 const selectselectFieldExample = dynamic(() =>
   import("./select/demo").then((module) => module.examples["select-field"]),
+);
+const timeFieldtimeFieldTwelveHourExample = dynamic(() =>
+  import("./time-field/demo").then((module) => module.examples["time-field-twelve-hour"]),
+);
+const timeFieldtimeFieldConstraintsExample = dynamic(() =>
+  import("./time-field/demo").then((module) => module.examples["time-field-constraints"]),
+);
+const timeFieldtimeFieldStatesExample = dynamic(() =>
+  import("./time-field/demo").then((module) => module.examples["time-field-states"]),
 );
 const previewCardpreviewCardIssueExample = dynamic(() =>
   import("./preview-card/demo").then((module) => module.examples["preview-card-issue"]),
@@ -222,8 +255,10 @@ export const demoMap: Record<string, React.ComponentType> = {
   "calendar": calendarDemo,
   "checkbox": checkboxDemo,
   "checkbox-group": checkboxGroupDemo,
+  "color-picker": colorPickerDemo,
   "combobox": comboboxDemo,
   "date-picker": datePickerDemo,
+  "date-time-picker": dateTimePickerDemo,
   "field": fieldDemo,
   "fieldset": fieldsetDemo,
   "file-upload": fileUploadDemo,
@@ -236,6 +271,7 @@ export const demoMap: Record<string, React.ComponentType> = {
   "slider": sliderDemo,
   "switch": switchDemo,
   "textarea": textareaDemo,
+  "time-field": timeFieldDemo,
   "alert-dialog": alertDialogDemo,
   "dialog": dialogDemo,
   "popover": popoverDemo,
@@ -282,12 +318,19 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "calendar-constraints": calendarcalendarConstraintsExample,
   "checkbox-group-horizontal": checkboxGroupcheckboxGroupHorizontalExample,
   "checkbox-group-error": checkboxGroupcheckboxGroupErrorExample,
+  "color-picker-presets": colorPickercolorPickerPresetsExample,
+  "color-picker-custom": colorPickercolorPickerCustomExample,
+  "color-picker-states": colorPickercolorPickerStatesExample,
   "combobox-multiple": comboboxcomboboxMultipleExample,
   "combobox-empty": comboboxcomboboxEmptyExample,
   "date-picker-range": datePickerdatePickerRangeExample,
   "date-picker-clearable": datePickerdatePickerClearableExample,
   "date-picker-constraints": datePickerdatePickerConstraintsExample,
   "date-picker-states": datePickerdatePickerStatesExample,
+  "date-time-picker-range": dateTimePickerdateTimePickerRangeExample,
+  "date-time-picker-constraints": dateTimePickerdateTimePickerConstraintsExample,
+  "date-time-picker-actions": dateTimePickerdateTimePickerActionsExample,
+  "date-time-picker-states": dateTimePickerdateTimePickerStatesExample,
   "fieldset-disabled": fieldsetfieldsetDisabledExample,
   "file-upload-controlled": fileUploadfileUploadControlledExample,
   "file-upload-images": fileUploadfileUploadImagesExample,
@@ -295,6 +338,9 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "otp-field-masked": otpFieldotpFieldMaskedExample,
   "otp-field-error": otpFieldotpFieldErrorExample,
   "select-field": selectselectFieldExample,
+  "time-field-twelve-hour": timeFieldtimeFieldTwelveHourExample,
+  "time-field-constraints": timeFieldtimeFieldConstraintsExample,
+  "time-field-states": timeFieldtimeFieldStatesExample,
   "preview-card-issue": previewCardpreviewCardIssueExample,
   "preview-card-top": previewCardpreviewCardTopExample,
   "desktop-nav-submenu": desktopNavdesktopNavSubmenuExample,

@@ -8,8 +8,10 @@ import { meta as toolbarMeta } from "./toolbar/meta";
 import { meta as calendarMeta } from "./calendar/meta";
 import { meta as checkboxMeta } from "./checkbox/meta";
 import { meta as checkboxGroupMeta } from "./checkbox-group/meta";
+import { meta as colorPickerMeta } from "./color-picker/meta";
 import { meta as comboboxMeta } from "./combobox/meta";
 import { meta as datePickerMeta } from "./date-picker/meta";
+import { meta as dateTimePickerMeta } from "./date-time-picker/meta";
 import { meta as fieldMeta } from "./field/meta";
 import { meta as fieldsetMeta } from "./fieldset/meta";
 import { meta as fileUploadMeta } from "./file-upload/meta";
@@ -22,6 +24,7 @@ import { meta as selectMeta } from "./select/meta";
 import { meta as sliderMeta } from "./slider/meta";
 import { meta as switchMeta } from "./switch/meta";
 import { meta as textareaMeta } from "./textarea/meta";
+import { meta as timeFieldMeta } from "./time-field/meta";
 import { meta as alertDialogMeta } from "./alert-dialog/meta";
 import { meta as dialogMeta } from "./dialog/meta";
 import { meta as popoverMeta } from "./popover/meta";
@@ -65,8 +68,10 @@ export const registry: ComponentMeta[] = [
   calendarMeta,
   checkboxMeta,
   checkboxGroupMeta,
+  colorPickerMeta,
   comboboxMeta,
   datePickerMeta,
+  dateTimePickerMeta,
   fieldMeta,
   fieldsetMeta,
   fileUploadMeta,
@@ -79,6 +84,7 @@ export const registry: ComponentMeta[] = [
   sliderMeta,
   switchMeta,
   textareaMeta,
+  timeFieldMeta,
   alertDialogMeta,
   dialogMeta,
   popoverMeta,

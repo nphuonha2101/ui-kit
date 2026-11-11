@@ -8,6 +8,8 @@ import {
   CaretRightIcon,
   CaretUpDownIcon,
   CheckIcon,
+  ClockIcon,
+  EyedropperIcon,
   FileIcon,
   ListIcon,
   MinusIcon,
@@ -28,6 +30,8 @@ export type KitIconName =
   | "chevronLeft"
   | "chevronRight"
   | "close"
+  | "clock"
+  | "eyedropper"
   | "file"
   | "menu"
   | "spinner"
@@ -48,6 +52,8 @@ const defaultIcons: Record<KitIconName, KitIcon> = {
   chevronLeft: (props) => <CaretLeftIcon {...props} weight="bold" />,
   chevronRight: (props) => <CaretRightIcon {...props} weight="bold" />,
   close: (props) => <XIcon {...props} weight="bold" />,
+  clock: ClockIcon,
+  eyedropper: EyedropperIcon,
   file: FileIcon,
   menu: (props) => <ListIcon {...props} weight="bold" />,
   spinner: SpinnerIcon,

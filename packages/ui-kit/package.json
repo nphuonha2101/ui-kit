@@ -1,6 +1,6 @@
 {
   "name": "@nphuonha/ui-kit",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "description": "Solid, clean, flat, modern React UI kit (Base UI + Tailwind v4).",
   "license": "MIT",
   "author": "nphuonha",
@@ -102,6 +102,11 @@
       "import": "./dist/components/ui/collapsible/index.js",
       "default": "./dist/components/ui/collapsible/index.js"
     },
+    "./color-picker": {
+      "types": "./dist/components/ui/color-picker/index.d.ts",
+      "import": "./dist/components/ui/color-picker/index.js",
+      "default": "./dist/components/ui/color-picker/index.js"
+    },
     "./combobox": {
       "types": "./dist/components/ui/combobox/index.d.ts",
       "import": "./dist/components/ui/combobox/index.js",
@@ -111,6 +116,11 @@
       "types": "./dist/components/ui/date-picker/index.d.ts",
       "import": "./dist/components/ui/date-picker/index.js",
       "default": "./dist/components/ui/date-picker/index.js"
+    },
+    "./date-time-picker": {
+      "types": "./dist/components/ui/date-time-picker/index.d.ts",
+      "import": "./dist/components/ui/date-time-picker/index.js",
+      "default": "./dist/components/ui/date-time-picker/index.js"
     },
     "./data-table": {
       "types": "./dist/components/ui/data-table/index.d.ts",
@@ -276,6 +286,11 @@
       "types": "./dist/components/ui/textarea/index.d.ts",
       "import": "./dist/components/ui/textarea/index.js",
       "default": "./dist/components/ui/textarea/index.js"
+    },
+    "./time-field": {
+      "types": "./dist/components/ui/time-field/index.d.ts",
+      "import": "./dist/components/ui/time-field/index.js",
+      "default": "./dist/components/ui/time-field/index.js"
     },
     "./toast": {
       "types": "./dist/components/ui/toast/index.d.ts",

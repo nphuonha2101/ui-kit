@@ -641,7 +641,7 @@ export const propsMap: Record<string, ComponentProp[]> = {
     {
       "name": "caption",
       "type": "string",
-      "description": "Accessible name announced for the grid."
+      "description": "Accessible name announced for the table."
     },
     {
       "name": "sortKey",

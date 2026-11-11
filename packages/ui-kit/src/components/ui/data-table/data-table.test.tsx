@@ -405,6 +405,98 @@ describe("DataTable", () => {
     ).toHaveAttribute("aria-checked", "mixed");
   });
 
+  it("keeps row labels stable after sorting", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        getRowLabel={(row, index) => `${index}:${row.id}`}
+        pageSize={0}
+        selectable
+      />,
+    );
+
+    expect(screen.getByRole("checkbox", { name: "0:INV-003" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+    expect(screen.getByRole("checkbox", { name: "1:INV-001" })).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "0:INV-003" })).toBeInTheDocument();
+  });
+
+  it("keeps selection attached to the same row after sorting", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        selectable
+      />,
+    );
+
+    await user.click(screen.getByRole("checkbox", { name: "Select row INV-003" }));
+    await user.click(screen.getByRole("button", { name: /invoice/i }));
+
+    expect(screen.getByRole("checkbox", { name: "Select row INV-003" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Select row INV-001" })).not.toBeChecked();
+  });
+
+  it("marks sortable but unsorted headers as aria-sort none", () => {
+    render(
+      <DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={0} />,
+    );
+
+    expect(screen.getByRole("columnheader", { name: /client/i })).toHaveAttribute(
+      "aria-sort",
+      "none",
+    );
+  });
+
+  it("keeps the search box usable when nothing matches", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "zzz");
+    expect(screen.getByText("0 of 3")).toBeInTheDocument();
+    await user.clear(screen.getByLabelText("Search table"));
+    expect(rowIds()).toHaveLength(3);
+  });
+
+  it("searches and paginates together", async () => {
+    const user = userEvent.setup();
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: index % 2 === 0 ? "Acme Studio" : "Northwind",
+      amount: (index + 1) * 100,
+    }));
+    render(
+      <DataTable
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={5}
+        searchable
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "acme");
+    expect(screen.getByText("6 of 12")).toBeInTheDocument();
+    expect(screen.getByText("Showing 1–5 of 6")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Page 2" }));
+    expect(screen.getByText("Showing 6–6 of 6")).toBeInTheDocument();
+  });
+
   it("renders an empty state when there are no rows", () => {
     render(
       <DataTable

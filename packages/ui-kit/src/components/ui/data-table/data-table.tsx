@@ -55,7 +55,7 @@ export interface DataTableProps<T>
   rows: T[];
   /** Stable id per row. Defaults to the row index. */
   getRowId?: (row: T, index: number) => string;
-  /** Accessible name announced for the grid. */
+  /** Accessible name announced for the table. */
   caption?: string;
   /** Controlled sorted column key. */
   sortKey?: string | null;
@@ -189,6 +189,15 @@ export function DataTable<T>({
     () => rows.filter(matchesSearch).length,
     [rows, matchesSearch],
   );
+
+  // Original position per row, so labels stay stable after sorting/filtering.
+  const originalIndex = React.useMemo(() => {
+    const map = new Map<T, number>();
+    rows.forEach((row, index) => {
+      if (!map.has(row)) map.set(row, index);
+    });
+    return map;
+  }, [rows]);
 
   const sorting: SortingState = React.useMemo(() => {
     if (!isSortControlled) return internalSorting;
@@ -332,24 +341,25 @@ export function DataTable<T>({
               {columns.map((column) => {
                 const tableColumn = table.getColumn(column.key);
                 const sorted = tableColumn?.getIsSorted() ?? false;
+                const canSort = tableColumn?.getCanSort() ?? false;
                 return (
                   <TableHead
                     key={column.key}
                     aria-sort={
-                      tableColumn?.getCanSort()
-                        ? sorted
-                          ? sorted === "asc"
-                            ? "ascending"
-                            : "descending"
-                          : "none"
+                      canSort
+                        ? sorted === "asc"
+                          ? "ascending"
+                          : sorted === "desc"
+                            ? "descending"
+                            : "none"
                         : undefined
                     }
                     className={column.headerClassName}
                   >
-                    {tableColumn?.getCanSort() ? (
+                    {canSort ? (
                       <button
                         type="button"
-                        onClick={tableColumn.getToggleSortingHandler()}
+                        onClick={tableColumn?.getToggleSortingHandler()}
                         className="inline-flex items-center gap-1 rounded-xs transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40"
                       >
                         <span>{column.header}</span>
@@ -357,7 +367,7 @@ export function DataTable<T>({
                           size={13}
                           className={cn(
                             "transition-transform duration-[var(--duration-ui)]",
-                            sorted && sorted === "asc" && "rotate-180",
+                            sorted === "asc" && "rotate-180",
                             !sorted && "opacity-40",
                           )}
                         />
@@ -379,7 +389,8 @@ export function DataTable<T>({
                     <TableCell>
                       <Checkbox
                         aria-label={
-                          getRowLabel?.(row.original, row.index) ?? `Select row ${row.id}`
+                          getRowLabel?.(row.original, originalIndex.get(row.original) ?? 0) ??
+                          `Select row ${row.id}`
                         }
                         checked={selected}
                         onCheckedChange={(checked) => row.toggleSelected(checked === true)}

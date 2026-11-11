@@ -27,6 +27,8 @@ const columns: DataTableColumn<Invoice>[] = [
     key: "client",
     header: "Client",
     render: (row) => row.client,
+    sortable: true,
+    sortValue: (row) => row.client,
   },
   {
     key: "amount",
@@ -181,6 +183,106 @@ describe("DataTable", () => {
 
     await user.click(screen.getByRole("checkbox", { name: "Select row INV-001" }));
     expect(onSelectionChange).toHaveBeenLastCalledWith(["INV-003", "INV-002"]);
+  });
+
+  it("filters rows through the search box", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+      />,
+    );
+
+    expect(screen.getByText("3 of 3")).toBeInTheDocument();
+    await user.type(screen.getByLabelText("Search table"), "acme");
+    expect(rowIds()).toEqual(["INV-001"]);
+    expect(screen.getByText("1 of 3")).toBeInTheDocument();
+  });
+
+  it("falls back to sortable values when no search text is provided", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "2150");
+    expect(rowIds()).toEqual(["INV-003"]);
+  });
+
+  it("supports controlled search", () => {
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+        searchValue="northwind"
+      />,
+    );
+
+    expect(rowIds()).toEqual(["INV-002"]);
+    expect(screen.getByLabelText("Search table")).toHaveValue("northwind");
+  });
+
+  it("shows the empty state when search matches nothing", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+        emptyTitle="No matches"
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "zzz");
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.getByText("No matches")).toBeInTheDocument();
+  });
+
+  it("searches render-only content through getSearchText", async () => {
+    const user = userEvent.setup();
+    const noteColumns: DataTableColumn<Invoice>[] = [
+      {
+        key: "id",
+        header: "Invoice",
+        render: (row) => row.id,
+      },
+      {
+        key: "note",
+        header: "Note",
+        render: (row) => `Billed to ${row.client}`,
+      },
+    ];
+    render(
+      <DataTable
+        columns={noteColumns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        searchable
+        getSearchText={(row) => `${row.id} ${row.client} ${row.amount}`}
+      />,
+    );
+
+    await user.type(screen.getByLabelText("Search table"), "lumen");
+    expect(
+      screen.getByRole("cell", { name: "INV-003" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("cell", { name: "INV-001" })).not.toBeInTheDocument();
   });
 
   it("falls back to index-based row ids", async () => {

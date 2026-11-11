@@ -4,20 +4,6 @@ import * as React from "react";
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { cn } from "@nphuonha/ui-kit";
 import { copyText } from "@/lib/clipboard";
-import type { ReleaseMigration } from "@/content/migrations";
-
-export function formatReleaseCopy(release: ReleaseMigration) {
-  const rows = release.changes.length
-    ? release.changes
-        .map(
-          (change) =>
-            `- ${change.surface} (${change.kind})\n  Before: ${change.before}\n  After: ${change.after}\n  Find: ${change.find}\n  Fix: ${change.fix}`,
-        )
-        .join("\n")
-    : "- No action required.";
-
-  return `## v${release.version} (${release.date})\n\n${release.summary}\n\n${rows}`;
-}
 
 function useCopiedFlag() {
   const [copied, setCopied] = React.useState(false);
@@ -36,37 +22,6 @@ function useCopiedFlag() {
   }, []);
 
   return { copied, flag };
-}
-
-export function ReleaseCopyButton({ release }: { release: ReleaseMigration }) {
-  const { copied, flag } = useCopiedFlag();
-
-  const onCopy = async () => {
-    try {
-      await copyText(formatReleaseCopy(release));
-      flag();
-    } catch {
-      // Clipboard unavailable — leave button unchanged.
-    }
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={onCopy}
-      aria-label={copied ? `Copied v${release.version}` : `Copy v${release.version} migration`}
-      title={copied ? "Copied" : "Copy release migration"}
-      className={cn(
-        "inline-flex h-7 items-center gap-1.5 rounded-control px-2 font-mono text-[11px] font-medium transition-colors",
-        copied
-          ? "bg-primary-soft text-primary-soft-foreground"
-          : "text-muted-foreground hover:bg-surface hover:text-foreground",
-      )}
-    >
-      {copied ? <CheckIcon size={13} weight="bold" /> : <CopyIcon size={13} />}
-      {copied ? "Copied" : "Copy"}
-    </button>
-  );
 }
 
 export function InlineCopyButton({ text, label }: { text: string; label: string }) {

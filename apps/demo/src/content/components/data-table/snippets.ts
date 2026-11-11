@@ -35,6 +35,9 @@ export function Example() {
         getRowId={(row) => row.id}
         caption="Invoices"
         pageSize={5}
+        searchable
+        searchPlaceholder="Search invoices…"
+        getSearchText={(row) => \`\${row.id} \${row.client} \${row.amount}\`}
       />
     </Card>
   );

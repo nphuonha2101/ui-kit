@@ -73,8 +73,11 @@ function DataTableDemo() {
         columns={columns}
         rows={invoices}
         getRowId={(row) => row.id}
-        caption="Invoices with sorting and pagination"
+        caption="Invoices with sorting, search and pagination"
         pageSize={5}
+        searchable
+        searchPlaceholder="Search invoices…"
+        getSearchText={(row) => `${row.id} ${row.client} ${row.status} ${row.amount}`}
       />
     </Card>
   );

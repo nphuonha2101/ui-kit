@@ -32,18 +32,18 @@ export const releases: ReleaseMigration[] = [
     date: "2026-11-11",
     breaking: false,
     summary:
-      "Additive release: DataTable brings sorting, client-side pagination, row selection and custom action columns on top of the Table primitives. Existing imports and props keep working.",
+      "Additive release: DataTable brings sorting, search, client-side pagination, row selection and custom action columns on top of the Table primitives. Existing imports and props keep working.",
     changes: [
       {
         id: "data-table-0-13-0",
         kind: "additive",
         surface: "DataTable",
         before:
-          "Sortable or paginated tables had to be composed manually from Table primitives, Pagination and Checkbox.",
+          "Sortable, searchable or paginated tables had to be composed manually from Table primitives, an input, Pagination and Checkbox.",
         after:
-          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} />',
+          'import { DataTable, type DataTableColumn } from "@nphuonha/ui-kit";\n\n<DataTable columns={columns} rows={rows} getRowId={(row) => row.id} pageSize={10} searchable />',
         find: "<Table",
-        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, or add selectable for checkboxes and an action column for row buttons and dialogs.",
+        fix: "Nothing required. Mark a column sortable with sortValue, set pageSize={0} to disable pagination, add searchable with getSearchText for render-only columns, or add selectable for checkboxes and an action column for row buttons and dialogs.",
       },
     ],
   },

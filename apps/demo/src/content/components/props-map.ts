@@ -731,6 +731,39 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Empty state supporting copy."
     },
     {
+      "name": "searchable",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a search box that filters rows across `getSearchText`."
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "default": "\"Search…\"",
+      "description": "Placeholder for the search box."
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "description": "Controlled search text."
+    },
+    {
+      "name": "defaultSearchValue",
+      "type": "string",
+      "default": "\"\"",
+      "description": "Initial search text for uncontrolled usage."
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) => void",
+      "description": "Called when the search text changes."
+    },
+    {
+      "name": "getSearchText",
+      "type": "(row: T) => string",
+      "description": "Text matched against the search. Defaults to joining sortable column values."
+    },
+    {
       "name": "containerClassName",
       "type": "string",
       "description": "Extra classes for the scroll container around the table."

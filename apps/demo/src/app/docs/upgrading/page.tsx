@@ -9,7 +9,7 @@ import {
 import { Alert, buttonVariants } from "@nphuonha/ui-kit";
 import { AgentCopyButton } from "@/components/docs/agent-copy-button";
 import { CodeBlock } from "@/components/docs/code-block";
-import { UpgradeReleases } from "@/components/docs/upgrade-releases";
+import { MigrationTable } from "@/components/docs/migration-table";
 import { PageHeader } from "@/components/docs/page-header";
 import { DOCS_URL, UPGRADING_AGENT_PROMPT } from "@/content/llms";
 import { latestRelease, releases } from "@/content/migrations";
@@ -96,11 +96,12 @@ npm test`}
               Release migrations
             </h2>
             <p className="mt-1 text-sm leading-7 text-muted-foreground">
-              Apply entries oldest → newest. Additive rows are optional; rename, remove and
-              replace rows are required. Pick From/To to narrow to your upgrade path.
+              Every migration row ever shipped, newest first. Search to narrow,
+              sort by version or surface, and open a row for the full
+              Before/After with copy buttons.
             </p>
           </div>
-          <UpgradeReleases releases={releases} />
+          <MigrationTable releases={releases} />
         </section>
 
         <section className="flex flex-col gap-3">

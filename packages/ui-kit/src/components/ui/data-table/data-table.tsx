@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   useReactTable,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   type ColumnDef,
@@ -16,6 +17,7 @@ import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
 import { Checkbox } from "../checkbox";
 import { EmptyState } from "../empty-state";
+import { Input } from "../input";
 import { Pagination } from "../pagination";
 import {
   Table,
@@ -87,6 +89,18 @@ export interface DataTableProps<T>
   emptyTitle?: React.ReactNode;
   /** Empty state supporting copy. */
   emptyDescription?: React.ReactNode;
+  /** Shows a search box that filters rows across `getSearchText`. */
+  searchable?: boolean;
+  /** Placeholder for the search box. */
+  searchPlaceholder?: string;
+  /** Controlled search text. */
+  searchValue?: string;
+  /** Initial search text for uncontrolled usage. */
+  defaultSearchValue?: string;
+  /** Called when the search text changes. */
+  onSearchChange?: (value: string) => void;
+  /** Text matched against the search. Defaults to joining sortable column values. */
+  getSearchText?: (row: T) => string;
   /** Extra classes for the scroll container around the table. */
   containerClassName?: string;
 }
@@ -127,6 +141,12 @@ export function DataTable<T>({
   getRowLabel,
   emptyTitle = "No rows",
   emptyDescription,
+  searchable = false,
+  searchPlaceholder = "Search…",
+  searchValue,
+  defaultSearchValue = "",
+  onSearchChange,
+  getSearchText,
   className,
   containerClassName,
   ...props
@@ -146,13 +166,36 @@ export function DataTable<T>({
   const [internalSelection, setInternalSelection] = React.useState<RowSelectionState>(() =>
     Object.fromEntries(defaultSelectedIds.map((id) => [id, true])),
   );
+  const [internalSearch, setInternalSearch] = React.useState(defaultSearchValue);
+  const isSearchControlled = searchValue !== undefined;
+  const globalFilter = isSearchControlled ? searchValue : internalSearch;
+
+  const matchesSearch = React.useCallback(
+    (row: T) => {
+      const query = globalFilter.trim().toLowerCase();
+      if (!query) return true;
+      const haystack = getSearchText
+        ? getSearchText(row)
+        : columns
+            .filter((column) => column.sortValue)
+            .map((column) => String(column.sortValue?.(row) ?? ""))
+            .join(" ");
+      return haystack.toLowerCase().includes(query);
+    },
+    [globalFilter, columns, getSearchText],
+  );
+
+  const filteredCount = React.useMemo(
+    () => rows.filter(matchesSearch).length,
+    [rows, matchesSearch],
+  );
 
   const sorting: SortingState = React.useMemo(() => {
     if (!isSortControlled) return internalSorting;
     return sortKey ? [{ id: sortKey, desc: (sortDirection ?? "asc") === "desc" }] : [];
   }, [isSortControlled, internalSorting, sortKey, sortDirection]);
 
-  const maxPageIndex = Math.max(Math.ceil(rows.length / effectivePageSize) - 1, 0);
+  const maxPageIndex = Math.max(Math.ceil(filteredCount / effectivePageSize) - 1, 0);
 
   const pagination: PaginationState = React.useMemo(() => {
     const rawIndex = isPageControlled ? (page ?? 1) - 1 : internalPagination.pageIndex;
@@ -189,7 +232,9 @@ export function DataTable<T>({
               ),
           };
         }
-        return { ...base, enableSorting: false };
+        // Display-only column: a null accessor keeps it visible to the
+        // global filter (TanStack skips columns without accessorFn).
+        return { ...base, accessorFn: () => null, enableSorting: false };
       }),
     [columns],
   );
@@ -198,7 +243,7 @@ export function DataTable<T>({
     data: rows,
     columns: tanstackColumns,
     getRowId: (row, index) => getRowId?.(row, index) ?? String(index),
-    state: { sorting, pagination, rowSelection },
+    state: { sorting, pagination, rowSelection, globalFilter },
     onSortingChange: (updater) => {
       const next = typeof updater === "function" ? updater(sorting) : updater;
       const [first] = next;
@@ -222,16 +267,25 @@ export function DataTable<T>({
         Object.keys(next).filter((id) => next[id]),
       );
     },
+    onGlobalFilterChange: (updater) => {
+      const next =
+        typeof updater === "function" ? updater(globalFilter) : updater;
+      if (!isSearchControlled) setInternalSearch(next);
+      onSearchChange?.(next);
+    },
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getColumnCanGlobalFilter: () => true,
+    globalFilterFn: (row) => matchesSearch(row.original),
     enableRowSelection: selectable,
     enableSortingRemoval: false,
     autoResetPageIndex: !isPageControlled,
   });
 
   const pageRows = table.getRowModel().rows;
-  const total = rows.length;
+  const total = filteredCount;
   const pageCount = table.getPageCount();
   const activePageIndex = table.getState().pagination.pageIndex;
   const rangeStart = total === 0 ? 0 : activePageIndex * effectivePageSize + 1;
@@ -242,6 +296,20 @@ export function DataTable<T>({
 
   return (
     <div className={cn("flex w-full flex-col gap-3", className)} {...props}>
+      {searchable ? (
+        <div className="flex items-center justify-between gap-3">
+          <Input
+            value={globalFilter}
+            onChange={(event) => table.setGlobalFilter(event.target.value)}
+            placeholder={searchPlaceholder}
+            aria-label="Search table"
+            className="max-w-xs"
+          />
+          <p className="font-mono text-[11px] text-muted-foreground">
+            {total} of {rows.length}
+          </p>
+        </div>
+      ) : null}
       {total === 0 ? (
         <EmptyState size="sm" title={emptyTitle} description={emptyDescription} />
       ) : (

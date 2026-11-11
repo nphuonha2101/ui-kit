@@ -1,14 +1,15 @@
 import { test, expect } from "@playwright/test";
 
-test("upgrading: sorts a migration table and opens row detail", async ({ page }) => {
+test("upgrading: sorts the migration table and opens row detail", async ({ page }) => {
   await page.goto("/docs/upgrading");
 
-  await expect(page.getByRole("table").first()).toBeVisible();
+  const table = page.getByRole("table").first();
+  await expect(table).toBeVisible();
 
-  const surfaceHeader = page.getByRole("columnheader", { name: "Surface" }).first();
-  await expect(surfaceHeader).toHaveAttribute("aria-sort", "ascending");
-  await surfaceHeader.getByRole("button").click();
-  await expect(surfaceHeader).toHaveAttribute("aria-sort", "descending");
+  const versionHeader = page.getByRole("columnheader", { name: "Version" });
+  await expect(versionHeader).toHaveAttribute("aria-sort", "descending");
+  await versionHeader.getByRole("button").click();
+  await expect(versionHeader).toHaveAttribute("aria-sort", "ascending");
 
   await page.getByRole("button", { name: "View detail" }).first().click();
   const dialog = page.getByRole("dialog");
@@ -20,13 +21,14 @@ test("upgrading: sorts a migration table and opens row detail", async ({ page })
   await expect(dialog).toBeHidden();
 });
 
-test("upgrading: From narrows the release list oldest-first", async ({ page }) => {
+test("upgrading: search narrows the migration rows", async ({ page }) => {
   await page.goto("/docs/upgrading");
 
-  await page.getByLabel("Installed version").click();
-  await page.getByRole("option", { name: "v0.12.0" }).click();
+  await expect(page.getByRole("table").first()).toBeVisible();
+  await page.getByLabel("Search table").fill("scrollbar-styled");
+  await expect(page.getByRole("cell", { name: "scrollbar-styled" }).first()).toBeVisible();
 
-  await expect(page.locator("#v-0-12-0")).toBeVisible();
-  await expect(page.locator("#v-0-4-0")).toBeHidden();
-  await expect(page.getByText("oldest → newest").first()).toBeVisible();
+  await page.getByLabel("Search table").fill("zzz-no-match");
+  await expect(page.getByRole("table")).toBeHidden();
+  await expect(page.getByText("No migrations match")).toBeVisible();
 });

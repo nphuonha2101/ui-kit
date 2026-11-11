@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
-import { cn } from "@nphuonha/ui-kit";
+import { Button, cn } from "@nphuonha/ui-kit";
 import { copyText } from "@/lib/clipboard";
+import type { ReleaseMigration } from "@/content/migrations";
 
 function useCopiedFlag() {
   const [copied, setCopied] = React.useState(false);
@@ -22,6 +23,45 @@ function useCopiedFlag() {
   }, []);
 
   return { copied, flag };
+}
+
+export function formatReleaseCopy(release: ReleaseMigration) {
+  const rows = release.changes.length
+    ? release.changes
+        .map(
+          (change) =>
+            `- ${change.surface} (${change.kind})\n  Before: ${change.before}\n  After: ${change.after}\n  Find: ${change.find}\n  Fix: ${change.fix}`,
+        )
+        .join("\n")
+    : "- No action required.";
+
+  return `## v${release.version} (${release.date})\n\n${release.summary}\n\n${rows}`;
+}
+
+export function ReleaseCopyButton({ release }: { release: ReleaseMigration }) {
+  const { copied, flag } = useCopiedFlag();
+
+  const onCopy = async () => {
+    try {
+      await copyText(formatReleaseCopy(release));
+      flag();
+    } catch {
+      // Clipboard unavailable — leave button unchanged.
+    }
+  };
+
+  return (
+    <Button
+      type="button"
+      variant="secondary"
+      size="sm"
+      startIcon={copied ? CheckIcon : CopyIcon}
+      onClick={onCopy}
+      aria-live="polite"
+    >
+      {copied ? "Copied" : "Copy release"}
+    </Button>
+  );
 }
 
 export function InlineCopyButton({ text, label }: { text: string; label: string }) {

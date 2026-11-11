@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { waitForHydration } from "./helpers";
 
 const routes = ["/docs/components/data-table", "/docs/upgrading"];
 
@@ -22,6 +23,7 @@ for (const route of routes) {
     });
 
     await page.goto(route);
+  await waitForHydration(page);
     await expect(page.getByRole("table").first()).toBeVisible();
 
     const overflow = await page.evaluate(

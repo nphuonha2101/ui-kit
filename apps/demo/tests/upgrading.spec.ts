@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { waitForHydration } from "./helpers";
 
 test("upgrading: sorts the migration table and opens row detail", async ({ page }) => {
   await page.goto("/docs/upgrading");
+  await waitForHydration(page);
 
   const table = page.getByRole("table").first();
   await expect(table).toBeVisible();
@@ -17,6 +19,7 @@ test("upgrading: sorts the migration table and opens row detail", async ({ page 
   await expect(dialog).toContainText("Before");
   await expect(dialog).toContainText("After");
   await expect(dialog).toContainText("Find");
+  await expect(dialog.getByRole("button", { name: "Copy release" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
 });
@@ -30,5 +33,5 @@ test("upgrading: search narrows the migration rows", async ({ page }) => {
 
   await page.getByLabel("Search table").fill("zzz-no-match");
   await expect(page.getByRole("table")).toBeHidden();
-  await expect(page.getByText("No migrations match")).toBeVisible();
+  await expect(page.getByText("No releases match")).toBeVisible();
 });

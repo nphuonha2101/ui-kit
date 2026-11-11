@@ -44,6 +44,19 @@ export default function UpgradingPage() {
           release (or a minor while the package is 0.x) and always get a migration row below.
         </Alert>
 
+        <section className="flex flex-col gap-4">
+          <div>
+            <h2 className="text-xl font-semibold tracking-[-0.025em]">
+              Release migrations
+            </h2>
+            <p className="mt-1 text-sm leading-7 text-muted-foreground">
+              Every row ever shipped, newest first. Search or sort, then open a row
+              for the full Before/After and copy buttons.
+            </p>
+          </div>
+          <MigrationTable releases={releases} />
+        </section>
+
         <section className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold tracking-[-0.025em]">Upgrade checklist</h2>
           <div className="grid gap-2 sm:grid-cols-2">
@@ -88,20 +101,6 @@ npm test`}
             language="markdown"
             filename="Prompt to copy"
           />
-        </section>
-
-        <section className="flex flex-col gap-4">
-          <div>
-            <h2 className="text-xl font-semibold tracking-[-0.025em]">
-              Release migrations
-            </h2>
-            <p className="mt-1 text-sm leading-7 text-muted-foreground">
-              Every migration row ever shipped, newest first. Search to narrow,
-              sort by version or surface, and open a row for the full
-              Before/After with copy buttons.
-            </p>
-          </div>
-          <MigrationTable releases={releases} />
         </section>
 
         <section className="flex flex-col gap-3">

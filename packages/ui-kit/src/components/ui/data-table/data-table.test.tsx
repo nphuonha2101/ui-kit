@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { DataTable, type DataTableColumn } from "./data-table";
@@ -1040,5 +1040,120 @@ describe("DataTable", () => {
     await user.type(screen.getByLabelText("Search table"), "Row 4999");
     expect(screen.getByRole("table").querySelectorAll("tbody tr")).toHaveLength(1);
     expect(screen.getByRole("cell", { name: "Row 4999" })).toBeInTheDocument();
+  });
+
+  it("hides columns through controlled visibility", () => {
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        columnVisibility={{ client: false }}
+      />,
+    );
+
+    expect(screen.queryByRole("columnheader", { name: /client/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("cell", { name: "Acme Studio" })).not.toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: /invoice/i })).toBeInTheDocument();
+  });
+
+  it("toggles columns from the column menu", async () => {
+    const user = userEvent.setup();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        columnMenu
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Columns" }));
+    await user.click(await screen.findByRole("checkbox", { name: "Client" }));
+    expect(screen.queryByRole("columnheader", { name: /client/i })).not.toBeInTheDocument();
+  });
+
+  it("supports multi-column sorting with shift-click", () => {
+    const onSortingChange = vi.fn();
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        multiSort
+        onSortingChange={onSortingChange}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /invoice/i }));
+    fireEvent.click(screen.getByRole("button", { name: /client/i }), {
+      shiftKey: true,
+    });
+
+    expect(onSortingChange).toHaveBeenLastCalledWith([
+      { key: "id", direction: "asc" },
+      { key: "client", direction: "asc" },
+    ]);
+    expect(screen.getByRole("columnheader", { name: /invoice/i })).toHaveAttribute(
+      "aria-sort",
+      "ascending",
+    );
+    expect(screen.getByRole("columnheader", { name: /client/i })).toHaveAttribute(
+      "aria-sort",
+      "ascending",
+    );
+  });
+
+  it("accepts a controlled multi-sort list", () => {
+    render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={rows}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        sorting={[
+          { key: "amount", direction: "desc" },
+          { key: "client", direction: "asc" },
+        ]}
+      />,
+    );
+
+    expect(rowIds()).toEqual(["INV-003", "INV-001", "INV-002"]);
+    expect(screen.getByRole("columnheader", { name: /amount/i })).toHaveAttribute(
+      "aria-sort",
+      "descending",
+    );
+  });
+
+  it("wraps the table in a fixed-height virtualized area", () => {
+    const many = Array.from({ length: 100 }, (_, index) => ({
+      id: `INV-${String(index + 1).padStart(3, "0")}`,
+      client: `Row ${index + 1}`,
+      amount: index + 1,
+    }));
+    const { container } = render(
+      <DataTable
+        caption="Invoices"
+        columns={columns}
+        rows={many}
+        getRowId={(row) => row.id}
+        pageSize={0}
+        virtualized
+        virtualHeight={200}
+        estimateRowHeight={40}
+      />,
+    );
+
+    const scroller = container.querySelector('[data-virtualized="true"]');
+    expect(scroller).toBeInTheDocument();
+    expect(scroller).toHaveStyle({ height: "200px" });
+    expect(screen.getByRole("table")).toBeInTheDocument();
   });
 });

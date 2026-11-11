@@ -3,7 +3,7 @@ import type { ComponentMeta } from "@/content/types";
 export const meta: ComponentMeta = {
   "slug": "data-table",
   "title": "DataTable",
-  "description": "Data-driven table powered by TanStack Table: sorting, search, pagination, selection, server-side mode with loading skeletons, and custom action columns.",
+  "description": "Data-driven table powered by TanStack Table: sorting, search, pagination, selection, column visibility, virtualization, server-side mode with loading skeletons, and custom action columns.",
   "category": "Data Display",
   "imports": "import { Badge, Card, DataTable } from \"@nphuonha/ui-kit\";",
   "examples": [
@@ -21,6 +21,11 @@ export const meta: ComponentMeta = {
       "title": "Async server data",
       "description": "Manual pagination, sorting and filtering with a loading skeleton over 5,000 rows.",
       "demoKey": "data-table-async"
+    },
+    {
+      "title": "Virtualized rows",
+      "description": "Render 1,000 rows without mounting them all by virtualizing the scroll area.",
+      "demoKey": "data-table-virtualized"
     }
   ]
 };

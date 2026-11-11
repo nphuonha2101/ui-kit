@@ -1,24 +1,16 @@
 "use client";
 
 import * as React from "react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type ColumnDef,
-  type PaginationState,
-  type Row,
-  type RowSelectionState,
-  type SortingState,
-} from "@tanstack/react-table";
+import { useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type ColumnDef, type PaginationState, type Row, type RowSelectionState, type SortingState, type VisibilityState } from "@tanstack/react-table";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "../../../lib/utils";
 import { useKitIcon } from "../_shared/icon-provider";
+import { Button } from "../button";
 import { Checkbox } from "../checkbox";
 import { EmptyState } from "../empty-state";
 import { Input } from "../input";
 import { Pagination } from "../pagination";
+import { Popover } from "../popover";
 import { Skeleton } from "../skeleton";
 import {
   Table,
@@ -30,6 +22,13 @@ import {
 } from "../table";
 
 export type DataTableSortDirection = "asc" | "desc";
+
+export interface DataTableSort {
+  /** Column key. */
+  key: string;
+  /** Sort direction for that column. */
+  direction: DataTableSortDirection;
+}
 
 export interface DataTableColumn<T> {
   /** Stable key. Used for controlled sorting and header identity. */
@@ -71,6 +70,14 @@ export interface DataTableProps<T>
   defaultSortDirection?: DataTableSortDirection;
   /** Called when sorting changes. */
   onSortChange?: (key: string | null, direction: DataTableSortDirection) => void;
+  /** Controlled sort list. Takes precedence over `sortKey`/`sortDirection`. */
+  sorting?: DataTableSort[];
+  /** Initial sort list for uncontrolled multi-sort. */
+  defaultSorting?: DataTableSort[];
+  /** Called with the full sort list, including multi-sort entries. */
+  onSortingChange?: (sorting: DataTableSort[]) => void;
+  /** Allows shift-click multi-column sorting. */
+  multiSort?: boolean;
   /** Locale used for string sorting. Defaults to "en" for deterministic output. */
   sortLocale?: string;
   /** Rows per page. Defaults to 10. Set to 0 to disable pagination. */
@@ -136,6 +143,22 @@ export interface DataTableProps<T>
   manualSorting?: boolean;
   /** Filtering is handled by the caller. Pair with controlled `searchValue`. */
   manualFiltering?: boolean;
+  /** Controlled column visibility keyed by column key. */
+  columnVisibility?: Record<string, boolean>;
+  /** Initial column visibility for uncontrolled usage. */
+  defaultColumnVisibility?: Record<string, boolean>;
+  /** Called when column visibility changes. */
+  onColumnVisibilityChange?: (visibility: Record<string, boolean>) => void;
+  /** Shows a Columns popover for toggling column visibility. */
+  columnMenu?: boolean;
+  /** Accessible label for the column menu trigger. */
+  columnMenuLabel?: string;
+  /** Virtualizes body rows inside a fixed-height scroll area. */
+  virtualized?: boolean;
+  /** Height of the virtualized scroll area in pixels. Defaults to 360. */
+  virtualHeight?: number;
+  /** Estimated row height in pixels. Defaults to 48. */
+  estimateRowHeight?: number;
   /** Extra classes for the scroll container around the table. */
   containerClassName?: string;
 }
@@ -163,6 +186,10 @@ export function DataTable<T>({
   sortDirection,
   defaultSortDirection = "asc",
   onSortChange,
+  sorting,
+  defaultSorting,
+  onSortingChange,
+  multiSort = false,
   sortLocale = "en",
   pageSize = 10,
   page,
@@ -191,13 +218,20 @@ export function DataTable<T>({
   rowCount,
   manualSorting = false,
   manualFiltering = false,
+  columnVisibility,
+  defaultColumnVisibility,
+  onColumnVisibilityChange,
+  columnMenu = false,
+  columnMenuLabel = "Columns",
+  virtualized = false,
+  virtualHeight = 360,
+  estimateRowHeight = 48,
   className,
   containerClassName,
   ...props
 }: DataTableProps<T>) {
   const ChevronDownIcon = useKitIcon("chevronDown");
   const isPageControlled = page !== undefined;
-  const isSortControlled = sortKey !== undefined || sortDirection !== undefined;
   const effectivePageSize = pageSize > 0 ? pageSize : Math.max(rows.length, 1);
   const collator = React.useMemo(
     () =>
@@ -208,10 +242,19 @@ export function DataTable<T>({
     [sortLocale],
   );
 
-  const [internalSorting, setInternalSorting] = React.useState<SortingState>(() =>
-    defaultSortKey
+  const [internalSorting, setInternalSorting] = React.useState<SortingState>(() => {
+    if (defaultSorting?.length) {
+      return defaultSorting.map((entry) => ({
+        id: entry.key,
+        desc: entry.direction === "desc",
+      }));
+    }
+    return defaultSortKey
       ? [{ id: defaultSortKey, desc: defaultSortDirection === "desc" }]
-      : [],
+      : [];
+  });
+  const [internalVisibility, setInternalVisibility] = React.useState<VisibilityState>(
+    () => defaultColumnVisibility ?? {},
   );
   const [internalPagination, setInternalPagination] =
     React.useState<PaginationState>({ pageIndex: defaultPage - 1, pageSize });
@@ -261,10 +304,26 @@ export function DataTable<T>({
     return map;
   }, [rows]);
 
-  const sorting: SortingState = React.useMemo(() => {
+  const isSortControlled =
+    sorting !== undefined || sortKey !== undefined || sortDirection !== undefined;
+
+  const sortingState: SortingState = React.useMemo(() => {
     if (!isSortControlled) return internalSorting;
+    if (sorting) {
+      return sorting.map((entry) => ({
+        id: entry.key,
+        desc: entry.direction === "desc",
+      }));
+    }
     return sortKey ? [{ id: sortKey, desc: (sortDirection ?? "asc") === "desc" }] : [];
-  }, [isSortControlled, internalSorting, sortKey, sortDirection]);
+  }, [isSortControlled, internalSorting, sorting, sortKey, sortDirection]);
+
+  const visibilityState: VisibilityState =
+    columnVisibility !== undefined ? columnVisibility : internalVisibility;
+  const visibleColumns = React.useMemo(
+    () => columns.filter((column) => visibilityState[column.key] !== false),
+    [columns, visibilityState],
+  );
 
   const maxPageIndex = Math.max(Math.ceil(total / effectivePageSize) - 1, 0);
 
@@ -348,12 +407,34 @@ export function DataTable<T>({
     data: rows,
     columns: tanstackColumns,
     getRowId: (row, index) => getRowId?.(row, index) ?? String(index),
-    state: { sorting, pagination, rowSelection, globalFilter },
+    state: {
+      sorting: sortingState,
+      pagination,
+      rowSelection,
+      globalFilter,
+      columnVisibility: visibilityState,
+    },
     onSortingChange: (updater) => {
-      const next = typeof updater === "function" ? updater(sorting) : updater;
+      const next =
+        typeof updater === "function" ? updater(sortingState) : updater;
+      const entries = next.map((entry) => ({
+        key: entry.id,
+        direction: entry.desc ? ("desc" as const) : ("asc" as const),
+      }));
       const [first] = next;
       if (!isSortControlled) setInternalSorting(next);
+      onSortingChange?.(entries);
       onSortChange?.(first?.id ?? null, first?.desc ? "desc" : "asc");
+    },
+    onColumnVisibilityChange: (updater) => {
+      const next =
+        typeof updater === "function" ? updater(visibilityState) : updater;
+      if (columnVisibility === undefined) setInternalVisibility(next);
+      onColumnVisibilityChange?.(
+        Object.fromEntries(
+          Object.entries(next).filter(([, visible]) => visible !== undefined),
+        ) as Record<string, boolean>,
+      );
     },
     onPaginationChange: (updater) => {
       const next =
@@ -389,6 +470,7 @@ export function DataTable<T>({
     globalFilterFn: (row) => matchedFlags[row.index] ?? true,
     enableRowSelection: selectable,
     enableSortingRemoval: false,
+    enableMultiSort: multiSort,
     autoResetPageIndex: !isPageControlled,
     manualPagination,
     manualSorting,
@@ -404,6 +486,29 @@ export function DataTable<T>({
     pageSize > 0
       ? Math.min(activePageIndex * effectivePageSize + effectivePageSize, total)
       : total;
+
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const rowVirtualizer = useVirtualizer({
+    count: virtualized ? pageRows.length : 0,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => estimateRowHeight,
+    overscan: 8,
+    initialRect: { width: 800, height: virtualHeight },
+  });
+  const virtualItems = virtualized ? rowVirtualizer.getVirtualItems() : [];
+  const virtualPaddingTop = virtualItems.length > 0 ? virtualItems[0].start : 0;
+  const virtualPaddingBottom =
+    virtualItems.length > 0
+      ? rowVirtualizer.getTotalSize() -
+        virtualItems[virtualItems.length - 1].end
+      : 0;
+  const renderedRows = virtualized
+    ? virtualItems.map((item) => ({
+        row: pageRows[item.index],
+        virtualIndex: item.index,
+      }))
+    : pageRows.map((row) => ({ row, virtualIndex: undefined }));
+  const columnCount = visibleColumns.length + (selectable ? 1 : 0);
 
   const stickyHeadClassName = stickyHeader ? "sticky top-0 z-10 bg-card" : undefined;
 
@@ -422,7 +527,7 @@ export function DataTable<T>({
             />
           </TableHead>
         ) : null}
-        {columns.map((column) => {
+        {visibleColumns.map((column) => {
           const tableColumn = table.getColumn(column.key);
           const sorted = tableColumn?.getIsSorted() ?? false;
           const canSort = tableColumn?.getCanSort() ?? false;
@@ -472,15 +577,17 @@ export function DataTable<T>({
       aria-busy={loading || undefined}
       {...props}
     >
-      {searchable ? (
-        <div className="flex items-center justify-between gap-3">
-          <Input
-            value={globalFilter}
-            onChange={(event) => table.setGlobalFilter(event.target.value)}
-            placeholder={searchPlaceholder}
-            aria-label={searchLabel}
-            className="max-w-xs"
-          />
+      {searchable || columnMenu ? (
+        <div className="flex flex-wrap items-center gap-3">
+          {searchable ? (
+            <Input
+              value={globalFilter}
+              onChange={(event) => table.setGlobalFilter(event.target.value)}
+              placeholder={searchPlaceholder}
+              aria-label={searchLabel}
+              className="max-w-xs"
+            />
+          ) : null}
           <p
             aria-live="polite"
             className="font-mono text-[11px] text-muted-foreground"
@@ -491,6 +598,41 @@ export function DataTable<T>({
                 ? `${total} result${total === 1 ? "" : "s"}`
                 : `${total} of ${rows.length}`}
           </p>
+          {columnMenu ? (
+            <div className="ml-auto">
+              <Popover
+                trigger={
+                  <Button variant="secondary" size="sm">
+                    {columnMenuLabel}
+                  </Button>
+                }
+                title={columnMenuLabel}
+                aria-label={columnMenuLabel}
+              >
+                <div className="flex flex-col gap-2.5">
+                  {columns.map((column) => {
+                    const visible = visibilityState[column.key] !== false;
+                    return (
+                      <Checkbox
+                        key={column.key}
+                        label={
+                          typeof column.header === "string" ? column.header : column.key
+                        }
+                        checked={visible}
+                        disabled={visible && visibleColumns.length === 1}
+                        onCheckedChange={(checked) =>
+                          table.setColumnVisibility((current) => ({
+                            ...current,
+                            [column.key]: checked === true,
+                          }))
+                        }
+                      />
+                    );
+                  })}
+                </div>
+              </Popover>
+            </div>
+          ) : null}
         </div>
       ) : null}
       {loading ? (
@@ -505,7 +647,7 @@ export function DataTable<T>({
                     <Skeleton className="size-5 rounded-xs" />
                   </TableCell>
                 ) : null}
-                {columns.map((column, columnIndex) => (
+                {visibleColumns.map((column, columnIndex) => (
                   <TableCell key={column.key}>
                     <Skeleton
                       className={cn(
@@ -522,36 +664,71 @@ export function DataTable<T>({
       ) : total === 0 ? (
         <EmptyState size="sm" title={emptyTitle} description={emptyDescription} />
       ) : (
-        <Table containerClassName={containerClassName}>
-          <caption className="sr-only">{caption}</caption>
-          {tableHeader}
-          <TableBody>
-            {pageRows.map((row) => {
-              const selected = row.getIsSelected();
-              return (
-                <TableRow key={row.id} data-state={selected ? "selected" : undefined}>
-                  {selectable ? (
-                    <TableCell>
-                      <Checkbox
-                        aria-label={
-                          getRowLabel?.(row.original, originalIndex.get(row.original) ?? 0) ??
-                          `Select row ${row.id}`
-                        }
-                        checked={selected}
-                        onCheckedChange={(checked) => row.toggleSelected(checked === true)}
-                      />
-                    </TableCell>
-                  ) : null}
-                  {columns.map((column) => (
-                    <TableCell key={column.key} className={column.cellClassName}>
-                      {column.render(row.original)}
-                    </TableCell>
-                  ))}
+        <div
+          ref={virtualized ? scrollRef : undefined}
+          data-virtualized={virtualized || undefined}
+          className={virtualized ? "overflow-auto" : undefined}
+          style={virtualized ? { height: virtualHeight } : undefined}
+        >
+          <Table
+            containerClassName={cn(
+              virtualized && "overflow-visible",
+              containerClassName,
+            )}
+          >
+            <caption className="sr-only">{caption}</caption>
+            {tableHeader}
+            <TableBody>
+              {virtualized && virtualPaddingTop > 0 ? (
+                <TableRow aria-hidden="true" className="hover:bg-transparent">
+                  <TableCell
+                    colSpan={columnCount}
+                    style={{ height: virtualPaddingTop, padding: 0 }}
+                  />
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+              ) : null}
+              {renderedRows.map(({ row, virtualIndex }) => {
+                const selected = row.getIsSelected();
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-index={virtualIndex}
+                    ref={virtualized ? rowVirtualizer.measureElement : undefined}
+                    data-state={selected ? "selected" : undefined}
+                  >
+                    {selectable ? (
+                      <TableCell>
+                        <Checkbox
+                          aria-label={
+                            getRowLabel?.(row.original, originalIndex.get(row.original) ?? 0) ??
+                            `Select row ${row.id}`
+                          }
+                          checked={selected}
+                          onCheckedChange={(checked) =>
+                            row.toggleSelected(checked === true)
+                          }
+                        />
+                      </TableCell>
+                    ) : null}
+                    {visibleColumns.map((column) => (
+                      <TableCell key={column.key} className={column.cellClassName}>
+                        {column.render(row.original)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })}
+              {virtualized && virtualPaddingBottom > 0 ? (
+                <TableRow aria-hidden="true" className="hover:bg-transparent">
+                  <TableCell
+                    colSpan={columnCount}
+                    style={{ height: virtualPaddingBottom, padding: 0 }}
+                  />
+                </TableRow>
+              ) : null}
+            </TableBody>
+          </Table>
+        </div>
       )}
       {!loading && pageSize > 0 && pageCount > 1 ? (
         <div className="flex flex-wrap items-center justify-between gap-3">

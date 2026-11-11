@@ -78,6 +78,8 @@ function DataTableDemo() {
         searchable
         searchPlaceholder="Search invoices…"
         getSearchText={(row) => `${row.id} ${row.client} ${row.status} ${row.amount}`}
+        columnMenu
+        multiSort
       />
     </Card>
   );
@@ -236,9 +238,38 @@ function AsyncExample() {
   );
 }
 
+function VirtualizedExample() {
+  const virtualRows: Invoice[] = React.useMemo(
+    () =>
+      Array.from({ length: 1000 }, (_, index) => ({
+        id: `INV-${String(index + 1).padStart(4, "0")}`,
+        client: `Client ${index + 1}`,
+        status: (["Paid", "Pending", "Overdue"] as const)[index % 3],
+        amount: 100 + index * 5,
+      })),
+    [],
+  );
+
+  return (
+    <Card className="w-full overflow-hidden p-2">
+      <DataTable
+        columns={columns}
+        rows={virtualRows}
+        getRowId={(row) => row.id}
+        caption="Virtualized invoices"
+        pageSize={0}
+        virtualized
+        virtualHeight={320}
+        estimateRowHeight={53}
+      />
+    </Card>
+  );
+}
+
 export const demo = DataTableDemo;
 export const examples = {
   "data-table-selection": SelectionExample,
   "data-table-actions": ActionsExample,
   "data-table-async": AsyncExample,
+  "data-table-virtualized": VirtualizedExample,
 };

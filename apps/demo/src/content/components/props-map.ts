@@ -671,6 +671,27 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Called when sorting changes."
     },
     {
+      "name": "sorting",
+      "type": "DataTableSort[]",
+      "description": "Controlled sort list. Takes precedence over `sortKey`/`sortDirection`."
+    },
+    {
+      "name": "defaultSorting",
+      "type": "DataTableSort[]",
+      "description": "Initial sort list for uncontrolled multi-sort."
+    },
+    {
+      "name": "onSortingChange",
+      "type": "(sorting: DataTableSort[]) => void",
+      "description": "Called with the full sort list, including multi-sort entries."
+    },
+    {
+      "name": "multiSort",
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows shift-click multi-column sorting."
+    },
+    {
       "name": "sortLocale",
       "type": "string",
       "default": "\"en\"",
@@ -826,6 +847,51 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "type": "boolean",
       "default": "false",
       "description": "Filtering is handled by the caller. Pair with controlled `searchValue`."
+    },
+    {
+      "name": "columnVisibility",
+      "type": "Record<string, boolean>",
+      "description": "Controlled column visibility keyed by column key."
+    },
+    {
+      "name": "defaultColumnVisibility",
+      "type": "Record<string, boolean>",
+      "description": "Initial column visibility for uncontrolled usage."
+    },
+    {
+      "name": "onColumnVisibilityChange",
+      "type": "(visibility: Record<string, boolean>) => void",
+      "description": "Called when column visibility changes."
+    },
+    {
+      "name": "columnMenu",
+      "type": "boolean",
+      "default": "false",
+      "description": "Shows a Columns popover for toggling column visibility."
+    },
+    {
+      "name": "columnMenuLabel",
+      "type": "string",
+      "default": "\"Columns\"",
+      "description": "Accessible label for the column menu trigger."
+    },
+    {
+      "name": "virtualized",
+      "type": "boolean",
+      "default": "false",
+      "description": "Virtualizes body rows inside a fixed-height scroll area."
+    },
+    {
+      "name": "virtualHeight",
+      "type": "number",
+      "default": "360",
+      "description": "Height of the virtualized scroll area in pixels. Defaults to 360."
+    },
+    {
+      "name": "estimateRowHeight",
+      "type": "number",
+      "default": "48",
+      "description": "Estimated row height in pixels. Defaults to 48."
     },
     {
       "name": "containerClassName",

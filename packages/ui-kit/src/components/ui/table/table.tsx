@@ -50,12 +50,13 @@ export function TableFooter({
   );
 }
 
-export function TableRow({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLTableRowElement>) {
+export const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(function TableRow({ className, ...props }, ref) {
   return (
     <tr
+      ref={ref}
       className={cn(
         "border-b border-border/60 transition-colors hover:bg-surface/40 data-[state=selected]:bg-primary-soft",
         className,
@@ -63,7 +64,8 @@ export function TableRow({
       {...props}
     />
   );
-}
+});
+TableRow.displayName = "TableRow";
 
 export function TableHead({
   className,

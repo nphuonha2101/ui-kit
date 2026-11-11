@@ -105,3 +105,49 @@ test("data-table async example: loads server data and searches", async ({ page }
   });
   await expect(page.getByText("1 result")).toBeVisible({ timeout: 8000 });
 });
+
+test("data-table docs demo: column menu hides a column", async ({ page }) => {
+  await page.goto("/docs/components/data-table");
+  await waitForHydration(page);
+
+  await page.getByRole("button", { name: "Columns" }).click();
+  await page.getByRole("checkbox", { name: "Status" }).click();
+  await expect(
+    page.getByRole("table").first().getByRole("columnheader", { name: "Status" }),
+  ).toBeHidden();
+});
+
+test("data-table docs demo: shift-click multi-sort", async ({ page }) => {
+  await page.goto("/docs/components/data-table");
+  await waitForHydration(page);
+
+  const table = page.getByRole("table").first();
+  const invoice = table.getByRole("columnheader", { name: "Invoice" });
+  const client = table.getByRole("columnheader", { name: "Client" });
+  await invoice.getByRole("button").click();
+  await page.keyboard.down("Shift");
+  await client.getByRole("button").click();
+  await page.keyboard.up("Shift");
+
+  await expect(invoice).toHaveAttribute("aria-sort", "ascending");
+  await expect(client).toHaveAttribute("aria-sort", "ascending");
+});
+
+test("data-table virtualized example renders a window and scrolls", async ({ page }) => {
+  await page.goto("/docs/components/data-table");
+  await waitForHydration(page);
+
+  const scroller = page.locator('[data-virtualized="true"]');
+  await expect(scroller).toBeVisible();
+  const table = scroller.getByRole("table");
+  const mounted = await table.locator("tbody tr").count();
+  expect(mounted).toBeLessThan(100);
+  await expect(table.getByRole("cell", { name: "Client 1", exact: true })).toBeVisible();
+
+  await scroller.evaluate((element) => {
+    element.scrollTop = element.scrollHeight;
+  });
+  await expect(table.getByRole("cell", { name: "Client 1000", exact: true })).toBeVisible({
+    timeout: 5000,
+  });
+});

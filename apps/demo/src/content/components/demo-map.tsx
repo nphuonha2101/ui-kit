@@ -183,6 +183,9 @@ const dataTabledataTableActionsExample = dynamic(() =>
 const dataTabledataTableAsyncExample = dynamic(() =>
   import("./data-table/demo").then((module) => module.examples["data-table-async"]),
 );
+const dataTabledataTableVirtualizedExample = dynamic(() =>
+  import("./data-table/demo").then((module) => module.examples["data-table-virtualized"]),
+);
 const scrollAreascrollAreaHiddenScrollbarExample = dynamic(() =>
   import("./scroll-area/demo").then((module) => module.examples["scroll-area-hidden-scrollbar"]),
 );
@@ -307,6 +310,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "data-table-selection": dataTabledataTableSelectionExample,
   "data-table-actions": dataTabledataTableActionsExample,
   "data-table-async": dataTabledataTableAsyncExample,
+  "data-table-virtualized": dataTabledataTableVirtualizedExample,
   "scroll-area-hidden-scrollbar": scrollAreascrollAreaHiddenScrollbarExample,
   "meter-thresholds": metermeterThresholdsExample,
   "meter-sizes": metermeterSizesExample,

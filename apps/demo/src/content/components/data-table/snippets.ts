@@ -50,6 +50,21 @@ export function Example() {
   pageSize={5}
 />`,
   "examples": {
+    "data-table-virtualized": `const rows = React.useMemo(
+  () => Array.from({ length: 1000 }, (_, index) => makeInvoice(index)),
+  [],
+);
+
+<DataTable
+  columns={columns}
+  rows={rows}
+  getRowId={(row) => row.id}
+  caption="Invoices"
+  pageSize={0}
+  virtualized
+  virtualHeight={320}
+  estimateRowHeight={53}
+/>`,
     "data-table-async": `const [page, setPage] = React.useState(1);
 const [sortKey, setSortKey] = React.useState<string | null>("id");
 const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc");

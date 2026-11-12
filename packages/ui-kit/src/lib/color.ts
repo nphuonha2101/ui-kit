@@ -27,51 +27,6 @@ function rgbToHex(r: number, g: number, b: number) {
   return `#${to(r)}${to(g)}${to(b)}`;
 }
 
-function rgbToHsl(r: number, g: number, b: number) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  let h = 0, s = 0;
-  const l = (max + min) / 2;
-  if (max !== min) {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
-    }
-    h /= 6;
-  }
-  return { h: h * 360, s, l };
-}
-
-function hslToRgb(h: number, s: number, l: number) {
-  h = ((h % 360) + 360) % 360;
-  h /= 360;
-  let r: number, g: number, b: number;
-  if (s === 0) { r = g = b = l; }
-  else {
-    const hue2rgb = (p: number, q: number, t: number) => {
-      if (t < 0) t += 1; if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
-    };
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1 / 3);
-  }
-  return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
-}
-
-function hslToHex(h: number, s: number, l: number) {
-  const { r, g, b } = hslToRgb(h, s, l);
-  return rgbToHex(r, g, b);
-}
-
 function srgbToLinear(channel: number) {
   const value = channel / 255;
   return value <= 0.04045
@@ -189,26 +144,33 @@ function contrastText(bg: string) {
  */
 export function generateAccentVars(accent: string, mode: ThemeMode = "light"): AccentVars {
   const { r, g, b } = hexToRgb(accent);
-  const { h, s } = rgbToHsl(r, g, b);
-  const sat = clamp(s, 0.35, 1);
-  if (mode === "dark") {
-    const primary = hslToHex(h, sat, 0.62);
-    return {
-      "--primary": primary,
-      "--primary-foreground": contrastText(primary),
-      "--primary-hover": hslToHex(h, sat, 0.68),
-      "--primary-active": hslToHex(h, sat, 0.56),
-      "--primary-soft": hslToHex(h, clamp(sat - 0.15, 0.2, 1), 0.22),
-      "--primary-soft-foreground": hslToHex(h, clamp(sat - 0.05, 0.2, 1), 0.82),
-      "--ring": hslToHex(h, sat, 0.62),
-    };
-  }
-  // Light accents are derived in OKLCH so every hue lands on the same
-  // perceived lightness. HSL keeps saturated cyans/yellows/neons much
-  // brighter than indigo at the same L value, which reads as glare.
+  // Both modes derive in OKLCH so every hue lands on the same perceived
+  // lightness. HSL keeps saturated cyans/yellows/neons much brighter than
+  // indigo at the same L value, which reads as glare — especially on dark
+  // surfaces, so dark clamps chroma even tighter.
   const oklch = rgbToOklch(r, g, b);
   const neutral = oklch.c < 0.01;
   const hue = neutral ? 0 : oklch.h;
+  if (mode === "dark") {
+    const chroma = neutral ? 0 : clamp(oklch.c * 0.65, 0.02, 0.12);
+    const softChroma = neutral
+      ? 0
+      : Math.min(0.03, Math.max(0.01, chroma * 0.25));
+    const softForegroundChroma = neutral
+      ? 0
+      : Math.min(0.1, Math.max(0.02, chroma * 0.6));
+
+    const primary = oklchToHex(0.65, chroma, hue);
+    return {
+      "--primary": primary,
+      "--primary-foreground": contrastText(primary),
+      "--primary-hover": oklchToHex(0.69, chroma, hue),
+      "--primary-active": oklchToHex(0.6, chroma, hue),
+      "--primary-soft": oklchToHex(0.25, softChroma, hue),
+      "--primary-soft-foreground": oklchToHex(0.8, softForegroundChroma, hue),
+      "--ring": primary,
+    };
+  }
   const chroma = neutral
     ? 0
     : clamp(oklch.c * 0.8, 0.02, 0.17);

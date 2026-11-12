@@ -33,6 +33,8 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
         var accentStyle = document.getElementById("kit-accent");
         var runtime = window.KitPlaygroundRuntime;
         var reactRoot = null;
+        var renderSeq = 0;
+        var lastAppliedSeq = 0;
         // The sandbox is intentionally opaque. Only accept render/theme
         // messages from the direct parent page at the expected origin.
         var expectedOrigin = new URL(document.baseURI).origin;
@@ -139,8 +141,11 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
         ErrorBoundary.getDerivedStateFromError = function (error) {
           return { error: error };
         };
-        ErrorBoundary.prototype.componentDidCatch = function (error) {
-          send("error", { message: serialize(error) });
+        ErrorBoundary.prototype.componentDidCatch = function (error, info) {
+          send("error", {
+            message: serialize(error),
+            seq: this.props.seq || 0,
+          });
         };
         ErrorBoundary.prototype.render = function () {
           if (this.state.error) {
@@ -150,13 +155,34 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
                 className:
                   "surface-curved relative rounded-card bg-destructive/10 p-4 text-sm text-destructive",
               },
-              String(this.state.error)
+              String(
+                (this.state.error && (this.state.error.stack || this.state.error.message)) ||
+                  this.state.error
+              )
             );
           }
           return this.props.children;
         };
 
-        function render(code) {
+        function renderError(message, seq) {
+          if (!runtime) return;
+          if (!reactRoot) {
+            reactRoot = runtime.ReactDOMClient.createRoot(root);
+          }
+          reactRoot.render(
+            runtime.React.createElement(
+              "div",
+              {
+                className:
+                  "surface-curved relative rounded-card bg-destructive/10 p-4 text-sm text-destructive",
+              },
+              String(message)
+            )
+          );
+          send("error", { message: serialize(message), seq: seq || 0 });
+        }
+
+        function render(code, seq) {
           if (!runtime) throw new Error("Playground runtime failed to load.");
 
           var module = { exports: {} };
@@ -171,14 +197,20 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
           if (!reactRoot) {
             reactRoot = runtime.ReactDOMClient.createRoot(root);
           }
+          // Remount the boundary on every render (key = seq). Without this,
+          // a previous runtime error keeps ErrorBoundary in its error state
+          // and all future renders keep showing the old fallback UI even
+          // after the code is fixed.
+          renderSeq += 1;
+          var boundaryKey = typeof seq === "number" ? seq : renderSeq;
           reactRoot.render(
             runtime.React.createElement(
               ErrorBoundary,
-              null,
+              { key: boundaryKey, seq: boundaryKey },
               runtime.React.createElement(App)
             )
           );
-          send("rendered", {});
+          send("rendered", { seq: typeof seq === "number" ? seq : boundaryKey });
         }
 
         window.addEventListener("message", function (event) {
@@ -194,10 +226,15 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
           }
 
           if (data.type === "render") {
+            var incomingSeq = typeof data.seq === "number" ? data.seq : 0;
+            // Ignore out-of-order renders: a slow transform for old code must
+            // not overwrite the result of newer code.
+            if (incomingSeq !== 0 && incomingSeq < lastAppliedSeq) return;
+            if (incomingSeq !== 0) lastAppliedSeq = incomingSeq;
             try {
-              render(data.code);
+              render(data.code, incomingSeq || undefined);
             } catch (error) {
-              send("error", { message: serialize(error) });
+              renderError(serialize(error), incomingSeq || 0);
             }
           }
         });

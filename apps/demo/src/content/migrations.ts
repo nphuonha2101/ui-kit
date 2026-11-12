@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.14.1",
+    date: "2026-11-12",
+    breaking: false,
+    summary:
+      "Patch release: portalled overlays inherit the live accent and dark palette from the enclosing kit scope instead of resetting to the default tokens. No API changes.",
+    changes: [
+      {
+        id: "portal-accent-inheritance-0-14-1",
+        kind: "behavior",
+        surface: "Dialog, Sheet, Popover, PreviewCard, Menu, Select, Combobox, Tooltip, Toaster",
+        before:
+          "Portalled roots re-declared the default kit palette, so a runtime accent applied to <html> stopped at the portal boundary: dialogs, menus, popovers and toasts kept the default primary color.",
+        after:
+          "Portalled roots inherit the live token set — accent, ring and dark palette — from the enclosing kit scope. They still fall back to the default palette when rendered outside any data-ui=\"kit\" root.",
+        find: '<html data-ui="kit"',
+        fix: "Nothing required. For overlays to pick up a custom accent, apply accentStyle or generateAccentVars to <html> (or another ancestor of the portal root) rather than an inner wrapper div; CSS variables do not cross the portal boundary.",
+      },
+    ],
+  },
+  {
     version: "0.14.0",
     date: "2026-11-11",
     breaking: false,

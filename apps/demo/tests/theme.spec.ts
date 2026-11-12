@@ -42,3 +42,27 @@ test("dark preference paints the right icon before hydration", async ({ page }) 
   await expect(toggle.locator("svg").first()).toBeHidden();
   await expect(toggle.locator("svg").nth(1)).toBeVisible();
 });
+
+test("portals inherit the live accent instead of resetting it", async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("ui-kit-accent", "#0d9488");
+  });
+  await page.goto("/docs/components/dialog");
+  await waitForHydration(page, "header");
+
+  const rootAccent = () =>
+    page.evaluate(() =>
+      getComputedStyle(document.documentElement).getPropertyValue("--primary").trim(),
+    );
+  await expect.poll(rootAccent).not.toBe("#4f46e5");
+  const accent = await rootAccent();
+
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  const popup = page.getByRole("dialog");
+  await expect(popup).toBeVisible();
+
+  const popupAccent = await popup.evaluate((element) =>
+    getComputedStyle(element).getPropertyValue("--primary").trim(),
+  );
+  expect(popupAccent).toBe(accent);
+});

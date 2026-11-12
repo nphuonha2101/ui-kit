@@ -691,6 +691,51 @@ export const propsMap: Record<string, ComponentProp[]> = {
       "description": "Called with the next value when the selection changes."
     }
   ],
+  "context-menu": [
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "description": "Area that opens the menu on right click (or long press on touch)."
+    },
+    {
+      "name": "items",
+      "type": "ContextMenuEntry[]",
+      "description": "Menu entries: items, separators, labels, groups and submenus."
+    },
+    {
+      "name": "side",
+      "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+      "default": "\"bottom\"",
+      "description": "Preferred side of the cursor."
+    },
+    {
+      "name": "align",
+      "type": "\"center\" | \"start\" | \"end\"",
+      "default": "\"center\"",
+      "description": "Alignment against the cursor."
+    },
+    {
+      "name": "sideOffset",
+      "type": "number",
+      "default": "6",
+      "description": "Gap between the cursor and the popup."
+    },
+    {
+      "name": "triggerClassName",
+      "type": "string",
+      "description": "Additional classes for the trigger wrapper."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Additional classes for the popup."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name for the menu popup."
+    }
+  ],
   "data-table": [
     {
       "name": "columns",

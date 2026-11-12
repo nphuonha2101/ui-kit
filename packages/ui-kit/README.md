@@ -2,7 +2,7 @@
 
 ![nphuonha UI — solid, borderless React UI kit](https://ui.nphuonha.id.vn/og.png)
 
-**Solid, borderless React UI kit** for **Tailwind CSS v4**. Base UI supplies primitives where they exist; calendar, date/time, color and data-grid controls are first-party. Tonal surfaces, top-lit curves and an accent you can change at runtime.
+**Solid, borderless React UI kit** for **Tailwind CSS v4**. It wraps the external Base UI primitives where they exist (`@base-ui/react` is a runtime dependency, installed automatically — not vendored in this repo); calendar, date/time, color and data-grid controls are first-party. Tonal surfaces, top-lit curves and an accent you can change at runtime.
 
 [![npm version](https://img.shields.io/npm/v/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
 [![npm downloads](https://img.shields.io/npm/dm/%40nphuonha%2Fui-kit?style=flat-square)](https://www.npmjs.com/package/@nphuonha/ui-kit)
@@ -16,7 +16,7 @@
 
 ## Why this kit
 
-- **Base UI where it fits** — overlays and form primitives use Base UI; calendar, date/time, color and data-grid controls are first-party with the same a11y contract.
+- **Base UI where it fits** — overlays and form primitives wrap the external `@base-ui/react` package (a dependency, not part of this repo); calendar, date/time, color and data-grid controls are first-party with the same a11y contract.
 - **Owned visual language** — semantic tokens, solid filled surfaces and a top-lit curved edge; no gray outlined boxes.
 - **Runtime accent** — generate the full primary palette from one color and re-tone the whole app.
 - **Prop-driven API** — consistent variants, sizes, icons and loading semantics across components.
@@ -27,7 +27,7 @@
 npm install @nphuonha/ui-kit
 ```
 
-Peer dependencies: React 19, React DOM 19, Tailwind CSS 4.
+Peer dependencies (you provide): React 19, React DOM 19, Tailwind CSS 4. Runtime dependencies (`@base-ui/react`, TanStack Table/Virtual, sonner, Phosphor icons, cva/clsx/tailwind-merge) install automatically with the kit.
 
 The published package ships compiled ESM + `.d.ts`, so it works with Next.js, Vite, Remix and other bundlers. No `transpilePackages` step is required.
 
@@ -127,9 +127,17 @@ import { Check, ChevronUpDown, Loader, Minus, X } from "your-icon-pack";
 
 `Toaster` also accepts an `icons` prop for `success`, `info`, `warning`, `error`, `loading` and `close`.
 
+## Base UI coverage
+
+Not every component is Base UI. The kit wraps Base UI primitives where they exist and ships the rest first-party:
+
+- **Base UI-backed**: `Dialog`, `AlertDialog`, `Sheet`, `Popover`, `Menu`, `Select`, `Combobox`, `ContextMenu`, `Tooltip`, `PreviewCard`, `Tabs`, `Accordion`, `Collapsible`, `Checkbox`, `CheckboxGroup`, `RadioGroup`, `Switch`, `Slider`, `NumberField`, `OTPField`, `Toggle`, `ToggleGroup`, `Toolbar`, `Progress`, `Meter`, `Avatar`, `ScrollArea`, `Fieldset`.
+- **First-party** (no Base UI primitive in 1.9): `Calendar`, `DatePicker`, `DateTimePicker`, `TimeField`, `ColorPicker`, `DataTable`, `Table`, `FileUpload`, `Input`, `Textarea`, `Button`, `Badge`, `Card`, `Alert`, `Breadcrumb`, `Pagination`, `BottomNav`, `DesktopNav`, `MobileNav`, `Field`/`Form`, `Kbd`, `Skeleton`, `Spinner`, `EmptyState`.
+- **Third-party engines**: `Toaster` uses sonner; `DataTable` uses TanStack Table + Virtual on top of the kit's `Table` primitives.
+
 ## Components
 
-`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `ColorPicker`, `Combobox`, `DataTable`, `DatePicker`, `DateTimePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `TimeField`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
+`Accordion`, `Alert`, `AlertDialog`, `Avatar`, `Badge`, `BottomNav`, `Breadcrumb`, `Button`/`ButtonLink`, `Calendar`, `Card` (+Header/Title/Description/Content/Footer), `Checkbox`, `CheckboxGroup`, `Collapsible`, `ColorPicker`, `Combobox`, `ContextMenu`, `DataTable`, `DatePicker`, `DateTimePicker`, `DesktopNav`, `Dialog`, `EmptyState`, `Field`/`Label`, `Fieldset`, `FileUpload`, `IconButton`, `Input`, `Kbd`/`KbdGroup`, `Menu`, `Meter`, `MobileNav`, `NumberField`, `OTPField`, `Pagination`, `Popover`, `PreviewCard`, `Progress`, `RadioGroup`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Table`, `Tabs`, `Textarea`, `TimeField`, `Toaster`/`toast`, `Toggle`, `ToggleGroup`, `Toolbar`, `Tooltip`.
 
 `BottomNav` and `DesktopNav` items accept an optional `activeIcon` to swap to a filled or alternate icon when selected.
 

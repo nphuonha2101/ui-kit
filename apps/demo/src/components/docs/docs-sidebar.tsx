@@ -17,6 +17,9 @@ const gettingStarted = [
   { href: "/docs/agents", label: "For agents" },
 ];
 
+// The sidebar holds every route. Viewport prefetch would fetch the whole
+// catalogue at once; `prefetch={false}` keeps hover prefetch on pointer
+// devices, while the logo transition indicator covers touch/slow navigations.
 function SidebarLink({
   href,
   label,
@@ -32,6 +35,7 @@ function SidebarLink({
   return (
     <Link
       href={href}
+      prefetch={false}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
       className={cn(

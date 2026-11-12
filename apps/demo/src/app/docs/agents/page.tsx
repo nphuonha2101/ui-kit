@@ -195,6 +195,7 @@ export default function AgentsPage() {
                     <Link
                       key={component.slug}
                       href={`/docs/components/${component.slug}`}
+                      prefetch={false}
                       className="rounded-pill bg-card px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {component.title}

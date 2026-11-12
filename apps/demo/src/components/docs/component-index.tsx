@@ -28,6 +28,7 @@ export function ComponentIndex() {
                 >
                   <Link
                     href={`/docs/components/${entry.slug}`}
+                    prefetch={false}
                     aria-label={`Open ${entry.title}`}
                     className="absolute inset-0 z-10 rounded-card outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                   />

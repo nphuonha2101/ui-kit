@@ -23,6 +23,83 @@ html.theme-switching *::after {
   transition: none !important;
 }
 
+/* Navigation feedback lives on the header logo instead of a page-wide bar.
+   A conic rim light orbits the pill while a route is pending, reusing the
+   kit's primary accent and edge-light tokens. */
+@property --logo-light-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.logo-light {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms var(--ease-out-ui);
+  background: conic-gradient(
+    from var(--logo-light-angle),
+    transparent 0deg 215deg,
+    color-mix(in srgb, var(--primary) 18%, transparent) 255deg,
+    color-mix(in srgb, var(--primary) 75%, transparent) 300deg,
+    color-mix(in srgb, var(--primary) 45%, var(--light-top)) 322deg,
+    color-mix(in srgb, var(--primary) 75%, transparent) 342deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.nav-logo[data-route-loading="true"] .logo-light {
+  opacity: 1;
+  animation: logo-light-orbit 1.5s linear infinite;
+}
+
+@keyframes logo-light-orbit {
+  to {
+    --logo-light-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo[data-route-loading="true"] .logo-light {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+/* Docs pages fade in after a client navigation. The docs layout (sidebar
+   included) persists; only the page content is replaced. */
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.route-enter {
+  animation: route-enter 220ms var(--ease-out-ui) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-enter {
+    animation: none;
+  }
+}
+
 .preview-canvas {
   background-color: var(--card);
   background-image: radial-gradient(

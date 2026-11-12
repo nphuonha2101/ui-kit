@@ -16,6 +16,7 @@ import { IconButton, Kbd, MobileNav, Popover, buttonVariants, cn } from "@nphuon
 import { AccentPicker } from "./accent-picker";
 import { BrandLogo } from "./brand-logo";
 import { useThemeSettings } from "./providers";
+import { useRouteTransitionPending } from "./route-transition";
 import { SearchDialog } from "./search-dialog";
 
 const nav = [
@@ -23,6 +24,7 @@ const nav = [
   { href: "/docs/components", label: "Components" },
   { href: "/docs/theming", label: "Theming" },
   { href: "/docs/utilities", label: "Utilities" },
+  { href: "/playground", label: "Playground" },
 ];
 
 const GITHUB_URL = "https://github.com/nphuonha2101/ui-kit";
@@ -38,6 +40,7 @@ function navLinkClass(active: boolean) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const routePending = useRouteTransitionPending();
   const { setDark, accent } = useThemeSettings();
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -116,9 +119,11 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="nphuonha UI home"
-            className="surface-curved pointer-events-auto relative flex h-12 shrink-0 items-center rounded-pill bg-card p-1 pr-2.5 shadow-[var(--shadow-soft)]"
+            data-route-loading={routePending ? "true" : "false"}
+            className="nav-logo surface-curved pointer-events-auto relative flex h-12 shrink-0 items-center rounded-pill bg-card p-1 pr-2.5 shadow-[var(--shadow-soft)]"
           >
             <BrandLogo className="px-1.5" />
+            <span aria-hidden="true" className="logo-light" />
           </Link>
 
           <nav

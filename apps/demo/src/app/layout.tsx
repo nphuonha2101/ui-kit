@@ -9,6 +9,7 @@ import "@fontsource/google-sans-code/600.css";
 import "./globals.css";
 import { Providers } from "@/components/site/providers";
 import { InlineScript } from "@/components/site/inline-script";
+import { RouteTransitionProvider } from "@/components/site/route-transition";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import {
@@ -117,9 +118,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <Providers>
-          <SiteHeader />
-          <main className="flex-1 pt-16">{children}</main>
-          <SiteFooter />
+          <RouteTransitionProvider>
+            <SiteHeader />
+            <main className="flex-1 pt-16">{children}</main>
+            <SiteFooter />
+          </RouteTransitionProvider>
         </Providers>
         {process.env.NODE_ENV === "production" ? (
           <script

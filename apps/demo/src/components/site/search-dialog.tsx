@@ -9,6 +9,7 @@ import {
 } from "@phosphor-icons/react";
 import { Kbd, KbdGroup, cn, Dialog } from "@nphuonha/ui-kit";
 import { searchIndex } from "@/content/components";
+import { startRouteTransition } from "./route-transition";
 
 function optionId(slug: string) {
   return `search-option-${slug}`;
@@ -43,6 +44,7 @@ export function SearchDialog({
   const go = React.useCallback(
     (slug: string) => {
       onOpenChange(false);
+      startRouteTransition();
       router.push(`/docs/components/${slug}`);
     },
     [onOpenChange, router],

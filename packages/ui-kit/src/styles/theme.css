@@ -7,7 +7,11 @@
  * (or be overridden by) the host page's own variables and break user CSS.
  */
 
-[data-ui="kit"] {
+/* Palette roots. Portalled roots only seed the palette when no kit
+ * ancestor exists: when they are nested inside one, re-declaring tokens
+ * here would reset runtime accent overrides picked up by inheritance. */
+[data-ui="kit"]:not([data-kit-portal]),
+[data-ui="kit"][data-kit-portal]:not([data-ui="kit"] [data-ui="kit"]) {
   color-scheme: light;
 
   /* Tonal surface ladder (solid fills) */
@@ -67,9 +71,10 @@
   --font-mono-family: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-[data-ui="kit"].dark,
-.dark [data-ui="kit"],
-.dark:where([data-ui="kit"]) {
+/* Dark palette roots follow the same rule: a nested portal inherits the
+ * dark palette (and its accent) instead of re-seeding defaults. */
+[data-ui="kit"]:not([data-kit-portal]):is(.dark, .dark *),
+[data-ui="kit"][data-kit-portal]:not([data-ui="kit"] [data-ui="kit"]):is(.dark, .dark *) {
   color-scheme: dark;
 
   /* Light behaves differently on dark solids: cool rim, no milky wash. */

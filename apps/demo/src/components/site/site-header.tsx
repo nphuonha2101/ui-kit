@@ -128,7 +128,7 @@ export function SiteHeader() {
 
           <nav
             ref={navRef}
-            className="surface-curved pointer-events-auto relative hidden items-center gap-0.5 rounded-pill bg-card p-1 shadow-[var(--shadow-soft)] md:flex"
+            className="surface-curved pointer-events-auto relative hidden items-center gap-0.5 rounded-pill bg-card p-1 shadow-[var(--shadow-soft)] lg:flex"
           >
             <span
               aria-hidden
@@ -237,7 +237,7 @@ export function SiteHeader() {
                   variant="ghost"
                   size="icon"
                   shape="pill"
-                  className="md:hidden"
+                  className="lg:hidden"
                 >
                   <ListIcon size={18} />
                 </IconButton>

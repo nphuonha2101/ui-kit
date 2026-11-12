@@ -9,6 +9,7 @@ import Editor, {
 } from "@monaco-editor/react";
 import type { editor as monacoEditor } from "monaco-editor";
 import {
+  ArrowClockwiseIcon,
   FileTsxIcon,
   MonitorIcon,
   PlayIcon,
@@ -149,14 +150,18 @@ let typesPromise:
 
 function loadTypes() {
   if (!typesPromise) {
-    typesPromise = fetch("/playground/types.json").then((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to load playground types (${response.status}).`);
-      }
-      return response.json() as Promise<{
-        files: Array<{ path: string; content: string }>;
-      }>;
-    });
+    typesPromise = fetch("/playground/types.json", { cache: "no-store" }).then(
+      (response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Failed to load playground types (${response.status}).`,
+          );
+        }
+        return response.json() as Promise<{
+          files: Array<{ path: string; content: string }>;
+        }>;
+      },
+    );
   }
   return typesPromise;
 }
@@ -231,45 +236,143 @@ function withAlpha(color: string, alpha: string) {
 }
 
 function defineKitTheme(monaco: Monaco, dark: boolean) {
-  const primary = readColor("--primary", "#4f46e5");
+  const primary = readColor("--primary", dark ? "#818cf8" : "#4f46e5");
   const card = readColor("--card", dark ? "#171a22" : "#ffffff");
-  const foreground = readColor("--foreground", dark ? "#f1f3f8" : "#16181d");
-  const muted = readColor("--muted-foreground", "#63697a");
-  const success = readColor("--success", "#16a34a");
-  const warning = readColor("--warning", "#d97706");
-  const softForeground = readColor("--primary-soft-foreground", primary);
+  const foreground = readColor(
+    "--foreground",
+    dark ? "#f1f3f8" : "#16181d",
+  );
+  const muted = readColor(
+    "--muted-foreground",
+    dark ? "#9ba3b4" : "#63697a",
+  );
+  const info = readColor("--info", dark ? "#38bdf8" : "#0284c7");
+  const warning = readColor("--warning", dark ? "#fbbf24" : "#d97706");
+  const destructive = readColor(
+    "--destructive",
+    dark ? "#f87171" : "#dc2626",
+  );
+
+  // React/TSX-optimized palette, adapted to card background.
+  // Dark = One Dark Pro style, Light = One Light / GitHub style.
+  // JSX tags red, props orange, hooks/functions blue, types yellow.
+  const code = dark
+    ? {
+        comment: "#7f848e",
+        keyword: "#c678dd",
+        string: "#98c379",
+        number: "#d19a66",
+        type: "#e5c07b",
+        function: "#61afef",
+        variable: "#abb2bf",
+        operator: "#56b6c2",
+        delimiter: "#828997",
+        tag: "#e06c75",
+        attribute: "#d19a66",
+      }
+    : {
+        comment: "#a0a1a7",
+        keyword: "#a626a4",
+        string: "#50a14f",
+        number: "#986801",
+        type: "#c18401",
+        function: "#4078f2",
+        variable: "#383a42",
+        operator: "#0184bc",
+        delimiter: "#5c6773",
+        tag: "#e45649",
+        attribute: "#986801",
+      };
 
   monaco.editor.defineTheme("kit", {
     base: dark ? "vs-dark" : "vs",
-    inherit: true,
+    inherit: false,
     rules: [
-      { token: "comment", foreground: stripColor(muted), fontStyle: "italic" },
-      { token: "keyword", foreground: stripColor(primary) },
-      { token: "string", foreground: stripColor(success) },
-      { token: "number", foreground: stripColor(warning) },
-      { token: "type.identifier", foreground: stripColor(softForeground) },
-      { token: "delimiter.bracket", foreground: stripColor(muted) },
+      { token: "", foreground: stripColor(code.variable) },
+      {
+        token: "comment",
+        foreground: stripColor(code.comment),
+        fontStyle: "italic",
+      },
+      { token: "string", foreground: stripColor(code.string) },
+      { token: "string.jsx", foreground: stripColor(code.string) },
+      { token: "string.html", foreground: stripColor(code.string) },
+      { token: "string.xml", foreground: stripColor(code.string) },
+      { token: "number", foreground: stripColor(code.number) },
+      { token: "regexp", foreground: stripColor(code.string) },
+      { token: "keyword", foreground: stripColor(code.keyword) },
+      { token: "keyword.jsx", foreground: stripColor(code.keyword) },
+      { token: "operator", foreground: stripColor(code.operator) },
+      { token: "operator.jsx", foreground: stripColor(code.operator) },
+      { token: "delimiter", foreground: stripColor(code.delimiter) },
+      { token: "delimiter.html", foreground: stripColor(code.delimiter) },
+      { token: "delimiter.xml", foreground: stripColor(code.delimiter) },
+      {
+        token: "delimiter.bracket",
+        foreground: stripColor(code.delimiter),
+      },
+      { token: "delimiter.angle", foreground: stripColor(code.delimiter) },
+      { token: "delimiter.parenthesis", foreground: stripColor(code.variable) },
+      { token: "tag", foreground: stripColor(code.tag) },
+      { token: "metatag", foreground: stripColor(code.tag) },
+      { token: "metatag.html", foreground: stripColor(code.tag) },
+      { token: "metatag.xml", foreground: stripColor(code.tag) },
+      { token: "attribute.name", foreground: stripColor(code.attribute) },
+      { token: "attribute.name.jsx", foreground: stripColor(code.attribute) },
+      { token: "attribute.name.html", foreground: stripColor(code.attribute) },
+      { token: "attribute.name.xml", foreground: stripColor(code.attribute) },
+      { token: "attribute.value", foreground: stripColor(code.string) },
+      { token: "attribute.value.jsx", foreground: stripColor(code.string) },
+      { token: "attribute.value.html", foreground: stripColor(code.string) },
+      { token: "type", foreground: stripColor(code.type) },
+      { token: "type.identifier", foreground: stripColor(code.type) },
+      { token: "identifier", foreground: stripColor(code.variable) },
+      { token: "function", foreground: stripColor(code.function) },
+      { token: "variable", foreground: stripColor(code.variable) },
+      {
+        token: "variable.predefined",
+        foreground: stripColor(code.operator),
+      },
+      { token: "constant", foreground: stripColor(code.number) },
+      { token: "annotation", foreground: stripColor(code.number) },
     ],
     colors: {
       "editor.background": card,
       "editor.foreground": foreground,
-      "editorLineNumber.foreground": muted,
+      "editorGutter.background": card,
+      "editorLineNumber.foreground": withAlpha(muted, dark ? "99" : "cc"),
       "editorLineNumber.activeForeground": foreground,
-      "editor.selectionBackground": withAlpha(primary, "33"),
-      "editor.inactiveSelectionBackground": withAlpha(primary, "1f"),
-      "editor.lineHighlightBackground": withAlpha(primary, "0d"),
       "editorCursor.foreground": primary,
-      "editorIndentGuide.background1": withAlpha(muted, "22"),
-      "editorIndentGuide.activeBackground1": withAlpha(muted, "44"),
-      "editorWidget.background": card,
-      "editorWidget.border": withAlpha(muted, "33"),
-      "editorSuggestWidget.background": card,
-      "editorSuggestWidget.border": withAlpha(muted, "33"),
-      "editorSuggestWidget.selectedBackground": withAlpha(primary, "1a"),
-      "editorHoverWidget.background": card,
-      "editorHoverWidget.border": withAlpha(muted, "33"),
+      "editor.selectionBackground": withAlpha(primary, dark ? "45" : "2e"),
+      "editor.inactiveSelectionBackground": withAlpha(primary, dark ? "2e" : "1f"),
+      "editor.lineHighlightBackground": withAlpha(primary, dark ? "14" : "0f"),
       "editor.lineHighlightBorder": "#00000000",
+      "editorWhitespace.foreground": withAlpha(muted, "45"),
+      "editorIndentGuide.background1": withAlpha(muted, dark ? "2e" : "30"),
+      "editorIndentGuide.activeBackground1": withAlpha(muted, "66"),
+      "editorBracketHighlight.foreground1": primary,
+      "editorBracketHighlight.foreground2": info,
+      "editorBracketHighlight.foreground3": warning,
+      "editorBracketHighlight.unexpectedBracket.foreground": destructive,
+      "editorWidget.background": card,
+      "editorWidget.foreground": foreground,
+      "editorWidget.border": withAlpha(muted, "40"),
+      "editorSuggestWidget.background": card,
+      "editorSuggestWidget.foreground": foreground,
+      "editorSuggestWidget.border": withAlpha(muted, "40"),
+      "editorSuggestWidget.selectedBackground": withAlpha(primary, "26"),
+      "editorSuggestWidget.highlightForeground": primary,
+      "editorHoverWidget.background": card,
+      "editorHoverWidget.foreground": foreground,
+      "editorHoverWidget.border": withAlpha(muted, "40"),
+      "editorError.foreground": destructive,
+      "editorWarning.foreground": warning,
+      "editorInfo.foreground": info,
       "editorOverviewRuler.border": "#00000000",
+      "focusBorder": withAlpha(primary, "66"),
+      "scrollbarSlider.background": withAlpha(muted, "40"),
+      "scrollbarSlider.hoverBackground": withAlpha(muted, "55"),
+      "scrollbarSlider.activeBackground": withAlpha(muted, "6e"),
     },
   });
   monaco.editor.setTheme("kit");
@@ -315,11 +418,13 @@ export function PlaygroundClient() {
   const [logs, setLogs] = React.useState<LogItem[]>([]);
   const [sandboxHtml, setSandboxHtml] = React.useState<string>();
   const [iframeReady, setIframeReady] = React.useState(false);
+  const [iframeKey, setIframeKey] = React.useState(0);
 
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const editorRef = React.useRef<monacoEditor.IStandaloneCodeEditor | null>(null);
   const monacoRef = React.useRef<Monaco | null>(null);
   const compileRef = React.useRef<() => void>(() => {});
+  const compileSeq = React.useRef(0);
   const logId = React.useRef(0);
 
   const addLog = React.useCallback((level: LogLevel, text: string) => {
@@ -333,7 +438,8 @@ export function PlaygroundClient() {
     const origin = window.location.origin;
     setSandboxHtml(
       createSandboxHtml(
-        `${origin}/playground/runtime.js`,
+        // Cache-bust so a redeployed runtime.js never serves stale code.
+        `${origin}/playground/runtime.js?v=${Date.now()}`,
         `${origin}/`,
       ),
     );
@@ -349,6 +455,7 @@ export function PlaygroundClient() {
             level?: LogLevel;
             args?: string[];
             message?: string;
+            seq?: number;
           }
         | null;
       if (!data || data.source !== "kit-playground") return;
@@ -356,6 +463,15 @@ export function PlaygroundClient() {
       if (data.type === "ready") {
         setIframeReady(true);
         setStatus("compiling");
+        return;
+      }
+
+      // Ignore stale results from an older compile that finished late.
+      if (
+        typeof data.seq === "number" &&
+        data.seq !== 0 &&
+        data.seq !== compileSeq.current
+      ) {
         return;
       }
 
@@ -412,24 +528,31 @@ export function PlaygroundClient() {
 
   const compile = React.useCallback(async () => {
     if (!iframeReady) return;
+    compileSeq.current += 1;
+    const seq = compileSeq.current;
     setStatus("compiling");
     try {
       const { transform } = await import("sucrase");
+      // A newer edit started while sucrase was loading: drop this stale run.
+      if (seq !== compileSeq.current) return;
       const result = transform(code, {
         transforms: ["typescript", "jsx", "imports"],
         jsxRuntime: "automatic",
         production: true,
         filePath: "App.tsx",
       });
+      if (seq !== compileSeq.current) return;
       iframeRef.current?.contentWindow?.postMessage(
         {
           source: "kit-playground-host",
           type: "render",
           code: result.code,
+          seq,
         },
         "*",
       );
     } catch (error) {
+      if (seq !== compileSeq.current) return;
       setStatus("error");
       addLog("error", error instanceof Error ? error.message : String(error));
     }
@@ -478,6 +601,15 @@ export function PlaygroundClient() {
 
   const clearLogs = () => setLogs([]);
 
+  const resetPreview = React.useCallback(() => {
+    // Invalidate in-flight compiles so their late results can't overwrite
+    // the fresh iframe, then remount it to drop any stuck React tree.
+    compileSeq.current += 1;
+    setIframeReady(false);
+    setStatus("booting");
+    setIframeKey((key) => key + 1);
+  }, []);
+
   const statusMeta =
     status === "ready"
       ? { label: "Ready", variant: "success" as const }
@@ -497,6 +629,16 @@ export function PlaygroundClient() {
               ) : null}
               {statusMeta.label}
             </Badge>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={resetPreview}
+              disabled={!iframeReady && status === "booting"}
+              startIcon={ArrowClockwiseIcon}
+              aria-label="Reset preview"
+            >
+              Reset
+            </Button>
             <Button
               size="sm"
               onClick={() => void compile()}
@@ -563,6 +705,9 @@ export function PlaygroundClient() {
                       '"Google Sans Code", ui-monospace, SFMono-Regular, Menlo, monospace',
                     fontSize: 13,
                     lineHeight: 22,
+                    fontLigatures: true,
+                    fontWeight: "400",
+                    letterSpacing: 0,
                     tabSize: 2,
                     minimap: { enabled: false },
                     scrollBeyondLastLine: false,
@@ -570,6 +715,9 @@ export function PlaygroundClient() {
                     padding: { top: 16, bottom: 16 },
                     cursorBlinking: "smooth",
                     cursorSmoothCaretAnimation: "on",
+                    cursorWidth: 2,
+                    renderLineHighlight: "all",
+                    roundedSelection: true,
                     formatOnType: true,
                     formatOnPaste: true,
                     quickSuggestions: true,
@@ -578,13 +726,20 @@ export function PlaygroundClient() {
                     hover: { enabled: "on" },
                     wordWrap: "on",
                     bracketPairColorization: { enabled: true },
-                    guides: { bracketPairs: true, indentation: true },
+                    guides: {
+                      bracketPairs: true,
+                      bracketPairsHorizontal: true,
+                      indentation: true,
+                    },
                     scrollbar: {
                       verticalScrollbarSize: 10,
                       horizontalScrollbarSize: 10,
+                      useShadows: false,
                     },
                     overviewRulerBorder: false,
                     lineNumbersMinChars: 3,
+                    renderWhitespace: "none",
+                    occurrencesHighlight: "singleFile",
                   }}
                 />
               </div>
@@ -598,6 +753,7 @@ export function PlaygroundClient() {
                 <div className="min-h-[280px] flex-1 bg-surface/15">
                   {sandboxHtml ? (
                     <iframe
+                      key={iframeKey}
                       ref={iframeRef}
                       title="Playground preview"
                       sandbox="allow-scripts"

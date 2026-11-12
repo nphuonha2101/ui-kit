@@ -1,3 +1,5 @@
+"use client";
+
 export function InlineScript({ id, html }: { id?: string; html: string }) {
   return (
     <script

@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.14.3",
+    date: "2026-11-12",
+    breaking: false,
+    summary:
+      "Patch release: dark-theme accent palettes are generated in OKLCH with tightened chroma and slightly lowered lightness, so saturated reds, cyans and yellows no longer glare on dark surfaces. No API changes.",
+    changes: [
+      {
+        id: "oklch-dark-accent-0-14-3",
+        kind: "behavior",
+        surface: "generateAccentVars, accentStyle",
+        before:
+          "Dark accents were derived in HSL at fixed lightness with full input saturation. Saturated inputs became neon on dark surfaces, and the palette could look noticeably brighter than its light-theme counterpart.",
+        after:
+          "Dark accents are derived in OKLCH at a consistent perceived lightness, with chroma scaled down and clamped to the sRGB gamut. Neutral inputs stay neutral, and --primary-foreground selects the higher-contrast of white and #111827.",
+        find: "generateAccentVars(",
+        fix: "Nothing required. Regenerate the accent variables and apply them to the root again; hard-coded hex values copied from an older generated palette should be refreshed.",
+      },
+    ],
+  },
+  {
     version: "0.14.2",
     date: "2026-11-12",
     breaking: false,

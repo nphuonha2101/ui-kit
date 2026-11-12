@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.14.2",
+    date: "2026-11-12",
+    breaking: false,
+    summary:
+      "Patch release: light-theme accent palettes are generated in OKLCH with consistent perceived lightness and capped chroma, so saturated cyans, greens and yellows no longer glare. Primary foreground contrast is also improved for custom accents. No API changes.",
+    changes: [
+      {
+        id: "oklch-light-accent-0-14-2",
+        kind: "behavior",
+        surface: "generateAccentVars, accentStyle",
+        before:
+          "Light accents were derived in HSL. Saturated cyan, green and yellow inputs became much brighter than indigo at the same HSL lightness, which read as glare, and foreground text was chosen from a luminance threshold rather than actual contrast.",
+        after:
+          "Light accents are derived in OKLCH at a consistent perceived lightness, with chroma scaled down and clamped to the sRGB gamut. Neutral inputs stay neutral, and --primary-foreground selects the higher-contrast of white and #111827. Dark accents keep their existing palette shape with the improved foreground selection.",
+        find: "generateAccentVars(",
+        fix: "Nothing required. Regenerate the accent variables and apply them to the root again; hard-coded hex values copied from an older generated palette should be refreshed.",
+      },
+    ],
+  },
+  {
     version: "0.14.1",
     date: "2026-11-12",
     breaking: false,

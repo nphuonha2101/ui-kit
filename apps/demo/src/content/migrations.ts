@@ -28,6 +28,37 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.15.0",
+    date: "2026-11-12",
+    breaking: false,
+    summary:
+      "Minor release: new ContextMenu component (right-click menu with the same entries API as Menu) and the missing Form barrel export is restored. No API changes to existing components.",
+    changes: [
+      {
+        id: "context-menu-0-15-0",
+        kind: "additive",
+        surface: "ContextMenu",
+        before:
+          "No right-click menu component; Menu only opened from a click trigger element.",
+        after:
+          "ContextMenu renders a Base UI-backed right-click (long-press on touch) menu from a wrapping area. It accepts the same entries as Menu — items with icons, shortcuts and danger states, separators, labels, groups and submenus — plus side, align, sideOffset, triggerClassName and aria-label. Import from @nphuonha/ui-kit or @nphuonha/ui-kit/context-menu.",
+        find: "ContextMenu",
+        fix: "Nothing required. Use <ContextMenu items={[...]}>area</ContextMenu> where a right-click menu is needed.",
+      },
+      {
+        id: "form-barrel-export-0-15-0",
+        kind: "behavior",
+        surface: "index barrel (Form, FormField)",
+        before:
+          "Form and FormField were only reachable via the @nphuonha/ui-kit/form subpath; the main barrel did not re-export them.",
+        after:
+          "The main barrel re-exports Form, FormField and FormFieldProps, so `import { Form } from \"@nphuonha/ui-kit\"` works like every other component.",
+        find: "from \"@nphuonha/ui-kit/form\"",
+        fix: "Nothing required. Barrel imports now work; subpath imports keep working unchanged.",
+      },
+    ],
+  },
+  {
     version: "0.14.3",
     date: "2026-11-12",
     breaking: false,

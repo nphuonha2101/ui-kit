@@ -95,12 +95,11 @@ export function Menu({
 
       if (entry.type === "label") {
         return (
-          <MenuPrimitive.GroupLabel
-            key={key}
-            className="px-2.5 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground"
-          >
-            {entry.label}
-          </MenuPrimitive.GroupLabel>
+          <MenuPrimitive.Group key={key}>
+            <MenuPrimitive.GroupLabel className="px-2.5 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {entry.label}
+            </MenuPrimitive.GroupLabel>
+          </MenuPrimitive.Group>
         );
       }
 

@@ -148,7 +148,7 @@ import { Button, Card, CardContent, Input } from "@nphuonha/ui-kit";
 
 ## Base UI coverage
 
-- Base UI primitives: Dialog, AlertDialog, Sheet, Popover, Menu, Select, Combobox, Tooltip, PreviewCard, Tabs, Accordion, Collapsible, Checkbox, CheckboxGroup, RadioGroup, Switch, Slider, NumberField, OTPField, Toggle, ToggleGroup, Toolbar, Progress, Meter, Avatar, ScrollArea, Fieldset.
+- Base UI primitives: Dialog, AlertDialog, Sheet, Popover, Menu, Select, Combobox, ContextMenu, Tooltip, PreviewCard, Tabs, Accordion, Collapsible, Checkbox, CheckboxGroup, RadioGroup, Switch, Slider, NumberField, OTPField, Toggle, ToggleGroup, Toolbar, Progress, Meter, Avatar, ScrollArea, Fieldset.
 - First-party controls (Base UI 1.9 has no primitive): Calendar, DatePicker, DateTimePicker, TimeField, ColorPicker, DataTable, Table, FileUpload, Input, Textarea, Button, Badge, Card, Alert, Breadcrumb, Pagination, BottomNav, DesktopNav, MobileNav, Field/Form, Kbd, Skeleton, Spinner, EmptyState.
 - Third-party engines: Toaster uses sonner; DataTable uses TanStack Table and Virtual on top of the kit's Table primitives.
 - First-party controls must keep the same focus, keyboard, ARIA and validation contract as Base UI-backed components.

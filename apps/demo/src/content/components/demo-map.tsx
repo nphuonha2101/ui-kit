@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 const buttonDemo = dynamic(() => import("./button/demo").then((module) => module.demo));
 const buttonLinkDemo = dynamic(() => import("./button-link/demo").then((module) => module.demo));
+const contextMenuDemo = dynamic(() => import("./context-menu/demo").then((module) => module.demo));
 const iconButtonDemo = dynamic(() => import("./icon-button/demo").then((module) => module.demo));
 const menuDemo = dynamic(() => import("./menu/demo").then((module) => module.demo));
 const toggleDemo = dynamic(() => import("./toggle/demo").then((module) => module.demo));
@@ -68,6 +69,9 @@ const buttonbuttonStatesExample = dynamic(() =>
 );
 const buttonLinkbuttonLinkNextExample = dynamic(() =>
   import("./button-link/demo").then((module) => module.examples["button-link-next"]),
+);
+const contextMenucontextMenuSubmenuExample = dynamic(() =>
+  import("./context-menu/demo").then((module) => module.examples["context-menu-submenu"]),
 );
 const menumenuGroupsExample = dynamic(() =>
   import("./menu/demo").then((module) => module.examples["menu-groups"]),
@@ -250,6 +254,7 @@ const toastertoastPromiseExample = dynamic(() =>
 export const demoMap: Record<string, React.ComponentType> = {
   "button": buttonDemo,
   "button-link": buttonLinkDemo,
+  "context-menu": contextMenuDemo,
   "icon-button": iconButtonDemo,
   "menu": menuDemo,
   "toggle": toggleDemo,
@@ -310,6 +315,7 @@ export const exampleMap: Record<string, React.ComponentType> = {
   "button-sizes": buttonbuttonSizesExample,
   "button-states": buttonbuttonStatesExample,
   "button-link-next": buttonLinkbuttonLinkNextExample,
+  "context-menu-submenu": contextMenucontextMenuSubmenuExample,
   "menu-groups": menumenuGroupsExample,
   "menu-submenu": menumenuSubmenuExample,
   "toggle-sizes": toggletoggleSizesExample,

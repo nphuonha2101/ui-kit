@@ -2,6 +2,7 @@ import type { ComponentSnippets } from "@/content/types";
 
 import { snippets as buttonSnippets } from "./button/snippets";
 import { snippets as buttonLinkSnippets } from "./button-link/snippets";
+import { snippets as contextMenuSnippets } from "./context-menu/snippets";
 import { snippets as iconButtonSnippets } from "./icon-button/snippets";
 import { snippets as menuSnippets } from "./menu/snippets";
 import { snippets as toggleSnippets } from "./toggle/snippets";
@@ -60,6 +61,7 @@ import { snippets as toasterSnippets } from "./toaster/snippets";
 const snippetsMap: Record<string, ComponentSnippets> = {
   "button": buttonSnippets,
   "button-link": buttonLinkSnippets,
+  "context-menu": contextMenuSnippets,
   "icon-button": iconButtonSnippets,
   "menu": menuSnippets,
   "toggle": toggleSnippets,

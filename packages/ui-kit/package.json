@@ -1,6 +1,6 @@
 {
   "name": "@nphuonha/ui-kit",
-  "version": "0.14.3",
+  "version": "0.15.0",
   "description": "Solid, clean, flat, modern React UI kit (Base UI + Tailwind v4).",
   "license": "MIT",
   "author": "nphuonha",
@@ -111,6 +111,11 @@
       "types": "./dist/components/ui/combobox/index.d.ts",
       "import": "./dist/components/ui/combobox/index.js",
       "default": "./dist/components/ui/combobox/index.js"
+    },
+    "./context-menu": {
+      "types": "./dist/components/ui/context-menu/index.d.ts",
+      "import": "./dist/components/ui/context-menu/index.js",
+      "default": "./dist/components/ui/context-menu/index.js"
     },
     "./date-picker": {
       "types": "./dist/components/ui/date-picker/index.d.ts",

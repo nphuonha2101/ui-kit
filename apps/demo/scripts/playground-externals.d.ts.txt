@@ -1,0 +1,208 @@
+/* Minimal Base UI declarations for the playground. The kit only exposes a
+ * small slice of Base UI types, so keeping these local avoids shipping the
+ * whole Base UI declaration tree to Monaco. */
+declare module "@base-ui/react/button" {
+  import * as React from "react";
+
+  export namespace Button {
+    type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+      render?: React.ReactElement | ((props: Record<string, unknown>) => React.ReactElement);
+    };
+  }
+  export const Button: React.ForwardRefExoticComponent<
+    Button.Props & React.RefAttributes<HTMLButtonElement>
+  >;
+}
+
+declare module "@base-ui/react/checkbox" {
+  import * as React from "react";
+
+  type RootProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    checked?: boolean;
+    defaultChecked?: boolean;
+    indeterminate?: boolean;
+    onCheckedChange?: (checked: boolean) => void;
+    name?: string;
+    value?: string;
+    required?: boolean;
+  };
+  export const Checkbox: {
+    Root: React.ForwardRefExoticComponent<RootProps & React.RefAttributes<HTMLButtonElement>>;
+  };
+}
+
+declare module "@base-ui/react/fieldset" {
+  import * as React from "react";
+
+  export const Fieldset: {
+    Root: React.ForwardRefExoticComponent<
+      React.FieldsetHTMLAttributes<HTMLFieldSetElement> & {
+        disabled?: boolean;
+      } & React.RefAttributes<HTMLFieldSetElement>
+    >;
+  };
+}
+
+declare module "@base-ui/react/radio-group" {
+  import * as React from "react";
+
+  export const RadioGroup: React.ForwardRefExoticComponent<
+    React.HTMLAttributes<HTMLDivElement> & {
+      value?: string;
+      defaultValue?: string;
+      onValueChange?: (value: string) => void;
+      disabled?: boolean;
+      required?: boolean;
+      name?: string;
+      orientation?: "horizontal" | "vertical";
+    } & React.RefAttributes<HTMLDivElement>
+  >;
+}
+
+declare module "@base-ui/react/switch" {
+  import * as React from "react";
+
+  type RootProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onCheckedChange?: (checked: boolean) => void;
+    name?: string;
+    value?: string;
+    required?: boolean;
+  };
+  export const Switch: {
+    Root: React.ForwardRefExoticComponent<RootProps & React.RefAttributes<HTMLButtonElement>>;
+  };
+}
+
+declare module "@base-ui/react/tabs" {
+  import * as React from "react";
+
+  export const Tabs: {
+    Root: React.ComponentType<
+      React.HTMLAttributes<HTMLDivElement> & {
+        value?: string;
+        defaultValue?: string;
+        onValueChange?: (value: string) => void;
+        orientation?: "horizontal" | "vertical";
+      }
+    >;
+  };
+}
+
+declare module "@base-ui/react/toggle" {
+  import * as React from "react";
+
+  export namespace Toggle {
+    type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+      pressed?: boolean;
+      defaultPressed?: boolean;
+      onPressedChange?: (pressed: boolean) => void;
+    };
+  }
+  export const Toggle: React.ForwardRefExoticComponent<
+    Toggle.Props & React.RefAttributes<HTMLButtonElement>
+  >;
+}
+
+declare module "@base-ui/react/toolbar" {
+  import * as React from "react";
+
+  type RootProps = React.HTMLAttributes<HTMLDivElement> & {
+    orientation?: "horizontal" | "vertical";
+    disabled?: boolean;
+    loopFocus?: boolean;
+  };
+
+  export const Toolbar: {
+    Root: React.ForwardRefExoticComponent<RootProps & React.RefAttributes<HTMLDivElement>>;
+    Group: React.ForwardRefExoticComponent<
+      React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
+    >;
+    Button: React.ForwardRefExoticComponent<
+      React.ButtonHTMLAttributes<HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>
+    >;
+    Link: React.ForwardRefExoticComponent<
+      React.AnchorHTMLAttributes<HTMLAnchorElement> & React.RefAttributes<HTMLAnchorElement>
+    >;
+    Input: React.ForwardRefExoticComponent<
+      React.InputHTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>
+    >;
+    Separator: React.ForwardRefExoticComponent<
+      React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
+    >;
+  };
+}
+
+declare module "@base-ui/react/use-render" {
+  export namespace useRender {
+    type RenderProp = unknown;
+  }
+  export function useRender(...args: unknown[]): unknown;
+}
+
+/* Curated Phosphor set exposed by the playground runtime. */
+declare module "@phosphor-icons/react" {
+  import type * as React from "react";
+
+  export interface IconProps extends React.SVGProps<SVGSVGElement> {
+    size?: number | string;
+    weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
+  }
+  export type Icon = React.ForwardRefExoticComponent<
+    IconProps & React.RefAttributes<SVGSVGElement>
+  >;
+
+  export const ArrowClockwiseIcon: Icon;
+  export const ArrowDownIcon: Icon;
+  export const ArrowLeftIcon: Icon;
+  export const ArrowRightIcon: Icon;
+  export const ArrowUpIcon: Icon;
+  export const ArrowUpRightIcon: Icon;
+  export const BellIcon: Icon;
+  export const CalendarIcon: Icon;
+  export const CaretDownIcon: Icon;
+  export const CaretRightIcon: Icon;
+  export const CheckCircleIcon: Icon;
+  export const CheckIcon: Icon;
+  export const ClockIcon: Icon;
+  export const CodeIcon: Icon;
+  export const CopyIcon: Icon;
+  export const DotsThreeIcon: Icon;
+  export const DotsThreeVerticalIcon: Icon;
+  export const DownloadIcon: Icon;
+  export const EnvelopeIcon: Icon;
+  export const EyeIcon: Icon;
+  export const EyeSlashIcon: Icon;
+  export const FileTsxIcon: Icon;
+  export const GearIcon: Icon;
+  export const GithubLogoIcon: Icon;
+  export const HeartIcon: Icon;
+  export const HouseIcon: Icon;
+  export const InfoIcon: Icon;
+  export const LightningIcon: Icon;
+  export const ListIcon: Icon;
+  export const LockIcon: Icon;
+  export const MagnifyingGlassIcon: Icon;
+  export const MinusIcon: Icon;
+  export const MoonIcon: Icon;
+  export const PaletteIcon: Icon;
+  export const PencilIcon: Icon;
+  export const PlayIcon: Icon;
+  export const PlusIcon: Icon;
+  export const QuestionIcon: Icon;
+  export const RocketIcon: Icon;
+  export const ShareIcon: Icon;
+  export const SlidersIcon: Icon;
+  export const SparkleIcon: Icon;
+  export const StarIcon: Icon;
+  export const SunIcon: Icon;
+  export const TerminalIcon: Icon;
+  export const TrashIcon: Icon;
+  export const UploadIcon: Icon;
+  export const UserIcon: Icon;
+  export const WarningCircleIcon: Icon;
+  export const WarningIcon: Icon;
+  export const XCircleIcon: Icon;
+  export const XIcon: Icon;
+}

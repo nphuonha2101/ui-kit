@@ -31,5 +31,9 @@ playwright/.cache/
 .eslintcache
 .DS_Store
 
+# Generated playground assets
+apps/demo/public/monaco/
+apps/demo/public/playground/
+
 # Package tarballs
 *.tgz

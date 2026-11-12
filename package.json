@@ -6,6 +6,9 @@
     "packages/*",
     "apps/*"
   ],
+  "overrides": {
+    "dompurify": "3.4.17"
+  },
   "scripts": {
     "dev": "npm run dev -w @nphuonha/ui-demo",
     "build": "npm run build -w @nphuonha/ui-demo",

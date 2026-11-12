@@ -33,6 +33,9 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
         var accentStyle = document.getElementById("kit-accent");
         var runtime = window.KitPlaygroundRuntime;
         var reactRoot = null;
+        // The sandbox is intentionally opaque. Only accept render/theme
+        // messages from the direct parent page at the expected origin.
+        var expectedOrigin = new URL(document.baseURI).origin;
 
         function send(type, payload) {
           parent.postMessage(
@@ -179,6 +182,9 @@ export function createSandboxHtml(runtimeUrl: string, baseUrl: string) {
         }
 
         window.addEventListener("message", function (event) {
+          if (event.source !== window.parent) return;
+          if (event.origin !== expectedOrigin) return;
+
           var data = event.data;
           if (!data || data.source !== "kit-playground-host") return;
 

@@ -323,7 +323,7 @@ export function PlaygroundClient() {
   const logId = React.useRef(0);
 
   const addLog = React.useCallback((level: LogLevel, text: string) => {
-    const message = text.trim() || "(empty)";
+    const message = text.trim().slice(0, 2000) || "(empty)";
     logId.current += 1;
     const entry = { id: logId.current, level, text: message };
     setLogs((current) => [...current.slice(-79), entry]);
@@ -366,12 +366,25 @@ export function PlaygroundClient() {
 
       if (data.type === "error") {
         setStatus("error");
-        addLog("error", data.message ?? "Unknown runtime error");
+        addLog(
+          "error",
+          typeof data.message === "string" ? data.message : "Unknown runtime error",
+        );
         return;
       }
 
       if (data.type === "log") {
-        addLog(data.level ?? "log", (data.args ?? []).join(" "));
+        const level: LogLevel =
+          data.level === "info" ||
+          data.level === "warn" ||
+          data.level === "error" ||
+          data.level === "log"
+            ? data.level
+            : "log";
+        const args = Array.isArray(data.args)
+          ? data.args.filter((value): value is string => typeof value === "string")
+          : [];
+        addLog(level, args.join(" "));
       }
     };
 

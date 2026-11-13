@@ -110,6 +110,79 @@ html.theme-switching *::after {
   background-size: 16px 16px;
 }
 
+/* Hero canvas — fine graph paper, one accent wash, grain. Structure comes
+   from rules and alignment, not floating mesh blobs. */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 94%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 94%);
+}
+
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    58% 48% at 50% 0%,
+    color-mix(in srgb, var(--primary) 11%, transparent),
+    transparent 72%
+  );
+}
+html.dark .hero-wash {
+  background: radial-gradient(
+    58% 48% at 50% 0%,
+    color-mix(in srgb, var(--primary) 17%, transparent),
+    transparent 72%
+  );
+}
+
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+}
+html.dark .hero-noise {
+  opacity: 0.055;
+}
+
+/* Tick ruler — the small measured detail that separates a built page from
+   a generated one. */
+.tick-rule {
+  height: 7px;
+  background-image: repeating-linear-gradient(
+    to right,
+    color-mix(in srgb, var(--foreground) 22%, transparent) 0 1px,
+    transparent 1px 12px
+  );
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Display accent for the hero headline — chunky contrast to Work Sans. */
+.font-gluten {
+  font-family: "Gluten", "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
 /* Prevent a flash of final-state content before GSAP hydrates. The class is
    added before first paint and handed over to the motion layer on mount. */
 @media (prefers-reduced-motion: no-preference) {

@@ -24,10 +24,9 @@ export function HomeMotion({ children }: { children: React.ReactNode }) {
         rootEl,
       );
       const heroCard = rootEl.querySelector<HTMLElement>("[data-motion='hero-card']");
-      const heroGlow = rootEl.querySelector<HTMLElement>("[data-motion='hero-glow']");
       const revealEls = gsap.utils.toArray<HTMLElement>("[data-motion='reveal']", rootEl);
       const cardEls = gsap.utils.toArray<HTMLElement>(
-        "[data-motion='component-card'], [data-motion='feature-card']",
+        "[data-motion='component-card']",
         rootEl,
       );
 
@@ -56,17 +55,6 @@ export function HomeMotion({ children }: { children: React.ReactNode }) {
           },
           "-=0.45",
         );
-      }
-
-      if (heroGlow) {
-        gsap.to(heroGlow, {
-          scale: 1.08,
-          opacity: 0.85,
-          duration: 6,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
-        });
       }
 
       revealEls.forEach((el) => {

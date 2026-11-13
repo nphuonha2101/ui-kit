@@ -66,18 +66,23 @@ export function HeroSpecimen() {
         </div>
 
         <div className="preview-canvas relative flex min-h-[216px] items-center justify-center p-10">
-          <Button
-            variant={variant}
-            size={size}
-            className="min-w-32 transition-[transform,background-color,color,box-shadow] duration-300"
-            onClick={() =>
-              toast("Continue pressed", {
-                description: `variant="${variant}" · size="${size === "default" ? "md" : size}"`,
-              })
-            }
+          <div
+            key={`${variant}-${size}`}
+            className="animate-in fade-in zoom-in-95 duration-200"
           >
-            Continue
-          </Button>
+            <Button
+              variant={variant}
+              size={size}
+              className="min-w-32 transition-[transform,background-color,color,box-shadow] duration-300"
+              onClick={() =>
+                toast("Continue pressed", {
+                  description: `variant="${variant}" · size="${size === "default" ? "md" : size}"`,
+                })
+              }
+            >
+              Continue
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-border/60 p-5">

@@ -219,7 +219,7 @@ function Section({
       <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-8 md:py-28">
         <div className="grid gap-8 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-3">
-            <div className="md:sticky md:top-28">
+            <div data-motion="reveal" className="md:sticky md:top-28">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
                 {label}
               </p>

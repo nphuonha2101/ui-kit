@@ -19,6 +19,7 @@
     "test:e2e:update": "playwright test --update-snapshots"
   },
   "dependencies": {
+    "@fontsource/gluten": "^5.3.0",
     "@fontsource/google-sans-code": "^5.3.2",
     "@fontsource/work-sans": "^5.3.0",
     "@gsap/react": "^2.1.2",

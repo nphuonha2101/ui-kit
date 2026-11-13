@@ -15,11 +15,23 @@ const presets = [
   { name: "Violet", value: "#7c3aed" },
 ];
 
-export function AccentPicker({ compact = false }: { compact?: boolean }) {
+export function AccentPicker({
+  compact = false,
+  className,
+}: {
+  compact?: boolean;
+  className?: string;
+}) {
   const { accent, setAccent } = useThemeSettings();
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-2", compact && "gap-1.5")}>
+    <div
+      className={cn(
+        "relative -m-1 flex flex-wrap items-center gap-2 p-1",
+        compact && "gap-1.5",
+        className,
+      )}
+    >
       <button
         type="button"
         onClick={() => setAccent(null)}
@@ -27,8 +39,9 @@ export function AccentPicker({ compact = false }: { compact?: boolean }) {
         title="Reset accent"
         className={cn(
           "inline-flex items-center justify-center rounded-full bg-surface text-muted-foreground transition-colors hover:text-foreground",
-          compact ? "size-7" : "h-8 gap-1.5 px-3 text-xs font-medium",
-          accent === null && "text-foreground",
+          compact ? "size-7" : "h-8 gap-1.5 px-2.5 text-xs font-medium",
+          accent === null &&
+            "relative z-10 text-foreground outline-2 outline-offset-2 outline-ring/50",
         )}
       >
         <ArrowCounterClockwiseIcon size={14} />
@@ -47,8 +60,8 @@ export function AccentPicker({ compact = false }: { compact?: boolean }) {
             aria-pressed={active}
             className={cn(
               "inline-flex items-center rounded-full transition-[box-shadow,background-color]",
-              compact ? "size-7 justify-center" : "h-8 gap-2 bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover",
-              active && "ring-2 ring-ring/40 ring-offset-2 ring-offset-background",
+              compact ? "size-7 justify-center" : "h-8 gap-2 bg-surface px-2 text-xs font-medium text-foreground hover:bg-surface-hover",
+              active && "relative z-10 outline-2 outline-offset-2 outline-ring/50",
             )}
           >
             <span
@@ -63,7 +76,7 @@ export function AccentPicker({ compact = false }: { compact?: boolean }) {
       <label
         className={cn(
           "relative inline-flex cursor-pointer items-center rounded-full bg-surface text-xs font-medium text-foreground transition-colors hover:bg-surface-hover",
-          compact ? "size-7 justify-center" : "h-8 gap-2 px-2.5",
+          compact ? "size-7 justify-center" : "h-8 gap-2 px-2",
         )}
         title="Custom accent"
       >

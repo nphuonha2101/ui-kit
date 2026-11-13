@@ -83,11 +83,11 @@ export function ToggleGroup({
             disabled={item.disabled}
             aria-label={item["aria-label"]}
             className={cn(
-              "relative inline-flex h-8 items-center justify-center gap-2 rounded-pill px-3.5 text-sm font-medium text-muted-foreground outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)]",
-              "focus-visible:ring-2 focus-visible:ring-ring/35 disabled:pointer-events-none disabled:opacity-45",
-              variant === "segmented"
-                ? "data-[pressed]:surface-curved data-[pressed]:bg-card data-[pressed]:text-foreground data-[pressed]:shadow-control"
-                : "hover:bg-surface data-[pressed]:bg-surface data-[pressed]:text-foreground",
+              "relative inline-flex h-8 shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-pill px-3.5 text-sm font-medium tracking-[-0.01em] text-muted-foreground outline-none transition-[background-color,color,box-shadow] duration-[var(--duration-ui)] ease-[var(--ease-out-ui)] hover:text-foreground",
+              "focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
+              "disabled:pointer-events-none disabled:opacity-45",
+              variant === "ghost" && "hover:bg-surface",
+              "data-[pressed]:surface-curved-soft data-[pressed]:bg-primary-soft data-[pressed]:text-primary-soft-foreground",
               orientation === "vertical" && "w-full justify-start",
             )}
           >

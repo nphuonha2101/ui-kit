@@ -92,6 +92,7 @@
   --shadow-control: var(--shadow-control);
 
   --ease-out-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-collapse-ui: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-ui: 160ms;
   --duration-ui-slow: 220ms;
 }
@@ -297,66 +298,31 @@
   }
 }
 
-/* Accordion panel height animation. Base UI exposes the measured height as
- * --accordion-panel-height while the panel opens and closes. */
+/* Accordion panel height transition. Base UI exposes the measured height as
+ * --accordion-panel-height and marks the mid-flight mount/unmount states with
+ * data-starting-style / data-ending-style. A transition (instead of keyframes)
+ * also reverses smoothly when the user toggles again mid-animation. */
 @utility accordion-panel {
   overflow: hidden;
+  height: var(--accordion-panel-height);
+  transition: height var(--duration-ui-slow) var(--ease-collapse-ui);
 
-  &[data-open] {
-    animation: kit-accordion-down var(--duration-ui-slow) var(--ease-out-ui);
-  }
-
-  &[data-closed] {
-    animation: kit-accordion-up var(--duration-ui-slow) var(--ease-out-ui);
-  }
-}
-
-@keyframes kit-accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--accordion-panel-height);
-  }
-}
-
-@keyframes kit-accordion-up {
-  from {
-    height: var(--accordion-panel-height);
-  }
-  to {
+  &[data-starting-style],
+  &[data-ending-style] {
     height: 0;
   }
 }
 
-/* Collapsible panel height animation. Base UI exposes the measured height as
- * --collapsible-panel-height while the panel opens and closes. */
+/* Collapsible panel height transition. Keep this element free of padding and
+ * borders: the collapsed height must reach exactly 0 or the panel snaps on
+ * unmount. Inner content owns the spacing instead. */
 @utility collapsible-panel {
   overflow: hidden;
+  height: var(--collapsible-panel-height);
+  transition: height var(--duration-ui-slow) var(--ease-collapse-ui);
 
-  &[data-open] {
-    animation: kit-collapsible-down var(--duration-ui-slow) var(--ease-out-ui);
-  }
-
-  &[data-closed] {
-    animation: kit-collapsible-up var(--duration-ui-slow) var(--ease-out-ui);
-  }
-}
-
-@keyframes kit-collapsible-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--collapsible-panel-height);
-  }
-}
-
-@keyframes kit-collapsible-up {
-  from {
-    height: var(--collapsible-panel-height);
-  }
-  to {
+  &[data-starting-style],
+  &[data-ending-style] {
     height: 0;
   }
 }

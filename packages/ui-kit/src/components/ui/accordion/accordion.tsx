@@ -102,7 +102,7 @@ export function Accordion({
                 </span>
                 <ChevronDownIcon
                   size={16}
-                  className="shrink-0 text-muted-foreground transition-transform duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)] group-data-[panel-open]/trigger:rotate-180"
+                  className="shrink-0 text-muted-foreground transition-transform duration-[var(--duration-ui-slow)] ease-[var(--ease-collapse-ui)] group-data-[panel-open]/trigger:rotate-180"
                 />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>

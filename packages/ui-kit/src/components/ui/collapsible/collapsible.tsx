@@ -97,17 +97,19 @@ export function Collapsible({
         </span>
         <ChevronDownIcon
           size={16}
-          className="shrink-0 text-muted-foreground transition-transform duration-[var(--duration-ui-slow)] ease-[var(--ease-out-ui)] group-data-[panel-open]/trigger:rotate-180"
+          className="shrink-0 text-muted-foreground transition-transform duration-[var(--duration-ui-slow)] ease-[var(--ease-collapse-ui)] group-data-[panel-open]/trigger:rotate-180"
         />
       </CollapsiblePrimitive.Trigger>
-      <CollapsiblePrimitive.Panel
-        className={cn(
-          "collapsible-panel text-sm leading-relaxed text-muted-foreground",
-          panelStyles[variant],
-          contentClassName,
-        )}
-      >
-        {children}
+      <CollapsiblePrimitive.Panel className="collapsible-panel">
+        <div
+          className={cn(
+            "text-sm leading-relaxed text-muted-foreground",
+            panelStyles[variant],
+            contentClassName,
+          )}
+        >
+          {children}
+        </div>
       </CollapsiblePrimitive.Panel>
     </CollapsiblePrimitive.Root>
   );

@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.15.2",
+    date: "2026-11-16",
+    breaking: false,
+    summary:
+      "Patch release: Collapsible and Accordion panels now use a smooth, interruptible height transition and collapse fully to zero, so closing no longer snaps. No API changes.",
+    changes: [
+      {
+        id: "collapsible-motion-0-15-2",
+        kind: "behavior",
+        surface: "Collapsible, Accordion",
+        before:
+          "Panel height was animated with keyframes on the padded element. Collapsible could not shrink below its bottom padding, so the last 16px disappeared in a snap on unmount, and toggling again mid-animation restarted from 0 or the full height.",
+        after:
+          "Panels transition their measured height and reverse smoothly from the current position when toggled mid-flight. Collapsible moves padding to an inner content wrapper, so the animated panel reaches exactly 0; contentClassName now applies to that wrapper.",
+        find: "<Collapsible",
+        fix: "Nothing required. contentClassName still targets the padded content area; only move panel-level classes such as overflow control to className if you previously relied on them.",
+      },
+    ],
+  },
+  {
     version: "0.15.0",
     date: "2026-11-12",
     breaking: false,

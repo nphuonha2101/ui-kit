@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.15.4",
+    date: "2026-11-25",
+    breaking: false,
+    summary:
+      "Patch release: focus rings on controls inside Dialog are no longer clipped at the edges. The dialog body now keeps a small clip-free gutter like Sheet does. No API changes.",
+    changes: [
+      {
+        id: "dialog-focus-ring-clip-0-15-4",
+        kind: "behavior",
+        surface: "Dialog",
+        before:
+          "The scrollable dialog body was exactly as wide as its content, so a focused Input's ring-offset-2 + ring-2 shadow (4px outside the control) was clipped on the sides and bottom edge.",
+        after:
+          "The scroll wrapper uses p-1 with -m-1, which keeps the layout and spacing identical while giving focus rings and outlines 4px of clip-free room. Sheet already worked this way.",
+        find: "<Dialog",
+        fix: "Nothing required. Content size and position are unchanged; only the overflow clip moved outward.",
+      },
+    ],
+  },
+  {
     version: "0.15.3",
     date: "2026-11-25",
     breaking: false,

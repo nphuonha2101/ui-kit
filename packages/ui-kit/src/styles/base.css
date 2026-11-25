@@ -212,14 +212,17 @@
 /* Solid surface with a curved, top-lit look.
  * The rim is strongest on the top edge (as if light grazes it), with a faint
  * glass edge all around and a barely-there vertical gradient for convexity.
- * Uses a pseudo-element so it never fights the element's outer shadow. */
+ * The gradient is capped to a narrow band so tall cards get an edge-light
+ * (not a wash over a large share of the surface); small controls keep their
+ * proportional stops. Uses a pseudo-element so it never fights the element's
+ * outer shadow. */
 @utility surface-curved {
   background-image:
     linear-gradient(
       to bottom,
       var(--light-sheen-soft) 0%,
-      transparent 28%,
-      transparent 72%,
+      transparent min(28%, 48px),
+      transparent max(72%, calc(100% - 48px)),
       var(--light-bottom) 100%
     );
   &::before {

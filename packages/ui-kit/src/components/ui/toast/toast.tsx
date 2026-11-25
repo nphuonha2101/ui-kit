@@ -64,7 +64,7 @@ export function Toaster({
             // on the element so it always follows the visible toast box.
             "group relative font-sans !items-start !gap-3 !rounded-overlay !border-0 !px-4 !py-4 !text-sm",
             closeButton && "!pr-9",
-            "!bg-[linear-gradient(to_bottom,var(--light-sheen-soft)_0%,transparent_28%,transparent_72%,var(--light-bottom)_100%)]",
+            "!bg-[linear-gradient(to_bottom,var(--light-sheen-soft)_0%,transparent_min(28%,48px),transparent_max(72%,calc(100%_-_48px)),var(--light-bottom)_100%)]",
             !richColors && "!bg-popover !text-popover-foreground",
             "!shadow-[inset_0_1px_0_0_var(--light-top),inset_0_0_0_1px_rgb(255_255_255_/_0.08),inset_0_-1px_0_0_rgb(0_0_0_/_0.06),var(--shadow-overlay)]",
             "focus-visible:!outline-none data-[removed=true]:!outline-none data-[removed=true]:!ring-0",

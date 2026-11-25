@@ -72,7 +72,9 @@ export function Dialog({
               ) : null}
             </div>
           )}
-          <div className="min-h-0 min-w-0 overflow-y-auto overscroll-contain">
+          {/* Negative margin + padding keeps the layout unchanged while giving
+           * focus rings and outlines 4px of room before the scroll clip. */}
+          <div className="-m-1 min-h-0 min-w-0 overflow-y-auto overscroll-contain p-1">
             {children}
           </div>
           {footer ? (

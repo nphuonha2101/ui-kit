@@ -28,6 +28,26 @@ export interface ReleaseMigration {
  */
 export const releases: ReleaseMigration[] = [
   {
+    version: "0.15.3",
+    date: "2026-11-25",
+    breaking: false,
+    summary:
+      "Patch release: the curved-surface sheen now stays inside a narrow band at the top and bottom edges, so tall cards read as edge-lit instead of washed by a large vertical gradient. No API changes.",
+    changes: [
+      {
+        id: "surface-sheen-band-0-15-3",
+        kind: "behavior",
+        surface: "surface-curved (Card, Dialog, Popover, Toast)",
+        before:
+          "The vertical sheen and bottom shade used percentage-based stops (transparent at 28% and 72% of height), so the highlight scaled with the element and covered a large share of tall cards.",
+        after:
+          "Both stops are capped to a 48px band at each edge (min(28%, 48px) and max(72%, calc(100% - 48px))). Tall surfaces keep a compact top-lit edge; small controls keep their previous proportions. The toast paint matches the shared surface gradient.",
+        find: "surface-curved",
+        fix: "Nothing required. If you overrode the gradient on a tall surface, check that the narrower band still reads as intended.",
+      },
+    ],
+  },
+  {
     version: "0.15.2",
     date: "2026-11-16",
     breaking: false,
